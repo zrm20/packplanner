@@ -1,10 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native';
 import { colors } from '../styles/globalStyles'
 
-export default function PackScreen() {
+export default function SettingsScreen() {
   return (
     <View style={styles.container}>
+      <Text></Text>
     </View>
   )
 };

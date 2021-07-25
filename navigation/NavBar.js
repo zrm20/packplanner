@@ -5,30 +5,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../styles/globalStyles'
 import { LockerStack } from './LockerStack';
+import { PackStack } from './PackStack';
+import SettingsScreen from '../screens/SettingsScreen';
 
-
-function PackScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>Pack!</Text>
-    </View>
-  );
-}
 
 function WaterScreen() {
   return (
     <View style={styles.container}>
       <Text>Water!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>Settings!</Text>
-      <Text>Choose Units</Text>
-      <Text>Adjust Weight Maximums</Text>
     </View>
   );
 }
@@ -68,7 +52,7 @@ export function NavBar() {
         }}
         >
         <Tab.Screen name="Locker" component={LockerStack} />
-        <Tab.Screen name="Pack" component={PackScreen} />
+        <Tab.Screen name="Pack" component={PackStack} />
         <Tab.Screen name="Water" component={WaterScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
