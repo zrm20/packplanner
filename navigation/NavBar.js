@@ -60,7 +60,7 @@ export function NavBar() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: colors.white,
+          activeTintColor: colors.color1,
           inactiveTintColor: colors.white,
           activeBackgroundColor: colors.color4,
           inactiveBackgroundColor: colors.color4,

@@ -1,9 +1,9 @@
 export const colors = {
-  color1: "#ab674c",
-  color2: "#b39c4d",
-  color3: "#768948",
-  color4: "#34623f",
-  color5: "#554939",
+  color1: "#EF8354",
+  color2: "#fff",
+  color3: "#4F5D75",
+  color4: "#2D3142",
+  color5: "#BFC0C0",
   white: "#fff"
 };
 

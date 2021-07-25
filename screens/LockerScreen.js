@@ -1,93 +1,59 @@
 import React from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, Text, FlatList, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import NewPackItem from '../components/NewPackItem';
+import PackItem from '../components/PackItem';
 import { colors } from '../styles/globalStyles'
+import InventoryItem from '../components/InventoryItem';
+import { useSelector, useDispatch } from 'react-redux'
+import { AntDesign } from '@expo/vector-icons';
+
 
 
 //screen that contains a horizonal scroll view at the top for packs, and a list of inventory items below. Also has an "Add Item" button to bring up a new item screen in the stack.
 
-//testing only
-const data = [
-  {
-    id: 1,
-    brand: 'Osprey',
-    model: 'Lumina 45',
-    capacity: 45
-  },
-  {
-    id: 2,
-    brand: 'Osprey',
-    model: 'Exo 60',
-    capacity: 62
-  },
-  {
-    id: 3,
-    brand: 'Teton',
-    model: 'Mountaneer 60',
-    capacity: 65
-  },
-  {
-    id: 4,
-    brand: 'Teton',
-    model: 'Mountaneer 60',
-    capacity: 65
-  },
-  {
-    id: 5,
-    brand: 'Teton',
-    model: 'Mountaneer 60',
-    capacity: 65
-  },
-  {
-    id: 6,
-    brand: 'Teton',
-    model: 'Mountaneer 60',
-    capacity: 65
-  },
-  {
-    id: 7,
-    brand: 'Teton',
-    model: 'Mountaneer 60',
-    capacity: 65
-  },
-  {
-    id: 8,
-    brand: 'Teton',
-    model: 'Mountaneer 60',
-    capacity: 65
-  },
-];
+export function LockerScreen({ navigation }) {
 
-function PackComponent( { brand, model }){
-  return(
-    <View style={{height: 60, width: 60, backgroundColor: 'red', margin: 3}}>
-      <Text>{brand}</Text>
-      <Text>{model}</Text>
-    </View>
-  )
-}
-//end testing
+  // function uses an object with id 0 to start list with a CreateNewPack component, then renders all other existing packs
+  const renderPack = ({ item }) => (
+    item.id != 0 ? <PackItem pack={item} /> : <NewPackItem pressHandler={() => navigation.navigate('New Pack')}/>
+  );
+  
+  const renderInventory = ({ item }) => (<InventoryItem item={item} />)
 
+  //redux packs and inventory state
+  const packs = useSelector((state) => state.packs.value)
+  const inventory = useSelector((state) => state.inventory.value)
 
-const renderPack = ({ item }) => (
-    <PackComponent brand={item.brand} model={item.model}/>
-)
-
-export function LockerScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.categoryHeader}>Packs</Text>
       <View style={styles.packsWindow}>
         <FlatList 
-          data={data}
+          data={packs}
           renderItem={renderPack}
           keyExtractor= {item => item.id}
           horizontal={true}
           />
       </View>
-      <Text style={styles.categoryHeader}>Inventory</Text>
-      <FlatList style={styles.inventoryWindow}>
-        <Text>Hello</Text>
-      </FlatList>
+      <View style={styles.inventoryHeader}>
+        <TouchableOpacity>
+          <Text>Sort By</Text>
+        </TouchableOpacity>
+        <Text style={styles.categoryHeader}>Inventory</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('New Item')}>
+          <AntDesign 
+          name={'pluscircleo'} 
+          size={24} 
+          color={colors.white} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.inventoryList}>
+        <FlatList 
+          data={inventory}
+          renderItem={renderInventory}
+          keyExtractor= {item => item.id}
+          />
+      </View>
     </View>
   )
 };
@@ -100,8 +66,14 @@ const styles = StyleSheet.create({
   },
   packsWindow: {
     width: '95%',
-    height: 100,
+    height: 120,
     padding: 5
+  },
+  inventoryHeader: {
+    width: '90%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   inventoryWindow: {
     width: '95%',
@@ -112,5 +84,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 3,
     padding: 2
+  },
+  inventoryList: {
+    flex: 1,
+    padding: 3
   }
 });
