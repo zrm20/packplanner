@@ -12,9 +12,13 @@ export const counterSlice = createSlice({
   reducers: {
     setWeightToMetric: (state) => {
       state.value.weightUnits = 'metric'
+      console.log('Weight Metric');
+      console.log(state.value)
     },
     setWeightToImperial: (state) => {
       state.value.weightUnits = 'imperial'
+      console.log('Weight Imperial');
+      console.log(state.value)
     },
     setWaterCapacityToMetric: (state) => {
       state.value.waterCapacityUnits = 'metric'
@@ -26,6 +30,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {  } = counterSlice.actions
+export const { setWeightToMetric, setWeightToImperial, setWaterCapacityToMetric, setWaterCapacityToImperial } = counterSlice.actions
 
 export default counterSlice.reducer
