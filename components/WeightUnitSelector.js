@@ -2,24 +2,30 @@ import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { colors } from '../styles/globalStyles'
 
-//This component is used in the settings screen for selecting global settings for metric or imperial units.
+//This component is used in the New Pack and New Item page for selecting the input unit.
 
-export default function UnitSelector({ category, state, setToMetric, setToImperial }) {
+export default function WeightUnitSelector({ state, setState }) {
   return (
     <View>
-      <Text style={styles.subHeaderText}>{category} Units</Text>
+      <Text style={styles.subHeaderText}>Unit</Text>
       <View style={styles.row}>
         <TouchableOpacity 
-          style={state === 'metric' ? styles.activeButtonContainer : styles.inactiveButtonContainer}
-          onPress={setToMetric}
+          style={state === 'lbs' ? styles.activeButtonContainer : styles.inactiveButtonContainer}
+          onPress={() => setState('lbs')}
           >
-          <Text style={styles.buttonText}>Metric</Text>
+          <Text style={styles.buttonText}>lbs</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={state === 'imperial' ? styles.activeButtonContainer : styles.inactiveButtonContainer}
-          onPress={setToImperial}
+          style={state === 'oz' ? styles.activeButtonContainer : styles.inactiveButtonContainer}
+          onPress={() => setState('oz')}
           >
-          <Text style={styles.buttonText}>Imperial</Text>
+          <Text style={styles.buttonText}>oz</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={state === 'kg' ? styles.activeButtonContainer : styles.inactiveButtonContainer}
+          onPress={() => setState('kg')}
+          >
+          <Text style={styles.buttonText}>kg</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -35,10 +41,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   inactiveButtonContainer: {
-    height: 60,
-    width: 120,
+    height: 50,
+    width: 50,
     borderColor: colors.color5,
-    borderWidth: 4,
+    borderWidth: 2,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
@@ -46,10 +52,10 @@ const styles = StyleSheet.create({
     margin: 5
   },
   activeButtonContainer: {
-    height: 60,
-    width: 120,
+    height: 50,
+    width: 50,
     borderColor: colors.color1,
-    borderWidth: 4,
+    borderWidth: 2,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',

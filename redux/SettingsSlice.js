@@ -12,13 +12,9 @@ export const counterSlice = createSlice({
   reducers: {
     setWeightToMetric: (state) => {
       state.value.weightUnits = 'metric'
-      console.log('Weight Metric');
-      console.log(state.value)
     },
     setWeightToImperial: (state) => {
       state.value.weightUnits = 'imperial'
-      console.log('Weight Imperial');
-      console.log(state.value)
     },
     setWaterCapacityToMetric: (state) => {
       state.value.waterCapacityUnits = 'metric'
