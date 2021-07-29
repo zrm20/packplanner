@@ -11,43 +11,50 @@ export const packs = [
     id: 2,
     brand: 'Osprey',
     model: 'Exo 60',
-    capacity: 62
+    capacity: 62,
+    weight: 3
   },
   {
     id: 3,
     brand: 'Teton',
     model: 'Mountaneer 60',
-    capacity: 65
+    capacity: 65,
+    weight: 5.12
   },
   {
     id: 4,
     brand: 'Mountain Hardwear',
     model: 'Mountaneer 60',
-    capacity: 65
+    capacity: 65,
+    weight: 4.2
   },
   {
     id: 5,
     brand: 'Teton',
     model: 'Mountaneer 60',
-    capacity: 65
+    capacity: 65,
+    weight: 4.2
   },
   {
     id: 6,
     brand: 'Teton',
     model: 'Mountaneer 60',
-    capacity: 65
+    capacity: 65,
+    weight: 4.2
   },
   {
     id: 7,
     brand: 'Teton',
     model: 'Mountaneer 60',
-    capacity: 65
+    capacity: 65,
+    weight: 4.2
   },
   {
     id: 8,
     brand: 'Teton',
     model: 'Mountaneer 60',
-    capacity: 65
+    capacity: 65,
+    weight: 4.2
   },
 ];
 

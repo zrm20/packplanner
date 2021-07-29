@@ -2,27 +2,27 @@ import React, { useState } from 'react'
 import { KeyboardAvoidingView, View, Text, TextInput, StyleSheet, Alert, Keyboard, TouchableOpacity } from 'react-native'
 import { colors } from '../styles/globalStyles'
 import { useDispatch } from 'react-redux';
-import { addPack } from '../redux/PacksSlice'
+import { replacePack } from '../redux/PacksSlice'
 import WeightUnitSelector from '../components/WeightUnitSelector';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import AddButton from '../components/AddButton'
 import { lbsToKg, ozToKg } from '../globalFunctons';
+import GenericButton from '../components/GenericButton';
 
 
-//TODO add hide keyboard function
+export default function EditPackScreen( { navigation, route }) {
 
-export default function NewPackScreen( { navigation }) {
+  const packToEdit =  route.params;
 
-  const [brand, setBrand] = useState();
-  const [model, setModel] = useState();
-  const [capacity, setCapacity] = useState();
-  const [weight, setWeight] = useState();
+  const [brand, setBrand] = useState(packToEdit.brand);
+  const [model, setModel] = useState(packToEdit.model);
+  const [capacity, setCapacity] = useState(packToEdit.capacity);
+  const [weight, setWeight] = useState(packToEdit.weight);
   //unit for input weight. Should be lbs, oz, or kg
-  const [weightUnits, setWeightUnits] = useState('lbs');
+  const [weightUnits, setWeightUnits] = useState('kg');
   
   const dispatch = useDispatch();
   
-  function addNewPack(){
+  function submitPack(){
     if(!brand || !model || !weight){
       Alert.alert("Brand, Model and Weight are required");
     }else if(!isFinite(weight) || weight < 0){
@@ -37,18 +37,14 @@ export default function NewPackScreen( { navigation }) {
       };
   
       const newPack = {
+        id: packToEdit.id,
         brand: brand,
         model: model,
         weight: kgWeight,
         capacity: capacity
       };
-  
-      dispatch(addPack(newPack));
-  
-      setBrand(null);
-      setModel(null);
-      setCapacity(null);
-      setWeight(null);
+      
+      dispatch(replacePack(newPack));
   
       navigation.navigate('Locker');
     }
@@ -86,7 +82,7 @@ export default function NewPackScreen( { navigation }) {
           <Text style={styles.labelText}>Weight</Text>
           <TextInput 
             style={styles.numberInput} 
-            value={weight}
+            value={weight.toString()}
             onChangeText={(value) => setWeight(Number(value))}
             keyboardType='numeric'
             placeholder={weightUnits}
@@ -98,14 +94,15 @@ export default function NewPackScreen( { navigation }) {
         <Text style={styles.labelText}>Capacity (L)</Text>
         <TextInput 
           style={styles.numberInput} 
-          value={capacity}
+          value={capacity.toString()}
           onChangeText={(value) => setCapacity(value)}
           keyboardType='numeric'
           placeholder='Liters'
           />
       </View>
       <View style={styles.iconHeader}>
-        <AddButton name='Pack' pressHandler={addNewPack}/>
+        <GenericButton name='Submit' pressHandler={submitPack}/>
+        <GenericButton name='Cancel' pressHandler={() => navigation.navigate('Locker')}/>
       </View>
     </TouchableOpacity>
   )

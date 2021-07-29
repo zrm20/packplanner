@@ -1,23 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { colors } from '../styles/globalStyles'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { setActivePack } from '../redux/PacksSlice';
+import { kgToLbsOz, kgToOz } from '../globalFunctons';
 
 
-export default function PackItem({ pack }) {
+export default function PackItem({ pack, longPressHandler }) {
 
+  const settings = useSelector((state) => state.settings.value);
   const dispatch = useDispatch();
+
+
+  let convertedWeight;
+  switch(settings.weightUnits){
+    case("metric"): convertedWeight = pack.weight.toFixed(2) + " kg"; break;
+    case("imperial"): {
+      let lbsOz = kgToLbsOz(pack.weight)
+      convertedWeight = `${lbsOz[0]} lbs, ${lbsOz[1].toFixed(1)} oz`;
+      break;
+    }
+  }
+
 
   return (
     <TouchableOpacity 
       style={pack.isActivePack ? styles.activeContainer : styles.container}
       onPress={() => dispatch(setActivePack(pack.id))}
+      onLongPress={() => longPressHandler(pack)}
       >
       <Text style={styles.brandText}>{pack.brand}</Text>
       <Text style={styles.modelText}>{pack.model}</Text>
       {pack.capacity ? <Text style={styles.dataText}>{pack.capacity} L</Text> : null}
-      {pack.weight ? <Text style={styles.dataText}>{pack.weight} lbs</Text> : null}
+      <Text style={styles.dataText}>{convertedWeight} {settings.weightUnit}</Text>
     </TouchableOpacity>
   )
 };

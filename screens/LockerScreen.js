@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, StyleSheet, Button, TouchableOpacity, Vibration } from 'react-native'
 import NewPackItem from '../components/NewPackItem';
 import PackItem from '../components/PackItem';
 import { colors } from '../styles/globalStyles'
@@ -13,9 +13,15 @@ import { AntDesign } from '@expo/vector-icons';
 
 export function LockerScreen({ navigation }) {
 
+  //function for long pressing the PackItem, to then navigate to the edit page
+  function editPack(pack){
+    Vibration.vibrate(50);
+    navigation.navigate("Edit Pack", pack);
+  }
+
   // function uses an object with id 0 to start list with a CreateNewPack component, then renders all other existing packs
   const renderPack = ({ item }) => (
-    item.id != 0 ? <PackItem pack={item} /> : <NewPackItem pressHandler={() => navigation.navigate('New Pack')}/>
+    item.id != 0 ? <PackItem pack={item} longPressHandler={editPack}/> : <NewPackItem pressHandler={() => navigation.navigate('New Pack')}/>
   );
   
   const renderInventory = ({ item }) => (<InventoryItem item={item} />)
