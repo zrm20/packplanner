@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setActivePack } from '../redux/PacksSlice';
 import { kgToLbsOz, kgToOz } from '../globalFunctons';
 
+//TODO scale text
 
 export default function PackItem({ pack, longPressHandler }) {
 

@@ -99,7 +99,7 @@ export default function NewPackScreen( { navigation }) {
         <TextInput 
           style={styles.numberInput} 
           value={capacity}
-          onChangeText={(value) => setCapacity(value)}
+          onChangeText={(value) => setCapacity(Number(value))}
           keyboardType='numeric'
           placeholder='Liters'
           />

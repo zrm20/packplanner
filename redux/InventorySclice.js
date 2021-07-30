@@ -1,21 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { inventory } from '../dummyData'
+import React from "react";
+import { Vibration } from "react-native";
+import { createSlice } from '@reduxjs/toolkit';
+import { inventory } from '../dummyData';
+import keygen from 'keygenerator';
 
 export const counterSlice = createSlice({
-  name: 'Inventory',
+  name: 'inventory',
   initialState: {
-    value: inventory,
+    value: [],
   },
   reducers: {
     //accepts an object as action payload.
     addItem: (state, action) => {
-      const nextId = state.value.length;
-      
+      const nextId = keygen._();
+
       state.value.push({
         id: nextId,
         ...action.payload
       })
-      console.log('Item Added!')
+      Vibration.vibrate(250)
     },
     toggleInPack: (state, action) => {
       //sets the inPack property on object with a given id. action.payload must contain id

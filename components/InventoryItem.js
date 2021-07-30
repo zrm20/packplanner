@@ -3,12 +3,48 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { colors } from '../styles/globalStyles';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toggleInPack } from '../redux/InventorySclice';
+import { kgToLbs, mLToFlOz } from '../globalFunctons';
 
 export default function InventoryItem({ item }) {
 
+  const settings = useSelector(state => state.settings.value);
+
   const dispatch = useDispatch();
+
+  let weightIconName;
+  let displayWeight;
+
+  switch(settings.weightUnits){
+    case('metric'): {
+      weightIconName = 'weight-kilogram';
+      displayWeight = item.weight.toFixed(2);
+      break;
+    }
+    case('imperial'): {
+      weightIconName = 'weight-pound'
+      displayWeight = kgToLbs(item.weight).toFixed(2)
+    }
+  };
+
+  let waterUnit;
+  let displayWater;
+
+  switch(settings.waterCapacityUnits){
+    case('metric'):{
+      waterUnit = 'mL'
+      displayWater = item.waterCapacity ? item.waterCapacity.toFixed(0) : null;
+      break
+    }
+    case('imperial'):{
+      waterUnit = 'fl oz';
+      displayWater = item.waterCapacity ? mLToFlOz(item.waterCapacity).toFixed(2) : null;
+      break;
+    }
+  }
+
+
 
   return (
     <View style={styles.container}>
@@ -20,13 +56,16 @@ export default function InventoryItem({ item }) {
         </View>
         <View style={styles.attributeInfo}>
           <View style={styles.row}>
-            <MaterialCommunityIcons name="weight-pound" size={24} color={colors.white} />
-            <Text style={styles.attributeText}>{item.weight}</Text>
+            <MaterialCommunityIcons name={weightIconName} size={24} color={colors.white} />
+            <Text style={styles.attributeText}>{displayWeight}</Text>
           </View>
-          <View style={styles.row}>
-            <MaterialCommunityIcons name="water" size={24} color={colors.white} />
-            <Text style={styles.attributeText}>{item.waterCapacity ? item.waterCapacity + "L" : null}</Text>
-          </View>
+          {item.category === 'water' ?
+            <View style={styles.row}>
+              <MaterialCommunityIcons name="water" size={24} color={colors.white} />
+              <Text style={styles.attributeText}>{`${displayWater} ${waterUnit}`}</Text>
+            </View>
+            : null
+          }
         </View>
       </View>
       <TouchableOpacity 

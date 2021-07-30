@@ -30,3 +30,13 @@ export function kgToLbsOz(kg){
   oz = oz % 16;
   return [lbs, oz];
 }
+
+export function flOzToML(flOz){
+  //converts fl Oz to mL
+  return flOz * 29.5735;
+}
+
+export function mLToFlOz(mL){
+  //converts mL to fl oz
+  return mL * 0.033814;
+}

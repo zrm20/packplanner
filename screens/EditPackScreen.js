@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { KeyboardAvoidingView, View, Text, TextInput, StyleSheet, Alert, Keyboard, TouchableOpacity } from 'react-native'
 import { colors } from '../styles/globalStyles'
 import { useDispatch } from 'react-redux';
-import { replacePack } from '../redux/PacksSlice'
+import { replacePack, removePack } from '../redux/PacksSlice'
 import WeightUnitSelector from '../components/WeightUnitSelector';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { lbsToKg, ozToKg } from '../globalFunctons';
@@ -48,8 +48,25 @@ export default function EditPackScreen( { navigation, route }) {
   
       navigation.navigate('Locker');
     }
-    
-    
+  }
+
+  function deletePack(){
+    dispatch(removePack(packToEdit.id))
+    navigation.navigate("Locker")
+  }
+
+  function confirmDelete(){
+    const buttonOptions = [
+      {
+        text: 'Delete',
+        onPress: deletePack
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancelled!')
+      }
+    ]
+    Alert.alert('Are you sure?', 'Do you want to perminantly delete this pack?', buttonOptions);
   }
 
   return (
@@ -94,7 +111,7 @@ export default function EditPackScreen( { navigation, route }) {
         <Text style={styles.labelText}>Capacity (L)</Text>
         <TextInput 
           style={styles.numberInput} 
-          value={capacity.toString()}
+          value={capacity ? capacity.toString() : null}
           onChangeText={(value) => setCapacity(value)}
           keyboardType='numeric'
           placeholder='Liters'
@@ -102,6 +119,7 @@ export default function EditPackScreen( { navigation, route }) {
       </View>
       <View style={styles.iconHeader}>
         <GenericButton name='Submit' pressHandler={submitPack}/>
+        <GenericButton name='Delete' pressHandler={confirmDelete}/>
         <GenericButton name='Cancel' pressHandler={() => navigation.navigate('Locker')}/>
       </View>
     </TouchableOpacity>

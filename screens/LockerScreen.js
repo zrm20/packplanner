@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, FlatList, StyleSheet, Button, TouchableOpacity, Vibration } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Vibration, TextInput, Keyboard } from 'react-native'
 import NewPackItem from '../components/NewPackItem';
 import PackItem from '../components/PackItem';
 import { colors } from '../styles/globalStyles'
@@ -12,6 +12,8 @@ import { AntDesign } from '@expo/vector-icons';
 //screen that contains a horizonal scroll view at the top for packs, and a list of inventory items below. Also has an "Add Item" button to bring up a new item screen in the stack.
 
 export function LockerScreen({ navigation }) {
+
+  const [searchBox, setSearchBox] = useState('');
 
   //function for long pressing the PackItem, to then navigate to the edit page
   function editPack(pack){
@@ -30,6 +32,15 @@ export function LockerScreen({ navigation }) {
   const packs = useSelector((state) => state.packs.value)
   const inventory = useSelector((state) => state.inventory.value)
 
+  function filterInventory(item){
+    //function for filtering inventory items by searchBox
+    const lowerBrand = item.brand.toLowerCase();
+    const lowerName = item.name.toLowerCase();
+    const lowerCategory = item.category.toLowerCase();
+    
+    return (lowerBrand.includes(searchBox) || lowerName.includes(searchBox) || lowerCategory.includes(searchBox));
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.categoryHeader}>Packs</Text>
@@ -42,20 +53,25 @@ export function LockerScreen({ navigation }) {
           />
       </View>
       <View style={styles.inventoryHeader}>
-        <TouchableOpacity>
-          <Text>Sort By</Text>
-        </TouchableOpacity>
-        <Text style={styles.categoryHeader}>Inventory</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('New Item')}>
-          <AntDesign 
-          name={'pluscircleo'} 
-          size={24} 
-          color={colors.white} />
-        </TouchableOpacity>
+        <TextInput 
+          style={styles.searchBox} 
+          placeholder="Search Inventory"
+          onChangeText={value => setSearchBox(value.toLowerCase())}
+          clearButtonMode='always'
+          />
+        <Text style={styles.inventoryHeaderText}>Inventory</Text>
+        <View style={styles.inventoryButtons}>
+          <TouchableOpacity onPress={() => navigation.navigate('New Item')}>
+            <AntDesign 
+            name={'pluscircleo'} 
+            size={24} 
+            color={colors.white} />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.inventoryList}>
         <FlatList 
-          data={inventory}
+          data={inventory.filter(filterInventory)}
           renderItem={renderInventory}
           keyExtractor= {item => item.id}
           />
@@ -79,20 +95,44 @@ const styles = StyleSheet.create({
     width: '90%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-evenly'
+  },
+  inventoryHeaderText: {
+    color: colors.white,
+    fontSize: 15,
+    fontWeight: 'bold',
+    margin: 3,
+    padding: 2,
+    width: '33%',
+    textAlign: 'center'
   },
   inventoryWindow: {
     width: '95%',
+  },
+  inventoryButtons: {
+    width: '33%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: 8
   },
   categoryHeader: {
     color: colors.white,
     fontSize: 15,
     fontWeight: 'bold',
     margin: 3,
-    padding: 2
+    padding: 2,
+    textAlign: 'center'
   },
   inventoryList: {
     flex: 1,
     padding: 3
+  },
+  searchBox: {
+    width: '33%',
+    height: 24,
+    borderColor: colors.color5,
+    borderWidth: 1,
+    borderRadius: 3,
+    backgroundColor: colors.color5
   }
 });
