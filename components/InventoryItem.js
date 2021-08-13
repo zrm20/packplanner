@@ -36,12 +36,12 @@ export default function InventoryItem({ item, longPressHandler }) {
   switch(settings.waterCapacityUnits){
     case('metric'):{
       waterUnit = 'mL'
-      displayWater = item.waterCapacity ? item.waterCapacity.toFixed(0) : null;
+      displayWater = !isNaN(item.waterCapacity) ? item.waterCapacity.toFixed(0) : null;
       break
     }
     case('imperial'):{
       waterUnit = 'fl oz';
-      displayWater = item.waterCapacity ? mLToFlOz(item.waterCapacity).toFixed(1) : null;
+      displayWater = !isNaN(item.waterCapacity) ? mLToFlOz(item.waterCapacity).toFixed(1) : null;
       break;
     }
   }

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { colors } from '../styles/globalStyles'
 import { useSelector, useDispatch } from 'react-redux'
-import { setActivePack } from '../redux/PacksSlice';
+import { toggleActivePack } from '../redux/PacksSlice';
 import { kgToLbsOz, kgToOz } from '../globalFunctons';
 
 //TODO scale text
@@ -27,7 +27,7 @@ export default function PackItem({ pack, longPressHandler }) {
   return (
     <TouchableOpacity 
       style={pack.isActivePack ? styles.activeContainer : styles.container}
-      onPress={() => dispatch(setActivePack(pack.id))}
+      onPress={() => dispatch(toggleActivePack(pack.id))}
       onLongPress={() => longPressHandler(pack)}
       >
       <Text style={styles.brandText}>{pack.brand}</Text>

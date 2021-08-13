@@ -15,25 +15,30 @@ export default function EditPackScreen( { navigation, route }) {
 
   const [brand, setBrand] = useState(packToEdit.brand);
   const [model, setModel] = useState(packToEdit.model);
-  const [capacity, setCapacity] = useState(packToEdit.capacity);
-  const [weight, setWeight] = useState(packToEdit.weight);
+  const [capacity, setCapacity] = useState(packToEdit.capacity.toString());
+  const [weight, setWeight] = useState(packToEdit.weight.toString());
   //unit for input weight. Should be lbs, oz, or kg
   const [weightUnits, setWeightUnits] = useState('kg');
   
   const dispatch = useDispatch();
   
   function submitPack(){
+    const numWeight = Number(weight);
+    const numCapacity = Number(capacity);
+
     if(!brand || !model || !weight){
       Alert.alert("Brand, Model and Weight are required");
-    }else if(!isFinite(weight) || weight < 0){
-      Alert.alert("Weight must be positive number");
+    }else if(!isFinite(numWeight) || numWeight < 0){
+      Alert.alert("Weight must be valid positive number");
+    }else if(capacity && isNaN(numCapacity)){
+      Alert.alert("Capacity must be valid number");
     }else{
       let kgWeight;
   
       switch(weightUnits){
-        case('kg'): kgWeight = weight; break;
-        case('lbs'): kgWeight = lbsToKg(weight); break;
-        case('oz'): kgWeight = ozToKg(weight); break;
+        case('kg'): kgWeight = numWeight; break;
+        case('lbs'): kgWeight = lbsToKg(numWeight); break;
+        case('oz'): kgWeight = ozToKg(numWeight); break;
       };
   
       const newPack = {
@@ -41,13 +46,18 @@ export default function EditPackScreen( { navigation, route }) {
         brand: brand,
         model: model,
         weight: kgWeight,
-        capacity: capacity
+        capacity: numCapacity
       };
-      
+  
       dispatch(replacePack(newPack));
   
+      setBrand(null);
+      setModel(null);
+      setCapacity(null);
+      setWeight(null);
+  
       navigation.navigate('Locker');
-    }
+    }  
   }
 
   function deletePack(){
@@ -99,8 +109,8 @@ export default function EditPackScreen( { navigation, route }) {
           <Text style={styles.labelText}>Weight</Text>
           <TextInput 
             style={styles.numberInput} 
-            value={weight.toString()}
-            onChangeText={(value) => setWeight(Number(value))}
+            value={weight}
+            onChangeText={(value) => setWeight(value)}
             keyboardType='numeric'
             placeholder={weightUnits}
             />
@@ -111,7 +121,7 @@ export default function EditPackScreen( { navigation, route }) {
         <Text style={styles.labelText}>Capacity (L)</Text>
         <TextInput 
           style={styles.numberInput} 
-          value={capacity ? capacity.toString() : null}
+          value={capacity ? capacity : null}
           onChangeText={(value) => setCapacity(value)}
           keyboardType='numeric'
           placeholder='Liters'

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert, Keyboard, TouchableOpacity, Image } from 'react-native'
 import { colors } from '../styles/globalStyles'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import WeightUnitSelector from '../components/WeightUnitSelector';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AddButton from '../components/AddButton'
@@ -9,10 +9,7 @@ import CategoryPicker from '../components/CategoryPicker';
 import { addItem } from '../redux/InventorySlice';
 import WaterUnitSelector from '../components/WaterUnitSelector';
 import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
-import QtyChanger from '../components/QtyChanger';
-import Icon from '../components/Icon';
 
-//TODO bug found! when adding new item, entering a decimal point doesnt work in weight field
 
 export default function NewItemScreen( { navigation }) {
 
@@ -29,12 +26,20 @@ export default function NewItemScreen( { navigation }) {
   const dispatch = useDispatch();
   
   function addNewItem(){
+
+    const numWeight = Number(weight);
+    const numWaterCapacity = Number(waterCapacity);
+
+    console.log(numWeight);
+    console.log(numWaterCapacity)
+
+
      if(!name || !weight){
       Alert.alert("Name and Weight are required");
-    }else if(!isFinite(weight) || weight < 0){
-      Alert.alert("Weight must be positive number");
-    }else if(category === 'water' && (!isFinite(waterCapacity) || waterCapacity < 0)){
-      Alert.alert("Water capacity must be positive number");
+    }else if(!isFinite(numWeight) || numWeight < 0){
+      Alert.alert("Weight must be a valid positive number");
+    }else if(category === 'water' && (!isFinite(numWaterCapacity) || numWaterCapacity < 0)){
+      Alert.alert("Water capacity must be a valid positive number");
     }else{
       let kgWeight;
   
@@ -44,7 +49,9 @@ export default function NewItemScreen( { navigation }) {
           case('oz'): kgWeight = ozToKg(weight); break;
         };
   
-      const adjustedCapacity = waterCapacityUnits === 'mL' ? waterCapacity : flOzToML(waterCapacity);
+      const adjustedCapacity = waterCapacityUnits === 'mL' ? numWaterCapacity : flOzToML(numWaterCapacity);
+
+      console.log(adjustedCapacity)
   
       let newItem = {
         category: category,
@@ -56,7 +63,7 @@ export default function NewItemScreen( { navigation }) {
       }
   
       if(category === 'water'){
-        newItem.waterCapacity=adjustedCapacity
+        newItem.waterCapacity = adjustedCapacity;
       }
   
       dispatch(addItem(newItem));
@@ -98,8 +105,8 @@ export default function NewItemScreen( { navigation }) {
           <Text style={styles.labelText}>Weight</Text>
           <TextInput 
             style={styles.numberInput}
-            onChangeText={value => setWeight(Number(value))}
-            value={weight ? weight.toString() : null}
+            onChangeText={value => setWeight(value)}
+            value={weight}
             keyboardType='numeric'
             placeholder={weightUnits}
           />
@@ -108,18 +115,21 @@ export default function NewItemScreen( { navigation }) {
       </View>
 
       {category === 'water' ? 
-      <View style={styles.row}>
-        <View style={styles.formItem}>
-          <Text style={styles.labelText}>Water Capactiy</Text>
-          <TextInput 
-            style={styles.numberInput}
-            keyboardType='numeric'
-            value={waterCapacity ? waterCapacity.toString() : null}
-            placeholder={waterCapacityUnits}
-            onChangeText={value => setWaterCapacity(Number(value))}
-          />
+      <View>
+        <View style={styles.row}>
+          <View style={styles.formItem}>
+            <Text style={styles.labelText}>Water Capacity</Text>
+            <TextInput 
+              style={styles.numberInput}
+              keyboardType='numeric'
+              value={waterCapacity}
+              placeholder={waterCapacityUnits}
+              onChangeText={value => setWaterCapacity(value)}
+            />
+          </View>
+          <WaterUnitSelector state={waterCapacityUnits} setState={setWaterCapacityUnits}/>
         </View>
-        <WaterUnitSelector state={waterCapacityUnits} setState={setWaterCapacityUnits}/>
+        <Text style={{color: colors.white}}>*For water containers, set weight to the empty container weight. Weight of the water will be calculated automatically by the water capacity value.</Text>
       </View>
       : null
       }

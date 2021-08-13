@@ -19,8 +19,8 @@ export default function EditItemScreen( { navigation, route }) {
   const [brand, setBrand] = useState(itemToEdit.brand);
   const [name, setName] = useState(itemToEdit.name);
   const [category, setCategory] = useState(itemToEdit.category);
-  const [weight, setWeight] = useState(itemToEdit.weight);
-  const [waterCapacity, setWaterCapacity] = useState(itemToEdit.waterCapacity ? itemToEdit.waterCapacity : null);
+  const [weight, setWeight] = useState(itemToEdit.weight.toString());
+  const [waterCapacity, setWaterCapacity] = useState(!isNaN(itemToEdit.waterCapacity) ? itemToEdit.waterCapacity.toString() : null);
   //unit for input weight. Should be lbs, oz, or kg
   const [weightUnits, setWeightUnits] = useState('kg');
   const [waterCapacityUnits, setWaterCapacityUnits]= useState('mL');
@@ -116,8 +116,8 @@ export default function EditItemScreen( { navigation, route }) {
           <Text style={styles.labelText}>Weight</Text>
           <TextInput 
             style={styles.numberInput}
-            onChangeText={value => setWeight(Number(value))}
-            value={weight.toString()}
+            onChangeText={value => setWeight(value)}
+            value={weight}
             keyboardType='numeric'
             placeholder={weightUnits}
           />
@@ -133,8 +133,8 @@ export default function EditItemScreen( { navigation, route }) {
             style={styles.numberInput}
             keyboardType='numeric'
             placeholder={waterCapacityUnits}
-            value={waterCapacity.toString()}
-            onChangeText={value => setWaterCapacity(Number(value))}
+            value={waterCapacity}
+            onChangeText={value => setWaterCapacity(value)}
           />
         </View>
         <WaterUnitSelector state={waterCapacityUnits} setState={setWaterCapacityUnits}/>

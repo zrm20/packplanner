@@ -7,15 +7,7 @@ import { colors } from '../styles/globalStyles'
 import { LockerStack } from './LockerStack';
 import { PackStack } from './PackStack';
 import SettingsScreen from '../screens/SettingsScreen';
-
-
-function WaterScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>Water!</Text>
-    </View>
-  );
-}
+import { WaterStack } from './WaterStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -53,7 +45,7 @@ export function NavBar() {
         >
         <Tab.Screen name="Locker" component={LockerStack} />
         <Tab.Screen name="Pack" component={PackStack} />
-        <Tab.Screen name="Water" component={WaterScreen} />
+        <Tab.Screen name="Water" component={WaterStack} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useSelector } from 'react-redux';
-import { kgToLbs } from '../globalFunctons';
+import { kgToLbsOz } from '../globalFunctons';
 import { colors } from '../styles/globalStyles'
 
 export default function PackDetailsHeader( { activePack }) {
@@ -14,7 +14,7 @@ export default function PackDetailsHeader( { activePack }) {
   if(pack){
     switch(settings.weightUnits){
       case('metric'): weightString = pack.weight.toFixed(2) + ' kg'; break;
-      case('imperial'): weightString = kgToLbs(pack.weight).toFixed(2) + ' lbs'; break;
+      case('imperial'): weightString = kgToLbsOz(pack.weight)[0] + ' lbs ' + kgToLbsOz(pack.weight)[1].toFixed(0) + ' oz'; break; 
     }
   };
 

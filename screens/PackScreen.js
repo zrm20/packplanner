@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native'
+import React from 'react'
+import { View, StyleSheet, ScrollView, Image } from 'react-native'
 import { colors } from '../styles/globalStyles'
 import { useSelector } from 'react-redux'
 import PackDetailsHeader from '../components/PackDetailsHeader';
@@ -8,7 +8,10 @@ import PackActionButtonBar from '../components/PackActionButtonBar';
 import InMyPack from '../components/InMyPack';
 import { calcBaseWeight, calcTotalPlusWaterWeight, calcTotalWeight } from '../globalFunctons';
 
-export default function PackScreen() {
+//TODO Add goal weight and progress bar
+//TODO Add note for empty pack
+
+export default function PackScreen({ navigation }) {
 
   const packs = useSelector(state => state.packs.value);
   const inventory = useSelector(state => state.inventory.value);
@@ -35,10 +38,18 @@ export default function PackScreen() {
   
   return (
     <View style={styles.container}>
-      <PackDetailsHeader activePack={activePack}/>
-      <WeightCounter total={totalWeight} base={baseWeight} totalPlusWater={totalPlusWater}/>
-      <PackActionButtonBar />
-      <InMyPack items={itemsInPack}/>
+      <PackDetailsHeader 
+        activePack={activePack}/>
+      <WeightCounter 
+        total={totalWeight} 
+        base={baseWeight} 
+        totalPlusWater={totalPlusWater}/>
+      <PackActionButtonBar 
+        chartsPress={() => navigation.navigate('Charts')}
+        checklistPress
+        />
+      <InMyPack 
+        items={itemsInPack}/>
     </View>
   )
 };

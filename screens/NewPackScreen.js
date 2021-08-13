@@ -23,24 +23,30 @@ export default function NewPackScreen( { navigation }) {
   const dispatch = useDispatch();
   
   function addNewPack(){
+    
+    const numWeight = Number(weight);
+    const numCapacity = Number(capacity);
+
     if(!brand || !model || !weight){
       Alert.alert("Brand, Model and Weight are required");
-    }else if(!isFinite(weight) || weight < 0){
+    }else if(!isFinite(numWeight) || numWeight < 0){
       Alert.alert("Weight must be positive number");
+    }else if(capacity && isNaN(numCapacity)){
+      Alert.alert("Capacity must be valid number");
     }else{
       let kgWeight;
   
       switch(weightUnits){
-        case('kg'): kgWeight = weight; break;
-        case('lbs'): kgWeight = lbsToKg(weight); break;
-        case('oz'): kgWeight = ozToKg(weight); break;
+        case('kg'): kgWeight = numWeight; break;
+        case('lbs'): kgWeight = lbsToKg(numWeight); break;
+        case('oz'): kgWeight = ozToKg(numWeight); break;
       };
   
       const newPack = {
         brand: brand,
         model: model,
         weight: kgWeight,
-        capacity: capacity
+        capacity: isNaN(numCapacity) ? 0 : numCapacity
       };
   
       dispatch(addPack(newPack));
@@ -51,9 +57,7 @@ export default function NewPackScreen( { navigation }) {
       setWeight(null);
   
       navigation.navigate('Locker');
-    }
-    
-    
+    }  
   }
 
   return (
@@ -87,7 +91,7 @@ export default function NewPackScreen( { navigation }) {
           <TextInput 
             style={styles.numberInput} 
             value={weight}
-            onChangeText={(value) => setWeight(Number(value))}
+            onChangeText={(value) => setWeight(value)}
             keyboardType='numeric'
             placeholder={weightUnits}
             />
@@ -99,7 +103,7 @@ export default function NewPackScreen( { navigation }) {
         <TextInput 
           style={styles.numberInput} 
           value={capacity}
-          onChangeText={(value) => setCapacity(Number(value))}
+          onChangeText={(value) => setCapacity(value)}
           keyboardType='numeric'
           placeholder='Liters'
           />

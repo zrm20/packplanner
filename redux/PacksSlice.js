@@ -21,7 +21,7 @@ export const counterSlice = createSlice({
       })
       Vibration.vibrate(250)
     },
-    setActivePack: (state, action) => {
+    toggleActivePack: (state, action) => {
       //this function sets the pack with a given id to have isActivePack property of true, and all other packs to be false
 
       const id = action.payload;
@@ -29,7 +29,7 @@ export const counterSlice = createSlice({
       for(let i = 0; i < state.value.length; i++){
         if(state.value[i].id === id){
           //ID Found, so do action
-          state.value[i].isActivePack = true;
+          state.value[i].isActivePack = !state.value[i].isActivePack;
         }else{
           //ID NOT Found so skip
           state.value[i].isActivePack = false;
@@ -74,6 +74,6 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addPack, setActivePack, replacePack, removePack } = counterSlice.actions
+export const { addPack, toggleActivePack, replacePack, removePack } = counterSlice.actions
 
 export default counterSlice.reducer

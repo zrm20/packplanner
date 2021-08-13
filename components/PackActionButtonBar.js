@@ -6,7 +6,7 @@ import { colors } from '../styles/globalStyles';
 import { useDispatch } from 'react-redux';
 import { emptyPack } from '../redux/InventorySlice';
 
-export default function PackActionButtonBar() {
+export default function PackActionButtonBar({ chartsPress, checklistPress }) {
 
   const dispatch = useDispatch();
 
@@ -26,10 +26,10 @@ export default function PackActionButtonBar() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={chartsPress}>
         <AntDesign name="piechart" size={34} color={colors.color5} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={checklistPress}>
         <Octicons name="checklist" size={34} color={colors.color5} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>

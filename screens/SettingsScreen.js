@@ -20,22 +20,26 @@ export default function SettingsScreen() {
   function logPacks(){
     console.log('-----PACKS-----');
     console.log(packs)
+    console.log('----- END PACKS-----');
   };
 
   function logInventory(){
     console.log('-----INVENTORY-----');
     console.log(inventory);
+    console.log('-----END INVENTORY-----');
 
   }
 
   function logCategories(){
     console.log('-----CATEGORIES-----');
     console.log(categories);
+    console.log('-----END CATEGORIES-----');
   }
 
   function logSettings(){
     console.log('-----SETTINGS-----');
     console.log(settings);
+    console.log('-----END SETTINGS-----');
 
   }
   //...END DEV FUNCTIONS................

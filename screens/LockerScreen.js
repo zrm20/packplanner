@@ -7,7 +7,8 @@ import InventoryItem from '../components/InventoryItem';
 import { useSelector, useDispatch } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons';
 
-
+//TODO clear search field on load
+//TODO Add icon for empty locker
 
 //screen that contains a horizonal scroll view at the top for packs, and a list of inventory items below. Also has an "Add Item" button to bring up a new item screen in the stack.
 
