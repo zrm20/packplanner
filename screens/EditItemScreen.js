@@ -1,34 +1,33 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, Alert, Keyboard, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert, Keyboard, TouchableOpacity } from 'react-native'
 import { colors } from '../styles/globalStyles'
 import { useSelector, useDispatch } from 'react-redux';
 import WeightUnitSelector from '../components/WeightUnitSelector';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import AddButton from '../components/AddButton'
+import GenericButton from '../components/GenericButton'
 import CategoryPicker from '../components/CategoryPicker';
-import { addItem } from '../redux/InventorySlice';
+import { replaceItem, removeItem } from '../redux/InventorySlice';
 import WaterUnitSelector from '../components/WaterUnitSelector';
 import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
-import QtyChanger from '../components/QtyChanger';
-import Icon from '../components/Icon';
 
-//TODO bug found! when adding new item, entering a decimal point doesnt work in weight field
+export default function EditItemScreen( { navigation, route }) {
 
-export default function NewItemScreen( { navigation }) {
+  const itemToEdit = route.params;
+  const categories = useSelector(state => state.categories.value)
 
-  const [icon, setIcon] = useState('food-drumstick');
-  const [brand, setBrand] = useState();
-  const [name, setName] = useState();
-  const [category, setCategory] = useState('food');
-  const [weight, setWeight] = useState();
-  const [waterCapacity, setWaterCapacity] = useState();
+  const [icon, setIcon] = useState(categories[itemToEdit.category].icon);
+  const [brand, setBrand] = useState(itemToEdit.brand);
+  const [name, setName] = useState(itemToEdit.name);
+  const [category, setCategory] = useState(itemToEdit.category);
+  const [weight, setWeight] = useState(itemToEdit.weight);
+  const [waterCapacity, setWaterCapacity] = useState(itemToEdit.waterCapacity ? itemToEdit.waterCapacity : null);
   //unit for input weight. Should be lbs, oz, or kg
-  const [weightUnits, setWeightUnits] = useState('lbs');
-  const [waterCapacityUnits, setWaterCapacityUnits]= useState('fl oz');
+  const [weightUnits, setWeightUnits] = useState('kg');
+  const [waterCapacityUnits, setWaterCapacityUnits]= useState('mL');
   
   const dispatch = useDispatch();
   
-  function addNewItem(){
+  function submitItem(){
      if(!name || !weight){
       Alert.alert("Name and Weight are required");
     }else if(!isFinite(weight) || weight < 0){
@@ -47,21 +46,40 @@ export default function NewItemScreen( { navigation }) {
       const adjustedCapacity = waterCapacityUnits === 'mL' ? waterCapacity : flOzToML(waterCapacity);
   
       let newItem = {
+        id: itemToEdit.id,
         category: category,
         brand: brand,
         name: name,
         weight: kgWeight,
-        qty: 1,
-        inPack: false
+        inPack: itemToEdit.inPack
       }
   
       if(category === 'water'){
         newItem.waterCapacity=adjustedCapacity
       }
   
-      dispatch(addItem(newItem));
+      dispatch(replaceItem(newItem));
       navigation.navigate('Locker');
     }
+  }
+
+  function deleteItem(){
+    dispatch(removeItem(itemToEdit.id))
+    navigation.navigate("Locker")
+  }
+
+  function confirmDelete(){
+    const buttonOptions = [
+      {
+        text: 'Delete',
+        onPress: deleteItem
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancelled!')
+      }
+    ]
+    Alert.alert('Are you sure?', 'Do you want to perminantly delete this item?', buttonOptions);
   }
 
   return (
@@ -99,7 +117,7 @@ export default function NewItemScreen( { navigation }) {
           <TextInput 
             style={styles.numberInput}
             onChangeText={value => setWeight(Number(value))}
-            value={weight ? weight.toString() : null}
+            value={weight.toString()}
             keyboardType='numeric'
             placeholder={weightUnits}
           />
@@ -114,8 +132,8 @@ export default function NewItemScreen( { navigation }) {
           <TextInput 
             style={styles.numberInput}
             keyboardType='numeric'
-            value={waterCapacity ? waterCapacity.toString() : null}
             placeholder={waterCapacityUnits}
+            value={waterCapacity.toString()}
             onChangeText={value => setWaterCapacity(Number(value))}
           />
         </View>
@@ -123,7 +141,12 @@ export default function NewItemScreen( { navigation }) {
       </View>
       : null
       }
-      <AddButton name='Item' pressHandler={addNewItem}/>
+
+      <View style={styles.row}>
+        <GenericButton name='Submit' pressHandler={submitItem}/>
+        <GenericButton name='Cancel' pressHandler={() => navigation.navigate('Locker')}/>
+        <GenericButton name='Delete' pressHandler={confirmDelete}/>
+      </View>
 
     </TouchableOpacity>
   )

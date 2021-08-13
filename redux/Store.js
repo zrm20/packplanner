@@ -1,14 +1,30 @@
 import { configureStore } from '@reduxjs/toolkit'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import thunk from 'redux-thunk';
+
 import packsReducer from './PacksSlice'
-import inventoryReducer from './InventorySclice'
+import inventoryReducer from './InventorySlice'
 import settingsReducer from './SettingsSlice'
 import categoriesReducer from './CategoriesSlice'
 
+const reducers = combineReducers({
+  packs: packsReducer,
+  inventory: inventoryReducer,
+  settings: settingsReducer,
+  categories: categoriesReducer
+});
+
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
 export default configureStore({
-  reducer: {
-    packs: packsReducer,
-    inventory: inventoryReducer,
-    settings: settingsReducer,
-    categories: categoriesReducer
-  },
+  reducer: persistedReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: [thunk],
 })

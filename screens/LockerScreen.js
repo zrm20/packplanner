@@ -26,7 +26,7 @@ export function LockerScreen({ navigation }) {
     item.id != 0 ? <PackItem pack={item} longPressHandler={editPack}/> : <NewPackItem pressHandler={() => navigation.navigate('New Pack')}/>
   );
   
-  const renderInventory = ({ item }) => (<InventoryItem item={item} />)
+  const renderInventory = ({ item }) => (<InventoryItem item={item} longPressHandler={() => navigation.navigate('Edit Item', item)}/>)
 
   //redux packs and inventory state
   const packs = useSelector((state) => state.packs.value)
@@ -48,7 +48,7 @@ export function LockerScreen({ navigation }) {
         <FlatList 
           data={packs}
           renderItem={renderPack}
-          keyExtractor= {item => item.id}
+          keyExtractor= {item => item.id.toString()}
           horizontal={true}
           />
       </View>
@@ -73,7 +73,7 @@ export function LockerScreen({ navigation }) {
         <FlatList 
           data={inventory.filter(filterInventory)}
           renderItem={renderInventory}
-          keyExtractor= {item => item.id}
+          keyExtractor= {item => item.id.toString()}
           />
       </View>
     </View>

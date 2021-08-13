@@ -4,12 +4,14 @@ import { colors } from '../styles/globalStyles';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleInPack } from '../redux/InventorySclice';
+import { toggleInPack } from '../redux/InventorySlice';
 import { kgToLbs, mLToFlOz } from '../globalFunctons';
 
-export default function InventoryItem({ item }) {
+export default function InventoryItem({ item, longPressHandler }) {
 
   const settings = useSelector(state => state.settings.value);
+  const categories = useSelector(state => state.categories.value);
+  const categoryText = categories[item.category].label ? categories[item.category].label : item.category;
 
   const dispatch = useDispatch();
 
@@ -39,7 +41,7 @@ export default function InventoryItem({ item }) {
     }
     case('imperial'):{
       waterUnit = 'fl oz';
-      displayWater = item.waterCapacity ? mLToFlOz(item.waterCapacity).toFixed(2) : null;
+      displayWater = item.waterCapacity ? mLToFlOz(item.waterCapacity).toFixed(1) : null;
       break;
     }
   }
@@ -47,10 +49,10 @@ export default function InventoryItem({ item }) {
 
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onLongPress={longPressHandler}>
       <View style={styles.infoBox}>
         <View style={styles.basicInfo}>
-          <Text style={styles.categoryText}>{item.category}</Text>
+          <Text style={styles.categoryText}>{categoryText}</Text>
           <Text style={styles.brandText}>{item.brand}</Text>
           <Text style={styles.nameText}>{item.name}</Text>
         </View>
@@ -77,14 +79,14 @@ export default function InventoryItem({ item }) {
           size={50} 
           color={item.inPack ? 'red' : colors.white} />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
     width: 400,
-    height: 100,
+    height: 70,
     borderColor: colors.color1,
     borderWidth: 3,
     borderRadius: 12,
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
   },
   attributeText: {
     color: colors.white,
-    fontSize: 18,
+    fontSize: 16,
     margin: 3
   },
   buttonBox: {
@@ -118,16 +120,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   categoryText: {
-    fontSize: 14,
+    fontSize: 12,
     color: colors.white
   },
   brandText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: colors.color2
   },
   nameText: {
-    fontSize: 18,
+    fontSize: 14,
     color: colors.color5
   },
 });

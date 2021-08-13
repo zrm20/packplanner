@@ -5,6 +5,7 @@ import { globalHeaderStyle } from '../styles/globalStyles';
 import NewPackScreen from '../screens/NewPackScreen';
 import NewItemScreen from '../screens/NewItemScreen';
 import EditPackScreen from '../screens/EditPackScreen';
+import EditItemScreen from '../screens/EditItemScreen';
 
 //This is a stack of screens contained on the locker tab
 
@@ -17,6 +18,7 @@ export function LockerStack(){
       <Stack.Screen name='New Pack' component={NewPackScreen}/>
       <Stack.Screen name='Edit Pack' component={EditPackScreen} />
       <Stack.Screen name='New Item' component={NewItemScreen}/>
+      <Stack.Screen name='Edit Item' component={EditItemScreen}/>
     </Stack.Navigator>
   )
 }

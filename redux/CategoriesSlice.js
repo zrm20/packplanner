@@ -4,47 +4,65 @@ export const counterSlice = createSlice({
   name: 'categories',
   initialState: {
     value: 
-      [
-        {
-          value: 'food',
+      {
+        food: {
           label: 'Food',
-          icon: 'food-drumstick'
+          icon: 'food-drumstick',
+          baseWeightExempt: true,
+          stock: true
         },
-        {
-          value: 'water',
+        water: {
           label: 'Water',
-          icon: 'cup-water'
+          icon: 'cup-water',
+          baseWeightExempt: true,
+          stock: true
         },
-        {
-          value: 'shelter',
+        fuel: {
+          label: 'Fuel',
+          icon: 'fuel',
+          stock: true
+        },
+        shelter: {
           label: 'Shelter',
-          icon: 'tent'
+          icon: 'tent',
+          stock: true
         },
-        {
-          value: 'clothing',
-          label: 'Clothing'
+        clothing: {
+          label: 'Clothing',
+          icon: 'tshirt-crew',
+          stock: true
         },
-        {
-          value: 'cooking',
-          label: 'Cooking'
+        cooking: {
+          label: 'Cooking',
+          icon: 'grill',
+          stock: true
         },
-        {
-          value: 'survival',
-          label: 'Survival'
+        survival: {
+          label: 'Survival',
+          icon: 'knife-military',
+          stock: true
         },
-        {
-          value: 'navigation',
-          label: 'Navigation'
+        navigation: {
+          label: 'Navigation',
+          icon: 'map',
+          stock: true
         },
-        {
-          value: 'health',
-          label: 'Health'
+        health: {
+          label: 'Health',
+          icon: 'medical-bag',
+          stock: true
         },
-        {
-          value: 'misc',
-          label: 'Misc'
+        electronics: {
+          label: 'Electronics',
+          icon: 'battery-charging-100',
+          stock: true
         },
-      ]
+        misc: {
+          label: 'Misc',
+          icon: 'chart-bubble',
+          stock: true
+        },
+      }
     ,
   },
   reducers: {

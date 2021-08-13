@@ -4,17 +4,32 @@ import { useSelector } from 'react-redux';
 import { colors } from '../styles/globalStyles'
 
 
-export default function CategoryPicker({ state, setState }) {
+export default function CategoryPicker({ state, setState, setIcon }) {
   
   const categories = useSelector((state) => state.categories.value);
+  
+  let categoryValues= [];
+
+  for(const[key, value] of Object.entries(categories)){
+    categoryValues.push(key);
+  }
+
+  function changeHandler(itemValue, itemIndex){
+    setState(itemValue);
+    if(categories[itemValue].icon){
+      setIcon(categories[itemValue].icon);
+    }else{
+      setIcon('crosshairs-question')
+    }
+  }
 
   return (
     <Picker
       selectedValue={state}
-      onValueChange={(itemValue, itemIndex) => setState(itemValue)}
+      onValueChange={changeHandler}
       style={{width: 280}}
       >
-      {categories.map((category) => (<Picker.Item color={colors.white} label={category.label} value={category.value}/>))}
+      {categoryValues.map((category) => (<Picker.Item key={category} color={colors.white} label={categories[category].label} value={category}/>))}
     </Picker>
 
   )

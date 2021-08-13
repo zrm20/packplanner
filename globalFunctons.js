@@ -1,3 +1,5 @@
+//all inventory items are stored in metric form. Weight as kg, water capacity as mL. 
+
 export function lbsToKg(lbs) {
   //converts lbs to kg
   return lbs * 0.453592;
@@ -40,3 +42,52 @@ export function mLToFlOz(mL){
   //converts mL to fl oz
   return mL * 0.033814;
 }
+
+export function calcWaterWeight(capacity){
+  //this accepts capacity in mL and converts to weight in kg
+  return capacity / 1000;
+}
+
+export function calcTotalWeight(items, pack){
+    let weight = 0;
+    items.forEach(item => {
+      weight += (item.weight * item.qty);
+    });
+
+    pack ? weight += pack.weight : null;
+
+    return weight;
+  }
+
+  export function calcBaseWeight(items, baseWeightExemptCategories, pack){
+    let weight = 0;
+    items.forEach(item => {
+      if(!baseWeightExemptCategories.includes(item.category)){
+        weight += (item.weight * item.qty);
+      };
+    });
+
+    pack ? weight += pack.weight : null;
+
+    return weight;
+  }
+
+  export function calcTotalPlusWaterWeight(items, pack){
+    let gearWeight = 0;
+    let waterCapacity = 0;
+
+    items.forEach(item => {
+      gearWeight += (item.weight * item.qty);
+      if(item.waterCapacity){
+        waterCapacity += item.waterCapacity;
+      };
+    });
+
+    let waterWeight = calcWaterWeight(waterCapacity);
+
+    pack ? gearWeight += pack.weight : null;
+
+    return gearWeight + waterWeight;
+  }
+
+
