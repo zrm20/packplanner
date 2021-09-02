@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
   brandText: {
     color: colors.color1,
     fontSize: 24,
-    margin: 5
+    margin: 5,
+    fontWeight: 'bold'
   },
   detailsText: {
     color: colors.color5,

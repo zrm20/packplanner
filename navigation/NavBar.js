@@ -1,13 +1,13 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../styles/globalStyles'
 import { LockerStack } from './LockerStack';
 import { PackStack } from './PackStack';
-import SettingsScreen from '../screens/SettingsScreen';
 import { WaterStack } from './WaterStack';
+import { SettingsStack } from './SettingsStack'
+import SettingsScreen from '../screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,17 +46,8 @@ export function NavBar() {
         <Tab.Screen name="Locker" component={LockerStack} />
         <Tab.Screen name="Pack" component={PackStack} />
         <Tab.Screen name="Water" component={WaterStack} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Settings" component={SettingsStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.color4,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});

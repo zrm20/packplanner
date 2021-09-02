@@ -5,8 +5,9 @@ import { colors } from '../styles/globalStyles'
 import { useSelector, useDispatch } from 'react-redux';
 import { setWeightToMetric, setWeightToImperial, setWaterCapacityToMetric, setWaterCapacityToImperial } from '../redux/SettingsSlice'
 import GenericButton from '../components/GenericButton';
+import { resetToInitialState, setToDummyData } from '../redux/InventorySlice';
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }) {
 
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings.value)
@@ -42,6 +43,10 @@ export default function SettingsScreen() {
     console.log('-----END SETTINGS-----');
 
   }
+
+  function flushInventory() {
+    dispatch(resetToInitialState());
+  }
   //...END DEV FUNCTIONS................
 
   return (
@@ -60,12 +65,15 @@ export default function SettingsScreen() {
           setToMetric={() => dispatch(setWaterCapacityToMetric())}
           setToImperial={() => dispatch(setWaterCapacityToImperial())}
           />
+        <GenericButton size={20} name="Edit Categories" pressHandler={() => navigation.navigate('Edit Categories')}/>
       </View>
       <Text>DEV USE ONLY</Text>
       <GenericButton size={14} name='Packs' pressHandler={logPacks}/>
       <GenericButton size={14} name='Inventory' pressHandler={logInventory}/>
       <GenericButton size={14} name='Categories' pressHandler={logCategories}/>
       <GenericButton size={14} name='Settings' pressHandler={logSettings}/>
+      <GenericButton size={14} name='Flush Inventory' pressHandler={flushInventory}/>
+      <GenericButton size={14} name='Dummy Inventory' pressHandler={() => dispatch(setToDummyData())}/>
     </View>
   )
 };

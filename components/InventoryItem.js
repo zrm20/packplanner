@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleInPack } from '../redux/InventorySlice';
 import { kgToLbs, mLToFlOz } from '../globalFunctons';
 
+//TODO change water capacity to appear for any category with holdWater: true
+
 export default function InventoryItem({ item, longPressHandler }) {
 
   const settings = useSelector(state => state.settings.value);
@@ -58,12 +60,12 @@ export default function InventoryItem({ item, longPressHandler }) {
         </View>
         <View style={styles.attributeInfo}>
           <View style={styles.row}>
-            <MaterialCommunityIcons name={weightIconName} size={24} color={colors.white} />
+            <MaterialCommunityIcons name={weightIconName} size={24} color={colors.color4} />
             <Text style={styles.attributeText}>{displayWeight}</Text>
           </View>
           {item.category === 'water' ?
             <View style={styles.row}>
-              <MaterialCommunityIcons name="water" size={24} color={colors.white} />
+              <MaterialCommunityIcons name="water" size={24} color={colors.color4} />
               <Text style={styles.attributeText}>{`${displayWater} ${waterUnit}`}</Text>
             </View>
             : null
@@ -87,6 +89,7 @@ const styles = StyleSheet.create({
   container: {
     width: 400,
     height: 70,
+    backgroundColor: colors.color5,
     borderColor: colors.color1,
     borderWidth: 3,
     borderRadius: 12,
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   attributeText: {
-    color: colors.white,
+    color: colors.color3,
     fontSize: 16,
     margin: 3
   },
@@ -121,15 +124,15 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontSize: 12,
-    color: colors.white
+    color: colors.color4
   },
   brandText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: colors.color2
+    color: colors.color4
   },
   nameText: {
     fontSize: 14,
-    color: colors.color5
+    color: colors.color4
   },
 });

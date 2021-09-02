@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, } from 'react-native';
 import { colors } from '../styles/globalStyles';
 
 export default function WaterScreen() {
@@ -28,13 +28,11 @@ const styles = StyleSheet.create({
   },
   totalSection: {
     flex: 1,
-    backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center'
   },
   percentageSection: {
     flex: 1,
-    backgroundColor: 'green',
     justifyContent: 'center',
     alignItems: 'center'
   }

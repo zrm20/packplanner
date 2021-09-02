@@ -10,6 +10,8 @@ import { addItem } from '../redux/InventorySlice';
 import WaterUnitSelector from '../components/WaterUnitSelector';
 import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
 
+//TODO change water capacity to appear for any category with holdWater: true
+
 
 export default function NewItemScreen( { navigation }) {
 

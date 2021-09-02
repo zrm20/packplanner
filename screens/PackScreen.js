@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView, Image } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { colors } from '../styles/globalStyles'
 import { useSelector } from 'react-redux'
 import PackDetailsHeader from '../components/PackDetailsHeader';
@@ -16,7 +16,6 @@ export default function PackScreen({ navigation }) {
   const packs = useSelector(state => state.packs.value);
   const inventory = useSelector(state => state.inventory.value);
   const categories = useSelector(state => state.categories.value);
-  const settings = useSelector(state => state.settings.value);
   
   //finds the pack in packs that isActive. There should only be one
   const activePack = packs.find(pack => pack.isActivePack === true);
@@ -25,6 +24,7 @@ export default function PackScreen({ navigation }) {
   
   //creates an array for all categories that are listed as baseWeightExempt = true
   let baseWeightExemptCategories= [];
+  
   //runs through the categories object, and adds the key (name) of each object that is baseWeightExempt to the array
   for(const[key, value] of Object.entries(categories)){
     if(value.baseWeightExempt){
@@ -46,7 +46,7 @@ export default function PackScreen({ navigation }) {
         totalPlusWater={totalPlusWater}/>
       <PackActionButtonBar 
         chartsPress={() => navigation.navigate('Charts')}
-        checklistPress
+        checklistPress={() => navigation.navigate('Checklist')}
         />
       <InMyPack 
         items={itemsInPack}/>

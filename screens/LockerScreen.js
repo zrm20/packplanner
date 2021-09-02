@@ -6,6 +6,7 @@ import { colors } from '../styles/globalStyles'
 import InventoryItem from '../components/InventoryItem';
 import { useSelector, useDispatch } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons';
+import { resetToInitialState } from '../redux/InventorySlice';
 
 //TODO clear search field on load
 //TODO Add icon for empty locker

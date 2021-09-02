@@ -1,8 +1,9 @@
 import React from "react";
 import { Vibration } from "react-native";
 import { createSlice } from '@reduxjs/toolkit';
-import { inventory } from '../dummyData';
 import keygen from 'keygenerator';
+import { inventory } from '../dummyData'
+
 
 export const counterSlice = createSlice({
   name: 'inventory',
@@ -98,11 +99,39 @@ export const counterSlice = createSlice({
         }
       }
     },
+    //resets state to an empty array
+    resetToInitialState: (state) => {
+      state.value = [];
+      console.log("Resetting Inventory State...");
+    },
+    //changes any objects in the array with the given category, to a new category
+    batchCategoryChange: (state, action) => {
+      const categoryToChange = action.payload.categoryToChange;
+      const newCategory = action.payload.newCategory;
+      let changeCount = 0;
+
+      console.log(`Changing all items in the ${categoryToChange} category`);
+
+      //loop through the array, find and change any category that matches
+      for(let i = 0; i < state.value.length; i++){
+        if(state.value[i].category === categoryToChange){
+          state.value[i].category = newCategory;
+          console.log(`Changing ${state.value[i].name} to ${newCategory}`);
+          changeCount++;
+        }
+      }
+      console.log(`Changed ${changeCount} items(s) to ${newCategory}`);
+    },
+    setToDummyData: (state) => {
+      console.log('Resetting inventory to dummy data...')
+      state.value = inventory;
+    }
+
 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addItem, toggleInPack, removeItem, replaceItem, emptyPack, updateQty } = counterSlice.actions
+export const { addItem, toggleInPack, removeItem, replaceItem, emptyPack, updateQty, resetToInitialState, batchCategoryChange, setToDummyData } = counterSlice.actions
 
 export default counterSlice.reducer

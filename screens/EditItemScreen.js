@@ -10,6 +10,9 @@ import { replaceItem, removeItem } from '../redux/InventorySlice';
 import WaterUnitSelector from '../components/WaterUnitSelector';
 import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
 
+//TODO Fix weight value. It's updating to a string
+//TODO change water capacity to appear for any category with holdWater: true
+
 export default function EditItemScreen( { navigation, route }) {
 
   const itemToEdit = route.params;

@@ -84,5 +84,26 @@ export const inventory = [
     waterCapacity: .75,
     weight: .5,
   },
+  {
+    id: 4,
+    category: 'shelter',
+    brand: 'REI',
+    name: 'Passage 2',
+    weight: 4,
+  },
+  {
+    id: 5,
+    category: 'shelter',
+    brand: 'Teton',
+    name: 'Leaf 0 Bag',
+    weight: 3.5,
+  },
+  {
+    id: 6,
+    category: 'food',
+    brand: 'Peak',
+    name: 'Fettuccini Alfredo',
+    weight: 1.3,
+  },
 
 ];
