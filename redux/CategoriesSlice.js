@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const counterSlice = createSlice({
-  name: 'categories',
-  initialState: {
-    value: 
-      {
+const initialValues = {
         food: {
           label: 'Food',
           icon: 'food-drumstick',
@@ -12,15 +8,16 @@ export const counterSlice = createSlice({
           stock: true
         },
         water: {
-          label: 'Water',
+          label: 'Water Containers',
           icon: 'cup-water',
           baseWeightExempt: false,
-          holdsWater: true,
+          holdsLiquid: true,
           stock: true
         },
         fuel: {
           label: 'Fuel',
           icon: 'fuel',
+          baseWeightExempt: true,
           stock: true
         },
         shelter: {
@@ -64,7 +61,11 @@ export const counterSlice = createSlice({
           stock: true
         },
       }
-    ,
+
+export const counterSlice = createSlice({
+  name: 'categories',
+  initialState: {
+    value: initialValues,
   },
   reducers: {
     addCategory: (state, action) => {
@@ -93,15 +94,15 @@ export const counterSlice = createSlice({
       console.log(state.value);
       console.log('<------END CATEGORIES--------->')
     },
-    resetToInitialState: (state) => {
-      state.value = initialState;
-      console.log("CATEGORIES RESET TO INITIAL STATE");
+    resetToInitialCategories: (state) => {
+      state.value = initialValues;
+      console.log("CATEGORIES RESET TO INITIAL VALUES");
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addCategory, updateCategory, deleteCategory, resetToInitialState } = counterSlice.actions
+export const { addCategory, updateCategory, deleteCategory, resetToInitialCategories } = counterSlice.actions
 
 export default counterSlice.reducer
 

@@ -16,3 +16,21 @@ export const globalHeaderStyle = {
     fontSize: 25,
   },
 }
+
+export const pieChartColors = [
+  '#0AFF', //always water weight
+  '#001219', //always pack color
+  '#EE9B00',
+  '#0A9396',
+  '#AE2012',
+  '#94D2BD',
+  '#BB3E03',
+  '#FF006E',
+  '#E9D8A6',
+  '#9B2226',
+  '#8338EC',
+  '#588157',
+  '#B56576',
+  '#CA6702',
+  '#fff' // always the misc, and catch all
+]

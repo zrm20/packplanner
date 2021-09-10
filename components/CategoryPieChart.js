@@ -1,53 +1,51 @@
+import { styleSheets } from 'min-document';
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { PieChart } from 'react-native-svg-charts'
-import { Circle, G, Line } from 'react-native-svg'
+import { useSelector } from 'react-redux'
+import { kgToLbs } from '../globalFunctons';
+import { colors } from '../styles/globalStyles'
 
-export default function CategoryPieChart() {
-  const data = [ 50, 10, 40, 95, -4, -24, 85, 91 ]
+export default function CategoryPieChart({ chartData }) {
+    // chartData is an array of objects with a value, svg object with fill color, and key
 
-  const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7)
+    const settings = useSelector(state => state.settings.value);
 
-  const pieData = data
-      .filter(value => value > 0)
-      .map((value, index) => ({
-          value,
-          svg: { fill: randomColor() },
-          key: `pie-${index}`,
-      }))
+    let totalWeight = 0;
+    for(let i = 0; i < chartData.length; i++){
+        totalWeight += chartData[i].value;
+    }
 
-  const Labels = ({ slices }) => {
-      return slices.map((slice, index) => {
-          const { labelCentroid, pieCentroid, data } = slice;
-          return (
-              <G key={ index }>
-                  <Line
-                      x1={ labelCentroid[ 0 ] }
-                      y1={ labelCentroid[ 1 ] }
-                      x2={ pieCentroid[ 0 ] }
-                      y2={ pieCentroid[ 1 ] }
-                      stroke={ data.svg.fill }
-                  />
-                  <Circle
-                      cx={ labelCentroid[ 0 ] }
-                      cy={ labelCentroid[ 1 ] }
-                      r={ 15 }
-                      fill={ data.svg.fill }
-                  />
-              </G>
-          )
-      })
-  }
+    let totalWeightString;
+    switch(settings.weightUnits){
+        case('metric'): {totalWeightString = `${totalWeight.toFixed(1)} kg`}; break;
+        case('imperial'): {totalWeightString = `${kgToLbs(totalWeight).toFixed(1)} lbs`}; break;
+    }
 
-  return (
-      <PieChart
-          style={ { height: '100%', width: '100%' } }
-          data={ pieData }
-          innerRadius={ 10 }
-          outerRadius={ 100 }
-          labelRadius={ 160 }
-      >
-          <Labels/>
-      </PieChart>
-  )
-}
+    return (
+        <View styles={styles.container}>
+            <Text style={styles.text}>{totalWeightString}</Text>
+            <PieChart
+                style={ { height: '95%', width: '100%' } }
+                data={ chartData }
+                innerRadius={ '15%' }
+                outerRadius={ '90%' }
+            >
+            </PieChart>
+        </View>
+    )
+};
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    text: {
+        color: colors.white,
+        marginTop: 3,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    }
+});

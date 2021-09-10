@@ -7,6 +7,7 @@ import { kgToLbsOz, kgToOz } from '../globalFunctons';
 
 //TODO scale text
 
+
 export default function PackItem({ pack, longPressHandler }) {
 
   const settings = useSelector((state) => state.settings.value);
@@ -15,6 +16,7 @@ export default function PackItem({ pack, longPressHandler }) {
 
   let convertedWeight;
   switch(settings.weightUnits){
+
     case("metric"): convertedWeight = pack.weight.toFixed(2) + " kg"; break;
     case("imperial"): {
       let lbsOz = kgToLbsOz(pack.weight)

@@ -19,7 +19,7 @@ export default function NewCategoryScreen({ navigation }) {
   
   const [categoryName, setCategoryName] = useState('');
   const [baseWeightExempt, setBaseWeightExempt] = useState(false);
-  const [holdsWater, setHoldsWater] = useState(false);
+  const [holdsLiquid, setholdsLiquid] = useState(false);
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [icon, setIcon] = useState('account');
 
@@ -55,7 +55,7 @@ export default function NewCategoryScreen({ navigation }) {
     const newCategory = {
       label: categoryName,
       baseWeightExempt: baseWeightExempt,
-      holdsWater: holdsWater,
+      holdsLiquid: holdsLiquid,
       icon: icon
     }
 
@@ -85,12 +85,12 @@ export default function NewCategoryScreen({ navigation }) {
           />
         <Text style={styles.alertText}>{baseWeightExempt ? 'Items will NOT count towards base weight' : 'Items WILL count towards base weight'}</Text>
         <BasicSwitch 
-          name="Holds Water?"
-          value={holdsWater}
-          setValue={setHoldsWater}
+          name="Holds Liquid?"
+          value={holdsLiquid}
+          setValue={setholdsLiquid}
           />
        
-        <Text style={styles.alertText}>{holdsWater ? 'Items WILL hold water' : 'Items will NOT hold water'}</Text>
+        <Text style={styles.alertText}>{holdsLiquid ? 'Items WILL hold liquid' : 'Items will NOT hold liquid'}</Text>
 
         <View style={styles.iconSection}>
           <IconPicker 

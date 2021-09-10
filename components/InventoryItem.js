@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleInPack } from '../redux/InventorySlice';
 import { kgToLbs, mLToFlOz } from '../globalFunctons';
 
-//TODO change water capacity to appear for any category with holdWater: true
 
 export default function InventoryItem({ item, longPressHandler }) {
 
@@ -35,15 +34,15 @@ export default function InventoryItem({ item, longPressHandler }) {
   let waterUnit;
   let displayWater;
 
-  switch(settings.waterCapacityUnits){
+  switch(settings.liquidCapacityUnits){
     case('metric'):{
       waterUnit = 'mL'
-      displayWater = !isNaN(item.waterCapacity) ? item.waterCapacity.toFixed(0) : null;
+      displayWater = !isNaN(item.liquidCapacity) ? item.liquidCapacity.toFixed(0) : null;
       break
     }
     case('imperial'):{
       waterUnit = 'fl oz';
-      displayWater = !isNaN(item.waterCapacity) ? mLToFlOz(item.waterCapacity).toFixed(1) : null;
+      displayWater = !isNaN(item.liquidCapacity) ? mLToFlOz(item.liquidCapacity).toFixed(1) : null;
       break;
     }
   }
@@ -63,7 +62,7 @@ export default function InventoryItem({ item, longPressHandler }) {
             <MaterialCommunityIcons name={weightIconName} size={24} color={colors.color4} />
             <Text style={styles.attributeText}>{displayWeight}</Text>
           </View>
-          {item.category === 'water' ?
+          {categories[item.category].holdsLiquid ?
             <View style={styles.row}>
               <MaterialCommunityIcons name="water" size={24} color={colors.color4} />
               <Text style={styles.attributeText}>{`${displayWater} ${waterUnit}`}</Text>

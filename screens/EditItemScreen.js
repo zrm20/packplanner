@@ -10,9 +10,6 @@ import { replaceItem, removeItem } from '../redux/InventorySlice';
 import WaterUnitSelector from '../components/WaterUnitSelector';
 import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
 
-//TODO Fix weight value. It's updating to a string
-//TODO change water capacity to appear for any category with holdWater: true
-
 export default function EditItemScreen( { navigation, route }) {
 
   const itemToEdit = route.params;
@@ -23,10 +20,11 @@ export default function EditItemScreen( { navigation, route }) {
   const [name, setName] = useState(itemToEdit.name);
   const [category, setCategory] = useState(itemToEdit.category);
   const [weight, setWeight] = useState(itemToEdit.weight.toString());
-  const [waterCapacity, setWaterCapacity] = useState(!isNaN(itemToEdit.waterCapacity) ? itemToEdit.waterCapacity.toString() : null);
+  const [liquidCapacity, setliquidCapacity] = useState(itemToEdit.liquidCapacity ? itemToEdit.liquidCapacity.toString() : null);
+
   //unit for input weight. Should be lbs, oz, or kg
   const [weightUnits, setWeightUnits] = useState('kg');
-  const [waterCapacityUnits, setWaterCapacityUnits]= useState('mL');
+  const [liquidCapacityUnits, setliquidCapacityUnits]= useState('mL');
   
   const dispatch = useDispatch();
   
@@ -35,18 +33,19 @@ export default function EditItemScreen( { navigation, route }) {
       Alert.alert("Name and Weight are required");
     }else if(!isFinite(weight) || weight < 0){
       Alert.alert("Weight must be positive number");
-    }else if(category === 'water' && (!isFinite(waterCapacity) || waterCapacity < 0)){
-      Alert.alert("Water capacity must be positive number");
+    }else if(categories[category].holdsLiquid && (!isFinite(liquidCapacity) || liquidCapacity < 0)){
+      Alert.alert("Liquid capacity must be positive number");
     }else{
+      //everything is good, so submit item
       let kgWeight;
   
       switch(weightUnits){
-          case('kg'): kgWeight = weight; break;
-          case('lbs'): kgWeight = lbsToKg(weight); break;
-          case('oz'): kgWeight = ozToKg(weight); break;
+          case('kg'): kgWeight = Number(weight); break;
+          case('lbs'): kgWeight = lbsToKg(Number(weight)); break;
+          case('oz'): kgWeight = ozToKg(Number(weight)); break;
         };
   
-      const adjustedCapacity = waterCapacityUnits === 'mL' ? waterCapacity : flOzToML(waterCapacity);
+      const adjustedCapacity = liquidCapacityUnits === 'mL' ? Number(liquidCapacity) : flOzToML(Number(liquidCapacity));
   
       let newItem = {
         id: itemToEdit.id,
@@ -54,21 +53,22 @@ export default function EditItemScreen( { navigation, route }) {
         brand: brand,
         name: name,
         weight: kgWeight,
-        inPack: itemToEdit.inPack
-      }
+        inPack: itemToEdit.inPack,
+        qty: itemToEdit.qty
+      };
   
-      if(category === 'water'){
-        newItem.waterCapacity=adjustedCapacity
+      if(categories[category].holdsLiquid){
+        newItem.liquidCapacity=adjustedCapacity;
       }
-  
+      
       dispatch(replaceItem(newItem));
       navigation.navigate('Locker');
     }
   }
 
   function deleteItem(){
-    dispatch(removeItem(itemToEdit.id))
-    navigation.navigate("Locker")
+    dispatch(removeItem(itemToEdit.id));
+    navigation.navigate("Locker");
   }
 
   function confirmDelete(){
@@ -128,19 +128,19 @@ export default function EditItemScreen( { navigation, route }) {
         <WeightUnitSelector state={weightUnits} setState={setWeightUnits}/>
       </View>
 
-      {category === 'water' ? 
+      {categories[category].holdsLiquid ? 
       <View style={styles.row}>
         <View style={styles.formItem}>
-          <Text style={styles.labelText}>Water Capactiy</Text>
+          <Text style={styles.labelText}>Liquid Capactiy</Text>
           <TextInput 
             style={styles.numberInput}
             keyboardType='numeric'
-            placeholder={waterCapacityUnits}
-            value={waterCapacity}
-            onChangeText={value => setWaterCapacity(value)}
+            placeholder={liquidCapacityUnits}
+            value={liquidCapacity}
+            onChangeText={setliquidCapacity}
           />
         </View>
-        <WaterUnitSelector state={waterCapacityUnits} setState={setWaterCapacityUnits}/>
+        <WaterUnitSelector state={liquidCapacityUnits} setState={setliquidCapacityUnits}/>
       </View>
       : null
       }

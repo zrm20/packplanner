@@ -74,16 +74,16 @@ export function calcTotalWeight(items, pack){
 
   export function calcTotalPlusWaterWeight(items, pack){
     let gearWeight = 0;
-    let waterCapacity = 0;
+    let liquidCapacity = 0;
 
     items.forEach(item => {
       gearWeight += (item.weight * item.qty);
-      if(item.waterCapacity){
-        waterCapacity += item.waterCapacity;
+      if(item.liquidCapacity){
+        liquidCapacity += item.liquidCapacity;
       };
     });
 
-    let waterWeight = calcWaterWeight(waterCapacity);
+    let waterWeight = calcWaterWeight(liquidCapacity);
 
     pack ? gearWeight += pack.weight : null;
 

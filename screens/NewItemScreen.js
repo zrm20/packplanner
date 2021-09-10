@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert, Keyboard, TouchableOpacity, Image } from 'react-native'
 import { colors } from '../styles/globalStyles'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import WeightUnitSelector from '../components/WeightUnitSelector';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AddButton from '../components/AddButton'
@@ -20,27 +20,23 @@ export default function NewItemScreen( { navigation }) {
   const [name, setName] = useState();
   const [category, setCategory] = useState('food');
   const [weight, setWeight] = useState();
-  const [waterCapacity, setWaterCapacity] = useState();
+  const [liquidCapacity, setliquidCapacity] = useState();
   //unit for input weight. Should be lbs, oz, or kg
   const [weightUnits, setWeightUnits] = useState('lbs');
-  const [waterCapacityUnits, setWaterCapacityUnits]= useState('fl oz');
+  const [liquidCapacityUnits, setliquidCapacityUnits]= useState('fl oz');
+  const categories = useSelector(state => state.categories.value);
   
   const dispatch = useDispatch();
   
   function addNewItem(){
-
     const numWeight = Number(weight);
-    const numWaterCapacity = Number(waterCapacity);
-
-    console.log(numWeight);
-    console.log(numWaterCapacity)
-
+    const numliquidCapacity = Number(liquidCapacity);
 
      if(!name || !weight){
       Alert.alert("Name and Weight are required");
     }else if(!isFinite(numWeight) || numWeight < 0){
       Alert.alert("Weight must be a valid positive number");
-    }else if(category === 'water' && (!isFinite(numWaterCapacity) || numWaterCapacity < 0)){
+    }else if(categories[category].holdsLiquid && (!isFinite(numliquidCapacity) || numliquidCapacity < 0)){
       Alert.alert("Water capacity must be a valid positive number");
     }else{
       let kgWeight;
@@ -51,7 +47,7 @@ export default function NewItemScreen( { navigation }) {
           case('oz'): kgWeight = ozToKg(weight); break;
         };
   
-      const adjustedCapacity = waterCapacityUnits === 'mL' ? numWaterCapacity : flOzToML(numWaterCapacity);
+      const adjustedCapacity = liquidCapacityUnits === 'mL' ? numliquidCapacity : flOzToML(numliquidCapacity);
 
       console.log(adjustedCapacity)
   
@@ -64,8 +60,8 @@ export default function NewItemScreen( { navigation }) {
         inPack: false
       }
   
-      if(category === 'water'){
-        newItem.waterCapacity = adjustedCapacity;
+      if(categories[category].holdsLiquid){
+        newItem.liquidCapacity = adjustedCapacity;
       }
   
       dispatch(addItem(newItem));
@@ -116,22 +112,22 @@ export default function NewItemScreen( { navigation }) {
         <WeightUnitSelector state={weightUnits} setState={setWeightUnits}/>
       </View>
 
-      {category === 'water' ? 
+      {categories[category].holdsLiquid ? 
       <View>
         <View style={styles.row}>
           <View style={styles.formItem}>
-            <Text style={styles.labelText}>Water Capacity</Text>
+            <Text style={styles.labelText}>Liquid Capacity</Text>
             <TextInput 
               style={styles.numberInput}
               keyboardType='numeric'
-              value={waterCapacity}
-              placeholder={waterCapacityUnits}
-              onChangeText={value => setWaterCapacity(value)}
+              value={liquidCapacity}
+              placeholder={liquidCapacityUnits}
+              onChangeText={value => setliquidCapacity(value)}
             />
           </View>
-          <WaterUnitSelector state={waterCapacityUnits} setState={setWaterCapacityUnits}/>
+          <WaterUnitSelector state={liquidCapacityUnits} setState={setliquidCapacityUnits}/>
         </View>
-        <Text style={{color: colors.white}}>*For water containers, set weight to the empty container weight. Weight of the water will be calculated automatically by the water capacity value.</Text>
+        <Text style={{color: colors.white}}>*For categories that contain liquid, set weight to the empty container weight. Weight of the liquid will be calculated automatically by the liquid capacity value.</Text>
       </View>
       : null
       }

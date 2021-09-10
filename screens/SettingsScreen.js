@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import UnitSelector from '../components/UnitSelector';
 import { colors } from '../styles/globalStyles'
 import { useSelector, useDispatch } from 'react-redux';
-import { setWeightToMetric, setWeightToImperial, setWaterCapacityToMetric, setWaterCapacityToImperial } from '../redux/SettingsSlice'
+import { setWeightToMetric, setWeightToImperial, setliquidCapacityToMetric, setliquidCapacityToImperial } from '../redux/SettingsSlice'
 import GenericButton from '../components/GenericButton';
 import { resetToInitialState, setToDummyData } from '../redux/InventorySlice';
+import { resetToInitialCategories } from '../redux/CategoriesSlice'
+import { resetSettingsToInitialValues } from '../redux/SettingsSlice';
 
 export default function SettingsScreen({ navigation }) {
 
@@ -61,9 +63,9 @@ export default function SettingsScreen({ navigation }) {
           />
         <UnitSelector 
           category='Water Capacity' 
-          state={settings.waterCapacityUnits} 
-          setToMetric={() => dispatch(setWaterCapacityToMetric())}
-          setToImperial={() => dispatch(setWaterCapacityToImperial())}
+          state={settings.liquidCapacityUnits} 
+          setToMetric={() => dispatch(setliquidCapacityToMetric())}
+          setToImperial={() => dispatch(setliquidCapacityToImperial())}
           />
         <GenericButton size={20} name="Edit Categories" pressHandler={() => navigation.navigate('Edit Categories')}/>
       </View>
@@ -74,6 +76,8 @@ export default function SettingsScreen({ navigation }) {
       <GenericButton size={14} name='Settings' pressHandler={logSettings}/>
       <GenericButton size={14} name='Flush Inventory' pressHandler={flushInventory}/>
       <GenericButton size={14} name='Dummy Inventory' pressHandler={() => dispatch(setToDummyData())}/>
+      <GenericButton size={14} name="Reset Categories" pressHandler={() => dispatch(resetToInitialCategories())} />
+      <GenericButton size={14} name="Reset Settings" pressHandler={() => dispatch(resetSettingsToInitialValues())} />
     </View>
   )
 };

@@ -2,22 +2,25 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import { colors } from '../styles/globalStyles'
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import Slider from '@react-native-community/slider';
 
 export default function BasicSlider({ size=20, name, value, setValue}) {
+
+
 
   return (
     <View style={styles.container}>
       <Text style={styles.text(size)}>{name} ({value}%)</Text>
-      {/* <MultiSlider 
+      <Slider
+        style={{width: 15 * size, height: 2 * size}}
         value={value}
-        min={0}
-        max={100}
-        onValuesChangeFinish={setValue}
-        selectedStyle={styles.selectedSlider(size)}
-        unselectedStyle={styles.unselectedSlider(size)}
-        
-        /> */}
-        
+        onValueChange={setValue}
+        step={1}
+        minimumValue={0}
+        maximumValue={100}
+        minimumTrackTintColor={colors.color1}
+        maximumTrackTintColor={colors.color5}
+        />
     </View>
   )
 };
@@ -33,12 +36,4 @@ const styles = StyleSheet.create({
     fontSize: size,
     color: colors.white
   }),
-  selectedSlider: (size) => ({
-    backgroundColor: colors.color1,
-    height: size / 4
-  }),
-  unselectedSlider: (size) => ({
-    backgroundColor: colors.color5,
-    height: size / 4
-  })
 });

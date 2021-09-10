@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { packs } from '../dummyData'
 
+const initialValues = {
+  weightUnits: 'metric',
+  liquidCapacityUnits: 'metric',
+};
+
 export const counterSlice = createSlice({
   name: 'settings',
   initialState: {
-    value: {
-      weightUnits: 'metric',
-      waterCapacityUnits: 'metric',
-    },
+    value: initialValues,
   },
   reducers: {
     setWeightToMetric: (state) => {
@@ -16,16 +18,20 @@ export const counterSlice = createSlice({
     setWeightToImperial: (state) => {
       state.value.weightUnits = 'imperial'
     },
-    setWaterCapacityToMetric: (state) => {
-      state.value.waterCapacityUnits = 'metric'
+    setliquidCapacityToMetric: (state) => {
+      state.value.liquidCapacityUnits = 'metric'
     },
-    setWaterCapacityToImperial: (state) => {
-      state.value.waterCapacityUnits = 'imperial'
+    setliquidCapacityToImperial: (state) => {
+      state.value.liquidCapacityUnits = 'imperial'
     },
+    resetSettingsToInitialValues: (state) => {
+      console.log("Resetting settings slice...")
+      state.value = initialValues;
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setWeightToMetric, setWeightToImperial, setWaterCapacityToMetric, setWaterCapacityToImperial } = counterSlice.actions
+export const { setWeightToMetric, setWeightToImperial, setliquidCapacityToMetric, setliquidCapacityToImperial, resetSettingsToInitialValues } = counterSlice.actions
 
 export default counterSlice.reducer
