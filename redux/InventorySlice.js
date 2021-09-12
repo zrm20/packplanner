@@ -25,6 +25,8 @@ export const counterSlice = createSlice({
     toggleInPack: (state, action) => {
       //sets the inPack property on object with a given id. action.payload must contain id
       const id = action.payload;
+      console.log(`Changing inPack status of id: ${id}`);
+
       let index;
 
       //first loop through array to find index of the object with the given id
@@ -36,6 +38,11 @@ export const counterSlice = createSlice({
       }
       //now set the object at the determined index to have a inPack property of true
       !state.value[index].inPack ? state.value[index].inPack = true: state.value[index].inPack = false;
+
+      if(!state.value[index].inPack){
+        state.value[index].isPacked = false;
+        state.value[index].qty = 1;
+      }
     },
 
     removeItem: (state, action) => {
@@ -77,6 +84,7 @@ export const counterSlice = createSlice({
       for(let i = 0; i < state.value.length; i++){
         state.value[i].inPack = false;
         state.value[i].qty = 1;
+        state.value[i].isPacked = false;
       }
 
       console.log("Pack Emptied");
@@ -125,6 +133,23 @@ export const counterSlice = createSlice({
     setToDummyData: (state) => {
       console.log('Resetting inventory to dummy data...')
       state.value = inventory;
+    },
+    togglePackedStatus: (state, action) => {
+      //accepts an id of an item, and toggles the isPacked value
+      const id = action.payload;
+      console.log(`Changing isPacked status of id: ${id}`);
+
+      let index;
+
+      //first loop through array to find index of the object with the given id
+      for(let i = 0; i < state.value.length; i++){
+        if(state.value[i].id === id){
+          index = i;
+          break;
+        }
+      }
+      //now set the object at the determined index to have a isPacked property changed
+      !state.value[index].isPacked ? state.value[index].isPacked = true: state.value[index].isPacked = false;
     }
 
 
@@ -132,6 +157,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addItem, toggleInPack, removeItem, replaceItem, emptyPack, updateQty, resetToInitialState, batchCategoryChange, setToDummyData } = counterSlice.actions
+export const { addItem, toggleInPack, removeItem, replaceItem, emptyPack, updateQty, resetToInitialState, batchCategoryChange, setToDummyData, togglePackedStatus } = counterSlice.actions
 
 export default counterSlice.reducer

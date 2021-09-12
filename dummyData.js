@@ -67,7 +67,8 @@ export const inventory = [
     name: '3L Water Bladder',
     liquidCapacity: 3000,
     weight: 1.3,
-    qty: 1
+    qty: 1,
+    isPacked: false
   },
   {
     id: 2,
@@ -76,7 +77,8 @@ export const inventory = [
     name: '1L Bottle',
     liquidCapacity: 1000,
     weight: .7,
-    qty: 1
+    qty: 1,
+    isPacked: false
   },
   {
     id: 3,
@@ -85,7 +87,8 @@ export const inventory = [
     name: 'Flex Bottle Filter',
     liquidCapacity: 300,
     weight: .5,
-    qty: 1
+    qty: 1,
+    isPacked: false
   },
   {
     id: 4,
@@ -93,7 +96,8 @@ export const inventory = [
     brand: 'REI',
     name: 'Passage 2',
     weight: 4,
-    qty: 1
+    qty: 1,
+    isPacked: false
   },
   {
     id: 5,
@@ -101,7 +105,8 @@ export const inventory = [
     brand: 'Teton',
     name: 'Leaf 0 Bag',
     weight: 3.5,
-    qty: 1
+    qty: 1,
+    isPacked: false
   },
   {
     id: 6,
@@ -109,7 +114,8 @@ export const inventory = [
     brand: 'Peak',
     name: 'Fettuccini Alfredo',
     weight: 1.3,
-    qty: 1
+    qty: 1,
+    isPacked: false
   },
 
 ];

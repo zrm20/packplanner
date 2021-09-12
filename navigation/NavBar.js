@@ -6,8 +6,8 @@ import { colors } from '../styles/globalStyles'
 import { LockerStack } from './LockerStack';
 import { PackStack } from './PackStack';
 import { WaterStack } from './WaterStack';
-import { SettingsStack } from './SettingsStack'
-import SettingsScreen from '../screens/SettingsScreen';
+import { SettingsStack } from './SettingsStack';
+import { CategoriesStack } from './CategoriesStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,6 +25,8 @@ export function NavBar() {
               iconName = focused ? 'bag-personal' : 'bag-personal';
             } else if (route.name === 'Water') {
               iconName = focused ? 'cup-water' : 'cup-water';
+            } else if (route.name === 'Categories') {
+              iconName = focused ? 'animation' : 'animation';
             } else if (route.name === 'Settings') {
               iconName = focused ? 'cog' : 'cog';
             }
@@ -46,6 +48,7 @@ export function NavBar() {
         <Tab.Screen name="Locker" component={LockerStack} />
         <Tab.Screen name="Pack" component={PackStack} />
         <Tab.Screen name="Water" component={WaterStack} />
+        <Tab.Screen name="Categories" component={CategoriesStack} />
         <Tab.Screen name="Settings" component={SettingsStack} />
       </Tab.Navigator>
     </NavigationContainer>

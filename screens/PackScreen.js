@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { colors } from '../styles/globalStyles'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import PackDetailsHeader from '../components/PackDetailsHeader';
 import WeightCounter from '../components/WeightCounter';
 import PackActionButtonBar from '../components/PackActionButtonBar';

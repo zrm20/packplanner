@@ -17,6 +17,7 @@ const iconDetails = iconsList;
 
 export default function EditCategoryScreen({ navigation, route }) {
 
+  //expects a category object in params
   const categoryToEdit = route.params
 
   const categories = useSelector(state => state.categories.value);

@@ -4,7 +4,8 @@ export const colors = {
   color3: "#4F5D75",
   color4: "#2D3142",
   color5: "#BFC0C0",
-  white: "#fff"
+  white: "#fff",
+  green: "#38b000"
 };
 
 export const globalHeaderStyle = {

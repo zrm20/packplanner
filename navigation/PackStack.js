@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 
 export function PackStack(){
   return(
-    <Stack.Navigator screenOptions={globalHeaderStyle}>
+    <Stack.Navigator mode={'modal'} screenOptions={globalHeaderStyle}>
       <Stack.Screen name='Pack' component={PackScreen}/>
       <Stack.Screen name='Charts' component={ChartsScreen}/>
       <Stack.Screen name='Checklist' component={ChecklistScreen} />

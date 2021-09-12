@@ -59,13 +59,11 @@ export default function ChartsScreen() {
     }
     if(!baseWeightOnly){
       //All items count towards weight, so add all items
-      console.log(`All items count. Adding ${itemsInPack[i].name}`)
       activeCategories[itemsInPack[i].category].totalItems += itemsInPack[i].qty;
       activeCategories[itemsInPack[i].category].totalWeight += itemsInPack[i].weight * itemsInPack[i].qty;
     }else{
       //Only counting base weight. Only add items that are NOT baseWeightExempt
       if(!categories[itemsInPack[i].category].baseWeightExempt){
-        console.log(`Only base weight items count. Adding ${itemsInPack[i].name}`)
         activeCategories[itemsInPack[i].category].totalItems += itemsInPack[i].qty;
         activeCategories[itemsInPack[i].category].totalWeight += itemsInPack[i].weight * itemsInPack[i].qty;
         };

@@ -12,13 +12,16 @@ export default function EditCategoriesScreen({ navigation }) {
   function editCategory(category) {
     navigation.navigate('Edit Category', category)
   }
+  function viewCategory(category){
+    navigation.navigate('Category Items', category)
+  }
 
   return (
     <View style={styles.container}>
       <GenericButton name="New Category" size={24} pressHandler={() => navigation.navigate('New Category')}/>
       <ScrollView style={styles.categoriesWindow}>
         {
-          Object.keys(categories).map(key => <CategoryItem key={key} category={categories[key]} editHandler={editCategory}/>)
+          Object.keys(categories).map(key => <CategoryItem key={key} category={categories[key]} editHandler={editCategory} pressHandler={() => viewCategory(key)}/>)
         }
       </ScrollView>
     </View>

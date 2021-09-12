@@ -13,18 +13,23 @@ import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
 //TODO change water capacity to appear for any category with holdWater: true
 
 
-export default function NewItemScreen( { navigation }) {
+export default function NewItemScreen( { navigation, route }) {
+  const categories = useSelector(state => state.categories.value);
 
-  const [icon, setIcon] = useState('food-drumstick');
+  //if a category is passed in the route params, use it. Otherwise it will be set to food
+  const defaulCategory = route.params ? route.params : 'food'
+  const defaultIcon = categories[defaulCategory].icon
+
+  const [icon, setIcon] = useState(defaultIcon);
   const [brand, setBrand] = useState();
   const [name, setName] = useState();
-  const [category, setCategory] = useState('food');
+  const [category, setCategory] = useState(defaulCategory);
   const [weight, setWeight] = useState();
   const [liquidCapacity, setliquidCapacity] = useState();
+  
   //unit for input weight. Should be lbs, oz, or kg
   const [weightUnits, setWeightUnits] = useState('lbs');
   const [liquidCapacityUnits, setliquidCapacityUnits]= useState('fl oz');
-  const categories = useSelector(state => state.categories.value);
   
   const dispatch = useDispatch();
   
@@ -57,7 +62,8 @@ export default function NewItemScreen( { navigation }) {
         name: name,
         weight: kgWeight,
         qty: 1,
-        inPack: false
+        inPack: false,
+        isPacked: false
       }
   
       if(categories[category].holdsLiquid){

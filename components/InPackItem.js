@@ -5,6 +5,8 @@ import { kgToLbs } from '../globalFunctons';
 import { updateQty } from '../redux/InventorySlice';
 import { colors } from '../styles/globalStyles'
 
+//TODO add swipe to delete feature
+
 export default function InPackItem({ item }) {
 
   const dispatch = useDispatch();

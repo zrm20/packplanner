@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleInPack } from '../redux/InventorySlice';
 import { kgToLbs, mLToFlOz } from '../globalFunctons';
 
-
 export default function InventoryItem({ item, longPressHandler }) {
 
   const settings = useSelector(state => state.settings.value);

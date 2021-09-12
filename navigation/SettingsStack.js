@@ -12,9 +12,6 @@ export function SettingsStack(){
   return(
     <Stack.Navigator screenOptions={globalHeaderStyle}>
       <Stack.Screen name='Settings' component={SettingsScreen}/>
-      <Stack.Screen name='Edit Categories' component={EditCategoriesScreen}/>
-      <Stack.Screen name='New Category' component={NewCategoryScreen} />
-      <Stack.Screen name='Edit Category' component={EditCategoryScreen} />
     </Stack.Navigator>
   )
 };

@@ -62,12 +62,12 @@ export default function SettingsScreen({ navigation }) {
           setToImperial={() => dispatch(setWeightToImperial())}
           />
         <UnitSelector 
-          category='Water Capacity' 
+          category='Liquid Capacity' 
           state={settings.liquidCapacityUnits} 
           setToMetric={() => dispatch(setliquidCapacityToMetric())}
           setToImperial={() => dispatch(setliquidCapacityToImperial())}
           />
-        <GenericButton size={20} name="Edit Categories" pressHandler={() => navigation.navigate('Edit Categories')}/>
+       
       </View>
       <Text>DEV USE ONLY</Text>
       <GenericButton size={14} name='Packs' pressHandler={logPacks}/>

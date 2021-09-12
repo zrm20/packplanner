@@ -54,7 +54,8 @@ export default function EditItemScreen( { navigation, route }) {
         name: name,
         weight: kgWeight,
         inPack: itemToEdit.inPack,
-        qty: itemToEdit.qty
+        qty: itemToEdit.qty,
+        isPacked: itemToEdit.isPacked
       };
   
       if(categories[category].holdsLiquid){

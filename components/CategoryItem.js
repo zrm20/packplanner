@@ -4,9 +4,9 @@ import { colors } from '../styles/globalStyles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
-export default function CategoryItem({ category, editHandler }) {
+export default function CategoryItem({ category, editHandler, pressHandler }) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={pressHandler} >
       <View style={styles.iconView}>
         {!category.icon ? null : 
         <MaterialCommunityIcons name={category.icon} size={60} color={colors.color4}/>}
@@ -14,16 +14,17 @@ export default function CategoryItem({ category, editHandler }) {
       <View style={styles.centerInfo}>
         <Text style={styles.titleText}>{category.label}</Text>
         <View style={styles.attributes}>
-          <Text>Included in Base Weight: {category.baseWeightExempt ? 'NO' : 'YES'}</Text>
+          <Text>Base Weight Exempt: {category.baseWeightExempt ? 'Yes' : 'No'}</Text>
+          <Text>Holds Liquid: {category.holdsLiquid ? 'Yes' : 'No'}</Text>
         </View> 
       </View>
       {
-        category.stock ? null :
+        category.stock ? <Text>Stock Category</Text> :
         <TouchableOpacity onPress={() => editHandler(category)}>
           <MaterialCommunityIcons name="square-edit-outline" size={45} color={colors.color4} />
         </TouchableOpacity>
       }
-    </View>
+    </TouchableOpacity>
   )
 };
 
@@ -52,6 +53,5 @@ const styles = StyleSheet.create({
     flex: 1
   },
   attributes: {
-    flexDirection: 'row'
   }
 });
