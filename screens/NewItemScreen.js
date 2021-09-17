@@ -10,9 +10,6 @@ import { addItem } from '../redux/InventorySlice';
 import WaterUnitSelector from '../components/WaterUnitSelector';
 import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
 
-//TODO change water capacity to appear for any category with holdWater: true
-
-
 export default function NewItemScreen( { navigation, route }) {
   const categories = useSelector(state => state.categories.value);
 
@@ -54,7 +51,6 @@ export default function NewItemScreen( { navigation, route }) {
   
       const adjustedCapacity = liquidCapacityUnits === 'mL' ? numliquidCapacity : flOzToML(numliquidCapacity);
 
-      console.log(adjustedCapacity)
   
       let newItem = {
         category: category,
@@ -71,7 +67,7 @@ export default function NewItemScreen( { navigation, route }) {
       }
   
       dispatch(addItem(newItem));
-      navigation.navigate('Locker');
+      navigation.goBack();
     }
   }
 

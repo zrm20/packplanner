@@ -4,16 +4,18 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 
-import packsReducer from './PacksSlice'
-import inventoryReducer from './InventorySlice'
-import settingsReducer from './SettingsSlice'
-import categoriesReducer from './CategoriesSlice'
+import packsReducer from './PacksSlice';
+import inventoryReducer from './InventorySlice';
+import settingsReducer from './SettingsSlice';
+import categoriesReducer from './CategoriesSlice';
+import listsReducer from './ListsSlice';
 
 const reducers = combineReducers({
   packs: packsReducer,
   inventory: inventoryReducer,
   settings: settingsReducer,
-  categories: categoriesReducer
+  categories: categoriesReducer,
+  lists: listsReducer
 });
 
 const persistConfig = {

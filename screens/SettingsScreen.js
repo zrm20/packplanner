@@ -8,6 +8,7 @@ import GenericButton from '../components/GenericButton';
 import { resetToInitialState, setToDummyData } from '../redux/InventorySlice';
 import { resetToInitialCategories } from '../redux/CategoriesSlice'
 import { resetSettingsToInitialValues } from '../redux/SettingsSlice';
+import { logLists, removeAllLists } from '../redux/ListsSlice';
 
 export default function SettingsScreen({ navigation }) {
 
@@ -78,6 +79,8 @@ export default function SettingsScreen({ navigation }) {
       <GenericButton size={14} name='Dummy Inventory' pressHandler={() => dispatch(setToDummyData())}/>
       <GenericButton size={14} name="Reset Categories" pressHandler={() => dispatch(resetToInitialCategories())} />
       <GenericButton size={14} name="Reset Settings" pressHandler={() => dispatch(resetSettingsToInitialValues())} />
+      <GenericButton size={14} name="Log Lists" pressHandler={() => dispatch(logLists())} />
+      <GenericButton size={14} name="Clear Lists" pressHandler={() => dispatch(removeAllLists())} />
     </View>
   )
 };

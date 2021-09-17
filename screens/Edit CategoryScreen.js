@@ -6,11 +6,11 @@ import BasicSwitch from '../components/BasicSwitch'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../styles/globalStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, addCategorys, deleteCategory } from '../redux/CategoriesSlice';
+import { addCategory, updateCategory, deleteCategory } from '../redux/CategoriesSlice';
 import { iconsList } from '../assets/iconsList'
 import { batchCategoryChange } from '../redux/InventorySlice'
 
-//TODO When changing a value but not a name, validateName prevents a category update
+//TODO When updating an existing category, need to change all items in that category to reflect liquidCapacity value
 
 const iconDetails = iconsList;
 
@@ -18,7 +18,7 @@ const iconDetails = iconsList;
 export default function EditCategoryScreen({ navigation, route }) {
 
   //expects a category object in params
-  const categoryToEdit = route.params
+  const categoryToEdit = route.params;
 
   const categories = useSelector(state => state.categories.value);
   const dispatch = useDispatch();
@@ -42,24 +42,7 @@ export default function EditCategoryScreen({ navigation, route }) {
     }).replace(/\s+/g, '');
   }
 
-  //function that checks if the name is in use already. Returns true if name is valid
-  function validateName(keyName){
-    if(!categoryName){
-      Alert.alert("Must include a category name")
-      return false;
-    }else if(categories[keyName]){
-      Alert.alert("That category name already exists")
-      return false;
-    }
-    else{
-      return true
-    }
-  }
-
-  function submitCategory(){
-    const oldKey = camelize(initialName);
-    const newKey = camelize(categoryName);
-
+  function submitCategory(oldKey, newKey){
     const newCategoryPayload = {
       key: newKey,
       newCategory: {
@@ -70,13 +53,40 @@ export default function EditCategoryScreen({ navigation, route }) {
       }
     };
 
-    if(validateName(newKey)){
+    if(oldKey === newKey){
+      dispatch(updateCategory(newCategoryPayload));
+      navigation.navigate('Edit Categories');
+    }else{
       dispatch(addCategory(newCategoryPayload));
       dispatch(batchCategoryChange({categoryToChange: oldKey, newCategory: newKey}));
       dispatch(deleteCategory(oldKey));
       navigation.navigate('Edit Categories');
     }
-    
+  };
+
+  //function that checks if the name is in use already. Runs submit Category if everything is good
+  function validateName(){
+    const oldKey = camelize(initialName);
+    const newKey = camelize(categoryName);
+
+    if(!categoryName){
+      Alert.alert("Must include a category name");
+    }else if(categories[newKey]){
+      Alert.alert("That category name already exists", "Would you like to update the existing category?",
+      [
+        {
+          text: 'Update',
+          onPress: () => submitCategory(oldKey, newKey)
+        },
+        {
+          text: 'Cancel',
+        }
+      ]
+      )
+    }
+    else{
+      submitCategory(oldKey, newKey);
+    }
   }
 
   function removeCategory(){
@@ -141,7 +151,7 @@ export default function EditCategoryScreen({ navigation, route }) {
           <MaterialCommunityIcons name={icon} size={100} color={colors.color4}/>
         </View>
       </View>
-      <GenericButton name='Update Category' size={30} pressHandler={submitCategory} />
+      <GenericButton name='Update Category' size={30} pressHandler={validateName} />
       <GenericButton name='Remove Category' size={30} pressHandler={verifyDelete} />
     </View>
   )

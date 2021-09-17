@@ -28,7 +28,7 @@ export default function ViewCategoryItems({ navigation, route}) {
         {
           itemsInCategory.length > 0 ?
           itemsInCategory.map(item => (
-            <InventoryItem item={item} longPressHandler={() => navigation.navigate("Edit Item", item)}/>
+            <InventoryItem key={item.id} item={item} longPressHandler={() => navigation.navigate("Edit Item", item)}/>
             )) :
             <Text style={styles.warningText}>No items in this category</Text>
           }

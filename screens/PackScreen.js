@@ -8,8 +8,7 @@ import PackActionButtonBar from '../components/PackActionButtonBar';
 import InMyPack from '../components/InMyPack';
 import { calcBaseWeight, calcTotalPlusWaterWeight, calcTotalWeight } from '../globalFunctons';
 
-//TODO Add goal weight and progress bar
-//TODO Add note for empty pack
+//TODO New Feature: Add goal weight and progress bar
 
 export default function PackScreen({ navigation }) {
 
@@ -47,6 +46,8 @@ export default function PackScreen({ navigation }) {
       <PackActionButtonBar 
         chartsPress={() => navigation.navigate('Charts')}
         checklistPress={() => navigation.navigate('Checklist')}
+        exportPress={() => navigation.navigate('New List', {pack: activePack, items: itemsInPack})}
+        importPress={() => navigation.navigate('Import List')}
         />
       <InMyPack 
         items={itemsInPack}/>

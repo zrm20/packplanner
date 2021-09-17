@@ -150,6 +150,14 @@ export const counterSlice = createSlice({
       }
       //now set the object at the determined index to have a isPacked property changed
       !state.value[index].isPacked ? state.value[index].isPacked = true: state.value[index].isPacked = false;
+    },
+    restoreItem: (state, action) => {
+      //add item to array with an id and values already set.
+      const item = action.payload;
+
+      state.value.push(item);
+      console.log(`${item.name} restored to inventory`);
+      console.log(item);
     }
 
 
@@ -157,6 +165,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addItem, toggleInPack, removeItem, replaceItem, emptyPack, updateQty, resetToInitialState, batchCategoryChange, setToDummyData, togglePackedStatus } = counterSlice.actions
+export const { addItem, toggleInPack, removeItem, replaceItem, emptyPack, updateQty, resetToInitialState, batchCategoryChange, setToDummyData, togglePackedStatus, restoreItem } = counterSlice.actions
 
 export default counterSlice.reducer

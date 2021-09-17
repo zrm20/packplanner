@@ -8,9 +8,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AddButton from '../components/AddButton'
 import { lbsToKg, ozToKg } from '../globalFunctons';
 
-
-//TODO add hide keyboard function
-
 export default function NewPackScreen( { navigation }) {
 
   const [brand, setBrand] = useState();

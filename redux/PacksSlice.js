@@ -1,5 +1,4 @@
-import React from "react";
-import { Vibration } from "react-native";
+import { Vibration, Alert } from "react-native";
 import { createSlice } from '@reduxjs/toolkit'
 import { packs } from "../dummyData";
 import keygen from "keygenerator";
@@ -68,12 +67,22 @@ export const counterSlice = createSlice({
           break;
         }
       }
+    },
+    setAllPacksInactive: (state) => {
+      state.value.forEach(pack => pack.isActivePack = false);
+    },
+    restorePack: (state, action) => {
+      const pack = action.payload;
+      state.value.push(pack);
+      console.log(`${pack.name} add back in`);
+      console.log(pack);
     }
+
     
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addPack, toggleActivePack, replacePack, removePack } = counterSlice.actions
+export const { addPack, toggleActivePack, replacePack, removePack, setAllPacksInactive, restorePack } = counterSlice.actions
 
 export default counterSlice.reducer

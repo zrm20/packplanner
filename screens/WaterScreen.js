@@ -70,7 +70,7 @@ export default function WaterScreen() {
       currentPackWeightString = kgToLbs(currentPackWeight).toFixed(2) + ' lbs';
       break;
     }
-  }
+  };
 
   return (
     <View style={styles.container}>

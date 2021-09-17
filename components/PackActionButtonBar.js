@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import { colors } from '../styles/globalStyles';
 import { useDispatch } from 'react-redux';
 import { emptyPack } from '../redux/InventorySlice';
 
-export default function PackActionButtonBar({ chartsPress, checklistPress }) {
+export default function PackActionButtonBar({ chartsPress, checklistPress, exportPress, importPress }) {
 
   const dispatch = useDispatch();
 
@@ -32,10 +33,10 @@ export default function PackActionButtonBar({ chartsPress, checklistPress }) {
       <TouchableOpacity style={styles.button} onPress={checklistPress}>
         <Octicons name="checklist" size={34} color={colors.color5} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <AntDesign name="printer" size={34} color={colors.color5} />
+      <TouchableOpacity style={styles.button} onPress={importPress}>
+        <MaterialCommunityIcons name="import" size={34} color={colors.color5} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={exportPress}>
         <AntDesign name="save" size={34} color={colors.color5} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={confirmDelete}>

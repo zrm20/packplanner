@@ -5,9 +5,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toggleActivePack } from '../redux/PacksSlice';
 import { kgToLbsOz, kgToOz } from '../globalFunctons';
 
-//TODO scale text
-
-
 export default function PackItem({ pack, longPressHandler }) {
 
   const settings = useSelector((state) => state.settings.value);

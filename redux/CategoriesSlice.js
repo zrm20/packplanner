@@ -97,6 +97,14 @@ export const counterSlice = createSlice({
     resetToInitialCategories: (state) => {
       state.value = initialValues;
       console.log("CATEGORIES RESET TO INITIAL VALUES");
+    },
+    updateCategory: (state, action) => {
+      //accpects a key and category object from payload.
+      const key = action.payload.key;
+      const categoryObject = action.payload.newCategory;
+      console.log(`Updating values for ${key}...`)
+      state.value[key] = categoryObject;
+      console.log(categoryObject);
     }
   },
 })

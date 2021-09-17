@@ -36,7 +36,7 @@ export function LockerScreen({ navigation }) {
 
   function filterInventory(item){
     //function for filtering inventory items by searchBox
-    const lowerBrand = item.brand.toLowerCase();
+    const lowerBrand = item.brand ? item.brand.toLowerCase() : '';
     const lowerName = item.name.toLowerCase();
     const lowerCategory = item.category.toLowerCase();
     

@@ -148,7 +148,7 @@ export default function EditItemScreen( { navigation, route }) {
 
       <View style={styles.row}>
         <GenericButton name='Submit' pressHandler={submitItem}/>
-        <GenericButton name='Cancel' pressHandler={() => navigation.navigate('Locker')}/>
+        <GenericButton name='Cancel' pressHandler={() => navigation.goBack()}/>
         <GenericButton name='Delete' pressHandler={confirmDelete}/>
       </View>
 
