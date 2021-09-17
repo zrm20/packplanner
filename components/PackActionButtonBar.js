@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Alert, Text} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
@@ -28,18 +28,23 @@ export default function PackActionButtonBar({ chartsPress, checklistPress, expor
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={chartsPress}>
+        <Text style={styles.labelText}>Charts</Text>
         <AntDesign name="piechart" size={34} color={colors.color5} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={checklistPress}>
+        <Text style={styles.labelText}>Checklist</Text>
         <Octicons name="checklist" size={34} color={colors.color5} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={importPress}>
-        <MaterialCommunityIcons name="import" size={34} color={colors.color5} />
-      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={exportPress}>
+        <Text style={styles.labelText}>Save List</Text>
         <AntDesign name="save" size={34} color={colors.color5} />
       </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={importPress}>
+        <Text style={styles.labelText}>Import</Text>
+        <MaterialCommunityIcons name="import" size={34} color={colors.color5} />
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={confirmDelete}>
+        <Text style={styles.labelText}>Empty</Text>
         <AntDesign name="delete" size={34} color={colors.color5} />
       </TouchableOpacity>
     </View>
@@ -55,12 +60,22 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderBottomColor: colors.color5,
     borderBottomWidth: 3,
+    alignItems: 'center'
   },
   button: {
-    padding: 5,
+    height: 60,
+    width: 60,
+    padding: 3,
     marginHorizontal: 15,
     borderColor: colors.color1,
     borderWidth: 2,
-    borderRadius: 5
+    borderRadius: 5,
+    alignItems: 'center'
+  },
+  labelText: {
+     color: colors.color5,
+     fontSize: 8,
+     textAlign: 'center',
+     marginBottom: 2
   }
 });

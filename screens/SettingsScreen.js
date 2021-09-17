@@ -70,17 +70,23 @@ export default function SettingsScreen({ navigation }) {
           />
        
       </View>
-      <Text>DEV USE ONLY</Text>
-      <GenericButton size={14} name='Packs' pressHandler={logPacks}/>
-      <GenericButton size={14} name='Inventory' pressHandler={logInventory}/>
-      <GenericButton size={14} name='Categories' pressHandler={logCategories}/>
-      <GenericButton size={14} name='Settings' pressHandler={logSettings}/>
-      <GenericButton size={14} name='Flush Inventory' pressHandler={flushInventory}/>
-      <GenericButton size={14} name='Dummy Inventory' pressHandler={() => dispatch(setToDummyData())}/>
-      <GenericButton size={14} name="Reset Categories" pressHandler={() => dispatch(resetToInitialCategories())} />
-      <GenericButton size={14} name="Reset Settings" pressHandler={() => dispatch(resetSettingsToInitialValues())} />
-      <GenericButton size={14} name="Log Lists" pressHandler={() => dispatch(logLists())} />
-      <GenericButton size={14} name="Clear Lists" pressHandler={() => dispatch(removeAllLists())} />
+
+
+      {/* <View>
+        <Text>DEV USE ONLY</Text>
+        <GenericButton size={14} name='Packs' pressHandler={logPacks}/>
+        <GenericButton size={14} name='Inventory' pressHandler={logInventory}/>
+        <GenericButton size={14} name='Categories' pressHandler={logCategories}/>
+        <GenericButton size={14} name='Settings' pressHandler={logSettings}/>
+        <GenericButton size={14} name='Flush Inventory' pressHandler={flushInventory}/>
+        <GenericButton size={14} name='Dummy Inventory' pressHandler={() => dispatch(setToDummyData())}/>
+        <GenericButton size={14} name="Reset Categories" pressHandler={() => dispatch(resetToInitialCategories())} />
+        <GenericButton size={14} name="Reset Settings" pressHandler={() => dispatch(resetSettingsToInitialValues())} />
+        <GenericButton size={14} name="Log Lists" pressHandler={() => dispatch(logLists())} />
+        <GenericButton size={14} name="Clear Lists" pressHandler={() => dispatch(removeAllLists())} />
+      </View> */}
+
+
     </View>
   )
 };

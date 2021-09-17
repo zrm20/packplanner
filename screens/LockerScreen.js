@@ -71,6 +71,11 @@ export function LockerScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+      {
+        searchBox ?
+        <Text style={styles.searchText}>Searching {searchBox}...</Text>
+        : null
+      }
       <View style={styles.inventoryList}>
         <FlatList 
           data={inventory.filter(filterInventory)}
@@ -136,5 +141,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
     backgroundColor: colors.color5
+  },
+  searchText: {
+    color: colors. color5,
   }
 });

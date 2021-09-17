@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, Switch, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Keyboard } from 'react-native';
 import IconPicker from "react-native-icon-picker";
 import GenericButton from '../components/GenericButton';
 import BasicSwitch from '../components/BasicSwitch'
@@ -71,7 +71,7 @@ export default function NewCategoryScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => Keyboard.dismiss()} activeOpacity={1}>
       <View style={styles.form}>
         <Text style={styles.textInputLabel}>Category Name</Text>
         <TextInput 
@@ -84,6 +84,7 @@ export default function NewCategoryScreen({ navigation }) {
           setValue={setBaseWeightExempt}
           />
         <Text style={styles.alertText}>{baseWeightExempt ? 'Items will NOT count towards base weight' : 'Items WILL count towards base weight'}</Text>
+        <Text style={styles.noteText}>*Typically items that are consumable, such as food or fuel, are not counted towards base weight</Text>
         <BasicSwitch 
           name="Holds Liquid?"
           value={holdsLiquid}
@@ -105,7 +106,7 @@ export default function NewCategoryScreen({ navigation }) {
         </View>
       </View>
       <GenericButton name='Add Category' size={30} pressHandler={submitCategory} />
-    </View>
+    </TouchableOpacity>
   )
 };
 
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    width: 400,
+    width: '100%',
     backgroundColor: colors.color5,
     borderRadius: 5,
     marginVertical: 5
@@ -142,5 +143,11 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  noteText: {
+    color: colors.white,
+    fontSize: 14,
+    marginVertical: 5,
+    textAlign: 'center'
   }
 });

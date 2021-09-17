@@ -13,8 +13,10 @@ export default function ImportListScreen({ navigation }) {
       <Text style={styles.title}>Saved Lists</Text>
       <ScrollView style={styles.scrollView}>
         {
+          lists.length > 0 ?
           lists.map(list => 
-            (<ListItem key={list.id} list={list} goBack={() => navigation.goBack()}/>))
+            (<ListItem key={list.id} list={list} goBack={() => navigation.goBack()}/>)) :
+            <Text style={styles.alertText}>No saved lists. To save a new list, press the save button on the Packs page</Text>
         }
       </ScrollView>
     </View>
@@ -39,5 +41,11 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 5,
     borderRadius: 8
+  },
+  alertText: {
+    margin: 5,
+    textAlign: 'center',
+    fontSize: 14,
+    color: colors.color4
   }
 });

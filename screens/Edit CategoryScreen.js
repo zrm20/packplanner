@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, Switch, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Keyboard } from 'react-native';
 import IconPicker from "react-native-icon-picker";
 import GenericButton from '../components/GenericButton';
 import BasicSwitch from '../components/BasicSwitch'
@@ -118,7 +118,7 @@ export default function EditCategoryScreen({ navigation, route }) {
   }
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => Keyboard.dismiss()} activeOpacity={1}>
       <View style={styles.form}>
         <Text style={styles.textInputLabel}>Category Name</Text>
         <TextInput 
@@ -153,7 +153,7 @@ export default function EditCategoryScreen({ navigation, route }) {
       </View>
       <GenericButton name='Update Category' size={30} pressHandler={validateName} />
       <GenericButton name='Remove Category' size={30} pressHandler={verifyDelete} />
-    </View>
+    </TouchableOpacity>
   )
 };
 
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    width: 400,
+    width: '100%',
     backgroundColor: colors.color5,
     borderRadius: 5,
     marginVertical: 5

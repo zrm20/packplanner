@@ -16,7 +16,7 @@ export default function ChecklistScreen() {
       <Text style={styles.titleText}>Items To Pack:</Text>
       <ScrollView style={styles.scrollView}>
         {
-          itemsInPack.map(item => <ChecklistItem item={item}/>)
+          itemsInPack.map(item => <ChecklistItem key={item.id} item={item}/>)
         }
       </ScrollView>
     </View>
