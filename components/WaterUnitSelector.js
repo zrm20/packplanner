@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   inactiveButtonContainer: {
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
     borderColor: colors.color5,
     borderWidth: 2,
     borderRadius: 12,
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     margin: 5
   },
   activeButtonContainer: {
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
     borderColor: colors.color1,
     borderWidth: 2,
     borderRadius: 12,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   subHeaderText: {
     textAlign: 'center',
     color: colors.white,
-    fontSize: 18,
+    fontSize: 16,
   },
   buttonText: {
     color: colors.white,

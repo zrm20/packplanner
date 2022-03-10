@@ -79,10 +79,11 @@ export default function ListItem({ list, goBack }) {
     {
       text: 'Import',
       onPress: () => {
-        importPackFromList();
+        if(list.pack){
+          importPackFromList();
+        }
         importItemsFromList();
         goBack();
-        
       }
     },
     {

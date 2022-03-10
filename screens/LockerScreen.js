@@ -81,6 +81,7 @@ export function LockerScreen({ navigation }) {
           data={inventory.filter(filterInventory)}
           renderItem={renderInventory}
           keyExtractor= {item => item.id.toString()}
+          contentContainerStyle={styles.flatList}
           />
       </View>
     </View>
@@ -132,7 +133,12 @@ const styles = StyleSheet.create({
   },
   inventoryList: {
     flex: 1,
-    padding: 3
+    padding: 3,
+    width: '99%',
+  },
+  flatList: {
+    width: '100%',
+    alignItems: 'center',
   },
   searchBox: {
     width: '33%',

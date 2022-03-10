@@ -20,7 +20,7 @@ export const globalHeaderStyle = {
 }
 
 export const pieChartColors = [
-  '#0AFF', //always water weight
+  '#0AFF', //always liquid weight
   '#001219', //always pack color
   '#EE9B00',
   '#0A9396',

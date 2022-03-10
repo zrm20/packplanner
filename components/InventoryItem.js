@@ -52,9 +52,9 @@ export default function InventoryItem({ item, longPressHandler }) {
     <TouchableOpacity style={styles.container} onLongPress={longPressHandler}>
       <View style={styles.infoBox}>
         <View style={styles.basicInfo}>
-          <Text style={styles.categoryText}>{categoryText}</Text>
-          <Text style={styles.brandText}>{item.brand}</Text>
-          <Text style={styles.nameText}>{item.name}</Text>
+          <Text style={styles.categoryText} numberOfLines={1} adjustsFontSizeToFit>{categoryText}</Text>
+          <Text style={styles.brandText} numberOfLines={1} adjustsFontSizeToFit>{item.brand}</Text>
+          <Text style={styles.nameText} numberOfLines={1} adjustsFontSizeToFit>{item.name}</Text>
         </View>
         <View style={styles.attributeInfo}>
           <View style={styles.row}>
@@ -85,7 +85,7 @@ export default function InventoryItem({ item, longPressHandler }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 400,
+    width: '97%',
     height: 70,
     backgroundColor: colors.color5,
     borderColor: colors.color1,

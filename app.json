@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Pack Planner",
+    "name": "Trail Pack Pro",
     "slug": "packplanner",
-    "version": "1.0.0",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/packplannerlogo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/packplannerlogo.png",
       "resizeMode": "contain",
       "backgroundColor": "#4f5d75"
     },
@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zachrmccoy.packplanner"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +28,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }

@@ -96,13 +96,13 @@ export default function ChartsScreen() {
             }}
             />
           <BasicSwitch 
-            name='Include Water Weight' 
+            name='Include Liquid Weight' 
             value={includeWaterWeight}
             setValue={setIncludeWaterWeight}
             />
         </View>
         <View>
-          <BasicSlider name="Water Fill Levels" value={waterLevel} setValue={setWaterLevel}/>
+          <BasicSlider name="Liquid Fill Levels" value={waterLevel} setValue={setWaterLevel}/>
         </View>
       </View>
       <View style={styles.charts}>
@@ -122,17 +122,16 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   chartSettings: {
-    flex: 1,
     borderBottomWidth: 1,
     borderBottomColor: colors.color1,
   },
   charts: {
-    flex: 3,
     borderBottomWidth: 1,
-    borderBottomColor: colors.color1
+    borderBottomColor: colors.color1,
+    height: '50%'
   },
   chartLabels: {
-    flex: 1.5,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },

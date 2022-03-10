@@ -10,6 +10,7 @@ import { replaceItem, removeItem } from '../redux/InventorySlice';
 import WaterUnitSelector from '../components/WaterUnitSelector';
 import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
 
+
 export default function EditItemScreen( { navigation, route }) {
 
   const itemToEdit = route.params;
@@ -63,13 +64,13 @@ export default function EditItemScreen( { navigation, route }) {
       }
       
       dispatch(replaceItem(newItem));
-      navigation.navigate('Locker');
+      navigation.goBack();
     }
   }
 
   function deleteItem(){
     dispatch(removeItem(itemToEdit.id));
-    navigation.navigate("Locker");
+    navigation.goBack();
   }
 
   function confirmDelete(){
@@ -147,9 +148,9 @@ export default function EditItemScreen( { navigation, route }) {
       }
 
       <View style={styles.row}>
-        <GenericButton name='Submit' pressHandler={submitItem}/>
-        <GenericButton name='Cancel' pressHandler={() => navigation.goBack()}/>
-        <GenericButton name='Delete' pressHandler={confirmDelete}/>
+        <GenericButton  size={20} name='Submit' pressHandler={submitItem}/>
+        <GenericButton  size={20} name='Cancel' pressHandler={() => navigation.goBack()}/>
+        <GenericButton  size={20} name='Delete' pressHandler={confirmDelete}/>
       </View>
 
     </TouchableOpacity>
@@ -173,17 +174,17 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: colors.color2,
-    fontSize: 24,
+    fontSize: 18,
     
   },
   textInput: {
     width: '90%',
-    height: 40,
+    height: 30,
     backgroundColor: colors.white
   },
   numberInput: {
     width: 100,
-    height: 50,
+    height: 30,
     backgroundColor: colors.white
   },
   formItem: {

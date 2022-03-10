@@ -10,7 +10,10 @@ import { resetToInitialCategories } from '../redux/CategoriesSlice'
 import { resetSettingsToInitialValues } from '../redux/SettingsSlice';
 import { logLists, removeAllLists } from '../redux/ListsSlice';
 
+
 export default function SettingsScreen({ navigation }) {
+
+  const appInfo = require('../app.json');
 
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings.value)
@@ -18,6 +21,16 @@ export default function SettingsScreen({ navigation }) {
   const packs = useSelector(state => state.packs.value);
   const inventory = useSelector(state => state.inventory.value);
   const categories = useSelector(state => state.categories.value);
+
+  function exportData(){
+    const allData = {
+      inventory,
+      packs,
+      categories
+    };
+    
+    const dataString = JSON.stringify(exportData);
+  }
 
 
   //...DEV FUNCTIONS......................
@@ -54,8 +67,7 @@ export default function SettingsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Units</Text>
-      <View>
+      <View style={styles.unitsArea}>
         <UnitSelector 
           category='Weight' 
           state={settings.weightUnits} 
@@ -67,10 +79,17 @@ export default function SettingsScreen({ navigation }) {
           state={settings.liquidCapacityUnits} 
           setToMetric={() => dispatch(setliquidCapacityToMetric())}
           setToImperial={() => dispatch(setliquidCapacityToImperial())}
-          />
-       
+          /> 
       </View>
-
+      <View style={styles.sharingArea}>
+        <Text>Import/Export Data</Text>
+        <GenericButton name='Import Data' size={14}/>
+        <GenericButton name='Export Data' size={14} pressHandler={exportData}/>
+      </View>
+      <View style={styles.feedbackArea}>
+        <Text>Feedback</Text>
+      </View>
+      <Text style={styles.versionText}>Version {appInfo.expo.version}</Text>
 
       {/* <View>
         <Text>DEV USE ONLY</Text>
@@ -94,7 +113,7 @@ export default function SettingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: colors.color3
   },
@@ -103,5 +122,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold'
   },
+  versionText: {
+    color: colors.white,
+  },
+  unitsArea: {
+
+  }
   
 });

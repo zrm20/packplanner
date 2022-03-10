@@ -49,7 +49,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: colors.color4,
-    borderRadius: 10
+    borderRadius: 10,
+    width: '97%',
+    justifyContent: 'space-evenly'
   },
   category: {
     margin: 10,
@@ -65,12 +67,12 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: colors.white,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold'
   },
   valueText: {
     color: colors.color5,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold'
   }
 });

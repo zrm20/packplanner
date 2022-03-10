@@ -33,8 +33,8 @@ export default function InPackItem({ item }) {
   return (
     <View style={styles.container}>
       <View style={styles.nameSection}>
-        <Text>{item.brand}</Text>
-        <Text>{item.name}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit>{item.brand}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit>{item.name}</Text>
       </View>
       <View style={styles.qtySection}>
         <TouchableOpacity style={styles.button} onPress={decrement}>

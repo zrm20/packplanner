@@ -78,61 +78,64 @@ export default function NewItemScreen( { navigation, route }) {
         <MaterialCommunityIcons name={icon} size={60} color={colors.color5} />
       </View>
 
-      <View style={styles.formItem}>
-        <Text style={styles.labelText}>Brand</Text>
-        <TextInput 
-          style={styles.textInput}
-          maxLength={30}
-          placeholder="Item Brand"
-          onChangeText={setBrand}
-          value={brand}
-        />
-      </View>
 
-      <View style={styles.formItem}>
-        <Text style={styles.labelText}>Name</Text>
-        <TextInput 
-          style={styles.textInput}
-          maxLength={45}
-          placeholder="Item Name"
-          onChangeText={setName}
-          value={name}
-        />
-      </View>
-      
-      <View style={styles.row}>
+      <View style={styles.fullForm}>
         <View style={styles.formItem}>
-          <Text style={styles.labelText}>Weight</Text>
+          <Text style={styles.labelText}>Brand</Text>
           <TextInput 
-            style={styles.numberInput}
-            onChangeText={value => setWeight(value)}
-            value={weight}
-            keyboardType='numeric'
-            placeholder={weightUnits}
+            style={styles.textInput}
+            maxLength={30}
+            placeholder="Item Brand"
+            onChangeText={setBrand}
+            value={brand}
           />
         </View>
-        <WeightUnitSelector state={weightUnits} setState={setWeightUnits}/>
-      </View>
 
-      {categories[category].holdsLiquid ? 
-      <View>
+        <View style={styles.formItem}>
+          <Text style={styles.labelText}>Name</Text>
+          <TextInput 
+            style={styles.textInput}
+            maxLength={45}
+            placeholder="Item Name"
+            onChangeText={setName}
+            value={name}
+          />
+        </View>
         <View style={styles.row}>
           <View style={styles.formItem}>
-            <Text style={styles.labelText}>Liquid Capacity</Text>
+            <Text style={styles.labelText}>Weight</Text>
             <TextInput 
               style={styles.numberInput}
+              onChangeText={value => setWeight(value)}
+              value={weight}
               keyboardType='numeric'
-              value={liquidCapacity}
-              placeholder={liquidCapacityUnits}
-              onChangeText={value => setliquidCapacity(value)}
+              placeholder={weightUnits}
             />
           </View>
-          <WaterUnitSelector state={liquidCapacityUnits} setState={setliquidCapacityUnits}/>
+          <WeightUnitSelector state={weightUnits} setState={setWeightUnits}/>
         </View>
-        <Text style={{color: colors.white}}>*For categories that contain liquid, set weight to the empty container weight. Weight of the liquid will be calculated automatically by the liquid capacity value.</Text>
+
+        {categories[category].holdsLiquid ? 
+        <View style={styles.liquidSection}>
+          <View style={styles.row}>
+            <View style={styles.formItem}>
+              <Text style={styles.labelText}>Liquid Capacity</Text>
+              <TextInput 
+                style={styles.numberInput}
+                keyboardType='numeric'
+                value={liquidCapacity}
+                placeholder={liquidCapacityUnits}
+                onChangeText={value => setliquidCapacity(value)}
+              />
+            </View>
+            <WaterUnitSelector state={liquidCapacityUnits} setState={setliquidCapacityUnits}/>
+          </View>
+          <Text style={styles.waterText}>*For categories that contain liquid, set weight to the empty container weight. Weight of the liquid will be calculated automatically by the liquid capacity value.</Text>
+        </View>
+        : null
+        }
       </View>
-      : null
-      }
+      
       <AddButton name='Item' pressHandler={addNewItem}/>
 
     </TouchableOpacity>
@@ -152,25 +155,32 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   labelText: {
     color: colors.color2,
-    fontSize: 24,
+    fontSize: 18,
     
   },
   textInput: {
     width: '90%',
-    height: 40,
+    height: 30,
     backgroundColor: colors.white
   },
   numberInput: {
     width: 100,
-    height: 50,
+    height: 30,
     backgroundColor: colors.white
   },
   formItem: {
     marginVertical: 5,
-    marginHorizontal: 10
-  }
+    marginHorizontal: 10,
+  },
+  fullForm: {
+    flex: 1,
+  },
+  waterText: {
+    color: colors.white,
+    fontSize: 12,
+  },
 });

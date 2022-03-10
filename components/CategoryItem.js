@@ -12,7 +12,12 @@ export default function CategoryItem({ category, editHandler, pressHandler }) {
         <MaterialCommunityIcons name={category.icon} size={60} color={colors.color4}/>}
       </View>
       <View style={styles.centerInfo}>
-        <Text style={styles.titleText}>{category.label}</Text>
+        <Text 
+          style={styles.titleText} 
+          numberOfLines={1} 
+          adjustsFontSizeToFit>
+            {category.label}
+        </Text>
         <View style={styles.attributes}>
           <Text>Base Weight Exempt: {category.baseWeightExempt ? 'Yes' : 'No'}</Text>
           <Text>Holds Liquid: {category.holdsLiquid ? 'Yes' : 'No'}</Text>

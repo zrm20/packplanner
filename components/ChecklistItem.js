@@ -9,7 +9,7 @@ export default function ChecklistItem({ item }) {
 
   const dispatch = useDispatch();
 
-  const itemString = `(${item.qty}) ${item.brand ? item.brand + ' ' : null}${item.name}`
+  const itemString = `(${item.qty}) ${item.brand ? item.brand + ' ' : ''}${item.name}`
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -17,11 +17,11 @@ export default function ChecklistItem({ item }) {
         >
         {
           item.isPacked ? 
-          <MaterialIcons name="check-circle-outline" size={40} color={colors.green} /> :
-          <MaterialIcons name="radio-button-unchecked" size={40} color={colors.color1} />
+          <MaterialIcons name="check-circle-outline" size={35} color={colors.green} /> :
+          <MaterialIcons name="radio-button-unchecked" size={35} color={colors.color1} />
         }
       </TouchableOpacity>
-      <Text style={styles.text(itemString.length)}>{itemString}</Text>
+      <Text style={styles.text} numberOfLines={1} adjustsFontSizeToFit>{itemString}</Text>
     </View>
   )
 };
@@ -29,14 +29,14 @@ export default function ChecklistItem({ item }) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 50,
+    height: 45,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 5,
 
   },
-  text: (textLength) => ({
-    fontSize: 24,
+  text: {
+    fontSize: 22,
     marginLeft: 5
-  })
+  }
 });

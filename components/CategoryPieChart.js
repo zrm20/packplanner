@@ -26,7 +26,7 @@ export default function CategoryPieChart({ chartData }) {
         <View styles={styles.container}>
             <Text style={styles.text}>{totalWeightString}</Text>
             <PieChart
-                style={ { height: '95%', width: '100%' } }
+                style={ { height: '93%', width: '100%', paddingBottom: 8} }
                 data={ chartData }
                 innerRadius={ '15%' }
                 outerRadius={ '90%' }
@@ -39,7 +39,8 @@ export default function CategoryPieChart({ chartData }) {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 5
     },
     text: {
         color: colors.white,
