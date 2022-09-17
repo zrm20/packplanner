@@ -1,16 +1,14 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import { colors } from '../styles/globalStyles'
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Slider from '@react-native-community/slider';
 
 export default function BasicSlider({ size=20, name, value, setValue}) {
-
-
+  const styles = useStyles(size);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text(size)}>{name} ({value}%)</Text>
+      <Text style={styles.text}>{name} ({value}%)</Text>
       <Slider
         style={{width: 15 * size, height: 2 * size}}
         value={value}
@@ -25,7 +23,7 @@ export default function BasicSlider({ size=20, name, value, setValue}) {
   )
 };
 
-const styles = StyleSheet.create({
+const useStyles = (size) => (StyleSheet.create({
   container: {
     margin: 2,
     padding: 5,
@@ -36,4 +34,4 @@ const styles = StyleSheet.create({
     fontSize: size,
     color: colors.white
   }),
-});
+}));

@@ -3,22 +3,24 @@ import { View, StyleSheet } from 'react-native';
 import { colors, pieChartColors } from '../styles/globalStyles';
 
 export default function WaterBottle({size = 200, fill = 50}) {
+  const styles = useStyles(size, fill);
+
   return (
     <View style={styles.container}>
-      <View style={styles.cap(size)}>
+      <View style={styles.cap}>
 
       </View>
-      <View style={styles.bottleBody(size)}>
+      <View style={styles.bottleBody}>
 
       </View>
-      <View style={styles.water(size, fill)}>
+      <View style={styles.water}>
 
       </View>
     </View>
   )
 };
 
-const styles = StyleSheet.create({
+const useStyles = (size, fill) => (StyleSheet.create({
   container: {
     margin: 25
   },
@@ -49,4 +51,4 @@ const styles = StyleSheet.create({
     borderRightWidth: size / 66.66,
     borderBottomWidth: size / 66.66,
   })
-});
+}));

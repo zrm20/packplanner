@@ -4,17 +4,19 @@ import { colors } from '../styles/globalStyles'
 import { AntDesign } from '@expo/vector-icons';
 
 export default function GenericButton({ pressHandler, name, size=24}) {
+  const styles = useStyles(24);
+
   return (
     <TouchableOpacity 
-      style={styles.container(size)}
+      style={styles.container}
       onPress={() => pressHandler()}
       >
-      <Text style={styles.buttonText(size)}>{name}</Text>
+      <Text style={styles.buttonText}>{name}</Text>
     </TouchableOpacity>
   )
 }
 
-const styles = StyleSheet.create({
+const useStyles = (size) => (StyleSheet.create({
   container: (size) => ({
     height: (size * 3),
     paddingHorizontal: (size * .625),
@@ -32,4 +34,4 @@ const styles = StyleSheet.create({
     fontSize: size,
     marginHorizontal: (size * .25)
   })
-});
+}));
