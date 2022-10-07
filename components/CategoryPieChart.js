@@ -1,9 +1,15 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-// import { PieChart } from 'react-native-svg-charts'
-import { useSelector } from 'react-redux'
+import { View, Text, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 import { kgToLbs } from '../globalFunctons';
-import { colors } from '../styles/globalStyles'
+import { colors } from '../styles/globalStyles';
+import { PieChart } from 'react-native-chart-kit';
+
+const chartConfig = {
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 5, // optional, default 3
+    // barPercentage: 0.5,
+  };
 
 export default function CategoryPieChart({ chartData }) {
     // chartData is an array of objects with a value, svg object with fill color, and key
@@ -11,26 +17,30 @@ export default function CategoryPieChart({ chartData }) {
     const settings = useSelector(state => state.settings.value);
 
     let totalWeight = 0;
-    for(let i = 0; i < chartData.length; i++){
-        totalWeight += chartData[i].value;
+    for (let i = 0; i < chartData.length; i++) {
+        totalWeight += chartData[i].weight;
     }
 
     let totalWeightString;
-    switch(settings.weightUnits){
-        case('metric'): {totalWeightString = `${totalWeight.toFixed(1)} kg`}; break;
-        case('imperial'): {totalWeightString = `${kgToLbs(totalWeight).toFixed(1)} lbs`}; break;
+    switch (settings.weightUnits) {
+        case ('metric'): { totalWeightString = `${totalWeight.toFixed(1)} kg` }; break;
+        case ('imperial'): { totalWeightString = `${kgToLbs(totalWeight).toFixed(1)} lbs` }; break;
     }
 
     return (
-        <View styles={styles.container}>
+        <View style={styles.container}>
             <Text style={styles.text}>{totalWeightString}</Text>
-            {/* <PieChart
-                style={ { height: '93%', width: '100%', paddingBottom: 8} }
-                data={ chartData }
-                innerRadius={ '15%' }
-                outerRadius={ '90%' }
-            >
-            </PieChart> */}
+            <PieChart
+                data={chartData}
+                width={300}
+                height={300}
+                chartConfig={chartConfig}
+                accessor={"weight"}
+                backgroundColor={"transparent"}
+                hasLegend={false}
+                center={[50, 0]}
+                absolute
+            />
         </View>
     )
 };
@@ -39,11 +49,10 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 5
     },
     text: {
         color: colors.white,
-        marginTop: 3,
+        marginTop: 10,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',

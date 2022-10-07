@@ -7,7 +7,7 @@ function SingleLabel({ name, color }){
 
   return(
     <View style={styles.singleLabelContainer}>
-      <View style={styles.labelSquare(color)}></View>
+      <View style={{...styles.labelSquare, backgroundColor: color}}></View>
       <Text style={styles.labelText}>{name}</Text>
     </View>
   )
@@ -18,9 +18,9 @@ export default function ChartLabels({ chartData }) {
   return (
     <ScrollView contentContainerStyle={styles.windowContainer}>
      {
-       chartData.map((value, index) => {
+       chartData.map((value) => {
          return(
-           <SingleLabel name={value.label} color={value.svg.fill} key={value.key}/>
+           <SingleLabel name={value.name} color={value.color} key={value.key}/>
          )
        })
      }
@@ -34,13 +34,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '50%'
   },
-  labelSquare: (color) => ({
+  labelSquare: {
     width: 25,
     height: 25,
-    backgroundColor: color,
     margin: 5,
     borderRadius: 2
-  }),
+  },
   labelText: {
     color: colors.white,
     fontSize: 14

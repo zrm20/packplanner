@@ -75,10 +75,10 @@ export default function ChartsScreen() {
   let colorCounter = 0;
   for(const [key, value] of Object.entries(activeCategories)){
     pieData.push({
-        value: value.totalWeight,
-        svg: { fill: pieChartColors[colorCounter]},
+        weight: value.totalWeight,
+        color: pieChartColors[colorCounter],
         key: key,
-        label: value.label
+        name: value.label
     })
     colorCounter++;
   };
@@ -106,10 +106,10 @@ export default function ChartsScreen() {
         </View>
       </View>
       <View style={styles.charts}>
-        {/* <CategoryPieChart chartData={pieData}/> */}
+        <CategoryPieChart chartData={pieData}/>
       </View>
       <View style={styles.chartLabels}>
-        {/* <ChartLabels chartData={pieData}/> */}
+        <ChartLabels chartData={pieData}/>
       </View>
     </View>
   )
