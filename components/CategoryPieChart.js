@@ -1,4 +1,3 @@
-import { styleSheets } from 'min-document';
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { PieChart } from 'react-native-svg-charts'

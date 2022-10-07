@@ -1,23 +1,23 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { colors } from '../styles/globalStyles'
-import { AntDesign } from '@expo/vector-icons';
+import React from 'react';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { colors } from '../styles/globalStyles';
 
-export default function GenericButton({ pressHandler, name, size=24}) {
-  const styles = useStyles(24);
+export default function GenericButton({ pressHandler, name, size = 24, ...props }) {
+  const styles = useStyles(size);
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.container}
       onPress={() => pressHandler()}
-      >
+      {...props}
+    >
       <Text style={styles.buttonText}>{name}</Text>
     </TouchableOpacity>
   )
 }
 
 const useStyles = (size) => (StyleSheet.create({
-  container: (size) => ({
+  container: {
     height: (size * 3),
     paddingHorizontal: (size * .625),
     borderColor: colors.color1,
@@ -28,10 +28,10 @@ const useStyles = (size) => (StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.color3,
     margin: (size * .25)
-  }),
-  buttonText: (size) => ({
+  },
+  buttonText: {
     color: colors.color2,
     fontSize: size,
     marginHorizontal: (size * .25)
-  })
+  }
 }));

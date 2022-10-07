@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import UnitSelector from '../components/UnitSelector';
 import { colors } from '../styles/globalStyles'
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,6 +9,8 @@ import { resetToInitialState, setToDummyData } from '../redux/InventorySlice';
 import { resetToInitialCategories } from '../redux/CategoriesSlice'
 import { resetSettingsToInitialValues } from '../redux/SettingsSlice';
 import { logLists, removeAllLists } from '../redux/ListsSlice';
+import * as FileSystem from 'expo-file-system';
+
 
 
 export default function SettingsScreen({ navigation }) {
@@ -22,38 +24,40 @@ export default function SettingsScreen({ navigation }) {
   const inventory = useSelector(state => state.inventory.value);
   const categories = useSelector(state => state.categories.value);
 
-  function exportData(){
+  function exportData() {
     const allData = {
       inventory,
       packs,
       categories
     };
-    
-    const dataString = JSON.stringify(exportData);
-  }
+
+    const dataString = JSON.stringify(allData);
+
+    saveFile();
+  };
 
 
   //...DEV FUNCTIONS......................
-  function logPacks(){
+  function logPacks() {
     console.log('-----PACKS-----');
     console.log(packs)
     console.log('----- END PACKS-----');
   };
 
-  function logInventory(){
+  function logInventory() {
     console.log('-----INVENTORY-----');
     console.log(inventory);
     console.log('-----END INVENTORY-----');
 
   }
 
-  function logCategories(){
+  function logCategories() {
     console.log('-----CATEGORIES-----');
     console.log(categories);
     console.log('-----END CATEGORIES-----');
   }
 
-  function logSettings(){
+  function logSettings() {
     console.log('-----SETTINGS-----');
     console.log(settings);
     console.log('-----END SETTINGS-----');
@@ -68,27 +72,31 @@ export default function SettingsScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.unitsArea}>
-        <UnitSelector 
-          category='Weight' 
-          state={settings.weightUnits} 
+        <UnitSelector
+          category='Weight'
+          state={settings.weightUnits}
           setToMetric={() => dispatch(setWeightToMetric())}
           setToImperial={() => dispatch(setWeightToImperial())}
-          />
-        <UnitSelector 
-          category='Liquid Capacity' 
-          state={settings.liquidCapacityUnits} 
+        />
+        <UnitSelector
+          category='Liquid Capacity'
+          state={settings.liquidCapacityUnits}
           setToMetric={() => dispatch(setliquidCapacityToMetric())}
           setToImperial={() => dispatch(setliquidCapacityToImperial())}
-          /> 
+        />
       </View>
-      <View style={styles.sharingArea}>
-        <Text>Import/Export Data</Text>
-        <GenericButton name='Import Data' size={14}/>
-        <GenericButton name='Export Data' size={14} pressHandler={exportData}/>
-      </View>
-      <View style={styles.feedbackArea}>
-        <Text>Feedback</Text>
-      </View>
+      {/* <View style={styles.sharingArea}>
+        <GenericButton 
+          name='Import Data' 
+          pressHandler={() => Alert.alert('Coming Soon')}
+          style={styles.buttons}
+        />
+        <GenericButton 
+          name='Export Data' 
+          pressHandler={exportData}
+          style={styles.buttons}
+        />
+      </View> */}
       <Text style={styles.versionText}>Version {appInfo.expo.version}</Text>
 
       {/* <View>
@@ -126,7 +134,9 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   unitsArea: {
-
+  },
+  buttons: {
+    marginBottom: 25,
   }
-  
+
 });

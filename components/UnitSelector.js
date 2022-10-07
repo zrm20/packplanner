@@ -4,9 +4,9 @@ import { colors } from '../styles/globalStyles'
 
 //This component is used in the settings screen for selecting global settings for metric or imperial units.
 
-export default function UnitSelector({ category, state, setToMetric, setToImperial }) {
+export default function UnitSelector({ category, state, setToMetric, setToImperial, ...props }) {
   return (
-    <View>
+    <View {...props} style={styles.container}>
       <Text style={styles.subHeaderText}>{category} Units</Text>
       <View style={styles.row}>
         <TouchableOpacity 
@@ -29,7 +29,8 @@ export default function UnitSelector({ category, state, setToMetric, setToImperi
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 15
   },
   row: {
     flexDirection: 'row'

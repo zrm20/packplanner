@@ -59,6 +59,7 @@ export default function NewPackScreen( { navigation }) {
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => Keyboard.dismiss()} activeOpacity={1}>
+      <View style={styles.container}>
       <View style={styles.formItem}>
         <View style={styles.iconHeader}>
           <MaterialCommunityIcons name="bag-personal" size={100} color={colors.color5} />
@@ -107,6 +108,7 @@ export default function NewPackScreen( { navigation }) {
       </View>
       <View style={styles.iconHeader}>
         <AddButton name='Pack' pressHandler={addNewPack}/>
+      </View>
       </View>
     </TouchableOpacity>
   )
