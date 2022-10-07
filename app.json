@@ -2,7 +2,7 @@
   "expo": {
     "name": "Trail Pack Pro",
     "slug": "packplanner",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/packplannerlogo.png",
     "splash": {

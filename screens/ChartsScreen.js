@@ -106,10 +106,10 @@ export default function ChartsScreen() {
         </View>
       </View>
       <View style={styles.charts}>
-        <CategoryPieChart chartData={pieData}/>
+        {/* <CategoryPieChart chartData={pieData}/> */}
       </View>
       <View style={styles.chartLabels}>
-        <ChartLabels chartData={pieData}/>
+        {/* <ChartLabels chartData={pieData}/> */}
       </View>
     </View>
   )

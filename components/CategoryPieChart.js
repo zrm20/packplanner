@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { PieChart } from 'react-native-svg-charts'
+// import { PieChart } from 'react-native-svg-charts'
 import { useSelector } from 'react-redux'
 import { kgToLbs } from '../globalFunctons';
 import { colors } from '../styles/globalStyles'
@@ -24,13 +24,13 @@ export default function CategoryPieChart({ chartData }) {
     return (
         <View styles={styles.container}>
             <Text style={styles.text}>{totalWeightString}</Text>
-            <PieChart
+            {/* <PieChart
                 style={ { height: '93%', width: '100%', paddingBottom: 8} }
                 data={ chartData }
                 innerRadius={ '15%' }
                 outerRadius={ '90%' }
             >
-            </PieChart>
+            </PieChart> */}
         </View>
     )
 };
