@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Keyboard } from 'react-native';
-import IconPicker from "react-native-icon-picker";
+import IconPicker from "../components/IconPicker";
 import GenericButton from '../components/GenericButton';
 import BasicSwitch from '../components/BasicSwitch'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -30,19 +30,19 @@ export default function EditCategoryScreen({ navigation, route }) {
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [icon, setIcon] = useState(categoryToEdit.icon);
 
-  function selectIcon(icon){
+  function selectIcon(icon) {
     setIcon(icon.icon);
     setShowIconPicker(false);
   }
 
   //function to convert to camel case via Stack Overflow
   function camelize(str) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
       return index === 0 ? word.toLowerCase() : word.toUpperCase();
     }).replace(/\s+/g, '');
   }
 
-  function submitCategory(oldKey, newKey){
+  function submitCategory(oldKey, newKey) {
     const newCategoryPayload = {
       key: newKey,
       newCategory: {
@@ -53,43 +53,43 @@ export default function EditCategoryScreen({ navigation, route }) {
       }
     };
 
-    if(oldKey === newKey){
+    if (oldKey === newKey) {
       dispatch(updateCategory(newCategoryPayload));
       navigation.navigate('Edit Categories');
-    }else{
+    } else {
       dispatch(addCategory(newCategoryPayload));
-      dispatch(batchCategoryChange({categoryToChange: oldKey, newCategory: newKey}));
+      dispatch(batchCategoryChange({ categoryToChange: oldKey, newCategory: newKey }));
       dispatch(deleteCategory(oldKey));
       navigation.navigate('Edit Categories');
     }
   };
 
   //function that checks if the name is in use already. Runs submit Category if everything is good
-  function validateName(){
+  function validateName() {
     const oldKey = camelize(initialName);
     const newKey = camelize(categoryName);
 
-    if(!categoryName){
+    if (!categoryName) {
       Alert.alert("Must include a category name");
-    }else if(categories[newKey]){
+    } else if (categories[newKey]) {
       Alert.alert("That category name already exists", "Would you like to update the existing category?",
-      [
-        {
-          text: 'Update',
-          onPress: () => submitCategory(oldKey, newKey)
-        },
-        {
-          text: 'Cancel',
-        }
-      ]
+        [
+          {
+            text: 'Update',
+            onPress: () => submitCategory(oldKey, newKey)
+          },
+          {
+            text: 'Cancel',
+          }
+        ]
       )
     }
-    else{
+    else {
       submitCategory(oldKey, newKey);
     }
   }
 
-  function removeCategory(){
+  function removeCategory() {
     const keyName = camelize(initialName);
 
     const inventoryPayload = {
@@ -121,34 +121,40 @@ export default function EditCategoryScreen({ navigation, route }) {
     <TouchableOpacity style={styles.container} onPress={() => Keyboard.dismiss()} activeOpacity={1}>
       <View style={styles.form}>
         <Text style={styles.textInputLabel}>Category Name</Text>
-        <TextInput 
+        <TextInput
           style={styles.textInput}
           value={categoryName}
-          onChangeText={setCategoryName}/>
-        <BasicSwitch 
+          onChangeText={setCategoryName} />
+        <BasicSwitch
           name="Exempt from base weight?"
           value={baseWeightExempt}
           setValue={setBaseWeightExempt}
-          />
+        />
         <Text style={styles.alertText}>{baseWeightExempt ? 'Items will NOT count towards base weight' : 'Items WILL count towards base weight'}</Text>
 
-        <BasicSwitch 
+        <BasicSwitch
           name="Holds Liquid?"
           value={holdsLiquid}
           setValue={setholdsLiquid}
-          />
+        />
         <Text style={styles.alertText}>{holdsLiquid ? 'Items WILL hold liquid' : 'Items will NOT hold liquid'}</Text>
 
         <View style={styles.iconSection}>
-          <IconPicker 
-            showIconPicker={showIconPicker}
-            toggleIconPicker={() => setShowIconPicker(!showIconPicker)}
-            iconDetails={iconDetails}
-            onSelect={selectIcon}
-            content={<GenericButton name='Select Icon' pressHandler={() => setShowIconPicker(!showIconPicker)}/>}
-            />
+          <IconPicker
+            iconList={iconsList}
+            visible={showIconPicker}
+            onClose={() => setShowIconPicker(false)}
+            onSelect={setIcon}
+            animationType="slide"
+          />
 
-          <MaterialCommunityIcons name={icon} size={100} color={colors.color4}/>
+          {
+            !showIconPicker &&
+            <GenericButton name='Select Icon' size={24} pressHandler={() => setShowIconPicker(true)} />
+          }
+
+
+          <MaterialCommunityIcons name={icon} size={100} color={colors.color4} />
         </View>
       </View>
       <GenericButton name='Update Category' size={30} pressHandler={validateName} />
