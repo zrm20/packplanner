@@ -11,11 +11,11 @@ import ImportListScreen from '../screens/ImportListScreen';
 
 const Stack = createStackNavigator();
 
-export function PackStack(){
-  return(
+export function PackStack() {
+  return (
     <Stack.Navigator mode={'modal'} screenOptions={globalHeaderStyle}>
-      <Stack.Screen name='Pack' component={PackScreen}/>
-      <Stack.Screen name='Charts' component={ChartsScreen}/>
+      <Stack.Screen name='Pack' component={PackScreen} />
+      <Stack.Screen name='Charts' component={ChartsScreen} />
       <Stack.Screen name='Checklist' component={ChecklistScreen} />
       <Stack.Screen name="New List" component={NewListScreen} />
       <Stack.Screen name="Import List" component={ImportListScreen} />

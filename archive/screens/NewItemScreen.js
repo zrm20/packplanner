@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert, Keyboard, TouchableOpacity, Image } from 'react-native'
 import { colors } from '../styles/globalStyles'
 import { useDispatch, useSelector } from 'react-redux';
-import WeightUnitSelector from '../components/WeightUnitSelector';
+import WeightUnitSelector from '../../components/WeightUnitSelector';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import AddButton from '../components/AddButton'
-import CategoryPicker from '../components/CategoryPicker';
-import { addItem } from '../redux/InventorySlice';
-import WaterUnitSelector from '../components/WaterUnitSelector';
+import AddButton from '../../components/AddButton'
+import CategoryPicker from '../../components/CategoryPicker';
+import { addItem } from '../../redux/InventorySlice';
+import WaterUnitSelector from '../../components/WaterUnitSelector';
 import { lbsToKg, ozToKg, flOzToML } from '../globalFunctons';
 
-export default function NewItemScreen( { navigation, route }) {
+export default function NewItemScreen({ navigation, route }) {
   const categories = useSelector(state => state.categories.value);
 
   //if a category is passed in the route params, use it. Otherwise it will be set to food
@@ -23,35 +23,35 @@ export default function NewItemScreen( { navigation, route }) {
   const [category, setCategory] = useState(defaulCategory);
   const [weight, setWeight] = useState();
   const [liquidCapacity, setliquidCapacity] = useState();
-  
+
   //unit for input weight. Should be lbs, oz, or kg
   const [weightUnits, setWeightUnits] = useState('lbs');
-  const [liquidCapacityUnits, setliquidCapacityUnits]= useState('fl oz');
-  
+  const [liquidCapacityUnits, setliquidCapacityUnits] = useState('fl oz');
+
   const dispatch = useDispatch();
-  
-  function addNewItem(){
+
+  function addNewItem() {
     const numWeight = Number(weight);
     const numliquidCapacity = Number(liquidCapacity);
 
-     if(!name || !weight){
+    if (!name || !weight) {
       Alert.alert("Name and Weight are required");
-    }else if(!isFinite(numWeight) || numWeight < 0){
+    } else if (!isFinite(numWeight) || numWeight < 0) {
       Alert.alert("Weight must be a valid positive number");
-    }else if(categories[category].holdsLiquid && (!isFinite(numliquidCapacity) || numliquidCapacity < 0)){
+    } else if (categories[category].holdsLiquid && (!isFinite(numliquidCapacity) || numliquidCapacity < 0)) {
       Alert.alert("Water capacity must be a valid positive number");
-    }else{
+    } else {
       let kgWeight;
-  
-      switch(weightUnits){
-          case('kg'): kgWeight = weight; break;
-          case('lbs'): kgWeight = lbsToKg(weight); break;
-          case('oz'): kgWeight = ozToKg(weight); break;
-        };
-  
+
+      switch (weightUnits) {
+        case ('kg'): kgWeight = weight; break;
+        case ('lbs'): kgWeight = lbsToKg(weight); break;
+        case ('oz'): kgWeight = ozToKg(weight); break;
+      };
+
       const adjustedCapacity = liquidCapacityUnits === 'mL' ? numliquidCapacity : flOzToML(numliquidCapacity);
 
-  
+
       let newItem = {
         category: category,
         brand: brand,
@@ -61,11 +61,11 @@ export default function NewItemScreen( { navigation, route }) {
         inPack: false,
         isPacked: false
       }
-  
-      if(categories[category].holdsLiquid){
+
+      if (categories[category].holdsLiquid) {
         newItem.liquidCapacity = adjustedCapacity;
       }
-  
+
       dispatch(addItem(newItem));
       navigation.goBack();
     }
@@ -74,7 +74,7 @@ export default function NewItemScreen( { navigation, route }) {
   return (
     <TouchableOpacity style={styles.container} onPress={() => Keyboard.dismiss()} activeOpacity={1}>
       <View style={styles.iconHeader}>
-        <CategoryPicker state={category} setState={setCategory} setIcon={setIcon}/>
+        <CategoryPicker state={category} setState={setCategory} setIcon={setIcon} />
         <MaterialCommunityIcons name={icon} size={60} color={colors.color5} />
       </View>
 
@@ -82,7 +82,7 @@ export default function NewItemScreen( { navigation, route }) {
       <View style={styles.fullForm}>
         <View style={styles.formItem}>
           <Text style={styles.labelText}>Brand</Text>
-          <TextInput 
+          <TextInput
             style={styles.textInput}
             maxLength={30}
             placeholder="Item Brand"
@@ -93,7 +93,7 @@ export default function NewItemScreen( { navigation, route }) {
 
         <View style={styles.formItem}>
           <Text style={styles.labelText}>Name</Text>
-          <TextInput 
+          <TextInput
             style={styles.textInput}
             maxLength={45}
             placeholder="Item Name"
@@ -104,7 +104,7 @@ export default function NewItemScreen( { navigation, route }) {
         <View style={styles.row}>
           <View style={styles.formItem}>
             <Text style={styles.labelText}>Weight</Text>
-            <TextInput 
+            <TextInput
               style={styles.numberInput}
               onChangeText={value => setWeight(value)}
               value={weight}
@@ -112,31 +112,31 @@ export default function NewItemScreen( { navigation, route }) {
               placeholder={weightUnits}
             />
           </View>
-          <WeightUnitSelector state={weightUnits} setState={setWeightUnits}/>
+          <WeightUnitSelector state={weightUnits} setState={setWeightUnits} />
         </View>
 
-        {categories[category].holdsLiquid ? 
-        <View style={styles.liquidSection}>
-          <View style={styles.row}>
-            <View style={styles.formItem}>
-              <Text style={styles.labelText}>Liquid Capacity</Text>
-              <TextInput 
-                style={styles.numberInput}
-                keyboardType='numeric'
-                value={liquidCapacity}
-                placeholder={liquidCapacityUnits}
-                onChangeText={value => setliquidCapacity(value)}
-              />
+        {categories[category].holdsLiquid ?
+          <View style={styles.liquidSection}>
+            <View style={styles.row}>
+              <View style={styles.formItem}>
+                <Text style={styles.labelText}>Liquid Capacity</Text>
+                <TextInput
+                  style={styles.numberInput}
+                  keyboardType='numeric'
+                  value={liquidCapacity}
+                  placeholder={liquidCapacityUnits}
+                  onChangeText={value => setliquidCapacity(value)}
+                />
+              </View>
+              <WaterUnitSelector state={liquidCapacityUnits} setState={setliquidCapacityUnits} />
             </View>
-            <WaterUnitSelector state={liquidCapacityUnits} setState={setliquidCapacityUnits}/>
+            <Text style={styles.waterText}>*For categories that contain liquid, set weight to the empty container weight. Weight of the liquid will be calculated automatically by the liquid capacity value.</Text>
           </View>
-          <Text style={styles.waterText}>*For categories that contain liquid, set weight to the empty container weight. Weight of the liquid will be calculated automatically by the liquid capacity value.</Text>
-        </View>
-        : null
+          : null
         }
       </View>
-      
-      <AddButton name='Item' pressHandler={addNewItem}/>
+
+      <AddButton name='Item' pressHandler={addNewItem} />
 
     </TouchableOpacity>
   )
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   labelText: {
     color: colors.color2,
     fontSize: 18,
-    
+
   },
   textInput: {
     width: '90%',
