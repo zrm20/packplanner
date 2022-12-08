@@ -5,6 +5,7 @@ import { View, Text } from "react-native";
 // import { PersistGate } from 'redux-persist/integration/react';
 // import { persistStore } from 'redux-persist';
 import { Button, Provider as ThemeProvider } from 'react-native-paper';
+import AppNavigator from './src/navigation/AppNavigator/AppNavigator';
 import theme from "./src/theme/theme";
 
 // let persistor = persistStore(store);
@@ -14,12 +15,7 @@ export default function App() {
     // <ReduxProvider store={store}>
     //   <PersistGate loading={null} persistor={persistor}>
     <ThemeProvider theme={theme} >
-      <View style={{ justifyContent: 'center', flex: 1 }}>
-        <Text>Blank Slate</Text>
-        <Button>Hello</Button>
-        <Button mode="contained">Hello</Button>
-        <Button mode="outlined">Hello</Button>
-      </View>
+      <AppNavigator />
     </ThemeProvider>
     //   </PersistGate>
     // </ReduxProvider>
