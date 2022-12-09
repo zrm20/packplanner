@@ -6,7 +6,7 @@ import { View, Text } from "react-native";
 // import { persistStore } from 'redux-persist';
 import { Button, Provider as ThemeProvider } from 'react-native-paper';
 import AppNavigator from './src/navigation/AppNavigator/AppNavigator';
-import theme from "./src/theme/theme";
+import { theme } from "./src/theme/theme";
 
 // let persistor = persistStore(store);
 
