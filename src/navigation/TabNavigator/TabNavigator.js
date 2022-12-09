@@ -18,9 +18,13 @@ export default function TabNavigator({ tabs = {} }) {
       <MaterialCommunityIcons
         name={tabs[route.name].iconName}
         size={iconSize}
-        color={focused ? colors.secondary : colors.primary}
+        color={focused ? colors.primary : colors.secondary}
       />
-    )
+    ),
+    tabBarActiveBackgroundColor: theme.colors.background,
+    tabBarActiveTintColor: theme.colors.primary,
+    tabBarInactiveBackgroundColor: theme.colors.background,
+    tabBarInactiveTintColor: theme.colors.secondary,
   });
 
   return (
