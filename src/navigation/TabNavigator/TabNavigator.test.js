@@ -5,6 +5,9 @@ import { View } from "react-native";
 
 import TabNavigator from './TabNavigator'
 
+// handle console warning by mocking this dependency
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+
 describe('<TabNavigator />', () => {
   let appTabs;
 
