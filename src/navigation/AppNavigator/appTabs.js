@@ -1,8 +1,9 @@
+import LockerStack from "../LockerStack/LockerStack";
 import { InventoryScreen } from "../../components/inventory";
 
 const appTabs = {
   "Locker": {
-    component: InventoryScreen,
+    component: LockerStack,
     iconName: "locker"
   },
   "MyPack": {
