@@ -1,5 +1,4 @@
 export const packs = [
-  {id: 0},
   {
     id: 1,
     brand: 'Osprey',

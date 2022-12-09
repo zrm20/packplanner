@@ -16,10 +16,14 @@ export default function useStyles(props) {
         borderColor: theme.colors.secondary,
         justifyContent: 'space-between',
         alignItems: 'flex-end',
-        paddingHorizontal: theme.space[2]
+        paddingHorizontal: theme.space[2],
       },
       iconGroup: {
 
+      },
+      packsContainer: {
+        padding: theme.space[2],
+        width: '100%',
       },
       text: {
         color: theme.colors.secondary
