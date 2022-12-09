@@ -2,37 +2,13 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { InventoryScreen } from "../../components/inventory";
 import { useTheme } from "react-native-paper";
 
 const iconSize = 24;
 
-const appTabs = {
-  "Locker": {
-    component: InventoryScreen,
-    iconName: "locker"
-  },
-  "MyPack": {
-    component: InventoryScreen,
-    iconName: "bag-personal"
-  },
-  "Water": {
-    component: InventoryScreen,
-    iconName: "cup-water"
-  },
-  "Categories": {
-    component: InventoryScreen,
-    iconName: "tag-multiple"
-  },
-  "Settings": {
-    component: InventoryScreen,
-    iconName: "cog"
-  },
-};
-
 const Tabs = createBottomTabNavigator();
 
-export default function TabNavigator() {
+export default function TabNavigator({ tabs = {} }) {
   const theme = useTheme();
   const { colors } = theme;
 
@@ -40,7 +16,7 @@ export default function TabNavigator() {
     headerShown: false,
     tabBarIcon: ({ focused }) => (
       <MaterialCommunityIcons
-        name={appTabs[route.name].iconName}
+        name={tabs[route.name].iconName}
         size={iconSize}
         color={focused ? colors.secondary : colors.primary}
       />
@@ -52,8 +28,8 @@ export default function TabNavigator() {
       screenOptions={screenOptions}
     >
       {
-        Object.keys(appTabs).map(tab => (
-          <Tabs.Screen name={tab} component={appTabs[tab].component} key={tab} />
+        Object.keys(tabs).map(tab => (
+          <Tabs.Screen name={tab} component={tabs[tab].component} key={tab} />
         ))
       }
     </Tabs.Navigator>
