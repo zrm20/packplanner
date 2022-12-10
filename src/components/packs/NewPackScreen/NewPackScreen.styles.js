@@ -13,6 +13,11 @@ export default function useStyles(props) {
         padding: theme.space[2],
         marginTop: theme.space[2],
         alignItems: 'center'
+      },
+      closeButton: {
+        position: 'absolute',
+        left: theme.space[2],
+        top: theme.space[2],
       }
     }
   );
