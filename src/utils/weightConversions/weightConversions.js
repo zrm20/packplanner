@@ -1,11 +1,13 @@
 export function lbsToKg(lbs) {
   //converts lbs to kg
-  return lbs * 0.453592;
+  const exactKg = lbs * 0.453592;
+  return Math.round(exactKg * 100) / 100;
 }
 
 export function ozToKg(oz) {
   //converts oz to kg
-  return oz * 0.0283495;
+  const exactKg = oz * 0.0283495;
+  return Math.round(exactKg * 100) / 100;
 }
 
 export function ozToLbs(oz) {

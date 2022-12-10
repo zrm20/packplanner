@@ -7,17 +7,16 @@ export default function useStyles(props) {
   const styles = StyleSheet.create(
     {
       container: {
-        backgroundColor: theme.colors.background,
-      },
-      titleContainer: {
-        padding: theme.space[2],
-        marginTop: theme.space[2],
+        flexDirection: 'row',
+        width: '100%',
+        marginVertical: theme.space,
         alignItems: 'center'
       },
-      closeButton: {
-        position: 'absolute',
-        left: theme.space[2],
-        top: theme.space[2],
+      input: {
+        flex: 1
+      },
+      toggleGroup: {
+        marginLeft: theme.space[3]
       }
     }
   );
