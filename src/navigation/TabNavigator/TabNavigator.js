@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { useTheme } from "react-native-paper";
+import { View } from "react-native";
 
 const iconSize = 24;
 
@@ -25,6 +26,7 @@ export default function TabNavigator({ tabs = {} }) {
     tabBarActiveTintColor: theme.colors.primary,
     tabBarInactiveBackgroundColor: theme.colors.background,
     tabBarInactiveTintColor: theme.colors.secondary,
+    tabBarStyle: { borderTopWidth: 0, backgroundColor: theme.colors.background }
   });
 
   return (
