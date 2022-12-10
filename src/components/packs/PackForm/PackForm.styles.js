@@ -8,7 +8,7 @@ export default function useStyles(props) {
     {
       container: {
         padding: theme.space[2],
-        alignItems: 'center'
+        alignItems: 'center',
       }
     }
   );

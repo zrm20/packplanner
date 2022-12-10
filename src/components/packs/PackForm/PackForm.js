@@ -1,9 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { KeyboardAvoidingView } from "react-native";
 import { Formik } from 'formik'
 
 import useStyles from "./PackForm.styles"
 import TextInput from "../../formComponents/TextInput/TextInput";
+import WeightInput from "../../formComponents/WeightInput/WeightInput";
 
 export default function PackForm(props) {
   const styles = useStyles();
@@ -11,8 +12,8 @@ export default function PackForm(props) {
   const initialValues = props.initialValues || {
     brand: "",
     model: "",
-    capacity: "",
-    weight: ""
+    capacity: 0,
+    weight: 0
   };
 
   return (
@@ -20,12 +21,12 @@ export default function PackForm(props) {
       initialValues={initialValues}
       onSubmit={props.handleSubmit}
     >
-      <View style={styles.container} >
+      <KeyboardAvoidingView style={styles.container} behavior="padding" >
         <TextInput name="brand" label="Brand" />
         <TextInput name="model" label="Model" />
         <TextInput name="capacity" label="Capacity" />
-        <TextInput name="weight" label="Weight" />
-      </View >
+        <WeightInput name="weight" label="Weight" />
+      </KeyboardAvoidingView >
     </Formik>
   );
 };

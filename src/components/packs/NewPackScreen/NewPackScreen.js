@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
 import { Text, Title } from "react-native-paper";
 
 import { SafeAreaScreen } from "../../ui";
@@ -10,12 +10,14 @@ export default function NewPackScreen(props) {
   const styles = useStyles();
 
   return (
-    <SafeAreaScreen style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Title>New Pack</Title>
-      </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaScreen style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Title>New Pack</Title>
+        </View>
 
-      <PackForm />
-    </SafeAreaScreen>
+        <PackForm />
+      </SafeAreaScreen>
+    </TouchableWithoutFeedback>
   );
 };
