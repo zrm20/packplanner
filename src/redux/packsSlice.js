@@ -22,15 +22,15 @@ const packsSlice = createSlice(
       },
       updatePack: (state, action) => {
         const { pack } = action.payload;
+
         if (!pack) {
           throw new Error('No pack included in payload')
         };
 
-        const index = state.packs.findIndex(item => item.id);
+        const index = state.packs.findIndex(item => item.id === pack.id);
         if (index === -1) {
           throw new Error('Could not find that pack')
         };
-
         state.packs[index] = pack;
       },
       deletePack: (state, action) => {

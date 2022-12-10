@@ -12,7 +12,7 @@ export default function TextInput(props) {
   return (
     <View style={[styles.container, props.style]} >
       <PaperInput
-        values={field.value}
+        value={field.value}
         onChangeText={util.setValue}
         error={meta.touched && meta.error}
         label={props.label || props.name}
