@@ -39,7 +39,7 @@ const packsSlice = createSlice(
           throw new Error('No pack included in payload')
         };
 
-        return state.packs.filter(item => item.id !== pack.id);
+        state.packs = state.packs.filter(item => item.id !== pack.id);
       }
     }
   }
