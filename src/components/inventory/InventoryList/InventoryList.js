@@ -3,13 +3,14 @@ import { View, FlatList } from "react-native";
 import { Text, IconButton, Surface } from "react-native-paper";
 
 import useStyles from "./InventoryList.styles"
-import { inventory } from "../../../../archive/dummyData";
 import InventoryItem from "../InventoryItem/InventoryItem";
 import { useNavigation } from "@react-navigation/native";
+import useInventory from "../../../hooks/inventory/useInventory";
 
 export default function InventoryList(props) {
   const styles = useStyles();
   const { navigate } = useNavigation();
+  const inventory = useInventory();
 
   return (
     <View style={styles.container} >
