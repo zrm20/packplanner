@@ -7,12 +7,9 @@ export default function useStyles(props) {
   const styles = StyleSheet.create(
     {
       container: {
-        backgroundColor: theme.colors.background,
-      },
-      titleContainer: {
-        padding: theme.space[2],
-        marginTop: theme.space[2],
-        alignItems: 'center'
+        width: '100%',
+        marginBottom: theme.space[2],
+        paddingHorizontal: theme.space[3]
       }
     }
   );

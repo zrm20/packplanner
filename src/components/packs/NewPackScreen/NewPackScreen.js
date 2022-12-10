@@ -1,7 +1,9 @@
 import React from "react";
-import { Text } from "react-native-paper";
+import { View } from "react-native";
+import { Text, Title } from "react-native-paper";
 
 import { SafeAreaScreen } from "../../ui";
+import PackForm from "../PackForm/PackForm";
 import useStyles from "./NewPackScreen.styles"
 
 export default function NewPackScreen(props) {
@@ -9,7 +11,11 @@ export default function NewPackScreen(props) {
 
   return (
     <SafeAreaScreen style={styles.container}>
-      <Text variant="displayLarge">New Pack</Text>
+      <View style={styles.titleContainer}>
+        <Title>New Pack</Title>
+      </View>
+
+      <PackForm />
     </SafeAreaScreen>
   );
 };
