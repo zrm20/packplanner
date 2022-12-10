@@ -27,6 +27,9 @@ export default function useStyles(props) {
       },
       text: {
         color: theme.colors.secondary
+      },
+      emptyText: {
+        textAlign: 'center',
       }
     }
   );

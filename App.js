@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, useColorScheme } from "react-native";
-// import store from './redux/Store'
-// import { Provider as ReduxProvider } from 'react-redux'
+import store from './src/redux/store';
+import { Provider as ReduxProvider } from 'react-redux'
 // import { PersistGate } from 'redux-persist/integration/react';
 // import { persistStore } from 'redux-persist';
 import { Provider as ThemeProvider } from 'react-native-paper';
@@ -16,13 +16,11 @@ export default function App() {
   const theme = colorScheme === 'light' ? lightTheme : darkTheme
 
   return (
-    // <ReduxProvider store={store}>
-    //   <PersistGate loading={null} persistor={persistor}>
-    <ThemeProvider theme={theme} >
-      <AppNavigator />
-    </ThemeProvider>
-    //   </PersistGate>
-    // </ReduxProvider>
+    <ReduxProvider store={store}>
+      <ThemeProvider theme={theme} >
+        <AppNavigator />
+      </ThemeProvider>
+    </ReduxProvider >
   );
 }
 
