@@ -18,7 +18,10 @@ export default function useStyles(props) {
         alignItems: 'center'
       },
       textInput: {
-        width: '50%'
+        flex: 1
+      },
+      unitSelector: {
+        marginLeft: theme.space[3]
       }
     }
   );

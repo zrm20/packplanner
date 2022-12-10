@@ -63,6 +63,7 @@ export default function WeightInput(props) {
         <ToggleButton.Row
           value={inputUnits}
           onValueChange={setInputUnits}
+          style={styles.unitSelector}
         >
           <ToggleButton icon={() => <ToggleButtonText label="oz" />} value="oz" />
           <ToggleButton icon={() => <ToggleButtonText label="lb" />} value="lb" />
