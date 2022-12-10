@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { useTheme } from "react-native-paper";
-import { View } from "react-native";
 
 const iconSize = 24;
 
@@ -19,14 +18,18 @@ export default function TabNavigator({ tabs = {} }) {
       <MaterialCommunityIcons
         name={tabs[route.name].iconName}
         size={iconSize}
-        color={focused ? colors.primary : colors.secondary}
+        color={focused ? colors.tertiaryContainer : colors.surface}
       />
     ),
-    tabBarActiveBackgroundColor: theme.colors.background,
-    tabBarActiveTintColor: theme.colors.primary,
-    tabBarInactiveBackgroundColor: theme.colors.background,
-    tabBarInactiveTintColor: theme.colors.secondary,
-    tabBarStyle: { borderTopWidth: 0, backgroundColor: theme.colors.background }
+    tabBarActiveBackgroundColor: theme.colors.onSurface,
+    tabBarActiveTintColor: theme.colors.tertiaryContainer,
+    tabBarInactiveBackgroundColor: theme.colors.onSurface,
+    tabBarInactiveTintColor: theme.colors.surface,
+    tabBarStyle: {
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.outline,
+      backgroundColor: theme.colors.onSurface
+    }
   });
 
   return (
