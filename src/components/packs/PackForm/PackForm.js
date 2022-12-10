@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import { TextInput as PaperInput } from "react-native-paper";
 
 import useStyles from "./PackForm.styles"
-import { TextInput, WeightInput, NumberInput } from "../../formComponents";
+import { TextInput, WeightInput, NumberInput, SubmitButton } from "../../formComponents";
 
 export default function PackForm(props) {
   const styles = useStyles();
@@ -19,13 +19,15 @@ export default function PackForm(props) {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={props.handleSubmit}
+      onSubmit={props.onSubmit}
     >
       <KeyboardAvoidingView style={styles.container} behavior="padding" >
         <TextInput name="brand" label="Brand" />
         <TextInput name="model" label="Model" />
         <NumberInput name="capacity" label="Capacity" right={<PaperInput.Affix text='liters' />} />
         <WeightInput name="weight" label="Weight" />
+
+        <SubmitButton mode='contained'>{props.submitText || "Add Pack"}</SubmitButton>
       </KeyboardAvoidingView >
     </Formik>
   );

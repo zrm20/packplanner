@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuid } from "uuid";
+import uuid from "react-native-uuid";
 
 import { packs } from "../../archive/dummyData";
 
@@ -17,8 +17,7 @@ const packsSlice = createSlice(
           throw new Error('No pack included in payload')
         };
 
-        pack.id = uuid();
-
+        pack.id = uuid.v4();
         state.packs.push(pack);
       },
       updatePack: (state, action) => {
@@ -48,4 +47,4 @@ const packsSlice = createSlice(
 
 export default packsSlice.reducer;
 
-// export const { };
+export const { addPack, updatePack, deletePack } = packsSlice.actions;

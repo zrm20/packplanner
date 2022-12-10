@@ -1,14 +1,22 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
-import { FAB, Text, Title } from "react-native-paper";
-import { isAndroid } from "../../../utils";
+import { FAB, Title } from "react-native-paper";
+import { useDispatch } from "react-redux";
 
+import { addPack } from "../../../redux/packsSlice";
+import { isAndroid } from "../../../utils";
 import { SafeAreaScreen } from "../../ui";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./NewPackScreen.styles"
 
 export default function NewPackScreen({ navigation, ...props }) {
   const styles = useStyles();
+  const dispatch = useDispatch();
+
+  function handleSubmit(pack) {
+    dispatch(addPack({ pack }));
+    navigation.goBack();
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -27,7 +35,7 @@ export default function NewPackScreen({ navigation, ...props }) {
           <Title>New Pack</Title>
         </View>
 
-        <PackForm />
+        <PackForm onSubmit={handleSubmit} />
       </SafeAreaScreen>
     </TouchableWithoutFeedback>
   );
