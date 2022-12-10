@@ -1,10 +1,10 @@
 import React from "react";
 import { KeyboardAvoidingView } from "react-native";
 import { Formik } from 'formik'
+import { TextInput as PaperInput } from "react-native-paper";
 
 import useStyles from "./PackForm.styles"
-import TextInput from "../../formComponents/TextInput/TextInput";
-import WeightInput from "../../formComponents/WeightInput/WeightInput";
+import { TextInput, WeightInput, NumberInput } from "../../formComponents";
 
 export default function PackForm(props) {
   const styles = useStyles();
@@ -24,7 +24,7 @@ export default function PackForm(props) {
       <KeyboardAvoidingView style={styles.container} behavior="padding" >
         <TextInput name="brand" label="Brand" />
         <TextInput name="model" label="Model" />
-        <TextInput name="capacity" label="Capacity" />
+        <NumberInput name="capacity" label="Capacity" right={<PaperInput.Affix text='liters' />} />
         <WeightInput name="weight" label="Weight" />
       </KeyboardAvoidingView >
     </Formik>
