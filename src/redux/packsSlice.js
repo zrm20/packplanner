@@ -40,6 +40,14 @@ const packsSlice = createSlice(
         };
 
         state.packs = state.packs.filter(item => item.id !== pack.id);
+      },
+      toggleSelectedPack: (state, action) => {
+        const { id } = action.payload;
+        if (state.selectedPack === id) {
+          state.selectedPack = null;
+        } else {
+          state.selectedPack = id
+        };
       }
     }
   }
@@ -47,4 +55,4 @@ const packsSlice = createSlice(
 
 export default packsSlice.reducer;
 
-export const { addPack, updatePack, deletePack } = packsSlice.actions;
+export const { addPack, updatePack, deletePack, toggleSelectedPack } = packsSlice.actions;

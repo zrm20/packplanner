@@ -16,6 +16,10 @@ export default function useStyles(props) {
       },
       title: {
         flexWrap: 'wrap'
+      },
+      selectedPack: {
+        borderWidth: 2,
+        borderColor: theme.colors.primary
       }
     }
   );

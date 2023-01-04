@@ -1,43 +1,30 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Text, Surface, Title, Subheading } from "react-native-paper";
 
 import useStyles from "./PackItem.styles"
 
-export default function PackItem({ pack = {}, ...props }) {
-  const { navigate } = useNavigation();
-
-  const {
-    brand = "Osprey",
-    model = "Exos",
-    weight = 4.1
-  } = pack;
-
+export default function PackItem({ pack, ...props }) {
   const styles = useStyles();
 
-  function navToEdit() {
-    navigate('EditPack', { pack });
-  };
-
   return (
-    <TouchableOpacity onLongPress={navToEdit}>
-      <Surface style={styles.container} >
+    <TouchableOpacity onLongPress={pack.openEdit} onPress={pack.select} >
+      <Surface style={[styles.container, pack.isSelected ? styles.selectedPack : null]} >
         <Title
           style={styles.title}
           adjustsFontSizeToFit
           numberOfLines={2}
         >
-          {brand}
+          {pack.brand}
         </Title>
         <Subheading
           style={styles.subheading}
           adjustsFontSizeToFit
           numberOfLines={1}
         >
-          {model}
+          {pack.model}
         </Subheading>
-        <Text style={styles.weight}>{weight}</Text>
+        <Text style={styles.weight}>{pack.weight}</Text>
       </Surface>
     </TouchableOpacity>
   );

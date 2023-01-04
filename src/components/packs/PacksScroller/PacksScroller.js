@@ -9,7 +9,7 @@ import useStyles from "./PacksScroller.styles"
 
 export default function PacksScroller(props) {
   const { navigate } = useNavigation();
-  const packs = usePacks();
+  const { packs, selectedPack } = usePacks();
   const styles = useStyles();
 
   function openNewPackScreen() {
