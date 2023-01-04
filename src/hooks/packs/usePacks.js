@@ -1,6 +1,6 @@
-import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
+
 import { toggleSelectedPack, deletePack } from "../../redux/packsSlice";
 
 export default function usePacks() {
@@ -17,30 +17,7 @@ export default function usePacks() {
       ...pack,
       isSelected: pack.id === packsSlice.selectedPack,
       select() {
-        dispatch(toggleSelectedPack({ id: pack.id }));
-      },
-      delete() {
-        Alert.alert(
-          "Are you sure?", // Alert title
-          `Do you want to perminantly delete ${pack.brand} ${pack.model}?`, // Alert message
-          [
-            {
-              // first button option
-              text: "Cancel",
-              onPress: () => null,
-              style: 'cancel' // iOS only
-            },
-            {
-              // second button option
-              text: "Delete pack",
-              onPress: dispatch(deletePack(pack)),
-              style: 'destructive' // iOS only
-            }
-          ]
-        );
-      },
-      update() {
-        console.log("TODO ADD UPDATE");
+        // dispatch(toggleSelectedPack({ id: pack.id }));
       },
       openEdit() {
         navigate("EditPack", { pack })
@@ -48,8 +25,11 @@ export default function usePacks() {
     }
   ));
 
-  const selectedPackIndex = packs.findIndex(pack => pack.id === packsSlice.selectedPack);
-  const selectedPack = selectedPackIndex === -1 ? null : packs[selectedPackIndex];
+  const selectedPack = packs.find(pack => pack.id === packsSlice.selectedPack);
 
-  return { ...packsSlice, packs, selectedPack };
+  function getPackById(id) {
+    return packs.find(pack => pack.id === id);
+  };
+
+  return { packsSlice, packs, selectedPack, getPackById };
 };
