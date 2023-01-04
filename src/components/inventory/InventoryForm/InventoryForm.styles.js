@@ -8,7 +8,11 @@ export default function useStyles(props) {
     {
       container: {
         padding: theme.space[2],
+        height: '100%',
         alignItems: 'center',
+      },
+      scrollView: {
+        width: '100%'
       },
       liquidEnableSection: {
         marginBottom: theme.space[2],
