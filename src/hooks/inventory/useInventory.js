@@ -1,11 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, removeItem, updateItem as updateAction, toggleInPack as toggleAction } from "../../redux/inventorySlice";
 
+import { addItem, removeItem, updateItem as updateAction, toggleInPack as toggleAction } from "../../redux/inventorySlice";
 import { extractId } from "../../utils";
 
 export default function useInventory() {
   const inventorySlice = useSelector(state => state.inventory);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { navigate } = useNavigation();
 
   if (!inventorySlice) {
     throw new Error("useInventory must be used within a Redux Provider that contains an inventory reducer");
@@ -18,7 +20,7 @@ export default function useInventory() {
         dispatch(toggleAction({ id: item.id }));
       },
       openEdit() {
-
+        navigate("EditItem", { item })
       }
 
     }

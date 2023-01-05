@@ -23,8 +23,12 @@ export default function useStyles(props) {
         flexDirection: 'row',
       },
       listContainer: {
-        margin: theme.space[2],
-        paddingBottom: theme.space[2]
+        marginTop: theme.space[2],
+        flex: 1,
+        width: '100%',
+      },
+      listSurface: {
+        height: '100%',
       }
     }
   );

@@ -23,7 +23,7 @@ const inventorySlice = createSlice(
       removeItem: (state, action) => {
         const { id } = action.payload;
 
-        if (!id || typeof id !== 'string') {
+        if (!id) {
           throw new Error("No item id recieved");
         };
 
@@ -32,7 +32,7 @@ const inventorySlice = createSlice(
       updateItem: (state, action) => {
         const { id, newItem } = action.payload;
 
-        if (!id || typeof id !== 'string') {
+        if (!id) {
           throw new Error("No item id recieved");
         };
 
@@ -54,7 +54,7 @@ const inventorySlice = createSlice(
       toggleInPack: (state, action) => {
         const { id } = action.payload;
 
-        if (!id || typeof id !== 'string') {
+        if (!id) {
           throw new Error("No item id recieved");
         };
 

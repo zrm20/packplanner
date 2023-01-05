@@ -10,7 +10,8 @@ export default function useStyles(props) {
         borderBottomWidth: theme.borderWeight[1],
         borderColor: theme.colors.outlineVariant
       },
-      icon: {
+      checkmark: {
+        marginLeft: theme.space[1]
       }
     }
   );

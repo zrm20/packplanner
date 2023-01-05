@@ -1,16 +1,16 @@
 import React from "react";
 import { View, FlatList } from "react-native";
 import { Text, IconButton, Surface } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 import useStyles from "./InventoryList.styles"
 import InventoryItem from "../InventoryItem/InventoryItem";
-import { useNavigation } from "@react-navigation/native";
-import useInventory from "../../../hooks/inventory/useInventory";
+import { useInventory } from "../../../hooks";
 
 export default function InventoryList(props) {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const inventory = useInventory();
+  const { inventory } = useInventory();
 
   return (
     <View style={styles.container} >
@@ -24,13 +24,20 @@ export default function InventoryList(props) {
         </View>
       </View>
 
-      <Surface style={styles.listContainer}>
-        <FlatList
-          data={inventory}
-          keyExtractor={item => item.id}
-          renderItem={data => <InventoryItem item={data.item} />}
-        />
-      </Surface>
+      <View style={styles.listContainer}>
+        <Surface style={styles.listSurface} >
+          <FlatList
+            data={inventory}
+            keyExtractor={item => item.id}
+            renderItem={data => (
+              <InventoryItem
+                item={data.item}
+                onPress={data.item.openEdit}
+              />
+            )}
+          />
+        </Surface>
+      </View>
     </View>
   );
 };

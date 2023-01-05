@@ -7,7 +7,6 @@ export default function useStyles(props) {
   const styles = StyleSheet.create(
     {
       container: {
-
       }
     }
   );
