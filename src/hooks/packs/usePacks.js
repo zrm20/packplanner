@@ -1,4 +1,3 @@
-import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -9,33 +8,7 @@ import {
   addPack as addAction
 } from "../../redux/packsSlice";
 
-import { extractId } from "../../utils";
-
-function confirmDelete(deleteFn, pack, callback) {
-  Alert.alert(
-    "Are you sure?", // Alert title
-    `Do you want to perminantly delete ${pack ? pack.brand + ' ' + pack.model : 'this pack'}?`, // Alert message
-    [
-      {
-        // first button option
-        text: "Cancel",
-        onPress: () => null,
-        style: 'cancel' // iOS only
-      },
-      {
-        // second button option
-        text: "Delete pack",
-        onPress: () => {
-          deleteFn();
-          if (callback) {
-            callback();
-          };
-        },
-        style: 'destructive' // iOS only
-      }
-    ]
-  );
-};
+import { confirmDelete } from "../../utils";
 
 export default function usePacks() {
   const packsSlice = useSelector(state => state.packs);
@@ -66,7 +39,7 @@ export default function usePacks() {
       delete(callback) {
         confirmDelete(
           () => dispatch(deleteAction({ id: pack.id })),
-          pack,
+          `Do you want to perminantly delete ${pack.brand} ${pack.model}?`,
           callback
         );
       },
