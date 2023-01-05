@@ -1,20 +1,19 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
 import { FAB, Title } from "react-native-paper";
-import { useDispatch } from "react-redux";
 
-import { addPack } from "../../../redux/packsSlice";
 import { isAndroid } from "../../../utils";
 import { SafeAreaScreen } from "../../ui";
+import { usePacks } from "../../../hooks";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./NewPackScreen.styles"
 
 export default function NewPackScreen({ navigation, ...props }) {
   const styles = useStyles();
-  const dispatch = useDispatch();
+  const { addPack } = usePacks();
 
   function handleSubmit(pack) {
-    dispatch(addPack({ pack }));
+    addPack(pack);
     navigation.goBack();
   };
 

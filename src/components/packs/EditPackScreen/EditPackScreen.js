@@ -1,21 +1,20 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
 import { Button, FAB, Title } from "react-native-paper";
-import { useDispatch } from "react-redux";
-import useDeletePack from "../../../hooks/packs/useDeletePack";
 
-import { updatePack } from "../../../redux/packsSlice";
-import { isAndroid } from "../../../utils";
+import { usePacks } from "../../../hooks";
+import { extractId, isAndroid } from "../../../utils";
 import { SafeAreaScreen } from "../../ui";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./EditPackScreen.styles"
 
 export default function EditPackScreen({ route, navigation, ...props }) {
   const styles = useStyles();
-  const deletePack = useDeletePack();
-  const dispatch = useDispatch();
+  const { getPackById } = usePacks();
 
-  const { pack } = route.params;
+  const packId = extractId(route.params.pack);
+  // need to use getPackById to recieve the full pack object with methods
+  const pack = getPackById(packId);
 
   if (!pack) {
     <SafeAreaScreen style={styles.container}>
@@ -24,9 +23,12 @@ export default function EditPackScreen({ route, navigation, ...props }) {
     </SafeAreaScreen>
   }
 
-  function handleSubmit(pack) {
-    dispatch(updatePack({ pack }));
-    navigation.goBack();
+  function handleSubmit(newValues) {
+    pack.update(newValues, navigation.goBack);
+  };
+
+  function handleDelete() {
+    pack.delete(() => navigation.navigate("Locker"));
   };
 
   return (
@@ -46,17 +48,20 @@ export default function EditPackScreen({ route, navigation, ...props }) {
           <Title>Edit Pack</Title>
         </View>
 
-        <PackForm
-          onSubmit={handleSubmit}
-          initialValues={{ ...pack }}
-          submitText="Update Pack"
-        />
+        {
+          pack?.baseFields &&
+          <PackForm
+            onSubmit={handleSubmit}
+            initialValues={pack.baseFields}
+            submitText="Update Pack"
+          />
+        }
 
         <View style={styles.deleteContainer}>
           <Button
             style={styles.deleteButton}
             mode="contained"
-            onPress={() => deletePack(pack)}
+            onPress={handleDelete}
           >
             Delete Pack
           </Button>

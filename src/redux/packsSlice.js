@@ -21,25 +21,31 @@ const packsSlice = createSlice(
         state.packs.push(pack);
       },
       updatePack: (state, action) => {
-        const { pack } = action.payload;
+        const { id, newValues } = action.payload;
 
-        if (!pack) {
-          throw new Error('No pack included in payload')
+        if (!id) {
+          throw new Error('No pack id recieved to update')
         };
 
-        const index = state.packs.findIndex(item => item.id === pack.id);
-        if (index === -1) {
-          throw new Error('Could not find that pack')
+        const indexToUpdate = state.packs.findIndex(pack => pack.id === id);
+        if (indexToUpdate === -1) {
+          throw new Error('No pack with that id')
         };
-        state.packs[index] = pack;
+
+        state.packs[indexToUpdate] = {
+          ...state.packs[indexToUpdate],
+          ...newValues,
+          // ensure that the id goes unchanged
+          id: state.packs[indexToUpdate].id
+        };
       },
       deletePack: (state, action) => {
-        const { pack } = action.payload;
-        if (!pack) {
-          throw new Error('No pack included in payload')
+        const { id } = action.payload;
+        if (!id) {
+          throw new Error('No pack id recieved to delete')
         };
 
-        state.packs = state.packs.filter(item => item.id !== pack.id);
+        state.packs = state.packs.filter(pack => pack.id !== id);
       },
       toggleSelectedPack: (state, action) => {
         const { id } = action.payload;
