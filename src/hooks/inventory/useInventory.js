@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 
-import { addItem, removeItem, updateItem as updateAction, toggleInPack as toggleAction } from "../../redux/inventorySlice";
+import {
+  addItem as addAction,
+  deleteItem as deleteAction,
+  updateItem as updateAction,
+  toggleInPack as toggleAction
+}
+  from "../../redux/inventorySlice";
 import { extractId } from "../../utils";
 
 export default function useInventory() {
@@ -15,14 +21,27 @@ export default function useInventory() {
 
   const inventory = inventorySlice.inventory.map(item => (
     {
+      // item properties
       ...item,
+
+      // base fields is used for distributing only the original fields
+      baseFields: {
+        ...item
+      },
+
+      // item methods
       toggleInPack() {
         dispatch(toggleAction({ id: item.id }));
       },
       openEdit() {
         navigate("EditItem", { item })
+      },
+      update(newValues, callback) {
+        dispatch(updateAction({ newValues, id: item.id }));
+        if (callback) {
+          callback();
+        };
       }
-
     }
   ));
 

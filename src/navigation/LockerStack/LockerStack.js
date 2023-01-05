@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { InventoryScreen, NewItemScreen } from '../../components/inventory';
+import { InventoryScreen, NewItemScreen, EditItemScreen } from '../../components/inventory';
 import { NewPackScreen, EditPackScreen } from '../../components/packs';
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +19,7 @@ export default function LockerStack() {
         <Stack.Screen name="NewPack" component={NewPackScreen} />
         <Stack.Screen name="EditPack" component={EditPackScreen} />
         <Stack.Screen name="NewItem" component={NewItemScreen} />
+        <Stack.Screen name="EditItem" component={EditItemScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

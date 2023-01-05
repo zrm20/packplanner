@@ -20,7 +20,7 @@ const inventorySlice = createSlice(
         item.id = uuid.v4();
         state.inventory.push(item);
       },
-      removeItem: (state, action) => {
+      deleteItem: (state, action) => {
         const { id } = action.payload;
 
         if (!id) {
@@ -30,14 +30,14 @@ const inventorySlice = createSlice(
         state.inventory = state.inventory.filter(item => item.id !== id);
       },
       updateItem: (state, action) => {
-        const { id, newItem } = action.payload;
+        const { id, newValues } = action.payload;
 
         if (!id) {
           throw new Error("No item id recieved");
         };
 
-        if (!newItem) {
-          throw new Error("newItem was not recieved");
+        if (!newValues) {
+          throw new Error("newValues were not recieved");
         };
 
         const indexToUpdate = state.inventory.findIndex(item => item.id === id);
@@ -46,10 +46,12 @@ const inventorySlice = createSlice(
           throw new Error("Item with that ID was not found");
         };
 
-        // ensure the original item id exists on the updated item object
-        newItem.id = state.inventory[indexToUpdate].id;
-
-        state.inventory[indexToUpdate] = newItem;
+        state.inventory[indexToUpdate] = {
+          ...state.inventory[indexToUpdate],
+          ...newValues,
+          // ensure that id is unchanged
+          id: state.inventory[indexToUpdate].id
+        };
       },
       toggleInPack: (state, action) => {
         const { id } = action.payload;
@@ -72,4 +74,4 @@ const inventorySlice = createSlice(
 
 export default inventorySlice.reducer;
 
-export const { addItem, removeItem, updateItem, toggleInPack } = inventorySlice.actions;
+export const { addItem, deleteItem, updateItem, toggleInPack } = inventorySlice.actions;
