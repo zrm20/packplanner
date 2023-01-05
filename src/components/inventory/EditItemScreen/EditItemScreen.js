@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
-import { FAB, Title } from "react-native-paper";
+import { FAB, Title, Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 import useStyles from "./EditItemScreen.styles";
@@ -21,6 +21,10 @@ export default function EditItemScreen({ route, ...props }) {
     item.update(newValues, () => navigate('Locker'));
   };
 
+  function handleDelete() {
+    item.delete(() => navigate('Locker'))
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaScreen style={styles.container}>
@@ -34,8 +38,6 @@ export default function EditItemScreen({ route, ...props }) {
               size="small"
             />
           }
-
-          <Title>Edit Item</Title>
         </View>
 
         {
@@ -43,9 +45,19 @@ export default function EditItemScreen({ route, ...props }) {
           <InventoryForm
             onSubmit={handleSubmit}
             initialValues={item.baseFields}
-            submitText="Update Pack"
+            submitText="Update Item"
           />
         }
+
+        <View style={styles.deleteContainer}>
+          <Button
+            style={styles.deleteButton}
+            mode="contained"
+            onPress={handleDelete}
+          >
+            Delete Item
+          </Button>
+        </View>
       </SafeAreaScreen>
     </TouchableWithoutFeedback>
   );

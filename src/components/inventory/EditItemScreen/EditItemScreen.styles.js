@@ -18,6 +18,13 @@ export default function useStyles(props) {
         position: 'absolute',
         left: theme.space[2],
         top: theme.space[2],
+      },
+      deleteContainer: {
+        width: '100%',
+        alignItems: 'center',
+      },
+      deleteButton: {
+        backgroundColor: theme.colors.error
       }
     }
   );

@@ -8,7 +8,7 @@ import {
   toggleInPack as toggleAction
 }
   from "../../redux/inventorySlice";
-import { extractId } from "../../utils";
+import { extractId, confirmDelete } from "../../utils";
 
 export default function useInventory() {
   const inventorySlice = useSelector(state => state.inventory);
@@ -41,6 +41,13 @@ export default function useInventory() {
         if (callback) {
           callback();
         };
+      },
+      delete(callback) {
+        confirmDelete(
+          () => dispatch(deleteAction({ id: item.id })),
+          `Do you want to perminantly delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
+          callback
+        );
       }
     }
   ));
