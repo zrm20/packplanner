@@ -60,17 +60,7 @@ export default function useInventory() {
   };
 
   function addToInventory(newItem) {
-    dispatch(addItem({ item: newItem }));
-  };
-
-  function deleteFromInventory(itemOrId) {
-    const id = extractId(itemOrId);
-    dispatch(removeItem(removeItem({ id })));
-  };
-
-  function updateItem(oldItemOrId, newItem) {
-    const id = extractId(oldItemOrId);
-    dispatch(updateAction({ id, newItem }));
+    dispatch(addAction({ item: newItem }));
   };
 
   function filterByCategory(category, arrayOfItems) {
@@ -90,8 +80,6 @@ export default function useInventory() {
     waterContainersInPack,
     getItemById,
     addToInventory,
-    deleteFromInventory,
-    updateItem,
     filterByCategory
   };
 };
