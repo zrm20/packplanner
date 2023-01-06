@@ -1,16 +1,35 @@
 import { useNavigation } from "@react-navigation/native";
 
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
+import { confirmDelete } from "../../utils";
 import {
+  Item as StateItem,
+  ItemValues,
+  InventoryState,
   addItem as addAction,
   deleteItem as deleteAction,
   updateItem as updateAction,
-  toggleInPack as toggleAction
-}
-  from "../../redux/inventorySlice";
-import { extractId, confirmDelete } from "../../utils";
+  toggleInPack as toggleAction,
+} from "../../redux/inventorySlice";
 
-export default function useInventory() {
+interface InventoryHook {
+  inventorySlice: InventoryState,
+  inventory: Item[];
+  itemsInPack: Item[];
+  waterContainersInPack: Item[];
+  getItemById(id: string): Item;
+  addToInventory(pack: ItemValues): void;
+};
+
+export interface Item extends StateItem {
+  baseFields: StateItem;
+  toggleInPack(): void;
+  openEdit(): void;
+  update(newValues: ItemValues, callback?: Function): void;
+  delete(callback?: Function): void;
+};
+
+export default function useInventory(): InventoryHook {
   const inventorySlice = useSelector(state => state.inventory);
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
@@ -19,58 +38,49 @@ export default function useInventory() {
     throw new Error("useInventory must be used within a Redux Provider that contains an inventory reducer");
   };
 
-  const inventory = inventorySlice.inventory.map(item => (
-    {
-      // item properties
-      ...item,
+  function createItem(item: StateItem): Item {
+    return {
+       // item properties
+       ...item,
 
-      // base fields is used for distributing only the original fields
-      baseFields: {
-        ...item
-      },
-
-      // item methods
-      toggleInPack() {
-        dispatch(toggleAction({ id: item.id }));
-      },
-      openEdit() {
-        navigate("EditItem", { item })
-      },
-      update(newValues, callback) {
-        dispatch(updateAction({ newValues, id: item.id }));
-        if (callback) {
-          callback();
-        };
-      },
-      delete(callback) {
-        confirmDelete(
-          () => dispatch(deleteAction({ id: item.id })),
-          `Do you want to perminantly delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
-          callback
-        );
-      }
+       // base fields is used for distributing only the original fields
+       baseFields: {
+         ...item
+       },
+ 
+       // item methods
+       toggleInPack() {
+         dispatch(toggleAction({ id: item.id }));
+       },
+       openEdit() {
+         navigate("EditItem", { item })
+       },
+       update(newValues, callback) {
+         dispatch(updateAction({ newValues, id: item.id }));
+         if (callback) {
+           callback();
+         };
+       },
+       delete(callback) {
+         confirmDelete(
+           () => dispatch(deleteAction({ id: item.id })),
+           `Do you want to perminantly delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
+           callback
+         );
+       }
     }
-  ));
+  };
 
-  const itemsInPack = inventory.filter(item => item.inPack);
-  const waterContainersInPack = inventory.filter(item => item.inPack && item.liquidCapacity > 0);
+  const inventory: Item[] = inventorySlice.inventory.map(createItem);
+  const itemsInPack: Item[] = inventory.filter(item => item.inPack);
+  const waterContainersInPack: Item[] = inventory.filter(item => item.inPack && item.liquidCapacity > 0);
 
-  function getItemById(id) {
+  function getItemById(id: string): Item {
     return inventory.find(item => item.id === id);
   };
 
-  function addToInventory(newItem) {
+  function addToInventory(newItem: ItemValues): void {
     dispatch(addAction({ item: newItem }));
-  };
-
-  function filterByCategory(category, arrayOfItems) {
-    const items = arrayOfItems || inventory;
-
-    if (typeof items !== 'array') {
-      throw new Error("Invalid argument. filterByCategory requires array of items to filter")
-    };
-
-    return items.filter(item => item.category === category);
   };
 
   return {
@@ -80,6 +90,5 @@ export default function useInventory() {
     waterContainersInPack,
     getItemById,
     addToInventory,
-    filterByCategory
   };
 };

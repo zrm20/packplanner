@@ -3,7 +3,7 @@ import uuid from "react-native-uuid";
 
 import { inventory } from "../../archive/dummyData";
 
-interface ItemValues {
+export interface ItemValues {
   brand?: string;
   name: string;
   weight: number;
@@ -11,15 +11,15 @@ interface ItemValues {
   inPack?: boolean
 };
 
-interface Item extends ItemValues {
+export interface Item extends ItemValues {
   id: string;
 }
 
-interface InitialState {
+export interface InventoryState {
   inventory: Item[];
 };
 
-const initialState: InitialState = { inventory };
+const initialState: InventoryState = { inventory };
 
 
 const inventorySlice = createSlice(
