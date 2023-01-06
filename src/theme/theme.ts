@@ -1,10 +1,22 @@
-import { MD3LightTheme, MD3DarkTheme } from "react-native-paper";
+import { MD3LightTheme, MD3DarkTheme, MD3Theme } from "react-native-paper";
+import { MD3Colors } from "react-native-paper/lib/typescript/types";
 
-const space = [0, 4, 8, 16, 32, 64];
+type Sizes = number[];
 
-const borderWeight = [0, 1, 2, 3, 5, 8];
+interface AppColors extends MD3Colors {};
 
-const lightColors = {
+interface AppTheme extends MD3Theme {
+  colors: AppColors;
+  space: Sizes;
+  borderWeight: Sizes;
+};
+
+
+
+const space: Sizes = [0, 4, 8, 16, 32, 64];
+const borderWeight: Sizes = [0, 1, 2, 3, 5, 8];
+
+const lightColors: AppColors = {
   "primary": "#446813",
   "onPrimary": "#ffffff",
   "primaryContainer": "#c4f18c",
@@ -47,7 +59,7 @@ const lightColors = {
   "backdrop": "rgba(42, 50, 45, 0.4)"
 };
 
-const darkColors = {
+const darkColors: AppColors = {
   "primary": "#a8d473",
   "onPrimary": "#1f3700",
   "primaryContainer": "#2f4f00",
@@ -90,7 +102,7 @@ const darkColors = {
   "backdrop": "rgba(42, 50, 45, 0.4)"
 };
 
-const theme = {
+const theme: AppTheme = {
   ...MD3LightTheme,
   roundness: 1,
   space,
@@ -98,7 +110,7 @@ const theme = {
   colors: lightColors,
 };
 
-const darkTheme = {
+const darkTheme: AppTheme = {
   ...MD3DarkTheme,
   roundness: theme.roundness,
   space: theme.space,
