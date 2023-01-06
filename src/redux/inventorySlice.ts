@@ -1,26 +1,47 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import uuid from "react-native-uuid";
 
 import { inventory } from "../../archive/dummyData";
 
+interface ItemValues {
+  brand?: string;
+  name: string;
+  weight: number;
+  liquidCapacity?: number
+  inPack?: boolean
+};
+
+interface Item extends ItemValues {
+  id: string;
+}
+
+interface InitialState {
+  inventory: Item[];
+};
+
+const initialState: InitialState = { inventory };
+
+
 const inventorySlice = createSlice(
   {
     name: 'inventory',
-    initialState: {
-      inventory
-    },
+    initialState,
     reducers: {
-      addItem: (state, action) => {
+      addItem: (state, action: PayloadAction<{ item: ItemValues }>) => {
         const { item } = action.payload;
 
         if (!item) {
           throw new Error("No item recieved");
         };
 
-        item.id = uuid.v4();
-        state.inventory.push(item);
+        const newItem: Item = {
+          ...item,
+          id: uuid.v4() as string
+        };
+
+        state.inventory.push(newItem);
       },
-      deleteItem: (state, action) => {
+      deleteItem: (state, action: PayloadAction<{ id: string }>) => {
         const { id } = action.payload;
 
         if (!id) {
@@ -29,7 +50,7 @@ const inventorySlice = createSlice(
 
         state.inventory = state.inventory.filter(item => item.id !== id);
       },
-      updateItem: (state, action) => {
+      updateItem: (state, action: PayloadAction<{ id: string, newValues: ItemValues }>) => {
         const { id, newValues } = action.payload;
 
         if (!id) {
@@ -53,7 +74,7 @@ const inventorySlice = createSlice(
           id: state.inventory[indexToUpdate].id
         };
       },
-      toggleInPack: (state, action) => {
+      toggleInPack: (state, action: PayloadAction<{ id: string }>) => {
         const { id } = action.payload;
 
         if (!id) {

@@ -1,26 +1,48 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import uuid from "react-native-uuid";
 
 import { packs } from "../../archive/dummyData";
 
+interface PackValues {
+  brand: string;
+  model: string;
+  capacity: number;
+  weight: number;
+};
+
+interface Pack extends PackValues {
+  id: string;
+};
+
+interface InitialState {
+  selectedPack: string | null;
+  packs: Pack[]
+};
+
+const initialState: InitialState = {
+  selectedPack: null,
+  packs
+};
+
 const packsSlice = createSlice(
   {
     name: 'packs',
-    initialState: {
-      selectedPack: null,
-      packs
-    },
+    initialState,
     reducers: {
-      addPack: (state, action) => {
+      addPack: (state, action: PayloadAction<{ pack: PackValues }>) => {
         const { pack } = action.payload;
         if (!pack) {
           throw new Error('No pack included in payload')
         };
 
-        pack.id = uuid.v4();
-        state.packs.push(pack);
+        const newPack: Pack = {
+          ...pack,
+          id: uuid.v4() as string
+        };
+        
+        state.packs.push(newPack);
       },
-      updatePack: (state, action) => {
+      updatePack: (state, action: PayloadAction<{ id: string, newValues: PackValues}>) => {
         const { id, newValues } = action.payload;
 
         if (!id) {
@@ -39,7 +61,7 @@ const packsSlice = createSlice(
           id: state.packs[indexToUpdate].id
         };
       },
-      deletePack: (state, action) => {
+      deletePack: (state, action: PayloadAction<{ id: string }>) => {
         const { id } = action.payload;
         if (!id) {
           throw new Error('No pack id recieved to delete')
@@ -47,7 +69,7 @@ const packsSlice = createSlice(
 
         state.packs = state.packs.filter(pack => pack.id !== id);
       },
-      toggleSelectedPack: (state, action) => {
+      toggleSelectedPack: (state, action: PayloadAction<{ id: string }>) => {
         const { id } = action.payload;
         if (state.selectedPack === id) {
           state.selectedPack = null;

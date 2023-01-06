@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import packsReducer from './packsSlice';
 import inventoryReducer from "./inventorySlice";
 
-export default configureStore(
+const store = configureStore(
   {
     reducer: {
       packs: packsReducer,
@@ -11,3 +11,8 @@ export default configureStore(
     }
   }
 );
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export default store;
