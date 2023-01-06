@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import { useSelector, useDispatch } from "react-redux";
 
+import { useSelector, useDispatch } from "../../redux/reduxHooks";
 import {
   addItem as addAction,
   deleteItem as deleteAction,

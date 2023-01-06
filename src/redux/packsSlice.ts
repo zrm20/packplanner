@@ -3,23 +3,23 @@ import uuid from "react-native-uuid";
 
 import { packs } from "../../archive/dummyData";
 
-interface PackValues {
+export interface PackValues {
   brand: string;
   model: string;
   capacity: number;
   weight: number;
 };
 
-interface Pack extends PackValues {
+export interface Pack extends PackValues {
   id: string;
 };
 
-interface InitialState {
+export interface PacksState {
   selectedPack: string | null;
   packs: Pack[]
 };
 
-const initialState: InitialState = {
+const initialState: PacksState = {
   selectedPack: null,
   packs
 };
