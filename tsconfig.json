@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "/dist"
   },
   "extends": "expo/tsconfig.base",
   "inlude": ["/src"]
