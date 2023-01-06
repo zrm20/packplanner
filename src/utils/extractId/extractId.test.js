@@ -9,12 +9,12 @@ describe('extractId()', () => {
     expect(result).toBe(input);
   });
 
-  it('should return number if number is passed in', () => {
+  it('should return string if number is passed in', () => {
     const input = 1.23;
 
     const result = extractId(input);
 
-    expect(result).toBe(input);
+    expect(result).toBe(input.toString());
   });
 
   it('should return id property if object is passed in', () => {
