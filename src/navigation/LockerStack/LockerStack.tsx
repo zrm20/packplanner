@@ -8,7 +8,7 @@ import { Pack } from '../../redux/packsSlice';
 type PackId = string;
 type ItemId = string;
 export type LockerStackParamList = {
-  Locker: undefined;
+  Inventory: undefined;
   NewPack: undefined;
   EditPack: { pack: Pack | PackId };
   NewItem: undefined;
@@ -23,7 +23,7 @@ export default function LockerStack() {
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="Locker" component={InventoryScreen} />
+      <Stack.Screen name="Inventory" component={InventoryScreen} />
       <Stack.Group
         screenOptions={{
           presentation: "modal"

@@ -3,12 +3,10 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import TabNavigator from "../TabNavigator/TabNavigator";
 
-export default function AppNavigator({ children }) {
+export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <TabNavigator>
-        {children}
-      </TabNavigator>
+      <TabNavigator />
     </NavigationContainer>
   );
 };

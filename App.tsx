@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import store from './src/redux/store';
 import { Provider as ReduxProvider } from 'react-redux'
 // import { PersistGate } from 'redux-persist/integration/react';
