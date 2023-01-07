@@ -3,38 +3,21 @@ import uuid from "react-native-uuid";
 
 import { inventory } from "../../archive/dummyData";
 
-export interface ItemValues {
-  brand?: string;
-  name: string;
-  weight: number;
-  liquidCapacity?: number
-  inPack?: boolean
-};
-
-export interface Item extends ItemValues {
-  id: string;
-}
-
-export interface InventoryState {
-  inventory: Item[];
-};
-
-const initialState: InventoryState = { inventory };
-
+const initialState: InventorySliceState = { inventory };
 
 const inventorySlice = createSlice(
   {
     name: 'inventory',
     initialState,
     reducers: {
-      addItem: (state, action: PayloadAction<{ item: ItemValues }>) => {
+      addItem: (state, action: PayloadAction<{ item: ItemFormData }>) => {
         const { item } = action.payload;
 
         if (!item) {
           throw new Error("No item recieved");
         };
 
-        const newItem: Item = {
+        const newItem: ItemData = {
           ...item,
           id: uuid.v4() as string
         };
@@ -50,7 +33,7 @@ const inventorySlice = createSlice(
 
         state.inventory = state.inventory.filter(item => item.id !== id);
       },
-      updateItem: (state, action: PayloadAction<{ id: string, newValues: ItemValues }>) => {
+      updateItem: (state, action: PayloadAction<{ id: string, newValues: ItemFormData }>) => {
         const { id, newValues } = action.payload;
 
         if (!id) {

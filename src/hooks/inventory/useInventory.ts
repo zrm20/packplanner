@@ -3,9 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
 import { confirmDelete } from "../../utils";
 import {
-  Item as StateItem,
-  ItemValues,
-  InventoryState,
   addItem as addAction,
   deleteItem as deleteAction,
   updateItem as updateAction,
@@ -13,20 +10,12 @@ import {
 } from "../../redux/inventorySlice";
 
 interface InventoryHook {
-  inventorySlice: InventoryState,
+  inventorySlice: InventorySliceState,
   inventory: Item[];
   itemsInPack: Item[];
   waterContainersInPack: Item[];
   getItemById(id: string): Item;
-  addToInventory(pack: ItemValues): void;
-};
-
-export interface Item extends StateItem {
-  baseFields: StateItem;
-  toggleInPack(): void;
-  openEdit(): void;
-  update(newValues: ItemValues, callback?: Function): void;
-  delete(callback?: Function): void;
+  addToInventory(pack: ItemFormData): void;
 };
 
 export default function useInventory(): InventoryHook {
@@ -38,7 +27,7 @@ export default function useInventory(): InventoryHook {
     throw new Error("useInventory must be used within a Redux Provider that contains an inventory reducer");
   };
 
-  function createItem(item: StateItem): Item {
+  function createItem(item: ItemData): Item {
     return {
        // item properties
        ...item,
@@ -79,7 +68,7 @@ export default function useInventory(): InventoryHook {
     return inventory.find(item => item.id === id);
   };
 
-  function addToInventory(newItem: ItemValues): void {
+  function addToInventory(newItem: ItemFormData): void {
     dispatch(addAction({ item: newItem }));
   };
 

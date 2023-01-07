@@ -2,17 +2,8 @@ import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navig
 
 import { InventoryScreen, NewItemScreen, EditItemScreen } from '../../components/inventory';
 import { NewPackScreen, EditPackScreen } from '../../components/packs';
-import { Item } from '../../redux/inventorySlice';
+import type { LockerStackParamList } from '../navigation.types';
 
-type PackId = string;
-type ItemId = string;
-export type LockerStackParamList = {
-  Inventory: undefined;
-  NewPack: undefined;
-  EditPack: { pack: PackData | PackId };
-  NewItem: undefined;
-  EditItem: { item: Item | ItemId };
-};
 type EditPackProps = NativeStackScreenProps<LockerStackParamList, 'EditPack', 'Locker'>
 
 const Stack = createNativeStackNavigator<LockerStackParamList>();

@@ -1,18 +1,10 @@
-import type {
-  CompositeScreenProps,
-  NavigatorScreenParams,
-} from '@react-navigation/native';
-import type { StackScreenProps } from '@react-navigation/stack';
-import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-
-import { Item } from '../redux/inventorySlice';
 
 export type LockerStackParamList = {
   Inventory: undefined;
   NewPack: undefined;
   EditPack: { pack: PackData | string };
   NewItem: undefined;
-  EditItem: { item: Item | string };
+  EditItem: { item: ItemData | string };
 };
 
 export type TabParamList = {
