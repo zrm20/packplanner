@@ -5,7 +5,7 @@ type Sizes = number[];
 
 interface AppColors extends MD3Colors {};
 
-interface AppTheme extends MD3Theme {
+export interface AppTheme extends MD3Theme {
   colors: AppColors;
   space: Sizes;
   borderWeight: Sizes;
