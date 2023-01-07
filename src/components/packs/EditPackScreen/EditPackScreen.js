@@ -28,7 +28,7 @@ export default function EditPackScreen({ route, navigation, ...props }) {
   };
 
   function handleDelete() {
-    pack.delete(() => navigation.navigate("Locker"));
+    pack.delete(navigation.goBack);
   };
 
   return (
