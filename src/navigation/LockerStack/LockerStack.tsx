@@ -3,14 +3,13 @@ import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navig
 import { InventoryScreen, NewItemScreen, EditItemScreen } from '../../components/inventory';
 import { NewPackScreen, EditPackScreen } from '../../components/packs';
 import { Item } from '../../redux/inventorySlice';
-import { Pack } from '../../redux/packsSlice';
 
 type PackId = string;
 type ItemId = string;
 export type LockerStackParamList = {
   Inventory: undefined;
   NewPack: undefined;
-  EditPack: { pack: Pack | PackId };
+  EditPack: { pack: PackData | PackId };
   NewItem: undefined;
   EditItem: { item: Item | ItemId };
 };

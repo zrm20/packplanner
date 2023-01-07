@@ -5,13 +5,12 @@ import type {
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-import { Pack } from '../redux/packsSlice';
 import { Item } from '../redux/inventorySlice';
 
 export type LockerStackParamList = {
   Inventory: undefined;
   NewPack: undefined;
-  EditPack: { pack: Pack | string };
+  EditPack: { pack: PackData | string };
   NewItem: undefined;
   EditItem: { item: Item | string };
 };
