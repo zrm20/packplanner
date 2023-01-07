@@ -2,10 +2,15 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Text, Surface, Title, Subheading } from "react-native-paper";
 
-import useStyles from "./PackItem.styles"
+import useStyles from "./PackItem.styles";
 
-export default function PackItem({ pack, ...props }) {
-  const styles = useStyles();
+interface PackItemProps {
+  pack: Pack
+};
+
+export default function PackItem(props: PackItemProps): JSX.Element {
+  const { pack } = props;
+  const styles = useStyles(props);
 
   return (
     <TouchableOpacity onLongPress={pack.openEdit} onPress={pack.select} >
@@ -18,13 +23,12 @@ export default function PackItem({ pack, ...props }) {
           {pack.brand}
         </Title>
         <Subheading
-          style={styles.subheading}
           adjustsFontSizeToFit
           numberOfLines={1}
         >
           {pack.model}
         </Subheading>
-        <Text style={styles.weight}>{pack.weight}</Text>
+        <Text>{pack.weight}</Text>
       </Surface>
     </TouchableOpacity>
   );

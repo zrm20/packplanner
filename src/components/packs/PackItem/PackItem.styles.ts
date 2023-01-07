@@ -1,10 +1,16 @@
-import { StyleSheet } from "react-native";
-import { useTheme } from "react-native-paper"
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { useTheme } from "../../../theme";
 
 export default function useStyles(props) {
-  const theme = useTheme();
+  const theme = useTheme()
 
-  const styles = StyleSheet.create(
+  type Style = {
+    container: ViewStyle,
+    title: TextStyle,
+    selectedPack: ViewStyle
+  };
+
+  const styles = StyleSheet.create<Style>(
     {
       container: {
         justifyContent: 'center',
