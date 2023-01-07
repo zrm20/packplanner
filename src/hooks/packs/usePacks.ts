@@ -2,31 +2,19 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
 import {
-  Pack as StorePack,
-  PacksState,
   toggleSelectedPack,
   deletePack as deleteAction,
   updatePack as updateAction,
-  addPack as addAction,
-  PackValues
+  addPack as addAction
 } from "../../redux/packsSlice";
 import { confirmDelete } from "../../utils";
 
-export interface Pack extends StorePack {
-  isSelected: boolean;
-  baseFields: StorePack,
-  select(): void;
-  openEdit(): void;
-  delete(callback?: Function): void;
-  update(newValues: PackValues, callback?: Function): void;
-};
-
 interface PackHook {
-  packsSlice: PacksState,
+  packsSlice: PacksSliceState,
   packs: Pack[],
   selectedPack: Pack,
   getPackById(id: string): Pack,
-  addPack(pack: PackValues): void
+  addPack(pack: PackFormData): void
 };
 
 export default function usePacks(): PackHook {
@@ -38,7 +26,7 @@ export default function usePacks(): PackHook {
     throw new Error('usePacks must be used within a Redux Provider with a packsReducer in store');
   };
 
-  function createPack(pack: StorePack): Pack {
+  function createPack(pack: PackData): Pack {
     return {
        // pack properties
        ...pack,
@@ -78,7 +66,7 @@ export default function usePacks(): PackHook {
     return packs.find(pack => pack.id === id);
   };
 
-  function addPack(pack: PackValues): void {
+  function addPack(pack: PackFormData): void {
     dispatch(addAction({ pack }));
   };
 

@@ -3,23 +3,7 @@ import uuid from "react-native-uuid";
 
 import { packs } from "../../archive/dummyData";
 
-export interface PackValues {
-  brand: string;
-  model: string;
-  capacity: number;
-  weight: number;
-};
-
-export interface Pack extends PackValues {
-  id: string;
-};
-
-export interface PacksState {
-  selectedPack: string | null;
-  packs: Pack[]
-};
-
-const initialState: PacksState = {
+const initialState: PacksSliceState = {
   selectedPack: null,
   packs
 };
@@ -29,20 +13,20 @@ const packsSlice = createSlice(
     name: 'packs',
     initialState,
     reducers: {
-      addPack: (state, action: PayloadAction<{ pack: PackValues }>) => {
+      addPack: (state, action: PayloadAction<{ pack: PackFormData }>) => {
         const { pack } = action.payload;
         if (!pack) {
           throw new Error('No pack included in payload')
         };
 
-        const newPack: Pack = {
+        const newPack: PackData = {
           ...pack,
           id: uuid.v4() as string
         };
         
         state.packs.push(newPack);
       },
-      updatePack: (state, action: PayloadAction<{ id: string, newValues: PackValues}>) => {
+      updatePack: (state, action: PayloadAction<{ id: string, newValues: PackFormData}>) => {
         const { id, newValues } = action.payload;
 
         if (!id) {
