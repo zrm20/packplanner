@@ -19,7 +19,7 @@ interface Pack extends PackData {
   select(): void;
   openEdit(): void;
   delete(callback?: Function): void;
-  update(newValues: PackValues, callback?: Function): void;
+  update(newValues: PackFormData, callback?: Function): void;
 };
 
 // used in the redux store
@@ -48,7 +48,7 @@ interface Item extends ItemData {
   baseFields: ItemData;
   toggleInPack(): void;
   openEdit(): void;
-  update(newValues: ItemValues, callback?: Function): void;
+  update(newValues: ItemFormData, callback?: Function): void;
   delete(callback?: Function): void;
 };
 
