@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, View, ScrollView } from "react-native";
-import { HelperText, Subheading, Surface, Switch, Text } from "react-native-paper";
+import { KeyboardAvoidingView, View } from "react-native";
+import { HelperText, Subheading, Surface, Switch } from "react-native-paper";
 import { Formik } from "formik";
 
 import useStyles from "./InventoryForm.styles";
 import { TextInput, WeightInput, SubmitButton, CapacityInput } from "../../formComponents";
 
-export default function InventoryForm(props) {
+interface InventoryFormProps {
+  initialValues?: PackFormData;
+  onSubmit(values: PackFormData): void;
+  submitText: string;
+};
+
+export default function InventoryForm(props: InventoryFormProps): JSX.Element {
   const styles = useStyles();
   const [showLiquid, setShowLiquid] = useState(false);
 
@@ -37,7 +43,7 @@ export default function InventoryForm(props) {
           showLiquid &&
           <Surface style={styles.liquidSection}>
             <Subheading style={styles.liquidTitle}>Liquid Capacity</Subheading>
-            <HelperText>
+            <HelperText type='info'>
               Items such as water bottles have a liquid capacity property.
               The weight of the item should be the weight of the empty container.
               The weight of the water will be automatically calculated.
