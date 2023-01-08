@@ -1,15 +1,21 @@
 import React from "react";
 import { KeyboardAvoidingView } from "react-native";
-import { Formik } from 'formik'
+import { Formik, FormikHelpers } from 'formik'
 import { TextInput as PaperInput } from "react-native-paper";
 
 import useStyles from "./PackForm.styles"
 import { TextInput, WeightInput, NumberInput, SubmitButton } from "../../formComponents";
 
-export default function PackForm(props) {
+interface PackFormProps {
+  initialValues?: PackFormData;
+  onSubmit(values: PackFormData, actions?: FormikHelpers<PackFormData>): void;
+  submitText?: string;
+};
+
+export default function PackForm(props: PackFormProps): JSX.Element {
   const styles = useStyles();
 
-  const initialValues = props.initialValues || {
+  const initialValues: PackFormData = props.initialValues || {
     brand: "",
     model: "",
     capacity: 0,
