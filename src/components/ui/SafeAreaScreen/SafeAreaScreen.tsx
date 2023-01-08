@@ -23,8 +23,8 @@ export default function SafeAreaScreen(props: Props): JSX.Element {
       container: {
         marginTop: isAndroid() ? StatusBar.currentHeight : 0,
         flex: 1,
-        alignItems: alignCenter ? 'center' : null,
-        justifyContent: justifyCenter ? 'center' : null,
+        alignItems: alignCenter ? 'center' : 'flex-start',
+        justifyContent: justifyCenter ? 'center' : 'flex-start',
         backgroundColor: theme.colors.background
       }
     }

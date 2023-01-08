@@ -28,11 +28,15 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
   }
 
   function handleSubmit(newValues: PackFormData): void {
-    pack.update(newValues, navigation.goBack);
+    if(pack) {
+      pack.update(newValues, navigation.goBack);
+    };
   };
 
   function handleDelete(): void {
-    pack.delete(navigation.goBack);
+    if(pack){
+      pack.delete(navigation.goBack);
+    }
   };
 
   return (

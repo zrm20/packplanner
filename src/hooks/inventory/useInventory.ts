@@ -14,7 +14,7 @@ interface InventoryHook {
   inventory: Item[];
   itemsInPack: Item[];
   waterContainersInPack: Item[];
-  getItemById(id: string): Item;
+  getItemById(id: string): Item | null;
   addToInventory(pack: ItemFormData): void;
 };
 
@@ -62,10 +62,10 @@ export default function useInventory(): InventoryHook {
 
   const inventory: Item[] = inventorySlice.inventory.map(createItem);
   const itemsInPack: Item[] = inventory.filter(item => item.inPack);
-  const waterContainersInPack: Item[] = inventory.filter(item => item.inPack && item.liquidCapacity > 0);
+  const waterContainersInPack: Item[] = inventory.filter(item => item.inPack && item.liquidCapacity && item.liquidCapacity > 0);
 
-  function getItemById(id: string): Item {
-    return inventory.find(item => item.id === id);
+  function getItemById(id: string): Item | null {
+    return  inventory.find(item => item.id === id) || null;
   };
 
   function addToInventory(newItem: ItemFormData): void {

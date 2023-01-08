@@ -12,8 +12,8 @@ import { confirmDelete } from "../../utils";
 interface PackHook {
   packsSlice: PacksSliceState,
   packs: Pack[],
-  selectedPack: Pack,
-  getPackById(id: string): Pack,
+  selectedPack: Pack | null,
+  getPackById(id: string): Pack | null,
   addPack(pack: PackFormData): void
 };
 
@@ -60,10 +60,10 @@ export default function usePacks(): PackHook {
   };
 
   const packs: Pack[] = packsSlice.packs.map(createPack);
-  const selectedPack: Pack = packs.find(pack => pack.id === packsSlice.selectedPack);
+  const selectedPack = packs.find(pack => pack.id === packsSlice.selectedPack) || null;
 
-  function getPackById(id: string): Pack {
-    return packs.find(pack => pack.id === id);
+  function getPackById(id: string): Pack | null {
+    return packs.find(pack => pack.id === id) || null;
   };
 
   function addPack(pack: PackFormData): void {

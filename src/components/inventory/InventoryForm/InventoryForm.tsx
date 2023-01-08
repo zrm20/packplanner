@@ -20,7 +20,7 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
     brand: "",
     name: "",
     liquidCapacity: 0,
-    weight: null,
+    weight: 0,
   };
 
   return (

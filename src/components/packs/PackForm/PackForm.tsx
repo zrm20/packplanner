@@ -19,7 +19,7 @@ export default function PackForm(props: PackFormProps): JSX.Element {
     brand: "",
     model: "",
     capacity: 0,
-    weight: 0
+    weight: 0,
   };
 
   return (

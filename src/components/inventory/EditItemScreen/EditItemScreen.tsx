@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
-import { FAB, Button } from "react-native-paper";
+import { FAB, Button, Title } from "react-native-paper";
 
 import useStyles from "./EditItemScreen.styles";
 import { SafeAreaScreen } from "../../ui";
@@ -19,12 +19,23 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
   const itemId = extractId(route.params.item);
   const item = getItemById(itemId);
 
+  if(!item) {
+    <SafeAreaScreen style={styles.container}>
+      <Title>Something went wrong</Title>
+      <Button onPress={navigation.goBack}>Go Back</Button>
+    </SafeAreaScreen>
+  };
+  
   function handleSubmit(newValues: ItemFormData): void {
-    item.update(newValues, () => navigation.navigate('Inventory'));
+    if(item) {
+      item.update(newValues, () => navigation.navigate('Inventory'));
+    }
   };
 
   function handleDelete(): void {
-    item.delete(navigation.goBack)
+    if(item) {
+      item.delete(navigation.goBack)
+    }
   };
 
   return (
