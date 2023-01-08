@@ -19,7 +19,3 @@ export default function extractId(idOrObject: string | number | ObjectWithId): s
 
   return id;
 };
-
-const id = 'acbs';
-
-const result = extractId(id)
