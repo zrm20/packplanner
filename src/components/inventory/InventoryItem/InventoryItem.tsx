@@ -1,26 +1,26 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import { List, useTheme, IconButton } from "react-native-paper";
+import { TouchableOpacity, TouchableOpacityProps } from "react-native";
+import { List, IconButton, ListItemProps } from "react-native-paper";
 
 import useStyles from "./InventoryItem.styles"
 
-export default function InventoryItem({ item = {}, onPress, onLongPress, ...props }) {
+interface InventoryItemProps extends TouchableOpacityProps {
+  item: Item;
+  listItemProps?: ListItemProps
+};
+
+export default function InventoryItem({ item, listItemProps, ...props }: InventoryItemProps): JSX.Element {
   const styles = useStyles();
-  const { colors } = useTheme();
-  const { navigate } = useNavigation();
 
   const {
-    name = "Passage 2",
-    brand = "REI",
-    qty = 1,
-    category = "shelter",
+    name,
+    brand,
     inPack,
     toggleInPack
   } = item;
 
   return (
-    <TouchableOpacity onPress={onPress} onLongPress={onLongPress} >
+    <TouchableOpacity {...props} >
       <List.Item style={styles.container}
         title={brand}
         description={name}
@@ -35,7 +35,7 @@ export default function InventoryItem({ item = {}, onPress, onLongPress, ...prop
           inPack &&
           <List.Icon icon='check' style={styles.checkmark} />
         )}
-        {...props}
+        {...listItemProps}
       />
     </TouchableOpacity>
   );

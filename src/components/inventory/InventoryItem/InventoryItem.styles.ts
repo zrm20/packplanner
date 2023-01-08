@@ -1,10 +1,16 @@
-import { StyleSheet } from "react-native";
-import { useTheme } from "react-native-paper"
+import { StyleSheet, ViewStyle } from "react-native";
 
-export default function useStyles(props) {
+import { useTheme } from "../../../theme";
+
+interface Style {
+  container: ViewStyle;
+  checkmark: ViewStyle
+};
+
+export default function useStyles() {
   const theme = useTheme();
 
-  const styles = StyleSheet.create(
+  const styles = StyleSheet.create<Style>(
     {
       container: {
         borderBottomWidth: theme.borderWeight[1],
