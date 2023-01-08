@@ -12,4 +12,4 @@ export {
   NewItemScreen,
   EditItemScreen,
   InventoryForm
-}
+};
