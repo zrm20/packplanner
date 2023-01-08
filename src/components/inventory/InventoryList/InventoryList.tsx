@@ -7,7 +7,7 @@ import useStyles from "./InventoryList.styles"
 import InventoryItem from "../InventoryItem/InventoryItem";
 import { useInventory } from "../../../hooks";
 
-export default function InventoryList(props) {
+export default function InventoryList(): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
   const { inventory } = useInventory();
