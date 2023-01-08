@@ -7,17 +7,16 @@ import useStyles from "./InventoryForm.styles";
 import { TextInput, WeightInput, SubmitButton, CapacityInput } from "../../formComponents";
 
 interface InventoryFormProps {
-  initialValues?: PackFormData;
-  onSubmit(values: PackFormData): void;
-  submitText: string;
+  initialValues?: ItemFormData;
+  onSubmit(values: ItemFormData): void;
+  submitText?: string;
 };
 
 export default function InventoryForm(props: InventoryFormProps): JSX.Element {
   const styles = useStyles();
   const [showLiquid, setShowLiquid] = useState(false);
 
-  const initialValues = props.initialValues || {
-    category: "",
+  const initialValues: ItemFormData = props.initialValues || {
     brand: "",
     name: "",
     liquidCapacity: 0,

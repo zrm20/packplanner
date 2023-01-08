@@ -1,26 +1,24 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
 import { FAB, Title } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
 
 import useStyles from "./NewItemScreen.styles";
 import { SafeAreaScreen } from "../../ui";
 import { useInventory } from "../../../hooks";
 import { isAndroid } from "../../../utils";
 import InventoryForm from "../InventoryForm/InventoryForm";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { LockerStackParamList } from "../../../navigation/navigation.types";
 
-export default function NewItemScreen(props) {
+type NewItemScreenProps = NativeStackScreenProps<LockerStackParamList, 'NewItem'>;
+
+export default function NewItemScreen({ navigation }: NewItemScreenProps): JSX.Element {
   const styles = useStyles();
   const { addToInventory } = useInventory();
-  const { navigate } = useNavigation();
 
-  function handleSubmit(values) {
-    const newItem = {
-      ...values
-    };
-
+  function handleSubmit(newItem: ItemFormData): void {
     addToInventory(newItem);
-    navigate('Locker');
+    navigation.navigate('Inventory');
   };
 
   return (
@@ -31,7 +29,7 @@ export default function NewItemScreen(props) {
             isAndroid() &&
             <FAB
               icon="arrow-left"
-              onPress={() => navigation.goBack()}
+              onPress={navigation.goBack}
               style={styles.closeButton}
               size="small"
             />
