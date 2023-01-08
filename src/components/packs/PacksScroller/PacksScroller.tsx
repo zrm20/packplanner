@@ -7,12 +7,12 @@ import { usePacks } from "../../../hooks";
 import PackItem from "../PackItem/PackItem";
 import useStyles from "./PacksScroller.styles"
 
-export default function PacksScroller(props) {
+export default function PacksScroller(): JSX.Element {
   const { navigate } = useNavigation();
   const { packs } = usePacks();
   const styles = useStyles();
 
-  function openNewPackScreen() {
+  function openNewPackScreen(): void {
     navigate('NewPack');
   };
 
@@ -20,7 +20,7 @@ export default function PacksScroller(props) {
     <View style={styles.container} >
       <View style={styles.toolbar}>
         <Text variant="titleLarge" >My Packs</Text>
-        <View styles={styles.iconGroup}>
+        <View>
           <IconButton icon="plus" size={14} mode="outlined" onPress={openNewPackScreen} />
         </View>
       </View>
@@ -28,7 +28,7 @@ export default function PacksScroller(props) {
       <View style={styles.packsContainer}>
         {
           (!packs || packs.length === 0) ?
-            <HelperText style={styles.emptyText}>No packs added yet</HelperText> :
+            <HelperText type="info" style={styles.emptyText}>No packs added yet</HelperText> :
             <FlatList
               data={packs}
               keyExtractor={item => item.id}

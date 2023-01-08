@@ -1,10 +1,19 @@
-import { StyleSheet } from "react-native";
-import { useTheme } from "react-native-paper"
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
-export default function useStyles(props) {
+import { useTheme } from "../../../theme";
+
+interface Style {
+  container: ViewStyle;
+  toolbar: ViewStyle;
+  packsContainer: ViewStyle;
+  text: TextStyle;
+  emptyText: TextStyle;
+};
+
+export default function useStyles() {
   const theme = useTheme();
 
-  const styles = StyleSheet.create(
+  const styles = StyleSheet.create<Style>(
     {
       container: {
         width: '100%',
@@ -17,9 +26,6 @@ export default function useStyles(props) {
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         paddingHorizontal: theme.space[2],
-      },
-      iconGroup: {
-
       },
       packsContainer: {
         padding: theme.space[2],
