@@ -1,14 +1,18 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
 import { Button, FAB, Title } from "react-native-paper";
 
 import { usePacks } from "../../../hooks";
+import { LockerStackParamList } from "../../../navigation/navigation.types";
 import { extractId, isAndroid } from "../../../utils";
 import { SafeAreaScreen } from "../../ui";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./EditPackScreen.styles"
 
-export default function EditPackScreen({ route, navigation, ...props }) {
+type EditPackScreenProps = NativeStackScreenProps<LockerStackParamList, 'EditPack'>;
+
+export default function EditPackScreen({ route, navigation }: EditPackScreenProps): JSX.Element {
   const styles = useStyles();
   const { getPackById } = usePacks();
 
@@ -23,11 +27,11 @@ export default function EditPackScreen({ route, navigation, ...props }) {
     </SafeAreaScreen>
   }
 
-  function handleSubmit(newValues) {
+  function handleSubmit(newValues: PackFormData): void {
     pack.update(newValues, navigation.goBack);
   };
 
-  function handleDelete() {
+  function handleDelete(): void {
     pack.delete(navigation.goBack);
   };
 
