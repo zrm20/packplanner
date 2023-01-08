@@ -7,21 +7,25 @@ import { SafeAreaScreen } from "../../ui";
 import { useInventory } from "../../../hooks";
 import { extractId, isAndroid } from "../../../utils";
 import InventoryForm from "../InventoryForm/InventoryForm";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { LockerStackParamList } from "../../../navigation/navigation.types";
 
-export default function EditItemScreen({ route, navigation, ...props }) {
+type EditItemScreenProps = NativeStackScreenProps<LockerStackParamList, 'EditItem'>;
+
+export default function EditItemScreen({ route, navigation }: EditItemScreenProps): JSX.Element {
   const styles = useStyles();
   const { getItemById } = useInventory();
 
   const itemId = extractId(route.params.item);
   const item = getItemById(itemId);
 
-  function handleSubmit(newValues) {
+  function handleSubmit(newValues: ItemFormData): void {
     item.update(newValues, () => navigation.navigate('Inventory'));
   };
 
-  function handleDelete() {
+  function handleDelete(): void {
     item.delete(navigation.goBack)
-  }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
