@@ -1,10 +1,18 @@
-import { StyleSheet } from "react-native";
-import { useTheme } from "react-native-paper"
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
-export default function useStyles(props) {
+import { useTheme } from "../../../theme";
+
+interface Style {
+  container: ViewStyle;
+  inputContainer: ViewStyle;
+  textInput: TextStyle;
+  unitSelector: ViewStyle;
+};
+
+export default function useStyles() {
   const theme = useTheme();
 
-  const styles = StyleSheet.create(
+  const styles = StyleSheet.create<Style>(
     {
       container: {
         width: '100%',
