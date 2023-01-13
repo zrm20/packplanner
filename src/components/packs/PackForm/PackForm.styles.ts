@@ -14,6 +14,7 @@ export default function useStyles() {
       container: {
         padding: theme.space[2],
         alignItems: 'center',
+        width: '100%',
       }
     }
   );
