@@ -42,7 +42,7 @@ export default function useInventory(): InventoryHook {
          dispatch(toggleAction({ id: item.id }));
        },
        openEdit() {
-         navigate("EditItem", { item })
+         navigate('Locker', {screen: 'EditItem', params: { item: item.id }})
        },
        update(newValues, callback) {
          dispatch(updateAction({ newValues, id: item.id }));

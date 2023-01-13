@@ -8,10 +8,11 @@ type EditPackProps = NativeStackScreenProps<LockerStackParamList, 'EditPack', 'L
 
 const Stack = createNativeStackNavigator<LockerStackParamList>();
 
-export default function LockerStack() {
+export default function LockerStack(): JSX.Element {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
+      id="LockerStack"
     >
       <Stack.Screen name="Inventory" component={InventoryScreen} />
       <Stack.Group

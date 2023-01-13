@@ -13,7 +13,7 @@ export default function PacksScroller(): JSX.Element {
   const styles = useStyles();
 
   function openNewPackScreen(): void {
-    navigate('NewPack');
+    navigate('Locker', { screen: 'NewPack'});
   };
 
   return (

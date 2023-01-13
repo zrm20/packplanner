@@ -1,4 +1,32 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { BottomTabNavigationOptions, BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import React from "react";
+import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/native";
 
+// describes the list of tabs in the apps root navigator
+export type RootTabParamList = {
+  Locker: NavigatorScreenParams<LockerStackParamList>;
+  MyPack: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
+  Water: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
+  Categories:  NavigatorScreenParams<LockerStackParamList>; // TODO Change this
+  Settings:  NavigatorScreenParams<LockerStackParamList>; // TODO Change this
+};
+
+
+// describes the object used to create a screen on the tab navigator
+export interface AppTab {
+  name: keyof RootTabParamList;
+  component(props: any): JSX.Element;
+  iconName: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
+  screenOptions?: BottomTabNavigationOptions 
+};
+
+
+// describes the array of tabs used to create screens on the tab navigator
+export type AppTabs  = AppTab[];
+
+// describes the params used on each screen in the locker stack
 export type LockerStackParamList = {
   Inventory: undefined;
   NewPack: undefined;
@@ -7,17 +35,8 @@ export type LockerStackParamList = {
   EditItem: { item: ItemData | string };
 };
 
-export type TabParamList = {
-  Locker: LockerStackParamList;
-  MyPack: LockerStackParamList; // TODO Change this
-  Water: LockerStackParamList; // TODO Change this
-  Categories:  LockerStackParamList; // TODO Change this
-  Settings:  LockerStackParamList; // TODO Change this
-};
-
-
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends LockerStackParamList {}
+    interface RootParamList extends RootTabParamList {}
   }
-}
+};

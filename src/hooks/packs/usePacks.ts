@@ -41,7 +41,7 @@ export default function usePacks(): PackHook {
          dispatch(toggleSelectedPack({ id: pack.id }));
        },
        openEdit() {
-         navigate("EditPack", { pack })
+         navigate("Locker", { screen: "EditPack", params: { pack: pack.id }})
        },
        delete(callback) {
          confirmDelete(

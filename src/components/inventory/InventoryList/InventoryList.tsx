@@ -20,7 +20,7 @@ export default function InventoryList(): JSX.Element {
         <View style={styles.iconGroup}>
           <IconButton icon="cloud-download" size={14} mode="outlined" />
           <IconButton icon="tag" size={14} mode="outlined" />
-          <IconButton icon="plus" size={14} mode="outlined" onPress={() => navigate("NewItem")} />
+          <IconButton icon="plus" size={14} mode="outlined" onPress={() => navigate('Locker', { screen: 'NewItem'})} />
         </View>
       </View>
 
