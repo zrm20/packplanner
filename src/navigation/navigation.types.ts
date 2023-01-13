@@ -7,7 +7,7 @@ import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/n
 // describes the list of tabs in the apps root navigator
 export type RootTabParamList = {
   Locker: NavigatorScreenParams<LockerStackParamList>;
-  MyPack: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
+  MyPack: NavigatorScreenParams<MyPackStackParamList>;
   Water: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
   Categories:  NavigatorScreenParams<LockerStackParamList>; // TODO Change this
   Settings:  NavigatorScreenParams<LockerStackParamList>; // TODO Change this
@@ -34,6 +34,15 @@ export type LockerStackParamList = {
   NewItem: undefined;
   EditItem: { item: ItemData | string };
 };
+
+export type MyPackStackParamList = {
+  MyPackHome: undefined
+};
+
+export type MyPackHomeScreenProps = CompositeScreenProps<
+  NativeStackScreenProps<MyPackStackParamList, 'MyPackHome'>,
+  BottomTabScreenProps<RootTabParamList>
+>;
 
 declare global {
   namespace ReactNavigation {

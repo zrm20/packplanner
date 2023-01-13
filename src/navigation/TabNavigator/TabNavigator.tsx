@@ -1,12 +1,13 @@
 import React from "react";
 import { createBottomTabNavigator, BottomTabNavigationOptions, BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { BottomNavigationProps, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 
 import { AppTabs, RootTabParamList } from "../navigation.types";
 import { useInventory } from "../../hooks";
 import LockerStack from "../LockerStack/LockerStack";
 import { InventoryScreen } from "../../components/inventory";
+import MyPackStack from "../MyPackStack/MyPackStack";
 
 const iconSize: number = 24;
 const Tabs = createBottomTabNavigator<RootTabParamList>();
@@ -25,7 +26,7 @@ export default function TabNavigator() {
     },
     {
       name: "MyPack",
-      component: InventoryScreen,
+      component: MyPackStack,
       iconName: "bag-personal",
       screenOptions: { tabBarBadge: itemsInPack.length ? itemsInPack.length : undefined}
     },
