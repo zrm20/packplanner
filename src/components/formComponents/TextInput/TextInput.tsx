@@ -5,7 +5,7 @@ import { useField } from "formik";
 
 import useStyles from "./TextInput.styles"
 
-type CustomTextInputProps = TextInputProps  & {
+export type CustomTextInputProps = TextInputProps  & {
   name: string
   label?: string,
 };

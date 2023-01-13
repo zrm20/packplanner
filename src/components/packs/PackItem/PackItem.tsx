@@ -10,7 +10,7 @@ interface PackItemProps {
 
 export default function PackItem(props: PackItemProps): JSX.Element {
   const { pack } = props;
-  const styles = useStyles(props);
+  const styles = useStyles();
 
   return (
     <TouchableOpacity onLongPress={pack.openEdit} onPress={pack.select} >

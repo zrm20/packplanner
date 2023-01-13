@@ -10,7 +10,7 @@ type IconButtonMode = 'outlined' | 'contained' | 'contained-tonal';
 export default function SubmitButton(props: SubmitButtonProps): JSX.Element {
   const { submitForm } = useFormikContext();
 
-  const { icon, mode } = props;
+  const { icon, mode = 'contained' } = props;
 
   if (icon) {
     let iconButtonMode: IconButtonMode;

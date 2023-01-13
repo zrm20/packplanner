@@ -1,7 +1,7 @@
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { useTheme } from "../../../theme";
 
-export default function useStyles(props) {
+export default function useStyles() {
   const theme = useTheme()
 
   type Style = {
