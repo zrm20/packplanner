@@ -14,7 +14,7 @@ interface InventoryFormProps {
 
 export default function InventoryForm(props: InventoryFormProps): JSX.Element {
   const styles = useStyles();
-  const [showLiquid, setShowLiquid] = useState(false);
+  const [showLiquid, setShowLiquid] = useState<boolean>(Boolean(props.initialValues?.liquidCapacity));
 
   const initialValues: ItemFormData = props.initialValues || {
     brand: "",
@@ -22,6 +22,8 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
     liquidCapacity: 0,
     weight: 0,
   };
+
+  // TODO When showLiquid is toggled off, it should reset liquidCapacity to 0
 
   return (
     <Formik
@@ -45,7 +47,7 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
             <HelperText type='info'>
               Items such as water bottles have a liquid capacity property.
               The weight of the item should be the weight of the empty container.
-              The weight of the water will be automatically calculated.
+              The weight of the liquid will be automatically calculated.
             </HelperText>
             <CapacityInput name="liquidCapacity" label="Liquid Capacity" />
           </Surface>
