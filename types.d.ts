@@ -15,7 +15,7 @@ interface PackData extends PackFormData {
 // contains all of the data AND methods used for a pack
 interface Pack extends PackData {
   isSelected: boolean;
-  baseFields: StorePack,
+  baseFields: PackData,
   select(): void;
   openEdit(): void;
   delete(callback?: Function): void;
@@ -56,3 +56,7 @@ interface Item extends ItemData {
 interface InventorySliceState {
   inventory: ItemData[];
 };
+
+type WeightUnit = 'oz' | 'lb' | 'kg';
+
+type LiquidCapacityUnit = 'ml' | 'oz';
