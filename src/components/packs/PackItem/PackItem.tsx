@@ -5,15 +5,16 @@ import { Text, Surface, Title, Subheading } from "react-native-paper";
 import useStyles from "./PackItem.styles";
 
 interface PackItemProps {
-  pack: Pack
+  pack: Pack;
+  disabled?: boolean;
 };
 
 export default function PackItem(props: PackItemProps): JSX.Element {
-  const { pack } = props;
+  const { pack, disabled = false } = props;
   const styles = useStyles();
 
   return (
-    <TouchableOpacity onLongPress={pack.openEdit} onPress={pack.select} >
+    <TouchableOpacity onLongPress={pack.openEdit} onPress={pack.select} disabled={disabled} >
       <Surface style={[styles.container, pack.isSelected ? styles.selectedPack : null]} >
         <Title
           style={styles.title}
