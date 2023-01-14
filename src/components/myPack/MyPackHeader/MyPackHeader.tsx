@@ -2,15 +2,10 @@ import React from "react";
 import { View } from "react-native";
 import { Avatar, Text } from "react-native-paper";
 import { usePacks } from "../../../hooks";
-import { PackItem } from "../../packs";
 
 import useStyles from "./MyPackHeader.styles";
 
-interface MyPackHeaderProps {
-
-};
-
-export default function MyPackHeader(props: MyPackHeaderProps): JSX.Element {
+export default function MyPackHeader(): JSX.Element {
   const styles = useStyles();
   const { selectedPack } = usePacks();
 
