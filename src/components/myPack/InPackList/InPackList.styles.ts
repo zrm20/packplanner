@@ -14,11 +14,10 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>(
     {
       container: {
-        padding: theme.space[2],
+        paddingHorizontal: theme.space[2],
         width: '100%',
       },
       listContainer: {
-        marginTop: theme.space[2],
         width: '100%',
       },
       li: {

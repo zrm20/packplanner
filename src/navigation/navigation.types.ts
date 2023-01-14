@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { BottomTabNavigationOptions, BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { BottomTabNavigationOptions, BottomTabNavigationProp, BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/native";
 
@@ -43,6 +43,8 @@ export type MyPackHomeScreenProps = CompositeScreenProps<
   NativeStackScreenProps<MyPackStackParamList, 'MyPackHome'>,
   BottomTabScreenProps<RootTabParamList>
 >;
+
+export type RootNavigationProps = BottomTabNavigationProp<RootTabParamList>;
 
 declare global {
   namespace ReactNavigation {
