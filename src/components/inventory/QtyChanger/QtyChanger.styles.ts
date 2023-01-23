@@ -4,7 +4,7 @@ import { useTheme } from "../../../theme";
 
 interface Style {
   container: ViewStyle;
-  checkmark: ViewStyle
+  button: ViewStyle;
 };
 
 export default function useStyles() {
@@ -13,15 +13,13 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>(
     {
       container: {
-        borderBottomWidth: theme.borderWeight[1],
-        borderColor: theme.colors.outlineVariant,
-        paddingVertical: 0
+        flexDirection: 'row',
+        alignItems: 'center'
       },
-      checkmark: {
-        marginLeft: theme.space[2],
-        justifyContent: 'center'
+      button: {
+        
       }
     }
-  );
-  return styles;
+);
+  return  styles;
 };

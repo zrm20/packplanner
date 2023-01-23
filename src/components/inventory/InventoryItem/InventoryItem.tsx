@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { List, IconButton, ListItemProps } from "react-native-paper";
+import QtyChanger from "../QtyChanger/QtyChanger";
 
 import useStyles from "./InventoryItem.styles"
 
@@ -19,22 +20,31 @@ export default function InventoryItem({ item, listItemProps, ...props }: Invento
     toggleInPack
   } = item;
 
+  function renderRight(): JSX.Element {
+    return inPack ? 
+      <QtyChanger item={item} /> :
+      <IconButton
+        icon="plus"
+        mode="outlined"
+        onPress={toggleInPack}
+      />;
+  };
+
+  function renderLeft(): JSX.Element | null {
+    return inPack ? 
+      <TouchableOpacity style={styles.checkmark} onPress={toggleInPack}>
+        <List.Icon icon='check' />
+      </TouchableOpacity> :
+      null;
+  };
+
   return (
     <TouchableOpacity {...props} >
       <List.Item style={styles.container}
         title={brand}
         description={name}
-        right={props => (
-          <IconButton
-            icon={inPack ? "minus" : "plus"}
-            onPress={toggleInPack}
-          />
-        )}
-        left={props =>
-        (
-          inPack &&
-          <List.Icon icon='check' style={styles.checkmark} />
-        )}
+        right={renderRight}
+        left={renderLeft}
         {...listItemProps}
       />
     </TouchableOpacity>

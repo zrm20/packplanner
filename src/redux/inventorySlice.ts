@@ -19,7 +19,8 @@ const inventorySlice = createSlice(
 
         const newItem: ItemData = {
           ...item,
-          id: uuid.v4() as string
+          id: uuid.v4() as string,
+          qty: 1
         };
 
         state.inventory.push(newItem);
@@ -70,12 +71,47 @@ const inventorySlice = createSlice(
           throw new Error("Item with that ID was not found");
         };
 
-        state.inventory[indexToUpdate].inPack = !state.inventory[indexToUpdate].inPack;
-      }
+
+        if (state.inventory[indexToUpdate].inPack) {
+          // if removing from pack, reset the qty to 1
+          state.inventory[indexToUpdate].inPack = false;
+          state.inventory[indexToUpdate].qty = 1;
+        } else {
+          state.inventory[indexToUpdate].inPack = true;
+        };
+      },
+      updateQty: (state, action: PayloadAction<{ id: string, newQty: number }>) => {
+        const { id, newQty } = action.payload;
+
+        if (!id) {
+          throw new Error("No item id recieved");
+        };
+
+        if (!newQty) {
+          throw new Error("newValues were not recieved");
+        };
+
+        const newInt = Math.floor(newQty);
+
+        if (newInt < 1) {
+          throw new Error("newQty must be greater than or equal to 1");
+        };
+
+        const indexToUpdate = state.inventory.findIndex(item => item.id === id);
+
+        if (indexToUpdate === -1) {
+          throw new Error("Item with that ID was not found");
+        };
+
+        state.inventory[indexToUpdate] = {
+          ...state.inventory[indexToUpdate],
+          qty: newInt
+        };
+      },
     }
   }
 );
 
 export default inventorySlice.reducer;
 
-export const { addItem, deleteItem, updateItem, toggleInPack } = inventorySlice.actions;
+export const { addItem, deleteItem, updateItem, toggleInPack, updateQty } = inventorySlice.actions;

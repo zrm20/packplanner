@@ -7,6 +7,7 @@ import {
   deleteItem as deleteAction,
   updateItem as updateAction,
   toggleInPack as toggleAction,
+  updateQty as updateQtyAction
 } from "../../redux/inventorySlice";
 
 interface InventoryHook {
@@ -29,34 +30,37 @@ export default function useInventory(): InventoryHook {
 
   function createItem(item: ItemData): Item {
     return {
-       // item properties
-       ...item,
+      // item properties
+      ...item,
 
-       // base fields is used for distributing only the original fields
-       baseFields: {
-         ...item
-       },
- 
-       // item methods
-       toggleInPack() {
-         dispatch(toggleAction({ id: item.id }));
-       },
-       openEdit() {
-         navigate('Locker', {screen: 'EditItem', params: { item: item.id }})
-       },
-       update(newValues, callback) {
-         dispatch(updateAction({ newValues, id: item.id }));
-         if (callback) {
-           callback();
-         };
-       },
-       delete(callback) {
-         confirmDelete(
-           () => dispatch(deleteAction({ id: item.id })),
-           `Do you want to perminantly delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
-           callback
-         );
-       }
+      // base fields is used for distributing only the original fields
+      baseFields: {
+        ...item
+      },
+
+      // item methods
+      toggleInPack() {
+        dispatch(toggleAction({ id: item.id }));
+      },
+      openEdit() {
+        navigate('Locker', { screen: 'EditItem', params: { item: item.id } })
+      },
+      update(newValues, callback) {
+        dispatch(updateAction({ newValues, id: item.id }));
+        if (callback) {
+          callback();
+        };
+      },
+      delete(callback) {
+        confirmDelete(
+          () => dispatch(deleteAction({ id: item.id })),
+          `Do you want to perminantly delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
+          callback
+        );
+      },
+      updateQty(newQty: number) {
+        dispatch(updateQtyAction({ id: item.id, newQty }))
+      }
     }
   };
 
@@ -65,7 +69,7 @@ export default function useInventory(): InventoryHook {
   const waterContainersInPack: Item[] = inventory.filter(item => item.inPack && item.liquidCapacity && item.liquidCapacity > 0);
 
   function getItemById(id: string): Item | null {
-    return  inventory.find(item => item.id === id) || null;
+    return inventory.find(item => item.id === id) || null;
   };
 
   function addToInventory(newItem: ItemFormData): void {

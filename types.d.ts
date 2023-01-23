@@ -34,13 +34,14 @@ interface ItemFormData {
   brand?: string;
   name: string;
   weight: number;
-  liquidCapacity?: number
-  inPack?: boolean
+  liquidCapacity?: number;
+  inPack?: boolean;
 };
 
 // used within the redux store and only contains serializable data
 interface ItemData extends ItemFormData {
   id: string;
+  qty: number;
 };
 
 // contains all of the data AND methods used for an item
@@ -50,6 +51,7 @@ interface Item extends ItemData {
   openEdit(): void;
   update(newValues: ItemFormData, callback?: Function): void;
   delete(callback?: Function): void;
+  updateQty(newQty: number): void;
 };
 
 // used in the redux store
