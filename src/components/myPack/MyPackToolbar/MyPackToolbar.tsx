@@ -1,7 +1,6 @@
 import React from "react";
 import { View } from "react-native";
 import { IconButton } from "react-native-paper";
-import { NavIconButton } from "../../ui";
 
 import useStyles from "./MyPackToolbar.styles";
 
@@ -12,11 +11,11 @@ export default function MyPackToolbar(): JSX.Element {
 
   return (
     <View style={styles.container} >
-      <NavIconButton goBack icon="chart-pie" mode={iconMode} />
-      <NavIconButton goBack icon="playlist-check" mode={iconMode} />
-      <NavIconButton goBack icon="content-save" mode={iconMode} />
-      <NavIconButton goBack icon="import" mode={iconMode} />
-      <NavIconButton goBack icon="trash-can" mode={iconMode} />
+      <IconButton icon="chart-pie" mode={iconMode} />
+      <IconButton icon="playlist-check" mode={iconMode} />
+      <IconButton icon="content-save" mode={iconMode} />
+      <IconButton icon="import" mode={iconMode} />
+      <IconButton icon="trash-can" mode={iconMode} />
     </View>
   );
 };
