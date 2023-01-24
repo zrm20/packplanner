@@ -16,7 +16,9 @@ interface InventoryHook {
   itemsInPack: Item[];
   waterContainersInPack: Item[];
   getItemById(id: string): Item | null;
-  addToInventory(pack: ItemFormData): void;
+  addToInventory(item: ItemFormData): void;
+  getTotalWeightInPack(): number;
+  getLiquidWeightInPack(): number;
 };
 
 export default function useInventory(): InventoryHook {
@@ -76,6 +78,28 @@ export default function useInventory(): InventoryHook {
     dispatch(addAction({ item: newItem }));
   };
 
+  // function getBaseWeightInPack(): number {
+  //   // TODO
+  // };
+
+  function getTotalWeightInPack(): number {
+    return itemsInPack.reduce(
+      (total: number, currentItem: Item) => (total + currentItem.weight * currentItem.qty),
+      0);
+  };
+
+  function getLiquidWeightInPack(): number {
+    return itemsInPack.reduce(
+      (total: number, currentItem: Item) => {
+        if (currentItem.liquidCapacity) {
+          return total + currentItem.liquidCapacity * currentItem.qty * 1000;
+        } else {
+          return total;
+        };
+      },
+      0);
+  };
+
   return {
     inventorySlice,
     inventory,
@@ -83,5 +107,7 @@ export default function useInventory(): InventoryHook {
     waterContainersInPack,
     getItemById,
     addToInventory,
+    getTotalWeightInPack,
+    getLiquidWeightInPack
   };
 };
