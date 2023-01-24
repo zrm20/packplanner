@@ -1,16 +1,20 @@
 import React from "react";
-import { View } from "react-native";
+import { View, ViewProps, ViewStyle } from "react-native";
 import { IconButton } from "react-native-paper";
 
 import useStyles from "./MyPackToolbar.styles";
 
-export default function MyPackToolbar(): JSX.Element {
+interface MyPackToolbarProps extends ViewProps {
+  style?: ViewStyle;
+};
+
+export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
   const styles = useStyles();
 
   const iconMode: React.ComponentProps<typeof IconButton>['mode'] = "outlined"
 
   return (
-    <View style={styles.container} >
+    <View style={[styles.container, props.style]}>
       <IconButton icon="chart-pie" mode={iconMode} />
       <IconButton icon="playlist-check" mode={iconMode} />
       <IconButton icon="content-save" mode={iconMode} />

@@ -23,8 +23,18 @@ export default function MyPackStatsBar(props: MyPackStatsBarProps): JSX.Element 
   return (
     <View style={[styles.container, props.style]} >
       <Surface style={styles.surface}>
-        <Text>Total Weight: {totalWeight} kg</Text>
-        <Text>Total w/Liquid: {totalWeightWithLiquid} kg</Text>
+        <View style={styles.dataContainer} >
+          <Text variant="labelLarge">Total Weight:</Text>
+          <Text variant="titleMedium">{totalWeight} kg</Text>
+        </View>
+        <View style={[styles.dataContainer, styles.centerData]} >
+          <Text variant="labelLarge">Total Weight:</Text>
+          <Text variant="titleMedium">{totalWeight} kg</Text>
+        </View>
+        <View style={styles.dataContainer} >
+          <Text variant="labelLarge">Total w/Liquid:</Text>
+          <Text variant="titleMedium">{totalWeightWithLiquid} kg</Text>
+        </View>
       </Surface>
     </View>
   );

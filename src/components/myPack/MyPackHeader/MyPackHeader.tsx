@@ -1,17 +1,21 @@
 import React from "react";
-import { View } from "react-native";
+import { View, ViewStyle } from "react-native";
 import { Avatar, Text } from "react-native-paper";
 import { usePacks } from "../../../hooks";
 
 import useStyles from "./MyPackHeader.styles";
 
-export default function MyPackHeader(): JSX.Element {
+interface MyPackHeaderProps {
+  style?: ViewStyle;
+}
+
+export default function MyPackHeader(props: MyPackHeaderProps): JSX.Element {
   const styles = useStyles();
   const { selectedPack } = usePacks();
 
   if(!selectedPack) {
     return (
-      <View style={styles.emptyContainer}>
+      <View style={[styles.emptyContainer, props.style]}>
         <Text variant="titleLarge" style={styles.emptyText}>
           No Pack Selected
         </Text>
@@ -23,7 +27,7 @@ export default function MyPackHeader(): JSX.Element {
   };
 
   return (
-    <View style={styles.container} >
+    <View style={[styles.container, props.style]} >
       <Avatar.Icon icon="bag-personal"/>
 
       <View style={styles.dataContainer}>

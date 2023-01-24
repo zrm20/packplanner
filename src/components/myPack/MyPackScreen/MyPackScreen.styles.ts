@@ -4,6 +4,9 @@ import { useTheme } from "../../../theme"
 
 interface Style {
   container: ViewStyle;
+  header: ViewStyle,
+  stats: ViewStyle;
+  toolbar: ViewStyle;
 };
 
 export default function useStyles() {
@@ -13,8 +16,17 @@ export default function useStyles() {
     {
       container: {
 
+      },
+      header: {
+        marginBottom: theme.space[2]
+      },
+      stats: {
+        marginBottom: theme.space[2]
+      },
+      toolbar: {
+        marginBottom: theme.space[2]
       }
     }
-);
-  return  styles;
+  );
+  return styles;
 };

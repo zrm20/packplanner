@@ -16,12 +16,11 @@ export default function useStyles() {
         width: '100%',
         justifyContent: 'space-evenly',
         paddingVertical: theme.space[1],
-        marginVertical: theme.space[3],
         borderTopWidth: theme.borderWeight[1],
         borderBottomWidth: theme.borderWeight[1],
         borderColor: theme.colors.primary
       }
     }
   );
-  return  styles;
+  return styles;
 };

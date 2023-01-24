@@ -5,6 +5,8 @@ import { useTheme } from "../../../theme";
 interface Style {
   container: ViewStyle;
   surface: ViewStyle;
+  dataContainer: ViewStyle;
+  centerData: ViewStyle;
 };
 
 export default function useStyles() {
@@ -18,9 +20,19 @@ export default function useStyles() {
       },
       surface: {
         width: '100%',
-        padding: theme.space[2],
+        padding: theme.space[1],
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        flexWrap: 'wrap'
+      },
+      dataContainer: {
+        alignItems: 'center'
+      },
+      centerData: {
+        borderLeftWidth: theme.borderWeight[1],
+        borderRightWidth: theme.borderWeight[1],
+        paddingHorizontal: theme.space[2],
+        borderColor: theme.colors.outline
       }
     }
   );

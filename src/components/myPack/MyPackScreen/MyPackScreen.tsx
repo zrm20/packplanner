@@ -13,9 +13,9 @@ export default function MyPackScreen(props: MyPackHomeScreenProps): JSX.Element 
 
   return (
     <SafeAreaScreen style={styles.container} >
-      <MyPackHeader />
-      <MyPackStatsBar />
-      <MyPackToolbar />
+      <MyPackHeader style={styles.header} />
+      <MyPackStatsBar style={styles.stats} />
+      <MyPackToolbar style={styles.toolbar} />
       <InPackList />
     </SafeAreaScreen>
   );
