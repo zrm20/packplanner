@@ -33,8 +33,8 @@ interface PacksSliceState {
 interface ItemFormData {
   brand?: string;
   name: string;
-  weight: number;
-  liquidCapacity?: number;
+  weight: number; // in kg
+  liquidCapacity?: number; // in ml
   inPack?: boolean;
 };
 

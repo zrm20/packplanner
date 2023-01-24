@@ -92,7 +92,7 @@ export default function useInventory(): InventoryHook {
     return itemsInPack.reduce(
       (total: number, currentItem: Item) => {
         if (currentItem.liquidCapacity) {
-          return total + currentItem.liquidCapacity * currentItem.qty * 1000;
+          return total + currentItem.liquidCapacity * currentItem.qty / 1000;
         } else {
           return total;
         };
