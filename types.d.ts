@@ -20,6 +20,7 @@ interface Pack extends PackData {
   openEdit(): void;
   delete(callback?: Function): void;
   update(newValues: PackFormData, callback?: Function): void;
+  getWeight(): string;
 };
 
 // used in the redux store
@@ -59,7 +60,7 @@ interface InventorySliceState {
   inventory: ItemData[];
 };
 
-type WeightUnit = 'oz' | 'lb' | 'kg';
+type WeightUnit = "oz" | "lb" | "kg";
 
 type LiquidCapacityUnit = 'ml' | 'oz';
 

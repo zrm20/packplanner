@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 
+import { weightMap } from "../../constants";
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
 import {
   toggleSelectedPack,
@@ -8,17 +9,19 @@ import {
   addPack as addAction
 } from "../../redux/packsSlice";
 import { confirmDelete } from "../../utils";
+import useSettings from "../settings/useSettings";
 
 interface PackHook {
   packsSlice: PacksSliceState,
   packs: Pack[],
   selectedPack: Pack | null,
   getPackById(id: string): Pack | null,
-  addPack(pack: PackFormData): void
+  addPack(pack: PackFormData): void,
 };
 
 export default function usePacks(): PackHook {
   const packsSlice = useSelector(state => state.packs);
+  const { weightUnits } = useSettings();
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
 
@@ -28,34 +31,38 @@ export default function usePacks(): PackHook {
 
   function createPack(pack: PackData): Pack {
     return {
-       // pack properties
-       ...pack,
-       isSelected: pack.id === packsSlice.selectedPack,
-       // base fields is used for distributing only the original field values from store
-       baseFields: {
-         ...pack
-       },
- 
-       // pack methods
-       select() {
-         dispatch(toggleSelectedPack({ id: pack.id }));
-       },
-       openEdit() {
-         navigate("Locker", { screen: "EditPack", params: { pack: pack.id }})
-       },
-       delete(callback) {
-         confirmDelete(
-           () => dispatch(deleteAction({ id: pack.id })),
-           `Do you want to perminantly delete ${pack.brand} ${pack.model}?`,
-           callback
-         );
-       },
-       update(newValues, callback) {
-         dispatch(updateAction({ id: pack.id, newValues }));
-         if (callback) {
-           callback();
-         }
-       }
+      // pack properties
+      ...pack,
+      isSelected: pack.id === packsSlice.selectedPack,
+      // base fields is used for distributing only the original field values from store
+      baseFields: {
+        ...pack
+      },
+
+      // pack methods
+      select() {
+        dispatch(toggleSelectedPack({ id: pack.id }));
+      },
+      openEdit() {
+        navigate("Locker", { screen: "EditPack", params: { pack: pack.id } })
+      },
+      delete(callback) {
+        confirmDelete(
+          () => dispatch(deleteAction({ id: pack.id })),
+          `Do you want to perminantly delete ${pack.brand} ${pack.model}?`,
+          callback
+        );
+      },
+      update(newValues, callback) {
+        dispatch(updateAction({ id: pack.id, newValues }));
+        if (callback) {
+          callback();
+        }
+      },
+      getWeight() {
+        const convertedValue = weightMap[weightUnits].convert(pack.weight);
+        return `${convertedValue} ${weightMap[weightUnits].value}`
+      }
     }
   };
 

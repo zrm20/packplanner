@@ -29,7 +29,7 @@ export default function PackItem(props: PackItemProps): JSX.Element {
         >
           {pack.model}
         </Subheading>
-        <Text>{pack.weight}</Text>
+        <Text>{pack.getWeight()}</Text>
       </Surface>
     </TouchableOpacity>
   );
