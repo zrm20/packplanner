@@ -6,6 +6,7 @@ interface Style {
   container: ViewStyle;
   title: TextStyle;
   settingsContainer: ViewStyle;
+  unitSelector: ViewStyle;
 };
 
 export default function useStyles() {
@@ -25,6 +26,11 @@ export default function useStyles() {
         alignItems: 'center',
         justifyContent: 'center',
         padding: theme.space[3]
+      },
+      unitSelector: {
+        width: '100%',
+        alignItems: 'center',
+        marginBottom: theme.space[3]
       }
     }
   );

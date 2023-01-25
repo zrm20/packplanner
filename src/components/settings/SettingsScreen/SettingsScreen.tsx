@@ -27,44 +27,49 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
       <Text variant="headlineLarge" style={styles.title}>Settings</Text>
 
       <View style={styles.settingsContainer}>
-        <Text variant="labelLarge">Weight Units</Text>
-        <SegmentedButtons
-          value={weightUnits}
-          onValueChange={handleWeightChange}
-          buttons={
-            [
-              {
-                value: 'oz',
-                label: 'oz',
-              },
-              {
-                value: 'lb',
-                label: 'lbs',
-              },
-              {
-                value: 'kg',
-                label: 'kg',
-              },
-            ]
-          }
-        />
-        <Text variant="labelLarge">Liquid Units</Text>
-        <SegmentedButtons
-          value={liquidUnits}
-          onValueChange={handleLiquidChange}
-          buttons={
-            [
-              {
-                value: 'oz',
-                label: 'oz',
-              },
-              {
-                value: 'ml',
-                label: 'ml',
-              },
-            ]
-          }
-        />
+        <View style={styles.unitSelector}>
+          <Text variant="titleMedium">Weight Units</Text>
+          <SegmentedButtons
+            value={weightUnits}
+            onValueChange={handleWeightChange}
+            buttons={
+              [
+                {
+                  value: 'oz',
+                  label: 'oz',
+                },
+                {
+                  value: 'lb',
+                  label: 'lbs',
+                },
+                {
+                  value: 'kg',
+                  label: 'kg',
+                },
+              ]
+            }
+          />
+        </View>
+        <View style={styles.unitSelector} >
+
+          <Text variant="titleMedium">Liquid Units</Text>
+          <SegmentedButtons
+            value={liquidUnits}
+            onValueChange={handleLiquidChange}
+            buttons={
+              [
+                {
+                  value: 'oz',
+                  label: 'oz',
+                },
+                {
+                  value: 'ml',
+                  label: 'ml',
+                },
+              ]
+            }
+          />
+        </View>
       </View>
     </SafeAreaScreen>
   );
