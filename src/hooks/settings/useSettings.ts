@@ -1,9 +1,11 @@
+import { weightMap, liquidMap } from "../../constants";
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
 import { changeLiquidUnits, changeWeightUnits } from "../../redux/settingsSlice";
 
 interface SettingsHook {
-  weightUnits: WeightUnit;
-  liquidUnits: LiquidCapacityUnit;
+  settingsSlice: SettingsSliceState;
+  weightUnit: WeightMapField;
+  liquidUnit: LiquidMapField;
   setWeightUnits(newUnit: WeightUnit): void;
   setLiquidUnits(newUnit: LiquidCapacityUnit): void;
 };
@@ -20,8 +22,13 @@ export default function useSettings(): SettingsHook {
     dispatch(changeWeightUnits({ newUnit }));
   };
 
+  const weightUnit = weightMap[settingsSlice.weightUnits];
+  const liquidUnit = liquidMap[settingsSlice.liquidUnits];
+
   return {
-    ...settingsSlice,
+    settingsSlice,
+    weightUnit,
+    liquidUnit,
     setLiquidUnits,
     setWeightUnits
   };

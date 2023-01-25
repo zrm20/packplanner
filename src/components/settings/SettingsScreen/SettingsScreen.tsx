@@ -12,7 +12,7 @@ type SettingsScreenProps = BottomTabScreenProps<RootTabParamList, 'Settings'>;
 
 export default function SettingsScreen(props: SettingsScreenProps): JSX.Element {
   const styles = useStyles();
-  const { weightUnits, setWeightUnits, liquidUnits, setLiquidUnits } = useSettings();
+  const { weightUnit, setWeightUnits, liquidUnit, setLiquidUnits } = useSettings();
 
   function handleWeightChange(newValue: string): void {
     setWeightUnits(newValue as WeightUnit);
@@ -30,7 +30,7 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
         <View style={styles.unitSelector}>
           <Text variant="titleMedium">Weight Units</Text>
           <SegmentedButtons
-            value={weightUnits}
+            value={weightUnit.value}
             onValueChange={handleWeightChange}
             buttons={
               [
@@ -54,7 +54,7 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
 
           <Text variant="titleMedium">Liquid Units</Text>
           <SegmentedButtons
-            value={liquidUnits}
+            value={liquidUnit.value}
             onValueChange={handleLiquidChange}
             buttons={
               [

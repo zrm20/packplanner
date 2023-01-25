@@ -64,7 +64,20 @@ interface InventorySliceState {
 
 type WeightUnit = "oz" | "lb" | "kg";
 
+interface WeightMapField {
+  value: WeightUnit;
+  label: string;
+  icon: MaterialWeightIcon;
+  convert(kgValue: number): number;
+};
+
 type LiquidCapacityUnit = 'ml' | 'oz';
+
+interface LiquidMapField {
+  value: LiquidCapacityUnit;
+  label: string;
+  convert(mlValue: number): number;
+};
 
 /* --SETTINGS TYPES-- */
 interface SettingsSliceState {

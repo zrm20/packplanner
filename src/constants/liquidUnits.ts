@@ -1,12 +1,5 @@
 import { mlToFlOz } from "../utils/liquidConversions/liquidConversions";
 
-
-interface LiquidMapField {
-  value: LiquidCapacityUnit;
-  label: string;
-  convert(mlValue: number): number;
-};
-
 interface LiquidMap {
   oz: LiquidMapField,
   ml: LiquidMapField,

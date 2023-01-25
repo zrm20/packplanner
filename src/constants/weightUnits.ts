@@ -2,13 +2,6 @@ import { kgToLbs, kgToOz, roundedKg } from "../utils/weightConversions/weightCon
 
 type MaterialWeightIcon = "weight-kilogram" | "weight-lb" | "weight";
 
-interface WeightMapField {
-  value: WeightUnit;
-  label: string;
-  icon: MaterialWeightIcon;
-  convert(kgValue: number): number;
-};
-
 interface WeightMap {
   oz: WeightMapField,
   lb: WeightMapField,

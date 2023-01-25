@@ -21,7 +21,7 @@ interface PackHook {
 
 export default function usePacks(): PackHook {
   const packsSlice = useSelector(state => state.packs);
-  const { weightUnits } = useSettings();
+  const { weightUnit } = useSettings();
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
 
@@ -60,8 +60,8 @@ export default function usePacks(): PackHook {
         }
       },
       getWeight() {
-        const convertedValue = weightMap[weightUnits].convert(pack.weight);
-        return `${convertedValue} ${weightMap[weightUnits].value}`
+        const convertedValue = weightUnit.convert(pack.weight);
+        return `${convertedValue} ${weightUnit.label}`
       }
     }
   };
