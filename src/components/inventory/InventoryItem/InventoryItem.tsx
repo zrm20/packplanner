@@ -43,10 +43,10 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
           <Text variant="titleSmall" numberOfLines={1}>{name}</Text>
         </View>
         <View style={styles.weightContainer}>
-          <Text>{getWeight()}</Text>
+          <Text variant="labelSmall">{getWeight()}</Text>
           {
             liquidCapacity &&
-            <Text>{getLiquidCapacity()}</Text>
+            <Text variant="labelSmall">{getLiquidCapacity()}</Text>
           }
         </View>
       </View>
