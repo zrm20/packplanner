@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import packsReducer from './packsSlice';
 import inventoryReducer from "./inventorySlice";
+import settingsReducer from "./settingsSlice";
 
 const store = configureStore(
   {
     reducer: {
       packs: packsReducer,
-      inventory: inventoryReducer
+      inventory: inventoryReducer,
+      settings: settingsReducer
     }
   }
 );

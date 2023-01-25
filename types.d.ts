@@ -62,3 +62,9 @@ interface InventorySliceState {
 type WeightUnit = 'oz' | 'lb' | 'kg';
 
 type LiquidCapacityUnit = 'ml' | 'oz';
+
+/* --SETTINGS TYPES-- */
+interface SettingsSliceState {
+  weightUnits: WeightUnit;
+  liquidUnits: LiquidCapacityUnit;
+};
