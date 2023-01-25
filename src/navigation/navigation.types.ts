@@ -9,8 +9,8 @@ export type RootTabParamList = {
   Locker: NavigatorScreenParams<LockerStackParamList>;
   MyPack: NavigatorScreenParams<MyPackStackParamList>;
   Water: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
-  Categories:  NavigatorScreenParams<LockerStackParamList>; // TODO Change this
-  Settings:  NavigatorScreenParams<LockerStackParamList>; // TODO Change this
+  Categories: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
+  Settings: undefined; // TODO Change this
 };
 
 
@@ -19,12 +19,12 @@ export interface AppTab {
   name: keyof RootTabParamList;
   component(props: any): JSX.Element;
   iconName: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
-  screenOptions?: BottomTabNavigationOptions 
+  screenOptions?: BottomTabNavigationOptions
 };
 
 
 // describes the array of tabs used to create screens on the tab navigator
-export type AppTabs  = AppTab[];
+export type AppTabs = AppTab[];
 
 // describes the params used on each screen in the locker stack
 export type LockerStackParamList = {
@@ -48,6 +48,6 @@ export type RootNavigationProps = BottomTabNavigationProp<RootTabParamList>;
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootTabParamList {}
+    interface RootParamList extends RootTabParamList { }
   }
 };

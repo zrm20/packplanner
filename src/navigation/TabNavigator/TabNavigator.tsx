@@ -8,6 +8,7 @@ import { useInventory } from "../../hooks";
 import LockerStack from "../LockerStack/LockerStack";
 import { InventoryScreen } from "../../components/inventory";
 import MyPackStack from "../MyPackStack/MyPackStack";
+import { SettingsScreen } from "../../components/settings";
 
 const iconSize: number = 24;
 const Tabs = createBottomTabNavigator<RootTabParamList>();
@@ -16,8 +17,8 @@ export default function TabNavigator() {
   const theme = useTheme();
   const { colors } = theme;
   const { itemsInPack } = useInventory();
-  
-  
+
+
   const tabs: AppTabs = [
     {
       name: "Locker",
@@ -28,7 +29,7 @@ export default function TabNavigator() {
       name: "MyPack",
       component: MyPackStack,
       iconName: "bag-personal",
-      screenOptions: { tabBarBadge: itemsInPack.length ? itemsInPack.length : undefined}
+      screenOptions: { tabBarBadge: itemsInPack.length ? itemsInPack.length : undefined }
     },
     {
       name: "Water",
@@ -42,11 +43,11 @@ export default function TabNavigator() {
     },
     {
       name: "Settings",
-      component: InventoryScreen,
+      component: SettingsScreen,
       iconName: "cog",
     }
   ];
-  
+
   function getScreenOptions({ route }: BottomTabScreenProps<RootTabParamList>): BottomTabNavigationOptions {
     return {
       headerShown: false,
