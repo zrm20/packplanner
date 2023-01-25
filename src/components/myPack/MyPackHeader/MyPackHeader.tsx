@@ -13,7 +13,7 @@ export default function MyPackHeader(props: MyPackHeaderProps): JSX.Element {
   const styles = useStyles();
   const { selectedPack } = usePacks();
 
-  if(!selectedPack) {
+  if (!selectedPack) {
     return (
       <View style={[styles.emptyContainer, props.style]}>
         <Text variant="titleLarge" style={styles.emptyText}>
@@ -28,16 +28,14 @@ export default function MyPackHeader(props: MyPackHeaderProps): JSX.Element {
 
   return (
     <View style={[styles.container, props.style]} >
-      <Avatar.Icon icon="bag-personal"/>
+      <Avatar.Icon icon="bag-personal" />
 
       <View style={styles.dataContainer}>
         <Text variant="titleLarge" numberOfLines={1} adjustsFontSizeToFit>
           {selectedPack.brand} - {selectedPack.model}
         </Text>
         <Text variant="titleMedium" numberOfLines={1} adjustsFontSizeToFit>
-          { // TODO Dynamically set unit types and labels
-          }
-          {selectedPack.capacity} Liters | {selectedPack.weight} kilograms
+          {selectedPack.capacity} Liters | {selectedPack.getWeight()}
         </Text>
       </View>
     </View>
