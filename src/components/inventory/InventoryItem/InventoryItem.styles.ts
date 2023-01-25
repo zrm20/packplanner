@@ -28,7 +28,7 @@ export default function useStyles() {
       },
       weightContainer: {
         padding: theme.space[1],
-        alignItems: 'center',
+        alignItems: 'flex-end',
       },
       leftContainer: {
         marginRight: theme.space[2]

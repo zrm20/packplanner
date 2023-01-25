@@ -18,8 +18,10 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
     name,
     brand,
     inPack,
-    weight,
-    toggleInPack
+    liquidCapacity,
+    toggleInPack,
+    getWeight,
+    getLiquidCapacity
   } = item;
 
   return (
@@ -41,8 +43,11 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
           <Text variant="titleSmall" numberOfLines={1}>{name}</Text>
         </View>
         <View style={styles.weightContainer}>
-          <Text>{weight}</Text>
-          <MaterialCommunityIcons name="weight-kilogram" style={styles.weightIcon} />
+          <Text>{getWeight()}</Text>
+          {
+            liquidCapacity &&
+            <Text>{getLiquidCapacity()}</Text>
+          }
         </View>
       </View>
     </TouchableOpacity>

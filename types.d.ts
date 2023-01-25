@@ -53,6 +53,8 @@ interface Item extends ItemData {
   update(newValues: ItemFormData, callback?: Function): void;
   delete(callback?: Function): void;
   updateQty(newQty: number): void;
+  getWeight(): string;
+  getLiquidCapacity(): string;
 };
 
 // used in the redux store

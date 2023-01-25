@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
+import { weightMap } from "../../constants";
 import { confirmDelete } from "../../utils";
 import {
   addItem as addAction,
@@ -9,6 +10,7 @@ import {
   toggleInPack as toggleAction,
   updateQty as updateQtyAction
 } from "../../redux/inventorySlice";
+import liquidMap from "../../constants/liquidUnits";
 
 interface InventoryHook {
   inventorySlice: InventorySliceState,
@@ -24,6 +26,7 @@ interface InventoryHook {
 export default function useInventory(): InventoryHook {
   const inventorySlice = useSelector(state => state.inventory);
   const dispatch = useDispatch();
+  const { weightUnits, liquidUnits } = useSelector(state => state.settings);
   const { navigate } = useNavigation();
 
   if (!inventorySlice) {
@@ -62,6 +65,17 @@ export default function useInventory(): InventoryHook {
       },
       updateQty(newQty: number) {
         dispatch(updateQtyAction({ id: item.id, newQty }))
+      },
+      getWeight() {
+        const convertedWeight = weightMap[weightUnits].convert(item.weight);
+        return `${convertedWeight} ${weightMap[weightUnits].label}`;
+      },
+      getLiquidCapacity() {
+        if (!item.liquidCapacity) {
+          return '';
+        };
+        const convertedCapacity = liquidMap[liquidUnits].convert(item.liquidCapacity);
+        return `${convertedCapacity} ${liquidMap[liquidUnits].label}`;
       }
     }
   };
