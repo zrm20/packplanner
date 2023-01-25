@@ -17,15 +17,20 @@ export default function InPackList(props: InPackListProps): JSX.Element {
   return (
     <View style={[styles.container, props.style]} >
       <Text variant="labelLarge">In My Pack:</Text>
-      <Surface style={styles.listContainer}>
-        <FlatList
-          data={itemsInPack}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <InventoryItem item={item} />
-          )}
-        />
-      </Surface>
+      {
+        itemsInPack.length ?
+          <Surface style={styles.listContainer}>
+            <FlatList
+              data={itemsInPack}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <InventoryItem item={item} />
+              )}
+            />
+          </Surface>
+          :
+          <Text variant="headlineMedium" style={styles.emptyText}>No Items in Pack</Text>
+      }
     </View>
   );
 };

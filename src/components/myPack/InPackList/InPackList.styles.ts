@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle, Animated, StyleProp } from "react-native";
+import { StyleSheet, ViewStyle, Animated, StyleProp, TextStyle } from "react-native";
 
 import { useTheme } from "../../../theme";
 
@@ -6,6 +6,7 @@ interface Style {
   container: ViewStyle;
   listContainer: ViewStyle;
   li: ViewStyle;
+  emptyText: TextStyle;
 };
 
 export default function useStyles() {
@@ -22,9 +23,13 @@ export default function useStyles() {
       },
       li: {
         padding: 0
+      },
+      emptyText: {
+        textAlign: 'center',
+        width: '100%',
       }
     }
   );
 
-  return  styles;
+  return styles;
 };
