@@ -1,10 +1,13 @@
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
 import { useTheme } from "../../../theme";
 
 interface Style {
   container: ViewStyle;
-  checkmark: ViewStyle
+  textContainer: ViewStyle;
+  weightContainer: ViewStyle;
+  leftContainer: ViewStyle;
+  weightIcon: TextStyle;
 };
 
 export default function useStyles() {
@@ -13,13 +16,26 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>(
     {
       container: {
-        borderBottomWidth: theme.borderWeight[1],
-        borderColor: theme.colors.outlineVariant,
-        paddingVertical: 0
+        flexDirection: 'row',
+        paddingVertical: theme.space[1],
+        paddingHorizontal: theme.space[2],
+        alignItems: 'center',
+        borderColor: theme.colors.outline,
+        borderBottomWidth: 1
       },
-      checkmark: {
-        marginLeft: theme.space[2],
-        justifyContent: 'center'
+      textContainer: {
+        flex: 1
+      },
+      weightContainer: {
+        padding: theme.space[1],
+        alignItems: 'center',
+      },
+      leftContainer: {
+        marginRight: theme.space[2]
+      },
+      weightIcon: {
+        fontSize: 20,
+        color: theme.colors.primary
       }
     }
   );
