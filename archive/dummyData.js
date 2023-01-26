@@ -26,7 +26,7 @@ export const packs = [
 export const inventory = [
   {
     id: "1",
-    category: 'water',
+    category: '01',
     brand: 'Osprey',
     name: '3L Water Bladder',
     liquidCapacity: 3000,
@@ -37,7 +37,7 @@ export const inventory = [
   },
   {
     id: "2",
-    category: 'water',
+    category: '01',
     brand: 'Nalgene',
     name: '1L Bottle',
     liquidCapacity: 1000,
@@ -48,7 +48,7 @@ export const inventory = [
   },
   {
     id: "3",
-    category: 'water',
+    category: '01',
     brand: 'LifeStraw',
     name: 'Flex Bottle Filter',
     liquidCapacity: 300,
@@ -59,7 +59,7 @@ export const inventory = [
   },
   {
     id: "4",
-    category: 'shelter',
+    category: '04',
     brand: 'REI',
     name: 'Passage 2',
     weight: 4,
@@ -69,7 +69,7 @@ export const inventory = [
   },
   {
     id: "5",
-    category: 'shelter',
+    category: '04',
     brand: 'Teton',
     name: 'Leaf 0 Bag',
     weight: 3.5,
@@ -79,7 +79,7 @@ export const inventory = [
   },
   {
     id: "6",
-    category: 'food',
+    category: '02',
     brand: 'Peak',
     name: 'Fettuccini Alfredo',
     weight: 1.3,
