@@ -87,10 +87,21 @@ interface SettingsSliceState {
 };
 
 /* --CATEGORIES -- */
-interface Category {
-  value: string;
+interface CategoryFormData {
   label: string;
   icon: string;
-  isStockCategory: boolean;
   isBaseWeightExempt: boolean;
+};
+
+interface CategoryData extends CategoryFormData {
+  id: string,
+  value: string;
+};
+
+interface Category extends CategoryData {
+  isStockCategory: boolean;
+};
+
+interface CategorySliceState {
+  categories: CategoryData[];
 };

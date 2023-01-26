@@ -3,13 +3,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import packsReducer from './packsSlice';
 import inventoryReducer from "./inventorySlice";
 import settingsReducer from "./settingsSlice";
+import categoriesReducer from "./categoriesSlice";
 
 const store = configureStore(
   {
     reducer: {
       packs: packsReducer,
       inventory: inventoryReducer,
-      settings: settingsReducer
+      settings: settingsReducer,
+      categories: categoriesReducer
     }
   }
 );
