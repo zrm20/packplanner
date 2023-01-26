@@ -5,6 +5,7 @@ const stockCategories: CategoryData[] = [
     label: 'Water Containers',
     icon: 'cup-water',
     isBaseWeightExempt: false,
+    isStockCategory: true
   },
   {
     id: '02',
@@ -12,6 +13,7 @@ const stockCategories: CategoryData[] = [
     label: 'Food',
     icon: 'food-drumstick',
     isBaseWeightExempt: true,
+    isStockCategory: true
   },
   {
     id: '03',
@@ -19,6 +21,7 @@ const stockCategories: CategoryData[] = [
     label: 'Fuel',
     icon: 'fuel',
     isBaseWeightExempt: true,
+    isStockCategory: true
   },
   {
     id: '04',
@@ -26,6 +29,7 @@ const stockCategories: CategoryData[] = [
     label: 'Shelter',
     icon: 'tent',
     isBaseWeightExempt: false,
+    isStockCategory: true
   },
   {
     id: '05',
@@ -33,6 +37,7 @@ const stockCategories: CategoryData[] = [
     label: 'Clothing',
     icon: 'tshirt-crew',
     isBaseWeightExempt: false,
+    isStockCategory: true
   },
   {
     id: '06',
@@ -40,6 +45,7 @@ const stockCategories: CategoryData[] = [
     isBaseWeightExempt: false,
     label: 'Cooking',
     icon: 'grill',
+    isStockCategory: true
   },
   {
     id: '07',
@@ -47,6 +53,7 @@ const stockCategories: CategoryData[] = [
     label: 'Survival',
     isBaseWeightExempt: false,
     icon: 'knife-military',
+    isStockCategory: true
   },
   {
     id: '08',
@@ -54,6 +61,7 @@ const stockCategories: CategoryData[] = [
     label: 'Navigation',
     isBaseWeightExempt: false,
     icon: 'map',
+    isStockCategory: true
   },
   {
     id: '09',
@@ -61,6 +69,7 @@ const stockCategories: CategoryData[] = [
     label: 'Health',
     isBaseWeightExempt: false,
     icon: 'medical-bag',
+    isStockCategory: true
   },
   {
     id: '10',
@@ -68,6 +77,7 @@ const stockCategories: CategoryData[] = [
     label: 'Electronics',
     isBaseWeightExempt: false,
     icon: 'battery-charging-100',
+    isStockCategory: true
   },
   {
     id: '00',
@@ -75,6 +85,7 @@ const stockCategories: CategoryData[] = [
     label: 'Misc',
     isBaseWeightExempt: false,
     icon: 'chart-bubble',
+    isStockCategory: true
   }
 ];
 

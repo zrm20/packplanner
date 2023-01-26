@@ -29,7 +29,8 @@ const categoiesSlice = createSlice(
         const newCategoryData: CategoryData = {
           ...newCategory,
           value: camelize(newCategory.label),
-          id: uuid.v4() as string
+          id: uuid.v4() as string,
+          isStockCategory: false
         };
 
         state.categories.push(newCategoryData);
@@ -57,10 +58,10 @@ const categoiesSlice = createSlice(
         };
 
         const newCategoryData: CategoryData = {
-          ...newValues,
+          ...state.categories[indexToUpdate], // spread old values
+          ...newValues, // overwrite new values
           value: camelize(newValues.label),
-          // ensure that original id is not changed
-          id: state.categories[indexToUpdate].id
+          id: state.categories[indexToUpdate].id // ensure that original id is not changed
         };
 
         state.categories[indexToUpdate] = newCategoryData;

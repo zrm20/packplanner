@@ -25,7 +25,7 @@ interface InventoryHook {
 
 export default function useInventory(): InventoryHook {
   const inventorySlice = useSelector(state => state.inventory);
-  const { getCategoryById } = useCategories();
+  const { getCategoryById, miscCategory } = useCategories();
   const dispatch = useDispatch();
   const { weightUnit, liquidUnit } = useSettings();
   const { navigate } = useNavigation();
@@ -45,7 +45,7 @@ export default function useInventory(): InventoryHook {
       },
 
       // populate the category field
-      category: getCategoryById(item.category),
+      category: getCategoryById(item.category) || miscCategory, // defaults back to Misc category if no category found
 
       // item methods
       toggleInPack() {
@@ -95,10 +95,6 @@ export default function useInventory(): InventoryHook {
   function addToInventory(newItem: ItemFormData): void {
     dispatch(addAction({ item: newItem }));
   };
-
-  // function getBaseWeightInPack(): number {
-  //   // TODO
-  // };
 
   function getTotalWeightInPack(): number {
     return itemsInPack.reduce(

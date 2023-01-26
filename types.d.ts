@@ -50,7 +50,7 @@ interface ItemData extends ItemFormData {
 // contains all of the data AND methods used for an item
 interface Item extends ItemData {
   baseFields: ItemData;
-  category: CategoryData | null;
+  category: Category;
   toggleInPack(): void;
   openEdit(): void;
   update(newValues: ItemFormData, callback?: Function): void;
@@ -98,10 +98,13 @@ interface CategoryFormData {
 interface CategoryData extends CategoryFormData {
   id: string,
   value: string;
+  isStockCategory: boolean;
 };
 
 interface Category extends CategoryData {
-  isStockCategory: boolean;
+  baseFields: CategoryData
+  delete(callback?: Function): void,
+  update(newValues: CategoryFormData, callback?: Function): void;
 };
 
 interface CategorySliceState {
