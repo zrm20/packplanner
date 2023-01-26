@@ -20,7 +20,7 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
     brand: "",
     name: "",
     liquidCapacity: 0,
-    weight: 0,
+    weight: 0
   };
 
   // TODO When showLiquid is toggled off, it should reset liquidCapacity to 0

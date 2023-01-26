@@ -32,7 +32,8 @@ export const inventory = [
     liquidCapacity: 3000,
     weight: 1.3,
     qty: 1,
-    inPack: false
+    inPack: false,
+    isPacked: false
   },
   {
     id: "2",
@@ -42,7 +43,8 @@ export const inventory = [
     liquidCapacity: 1000,
     weight: .7,
     qty: 1,
-    inPack: false
+    inPack: false,
+    isPacked: false
   },
   {
     id: "3",
@@ -52,7 +54,8 @@ export const inventory = [
     liquidCapacity: 300,
     weight: .5,
     qty: 1,
-    inPack: false
+    inPack: false,
+    isPacked: false
   },
   {
     id: "4",
@@ -61,7 +64,8 @@ export const inventory = [
     name: 'Passage 2',
     weight: 4,
     qty: 1,
-    inPack: false
+    inPack: false,
+    isPacked: false
   },
   {
     id: "5",
@@ -70,7 +74,8 @@ export const inventory = [
     name: 'Leaf 0 Bag',
     weight: 3.5,
     qty: 1,
-    inPack: false
+    inPack: false,
+    isPacked: false
   },
   {
     id: "6",
@@ -79,7 +84,8 @@ export const inventory = [
     name: 'Fettuccini Alfredo',
     weight: 1.3,
     qty: 1,
-    inPack: false
+    inPack: false,
+    isPacked: false
   },
 
 ];

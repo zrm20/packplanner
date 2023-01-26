@@ -20,7 +20,8 @@ const inventorySlice = createSlice(
         const newItem: ItemData = {
           ...item,
           id: uuid.v4() as string,
-          qty: 1
+          qty: 1,
+          isPacked: false
         };
 
         state.inventory.push(newItem);
