@@ -37,6 +37,7 @@ interface ItemFormData {
   weight: number; // in kg
   liquidCapacity?: number; // in ml
   inPack?: boolean;
+  category: string;
 };
 
 // used within the redux store and only contains serializable data
@@ -49,6 +50,7 @@ interface ItemData extends ItemFormData {
 // contains all of the data AND methods used for an item
 interface Item extends ItemData {
   baseFields: ItemData;
+  category: CategoryData | null;
   toggleInPack(): void;
   openEdit(): void;
   update(newValues: ItemFormData, callback?: Function): void;

@@ -10,6 +10,7 @@ import {
   updateQty as updateQtyAction
 } from "../../redux/inventorySlice";
 import useSettings from "../settings/useSettings";
+import useCategories from "../categories/useCategories";
 
 interface InventoryHook {
   inventorySlice: InventorySliceState,
@@ -24,6 +25,7 @@ interface InventoryHook {
 
 export default function useInventory(): InventoryHook {
   const inventorySlice = useSelector(state => state.inventory);
+  const { getCategoryById } = useCategories();
   const dispatch = useDispatch();
   const { weightUnit, liquidUnit } = useSettings();
   const { navigate } = useNavigation();
@@ -41,6 +43,9 @@ export default function useInventory(): InventoryHook {
       baseFields: {
         ...item
       },
+
+      // populate the category field
+      category: getCategoryById(item.category),
 
       // item methods
       toggleInPack() {

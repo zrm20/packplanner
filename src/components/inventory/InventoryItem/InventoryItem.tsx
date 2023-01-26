@@ -19,6 +19,7 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
     brand,
     inPack,
     liquidCapacity,
+    category,
     toggleInPack,
     getWeight,
     getLiquidCapacity
@@ -39,6 +40,10 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
           }
         </View>
         <View style={styles.textContainer}>
+          {
+            category &&
+            <Text variant='labelSmall'>{category.label}</Text>
+          }
           <Text variant="titleMedium" numberOfLines={1}>{brand}</Text>
           <Text variant="titleSmall" numberOfLines={1}>{name}</Text>
         </View>
