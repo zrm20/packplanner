@@ -85,3 +85,12 @@ interface SettingsSliceState {
   weightUnits: WeightUnit;
   liquidUnits: LiquidCapacityUnit;
 };
+
+/* --CATEGORIES -- */
+interface Category {
+  value: string;
+  label: string;
+  icon: string;
+  isStockCategory: boolean;
+  isBaseWeightExempt: boolean;
+};
