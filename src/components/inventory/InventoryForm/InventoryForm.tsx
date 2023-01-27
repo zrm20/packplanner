@@ -4,7 +4,8 @@ import { HelperText, Subheading, Surface, Switch } from "react-native-paper";
 import { Formik } from "formik";
 
 import useStyles from "./InventoryForm.styles";
-import { TextInput, WeightInput, SubmitButton, CapacityInput } from "../../formComponents";
+import { TextInput, WeightInput, SubmitButton, CapacityInput, PickerInput } from "../../formComponents";
+import { useCategories } from "../../../hooks";
 
 interface InventoryFormProps {
   initialValues?: ItemFormData;
@@ -15,12 +16,14 @@ interface InventoryFormProps {
 export default function InventoryForm(props: InventoryFormProps): JSX.Element {
   const styles = useStyles();
   const [showLiquid, setShowLiquid] = useState<boolean>(Boolean(props.initialValues?.liquidCapacity));
+  const { categories } = useCategories();
 
   const initialValues: ItemFormData = props.initialValues || {
     brand: "",
     name: "",
     liquidCapacity: 0,
-    weight: 0
+    weight: 0,
+    category: '00' // defaults to miscCategory id
   };
 
   // TODO When showLiquid is toggled off, it should reset liquidCapacity to 0
@@ -31,9 +34,16 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
       onSubmit={props.onSubmit}
     >
       <KeyboardAvoidingView style={styles.container} behavior="height" >
+        <PickerInput
+          name='category'
+          label="Category"
+          data={categories}
+        />
+
         <TextInput name="brand" label="Brand" />
         <TextInput name="name" label="Name" />
         <WeightInput name="weight" label="Weight" />
+
 
         <View style={styles.liquidEnableSection}>
           <Subheading style={styles.enableLiquidLabel}>Liquid Container?</Subheading>
