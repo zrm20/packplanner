@@ -6,8 +6,6 @@ interface Style {
   container: ViewStyle;
   titleContainer: ViewStyle;
   closeButton: ViewStyle;
-  deleteContainer: ViewStyle;
-  deleteButton: ViewStyle;
 };
 
 export default function useStyles() {
@@ -28,13 +26,6 @@ export default function useStyles() {
         left: theme.space[2],
         top: theme.space[2],
       },
-      deleteContainer: {
-        width: '100%',
-        alignItems: 'center',
-      },
-      deleteButton: {
-        backgroundColor: theme.colors.error
-      }
     }
   );
   return styles;

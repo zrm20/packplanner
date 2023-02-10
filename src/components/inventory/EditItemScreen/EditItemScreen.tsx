@@ -19,21 +19,21 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
   const itemId = extractId(route.params.item);
   const item = getItemById(itemId);
 
-  if(!item) {
+  if (!item) {
     <SafeAreaScreen style={styles.container}>
       <Title>Something went wrong</Title>
       <Button onPress={navigation.goBack}>Go Back</Button>
     </SafeAreaScreen>
   };
-  
+
   function handleSubmit(newValues: ItemFormData): void {
-    if(item) {
+    if (item) {
       item.update(newValues, () => navigation.navigate('Inventory'));
     }
   };
 
   function handleDelete(): void {
-    if(item) {
+    if (item) {
       item.delete(navigation.goBack)
     }
   };
@@ -59,18 +59,9 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
             onSubmit={handleSubmit}
             initialValues={item.baseFields}
             submitText="Update Item"
+            onDelete={handleDelete}
           />
         }
-
-        <View style={styles.deleteContainer}>
-          <Button
-            style={styles.deleteButton}
-            mode="contained"
-            onPress={handleDelete}
-          >
-            Delete Item
-          </Button>
-        </View>
       </SafeAreaScreen>
     </TouchableWithoutFeedback>
   );

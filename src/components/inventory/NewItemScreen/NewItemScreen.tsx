@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
-import { FAB, Title } from "react-native-paper";
+import { FAB } from "react-native-paper";
 
 import useStyles from "./NewItemScreen.styles";
 import { SafeAreaScreen } from "../../ui";
@@ -34,8 +34,6 @@ export default function NewItemScreen({ navigation }: NewItemScreenProps): JSX.E
               size="small"
             />
           }
-
-          <Title>New Item</Title>
         </View>
 
         <InventoryForm onSubmit={handleSubmit} />

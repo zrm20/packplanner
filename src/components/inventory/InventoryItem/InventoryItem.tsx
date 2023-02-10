@@ -41,7 +41,7 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
         </View>
         <View style={styles.textContainer}>
           {
-            category &&
+            Boolean(category) &&
             <Text variant='labelSmall'>{category.label}</Text>
           }
           <Text variant="titleMedium" numberOfLines={1}>{brand}</Text>
@@ -50,7 +50,7 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
         <View style={styles.weightContainer}>
           <Text variant="labelSmall">{getWeight()}</Text>
           {
-            liquidCapacity &&
+            Boolean(liquidCapacity) &&
             <Text variant="labelSmall">{getLiquidCapacity()}</Text>
           }
         </View>
