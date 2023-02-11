@@ -21,11 +21,12 @@ interface InventoryHook {
   addToInventory(item: ItemFormData): void;
   getTotalWeightInPack(): number;
   getLiquidWeightInPack(): number;
+  getSortedInventory(): CategoryMap[];
 };
 
 export default function useInventory(): InventoryHook {
   const inventorySlice = useSelector(state => state.inventory);
-  const { getCategoryById, miscCategory } = useCategories();
+  const { getCategoryById, miscCategory, categories } = useCategories();
   const dispatch = useDispatch();
   const { weightUnit, liquidUnit } = useSettings();
   const { navigate } = useNavigation();
@@ -114,6 +115,15 @@ export default function useInventory(): InventoryHook {
       0);
   };
 
+  function getSortedInventory(): CategoryMap[] {
+    return categories.map(cat => {
+      return {
+        category: cat.label,
+        items: inventory.filter(item => item.category.id === cat.id)
+      }
+    });
+  };
+
   return {
     inventorySlice,
     inventory,
@@ -122,6 +132,7 @@ export default function useInventory(): InventoryHook {
     getItemById,
     addToInventory,
     getTotalWeightInPack,
-    getLiquidWeightInPack
+    getLiquidWeightInPack,
+    getSortedInventory
   };
 };

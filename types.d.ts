@@ -110,3 +110,8 @@ interface Category extends CategoryData {
 interface CategorySliceState {
   categories: CategoryData[];
 };
+
+interface CategoryMap {
+  category: string;
+  items: Item[];
+}

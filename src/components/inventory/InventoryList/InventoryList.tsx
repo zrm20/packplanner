@@ -10,7 +10,9 @@ import { useInventory } from "../../../hooks";
 export default function InventoryList(): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { inventory } = useInventory();
+  const { getSortedInventory } = useInventory();
+
+  const sortedInventory = getSortedInventory();
 
   return (
     <View style={styles.container} >
@@ -20,21 +22,30 @@ export default function InventoryList(): JSX.Element {
         <View style={styles.iconGroup}>
           <IconButton icon="cloud-download" size={14} mode="outlined" />
           <IconButton icon="tag" size={14} mode="outlined" />
-          <IconButton icon="plus" size={14} mode="outlined" onPress={() => navigate('Locker', { screen: 'NewItem'})} />
+          <IconButton icon="plus" size={14} mode="outlined" onPress={() => navigate('Locker', { screen: 'NewItem' })} />
         </View>
       </View>
 
       <View style={styles.listContainer}>
         <Surface style={styles.listSurface} >
           <FlatList
-            data={inventory}
-            keyExtractor={item => item.id}
-            renderItem={data => (
-              <InventoryItem
-                item={data.item}
-                onPress={data.item.openEdit}
-              />
-            )}
+            data={sortedInventory}
+            keyExtractor={category => category.category}
+            renderItem={data => {
+              if (data.item.items.length > 0) {
+                return (
+                  <View>
+                    <Text style={styles.catHeader}>{data.item.category}</Text>
+                    {
+                      data.item.items.map(item => <InventoryItem item={item} key={item.id} />)
+                    }
+                  </View>
+                );
+              } else {
+                return null;
+              }
+            }
+            }
           />
         </Surface>
       </View>
