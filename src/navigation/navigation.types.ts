@@ -36,7 +36,8 @@ export type LockerStackParamList = {
 };
 
 export type MyPackStackParamList = {
-  MyPackHome: undefined
+  MyPackHome: undefined,
+  Checklist: undefined
 };
 
 export type MyPackHomeScreenProps = CompositeScreenProps<
