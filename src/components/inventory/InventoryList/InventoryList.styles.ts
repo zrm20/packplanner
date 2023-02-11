@@ -8,7 +8,6 @@ interface Style {
   iconGroup: ViewStyle;
   listContainer: ViewStyle;
   listSurface: ViewStyle;
-  catHeader: TextStyle;
 };
 
 export default function useStyles() {
@@ -39,11 +38,6 @@ export default function useStyles() {
       },
       listSurface: {
         height: '100%',
-      },
-      catHeader: {
-        backgroundColor: theme.colors.secondary,
-        color: theme.colors.onSecondary,
-        textAlign: 'center'
       }
     }
   );

@@ -4,6 +4,7 @@ import InventoryItem from "./InventoryItem/InventoryItem";
 import NewItemScreen from "./NewItemScreen/NewItemScreen";
 import EditItemScreen from "./EditItemScreen/EditItemScreen";
 import InventoryForm from "./InventoryForm/InventoryForm";
+import CategorizedItemList from "./CategorizedItemList/CategorizedItemList";
 
 export {
   InventoryScreen,
@@ -11,5 +12,6 @@ export {
   InventoryItem,
   NewItemScreen,
   EditItemScreen,
-  InventoryForm
+  InventoryForm,
+  CategorizedItemList
 };

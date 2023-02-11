@@ -21,7 +21,7 @@ interface InventoryHook {
   addToInventory(item: ItemFormData): void;
   getTotalWeightInPack(): number;
   getLiquidWeightInPack(): number;
-  getSortedInventory(): CategoryMap[];
+  getSortedInventory(items?: Item[]): CategoryMap[];
 };
 
 export default function useInventory(): InventoryHook {
@@ -115,7 +115,18 @@ export default function useInventory(): InventoryHook {
       0);
   };
 
-  function getSortedInventory(): CategoryMap[] {
+  function getSortedInventory(items?: Item[]): CategoryMap[] {
+    if (items) {
+      // if items are passed as params, sort them into categories
+      return categories.map(cat => {
+        return {
+          category: cat.label,
+          items: items.filter(item => item.category.id === cat.id)
+        }
+      });
+    };
+
+    // if no item param recieved, sort the whole inventory
     return categories.map(cat => {
       return {
         category: cat.label,
