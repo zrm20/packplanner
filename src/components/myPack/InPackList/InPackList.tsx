@@ -24,7 +24,7 @@ export default function InPackList(props: InPackListProps): JSX.Element {
               data={itemsInPack}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (
-                <InventoryItem item={item} />
+                <InventoryItem item={item} disabled />
               )}
             />
           </Surface>

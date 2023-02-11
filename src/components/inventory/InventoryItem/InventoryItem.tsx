@@ -1,7 +1,6 @@
 import React from "react";
 import { TouchableOpacity, TouchableOpacityProps, View, ViewStyle } from "react-native";
 import { Text, IconButton } from "react-native-paper";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import QtyChanger from "../QtyChanger/QtyChanger";
 import useStyles from "./InventoryItem.styles"

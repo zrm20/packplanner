@@ -37,7 +37,13 @@ export default function InventoryList(): JSX.Element {
                   <View>
                     <Text style={styles.catHeader}>{data.item.category}</Text>
                     {
-                      data.item.items.map(item => <InventoryItem item={item} key={item.id} />)
+                      data.item.items.map(item => (
+                        <InventoryItem
+                          item={item}
+                          key={item.id}
+                          onLongPress={item.openEdit}
+                        />
+                      ))
                     }
                   </View>
                 );
