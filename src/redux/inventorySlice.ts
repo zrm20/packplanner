@@ -77,6 +77,7 @@ const inventorySlice = createSlice(
           // if removing from pack, reset the qty to 1
           state.inventory[indexToUpdate].inPack = false;
           state.inventory[indexToUpdate].qty = 1;
+          state.inventory[indexToUpdate].isPacked = false;
         } else {
           state.inventory[indexToUpdate].inPack = true;
         };
@@ -109,10 +110,25 @@ const inventorySlice = createSlice(
           qty: newInt
         };
       },
+      toggleIsPacked: (state, action) => {
+        const { id } = action.payload;
+
+        if (!id) {
+          throw new Error("No item id recieved");
+        };
+
+        const indexToUpdate = state.inventory.findIndex(item => item.id === id);
+
+        if (indexToUpdate === -1) {
+          throw new Error("Item with that ID was not found");
+        };
+
+        state.inventory[indexToUpdate].isPacked = !state.inventory[indexToUpdate].isPacked;
+      },
     }
   }
 );
 
 export default inventorySlice.reducer;
 
-export const { addItem, deleteItem, updateItem, toggleInPack, updateQty } = inventorySlice.actions;
+export const { addItem, deleteItem, updateItem, toggleInPack, updateQty, toggleIsPacked } = inventorySlice.actions;

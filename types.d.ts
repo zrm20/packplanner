@@ -44,7 +44,7 @@ interface ItemFormData {
 interface ItemData extends ItemFormData {
   id: string;
   qty: number;
-  isPacked: boolean; // this descibed wether the item has acutally been packe, i.e. the checklist is checked
+  isPacked: boolean; // this descibes wether the item has acutally been packe, i.e. the checklist is checked
 };
 
 // contains all of the data AND methods used for an item
@@ -52,6 +52,7 @@ interface Item extends ItemData {
   baseFields: ItemData;
   category: Category;
   toggleInPack(): void;
+  toggleIsPacked(): void;
   openEdit(): void;
   update(newValues: ItemFormData, callback?: Function): void;
   delete(callback?: Function): void;

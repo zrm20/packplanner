@@ -7,7 +7,8 @@ import {
   deleteItem as deleteAction,
   updateItem as updateAction,
   toggleInPack as toggleAction,
-  updateQty as updateQtyAction
+  updateQty as updateQtyAction,
+  toggleIsPacked as toggleisPackedAction
 } from "../../redux/inventorySlice";
 import useSettings from "../settings/useSettings";
 import useCategories from "../categories/useCategories";
@@ -81,6 +82,9 @@ export default function useInventory(): InventoryHook {
         };
         const convertedCapacity = liquidUnit.convert(item.liquidCapacity);
         return `${convertedCapacity} ${liquidUnit.label}`;
+      },
+      toggleIsPacked() {
+        dispatch(toggleisPackedAction({ id: item.id }));
       }
     }
   };

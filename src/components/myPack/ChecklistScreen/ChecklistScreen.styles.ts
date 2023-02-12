@@ -1,9 +1,11 @@
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
 import { useTheme } from "../../../theme";
 
 interface Style {
   container: ViewStyle;
+  title: TextStyle;
+  listContainer: ViewStyle;
 };
 
 export default function useStyles() {
@@ -13,6 +15,15 @@ export default function useStyles() {
     {
       container: {
 
+      },
+      title: {
+        width: '100%',
+        marginTop: theme.space[2],
+        textAlign: "center"
+      },
+      listContainer: {
+        width: '100%',
+        paddingHorizontal: theme.space[2]
       }
     }
   );
