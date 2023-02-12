@@ -18,7 +18,7 @@ export default function useStyles() {
         paddingVertical: theme.space[1],
         borderTopWidth: theme.borderWeight[1],
         borderBottomWidth: theme.borderWeight[1],
-        borderColor: theme.colors.primary
+        borderColor: theme.colors.tertiary
       }
     }
   );

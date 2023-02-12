@@ -25,7 +25,7 @@ export default function useStyles() {
       },
       selectedPack: {
         borderWidth: 2,
-        borderColor: theme.colors.primary
+        borderColor: theme.colors.tertiary
       }
     }
   );
