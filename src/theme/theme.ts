@@ -49,7 +49,16 @@ const lightColors: AppColors = {
   "outline": "#75796c",
   "outlineVariant": "rgb(192, 201, 193)",
 
-  "backdrop": "rgba(42, 50, 45, 0.4)"
+  "backdrop": chroma(brandColors.primary).alpha(.4).css(),
+
+  "elevation": { // used on surface components
+    "level0": secondaryScale(.9).css(),
+    "level1": secondaryScale(.85).css(),
+    "level2": secondaryScale(.8).css(),
+    "level3": secondaryScale(.75).css(),
+    "level4": secondaryScale(.7).css(),
+    "level5": secondaryScale(.6).css()
+  }
 };
 
 const theme: AppTheme = {
