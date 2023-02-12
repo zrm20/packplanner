@@ -1,17 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
-
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
-import { confirmDelete } from "../../utils";
-import {
-  addItem as addAction,
-  deleteItem as deleteAction,
-  updateItem as updateAction,
-  toggleInPack as toggleAction,
-  updateQty as updateQtyAction,
-  toggleIsPacked as toggleisPackedAction
-} from "../../redux/inventorySlice";
-import useSettings from "../settings/useSettings";
+import { addItem as addAction } from "../../redux/inventorySlice";
 import useCategories from "../categories/useCategories";
+import useCreateItem from "./useCreateItem";
 
 interface InventoryHook {
   inventorySlice: InventorySliceState,
@@ -27,66 +17,12 @@ interface InventoryHook {
 
 export default function useInventory(): InventoryHook {
   const inventorySlice = useSelector(state => state.inventory);
-  const { getCategoryById, miscCategory, categories } = useCategories();
+  const { categories } = useCategories();
   const dispatch = useDispatch();
-  const { weightUnit, liquidUnit } = useSettings();
-  const { navigate } = useNavigation();
+  const createItem = useCreateItem();
 
   if (!inventorySlice) {
     throw new Error("useInventory must be used within a Redux Provider that contains an inventory reducer");
-  };
-
-  function createItem(item: ItemData): Item {
-    return {
-      // item properties
-      ...item,
-
-      // base fields is used for distributing only the original fields
-      baseFields: {
-        ...item
-      },
-
-      // populate the category field
-      category: getCategoryById(item.category) || miscCategory, // defaults back to Misc category if no category found
-
-      // item methods
-      toggleInPack() {
-        dispatch(toggleAction({ id: item.id }));
-      },
-      openEdit() {
-        navigate('Locker', { screen: 'EditItem', params: { item: item.id } })
-      },
-      update(newValues, callback) {
-        dispatch(updateAction({ newValues, id: item.id }));
-        if (callback) {
-          callback();
-        };
-      },
-      delete(callback) {
-        confirmDelete(
-          () => dispatch(deleteAction({ id: item.id })),
-          `Do you want to perminantly delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
-          callback
-        );
-      },
-      updateQty(newQty: number) {
-        dispatch(updateQtyAction({ id: item.id, newQty }))
-      },
-      getWeight() {
-        const convertedWeight = weightUnit.convert(item.weight);
-        return `${convertedWeight} ${weightUnit.label}`;
-      },
-      getLiquidCapacity() {
-        if (!item.liquidCapacity) {
-          return '';
-        };
-        const convertedCapacity = liquidUnit.convert(item.liquidCapacity);
-        return `${convertedCapacity} ${liquidUnit.label}`;
-      },
-      toggleIsPacked() {
-        dispatch(toggleisPackedAction({ id: item.id }));
-      }
-    }
   };
 
   const inventory: Item[] = inventorySlice.inventory.map(createItem);

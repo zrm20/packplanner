@@ -1,15 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
-
-import { weightMap } from "../../constants";
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
 import {
-  toggleSelectedPack,
-  deletePack as deleteAction,
-  updatePack as updateAction,
   addPack as addAction
 } from "../../redux/packsSlice";
-import { confirmDelete } from "../../utils";
-import useSettings from "../settings/useSettings";
+import useCreatePack from "./useCreatePack";
 
 interface PackHook {
   packsSlice: PacksSliceState,
@@ -21,49 +14,11 @@ interface PackHook {
 
 export default function usePacks(): PackHook {
   const packsSlice = useSelector(state => state.packs);
-  const { weightUnit } = useSettings();
   const dispatch = useDispatch();
-  const { navigate } = useNavigation();
+  const createPack = useCreatePack();
 
   if (!packsSlice) {
     throw new Error('usePacks must be used within a Redux Provider with a packsReducer in store');
-  };
-
-  function createPack(pack: PackData): Pack {
-    return {
-      // pack properties
-      ...pack,
-      isSelected: pack.id === packsSlice.selectedPack,
-      // base fields is used for distributing only the original field values from store
-      baseFields: {
-        ...pack
-      },
-
-      // pack methods
-      select() {
-        dispatch(toggleSelectedPack({ id: pack.id }));
-      },
-      openEdit() {
-        navigate("Locker", { screen: "EditPack", params: { pack: pack.id } })
-      },
-      delete(callback) {
-        confirmDelete(
-          () => dispatch(deleteAction({ id: pack.id })),
-          `Do you want to perminantly delete ${pack.brand} ${pack.model}?`,
-          callback
-        );
-      },
-      update(newValues, callback) {
-        dispatch(updateAction({ id: pack.id, newValues }));
-        if (callback) {
-          callback();
-        }
-      },
-      getWeight() {
-        const convertedValue = weightUnit.convert(pack.weight);
-        return `${convertedValue} ${weightUnit.label}`
-      }
-    }
   };
 
   const packs: Pack[] = packsSlice.packs.map(createPack);
