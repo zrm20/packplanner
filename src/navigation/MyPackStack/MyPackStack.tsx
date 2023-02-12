@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { ChecklistScreen, MyPackScreen } from "../../components/myPack";
+import { ChartScreen, ChecklistScreen, MyPackScreen } from "../../components/myPack";
 import { MyPackStackParamList } from "../navigation.types";
 
 const Stack = createNativeStackNavigator<MyPackStackParamList>();
@@ -22,6 +22,7 @@ export default function MyPackStack(): JSX.Element {
         }}
       >
         <Stack.Screen name="Checklist" component={ChecklistScreen} />
+        <Stack.Screen name="Chart" component={ChartScreen} />
       </Stack.Group>
 
     </Stack.Navigator>

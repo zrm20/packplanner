@@ -20,6 +20,7 @@ export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
       <IconButton
         icon="chart-pie"
         mode={iconMode}
+        onPress={() => navigate("MyPack", { screen: "Chart" })}
       />
       <IconButton
         icon="playlist-check"
