@@ -56,10 +56,10 @@ export default function useStyles() {
       },
       saveButton: {
         left: theme.space[4]
+
       },
       deleteButton: {
         right: theme.space[4],
-        backgroundColor: theme.colors.errorContainer
       }
     }
   );

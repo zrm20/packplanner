@@ -6,14 +6,14 @@ import { Provider as ReduxProvider } from 'react-redux'
 // import { persistStore } from 'redux-persist';
 import { Provider as ThemeProvider } from 'react-native-paper';
 import AppNavigator from './src/navigation/AppNavigator/AppNavigator';
-import { theme as lightTheme, darkTheme } from "./src/theme/theme";
+import { theme as lightTheme } from "./src/theme/theme";
 
 // let persistor = persistStore(store);
 
 export default function App() {
   const colorScheme = useColorScheme();
 
-  const theme = colorScheme === 'light' ? lightTheme : darkTheme
+  const theme = lightTheme;
 
   return (
     <ReduxProvider store={store}>
