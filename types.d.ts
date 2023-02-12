@@ -116,3 +116,13 @@ interface CategoryMap {
   category: string;
   items: Item[];
 }
+
+// pieChart
+interface ChartDataItem {
+  weight: number;
+  color: string;
+  key: string;
+  name: string;
+};
+
+type ChartData = ChartDataItem[]

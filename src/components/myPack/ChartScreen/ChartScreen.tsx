@@ -7,6 +7,7 @@ import { useInventory, usePacks } from "../../../hooks";
 import { CloseScreenButton, SafeAreaScreen } from "../../ui";
 import CategoryPieChart from "../CategoryPieChart/CategoryPieChart";
 import useStyles from "./ChartScreen.styles";
+import CategoryChartLegend from "../CategoryChartLegend/CategoryChartLegend";
 
 export default function ChartScreen(): JSX.Element {
   const styles = useStyles();
@@ -15,14 +16,14 @@ export default function ChartScreen(): JSX.Element {
 
   const sortedItems = getSortedInventory(itemsInPack);
 
-  const chartData =
+  const chartData: ChartData =
     sortedItems
       .filter(cat => cat.items.length > 0) // remove categories without items
       .map(cat => ({
         weight: cat.items.reduce((tot, currItem) => (tot + currItem.weight), 0),
         name: cat.category,
         key: cat.category,
-        color: chroma.random().hex()
+        color: chroma.random().hex() // TODO move this to a useEffect and external Fn
       }));
 
   // add the pack weight to the chart data
@@ -48,7 +49,7 @@ export default function ChartScreen(): JSX.Element {
   return (
     <SafeAreaScreen style={styles.container} >
       <CloseScreenButton androidOnly />
-      <Text variant="headlineLarge" style={styles.title}>
+      <Text variant="headlineMedium" style={styles.title}>
         Weight by Category
       </Text>
 
@@ -58,10 +59,9 @@ export default function ChartScreen(): JSX.Element {
 
       <Divider />
 
-      <ScrollView>
-
-      </ScrollView>
-
+      <View style={styles.legendContainer}>
+        <CategoryChartLegend chartData={chartData} />
+      </View>
     </SafeAreaScreen>
   );
 };

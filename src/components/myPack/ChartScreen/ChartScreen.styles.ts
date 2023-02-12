@@ -6,6 +6,7 @@ interface Style {
   container: ViewStyle;
   title: TextStyle;
   chartContainer: ViewStyle;
+  legendContainer: ViewStyle;
 };
 
 export default function useStyles() {
@@ -22,6 +23,12 @@ export default function useStyles() {
       },
       chartContainer: {
         width: '100%',
+        alignItems: 'center'
+      },
+      legendContainer: {
+        width: '100%',
+        flex: 1,
+        paddingHorizontal: theme.space[2],
         alignItems: 'center'
       }
     }
