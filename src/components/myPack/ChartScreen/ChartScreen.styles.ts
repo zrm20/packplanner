@@ -5,6 +5,7 @@ import { useTheme } from "../../../theme";
 interface Style {
   container: ViewStyle;
   title: TextStyle;
+  chartContainer: ViewStyle;
 };
 
 export default function useStyles() {
@@ -18,6 +19,10 @@ export default function useStyles() {
       title: {
         width: "100%",
         textAlign: "center"
+      },
+      chartContainer: {
+        width: '100%',
+        alignItems: 'center'
       }
     }
   );
