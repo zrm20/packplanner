@@ -1,11 +1,11 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
-import { FAB, Button, Title } from "react-native-paper";
+import { Button, Title } from "react-native-paper";
 
 import useStyles from "./EditItemScreen.styles";
-import { SafeAreaScreen } from "../../ui";
+import { CloseScreenButton, SafeAreaScreen } from "../../ui";
 import { useInventory } from "../../../hooks";
-import { extractId, isAndroid } from "../../../utils";
+import { extractId } from "../../../utils";
 import InventoryForm from "../InventoryForm/InventoryForm";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LockerStackParamList } from "../../../navigation/navigation.types";
@@ -41,17 +41,7 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaScreen style={styles.container}>
-        <View style={styles.titleContainer}>
-          {
-            isAndroid() &&
-            <FAB
-              icon="arrow-left"
-              onPress={() => navigation.goBack()}
-              style={styles.closeButton}
-              size="small"
-            />
-          }
-        </View>
+        <CloseScreenButton androidOnly />
 
         {
           item?.baseFields &&

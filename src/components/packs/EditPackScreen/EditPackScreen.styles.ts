@@ -5,7 +5,6 @@ import { useTheme } from "../../../theme";
 interface Style {
   container: ViewStyle;
   titleContainer: ViewStyle;
-  closeButton: ViewStyle;
   deleteContainer: ViewStyle;
   deleteButton: ViewStyle;
 };
@@ -22,11 +21,6 @@ export default function useStyles() {
         padding: theme.space[2],
         marginTop: theme.space[2],
         alignItems: 'center'
-      },
-      closeButton: {
-        position: 'absolute',
-        left: theme.space[2],
-        top: theme.space[2],
       },
       deleteContainer: {
         width: '100%',

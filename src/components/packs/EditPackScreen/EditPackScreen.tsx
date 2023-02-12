@@ -1,12 +1,12 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
-import { Button, FAB, Title } from "react-native-paper";
+import { Button, Title } from "react-native-paper";
 
 import { usePacks } from "../../../hooks";
 import { LockerStackParamList } from "../../../navigation/navigation.types";
-import { extractId, isAndroid } from "../../../utils";
-import { SafeAreaScreen } from "../../ui";
+import { extractId } from "../../../utils";
+import { CloseScreenButton, SafeAreaScreen } from "../../ui";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./EditPackScreen.styles"
 
@@ -28,13 +28,13 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
   }
 
   function handleSubmit(newValues: PackFormData): void {
-    if(pack) {
+    if (pack) {
       pack.update(newValues, navigation.goBack);
     };
   };
 
   function handleDelete(): void {
-    if(pack){
+    if (pack) {
       pack.delete(navigation.goBack);
     }
   };
@@ -43,15 +43,7 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaScreen style={styles.container}>
         <View style={styles.titleContainer}>
-          {
-            isAndroid() &&
-            <FAB
-              icon="arrow-left"
-              onPress={() => navigation.goBack()}
-              style={styles.closeButton}
-              size="small"
-            />
-          }
+          <CloseScreenButton androidOnly />
 
           <Title>Edit Pack</Title>
         </View>
