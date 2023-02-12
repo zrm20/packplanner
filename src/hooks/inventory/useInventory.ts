@@ -13,6 +13,7 @@ interface InventoryHook {
   getTotalWeightInPack(): number;
   getLiquidWeightInPack(): number;
   getSortedInventory(items?: Item[]): CategoryMap[];
+  getBaseWeightInPack(): number;
 };
 
 export default function useInventory(): InventoryHook {
@@ -41,6 +42,17 @@ export default function useInventory(): InventoryHook {
     return itemsInPack.reduce(
       (total: number, currentItem: Item) => (total + currentItem.weight * currentItem.qty),
       0);
+  };
+
+  function getBaseWeightInPack(): number {
+    return itemsInPack.reduce(
+      (total: number, currentItem: Item) => {
+        if (!currentItem.category.isBaseWeightExempt) {
+          return total + currentItem.weight * currentItem.qty;
+        } else {
+          return total;
+        };
+      }, 0)
   };
 
   function getLiquidWeightInPack(): number {
@@ -84,6 +96,7 @@ export default function useInventory(): InventoryHook {
     addToInventory,
     getTotalWeightInPack,
     getLiquidWeightInPack,
-    getSortedInventory
+    getSortedInventory,
+    getBaseWeightInPack
   };
 };
