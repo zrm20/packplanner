@@ -29,7 +29,7 @@ export default function useStyles() {
         width: '100%',
         flex: 1,
         paddingHorizontal: theme.space[2],
-        alignItems: 'center'
+        alignItems: 'center',
       }
     }
   );

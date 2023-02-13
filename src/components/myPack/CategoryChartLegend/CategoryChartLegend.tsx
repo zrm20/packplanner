@@ -14,7 +14,7 @@ export default function CategoryChartLegend(): JSX.Element {
   chartData.sort((a, b) => b.weight - a.weight);
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.container} style={styles.scrollView}>
       {
         chartData.map(cat => (
           <View style={styles.legendItem} key={cat.key} >
@@ -26,7 +26,9 @@ export default function CategoryChartLegend(): JSX.Element {
                 ]
               }
             />
-            <Text variant="labelLarge">{cat.name} - {weightUnit.convert(cat.weight)} {weightUnit.label}</Text>
+            <Text variant="labelLarge" adjustsFontSizeToFit numberOfLines={1}>
+              {cat.name} ({weightUnit.convert(cat.weight)} {weightUnit.label})
+            </Text>
           </View>
         ))
       }
