@@ -38,7 +38,7 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
         <PickerInput
           name='category'
           label="Category"
-          data={categories}
+          data={categories.map(cat => ({ label: cat.label, value: cat.id }))}
         />
 
         <TextInput name="brand" label="Brand" />
