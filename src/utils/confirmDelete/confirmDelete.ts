@@ -1,7 +1,11 @@
 import { Alert } from "react-native";
 
 
-export default function confirmDelete(deleteFn: Function, message: string = "Do you want to perminantly delete this?", callback?: Function): void {
+export default function confirmDelete(
+  deleteFn: Function,
+  message: string = "Do you want to perminantly delete this?",
+  callback?: Function): void {
+
   Alert.alert(
     "Are you sure?", // Alert title
     message, // Alert message
@@ -14,7 +18,7 @@ export default function confirmDelete(deleteFn: Function, message: string = "Do 
       },
       {
         // second button option
-        text: "Delete item",
+        text: "Remove",
         onPress: () => {
           deleteFn();
           if (callback) {
