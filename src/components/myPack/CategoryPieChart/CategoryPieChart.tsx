@@ -2,6 +2,7 @@ import React from "react";
 import { useWindowDimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { AbstractChartConfig } from "react-native-chart-kit/dist/AbstractChart";
+import { useChartContext } from "../../../hooks";
 
 const chartConfig: AbstractChartConfig = {
   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
@@ -9,12 +10,13 @@ const chartConfig: AbstractChartConfig = {
   // barPercentage: 0.5,
 };
 
-export default function CategoryPieChart(props: { chartData: ChartData }): JSX.Element {
+export default function CategoryPieChart(): JSX.Element {
   const { width } = useWindowDimensions();
+  const { chartData } = useChartContext();
 
   return (
     <PieChart
-      data={props.chartData}
+      data={chartData}
       width={width}
       height={width}
       chartConfig={chartConfig}
