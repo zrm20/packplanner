@@ -12,8 +12,8 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>(
     {
       catHeader: {
-        backgroundColor: theme.colors.primary,
-        color: theme.colors.onPrimary,
+        backgroundColor: theme.colors.secondary,
+        color: theme.colors.onSecondary,
         textAlign: 'center'
       }
     }
