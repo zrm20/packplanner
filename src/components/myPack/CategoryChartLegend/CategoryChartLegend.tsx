@@ -17,7 +17,7 @@ export default function CategoryChartLegend(): JSX.Element {
     <ScrollView>
       {
         chartData.map(cat => (
-          <View style={styles.legendItem} >
+          <View style={styles.legendItem} key={cat.key} >
             <View
               style={
                 [
