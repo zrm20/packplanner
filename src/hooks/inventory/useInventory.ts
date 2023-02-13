@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
-import { addItem as addAction } from "../../redux/inventorySlice";
+import { addItem as addAction, emptyPack as emptyPackAction } from "../../redux/inventorySlice";
 import useCategories from "../categories/useCategories";
 import useCreateItem from "./useCreateItem";
+import { confirmDelete } from "../../utils";
 
 interface InventoryHook {
   inventorySlice: InventorySliceState,
@@ -14,6 +15,7 @@ interface InventoryHook {
   getLiquidWeightInPack(): number;
   getSortedInventory(items?: Item[]): CategoryMap[];
   getBaseWeightInPack(): number;
+  emptyPack(): void;
 };
 
 export default function useInventory(): InventoryHook {
@@ -87,6 +89,13 @@ export default function useInventory(): InventoryHook {
     });
   };
 
+  function emptyPack(): void {
+    confirmDelete(
+      () => dispatch(emptyPackAction()),
+      "Are you sure you want to remove all items from your pack?"
+    )
+  };
+
   return {
     inventorySlice,
     inventory,
@@ -97,6 +106,7 @@ export default function useInventory(): InventoryHook {
     getTotalWeightInPack,
     getLiquidWeightInPack,
     getSortedInventory,
-    getBaseWeightInPack
+    getBaseWeightInPack,
+    emptyPack
   };
 };

@@ -110,7 +110,7 @@ const inventorySlice = createSlice(
           qty: newInt
         };
       },
-      toggleIsPacked: (state, action) => {
+      toggleIsPacked: (state, action: PayloadAction<{ id: string }>) => {
         const { id } = action.payload;
 
         if (!id) {
@@ -125,10 +125,25 @@ const inventorySlice = createSlice(
 
         state.inventory[indexToUpdate].isPacked = !state.inventory[indexToUpdate].isPacked;
       },
+      emptyPack: (state, action: PayloadAction<undefined>) => {
+        state.inventory.forEach(item => {
+          item.inPack = false;
+          item.isPacked = false;
+          item.qty = 1;
+        })
+      }
     }
   }
 );
 
 export default inventorySlice.reducer;
 
-export const { addItem, deleteItem, updateItem, toggleInPack, updateQty, toggleIsPacked } = inventorySlice.actions;
+export const {
+  addItem,
+  deleteItem,
+  updateItem,
+  toggleInPack,
+  updateQty,
+  toggleIsPacked,
+  emptyPack
+} = inventorySlice.actions;
