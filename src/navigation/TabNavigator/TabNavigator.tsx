@@ -9,6 +9,7 @@ import LockerStack from "../LockerStack/LockerStack";
 import { InventoryScreen } from "../../components/inventory";
 import MyPackStack from "../MyPackStack/MyPackStack";
 import { SettingsScreen } from "../../components/settings";
+import { WaterScreen } from "../../components/water";
 
 const iconSize: number = 24;
 const Tabs = createBottomTabNavigator<RootTabParamList>();
@@ -33,7 +34,7 @@ export default function TabNavigator() {
     },
     {
       name: "Water",
-      component: InventoryScreen,
+      component: WaterScreen,
       iconName: "cup-water",
     },
     {

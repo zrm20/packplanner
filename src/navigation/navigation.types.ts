@@ -8,7 +8,7 @@ import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/n
 export type RootTabParamList = {
   Locker: NavigatorScreenParams<LockerStackParamList>;
   MyPack: NavigatorScreenParams<MyPackStackParamList>;
-  Water: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
+  Water: NavigatorScreenParams<undefined>;
   Categories: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
   Settings: undefined; // TODO Change this
 };
