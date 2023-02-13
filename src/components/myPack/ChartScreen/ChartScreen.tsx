@@ -7,6 +7,7 @@ import { CloseScreenButton, SafeAreaScreen } from "../../ui";
 import CategoryPieChart from "../CategoryPieChart/CategoryPieChart";
 import useStyles from "./ChartScreen.styles";
 import CategoryChartLegend from "../CategoryChartLegend/CategoryChartLegend";
+import CategoryChartToolbar from "../CategoryChartToolbar/CategoryChartToolbar";
 
 export default function ChartScreen(): JSX.Element {
   const styles = useStyles();
@@ -22,6 +23,10 @@ export default function ChartScreen(): JSX.Element {
         <View style={styles.chartContainer}>
           <CategoryPieChart />
         </View>
+
+        <Divider />
+
+        <CategoryChartToolbar />
 
         <Divider />
 

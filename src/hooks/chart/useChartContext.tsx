@@ -6,8 +6,8 @@ import usePacks from "../packs/usePacks";
 import { chartColors } from "../../constants";
 
 interface ChartContextValues {
-  waterLevel: number,
-  setWaterLevel(value: number): void;
+  liquidLevel: number,
+  setLiquidLevel(value: number): void;
   baseWeightOnly: boolean;
   setBaseWeightOnly(value: boolean): void;
   hideLiquidWeight: boolean;
@@ -22,7 +22,7 @@ interface Props {
 }
 
 export function ChartContextProvider(props: Props): JSX.Element {
-  const [waterLevel, setWaterLevel] = useState(1);
+  const [liquidLevel, setLiquidLevel] = useState(100);
   const [baseWeightOnly, setBaseWeightOnly] = useState(false);
   const [hideLiquidWeight, setHideLiquidWeight] = useState(false);
   const { itemsInPack, getSortedInventory, getLiquidWeightInPack } = useInventory();
@@ -61,8 +61,8 @@ export function ChartContextProvider(props: Props): JSX.Element {
   );
 
   const values: ChartContextValues = {
-    waterLevel,
-    setWaterLevel,
+    liquidLevel,
+    setLiquidLevel,
     baseWeightOnly,
     setBaseWeightOnly,
     hideLiquidWeight,
