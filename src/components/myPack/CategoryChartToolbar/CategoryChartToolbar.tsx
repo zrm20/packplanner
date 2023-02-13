@@ -16,7 +16,7 @@ export default function CategoryChartToolbar(props: CategoryChartToolbarProps): 
   const { colors } = useTheme();
   const {
     baseWeightOnly,
-    setBaseWeightOnly,
+    handleChangeBaseWeightOnly,
     hideLiquidWeight,
     setHideLiquidWeight,
     liquidLevel,
@@ -29,7 +29,7 @@ export default function CategoryChartToolbar(props: CategoryChartToolbarProps): 
         <View style={styles.row}>
           <View style={styles.switchGroup}>
             <Text variant="labelMedium">Base Weight Only</Text>
-            <Switch value={baseWeightOnly} onValueChange={setBaseWeightOnly} />
+            <Switch value={baseWeightOnly} onValueChange={handleChangeBaseWeightOnly} />
           </View>
           <View style={styles.switchGroup}>
             <Text variant="labelMedium">Hide Liquid Weight</Text>

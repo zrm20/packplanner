@@ -9,7 +9,7 @@ interface ChartContextValues {
   liquidLevel: number,
   setLiquidLevel(value: number): void;
   baseWeightOnly: boolean;
-  setBaseWeightOnly(value: boolean): void;
+  handleChangeBaseWeightOnly(value: boolean): void;
   hideLiquidWeight: boolean;
   setHideLiquidWeight(value: boolean): void;
   chartData: ChartData
@@ -30,9 +30,19 @@ export function ChartContextProvider(props: Props): JSX.Element {
 
   const sortedItems = getSortedInventory(itemsInPack);
 
+  function handleChangeBaseWeightOnly(newVal: boolean): void {
+    setBaseWeightOnly(newVal);
+
+    if (newVal) { // when setting true, also set hideLiquidWeight to true
+      setHideLiquidWeight(newVal);
+    }
+  };
+
   const chartData: ChartData =
     sortedItems
       .filter(cat => cat.items.length > 0) // remove categories without items
+      // if baseWeightOnly is true, filter out categories that are baseWeightExempt
+      .filter(cat => baseWeightOnly ? !cat.items[0].category.isBaseWeightExempt : true)
       .map((cat, i) => ({
         weight: cat.items.reduce((tot, currItem) => (tot + currItem.weight), 0),
         name: cat.category,
@@ -50,21 +60,23 @@ export function ChartContextProvider(props: Props): JSX.Element {
     }
   );
 
-  // add the liquid weight to chart data
-  chartData.push(
-    {
-      weight: getLiquidWeightInPack(),
-      name: "Liquid",
-      key: "Liquid-stock",
-      color: "#00ffff"
-    }
-  );
+  // add the liquid weight to chart data IF showing liquid weight
+  if (!hideLiquidWeight) {
+    chartData.push(
+      {
+        weight: getLiquidWeightInPack() * liquidLevel / 100,
+        name: "Liquid",
+        key: "Liquid-stock",
+        color: "#00ffff"
+      }
+    );
+  }
 
   const values: ChartContextValues = {
     liquidLevel,
     setLiquidLevel,
     baseWeightOnly,
-    setBaseWeightOnly,
+    handleChangeBaseWeightOnly,
     hideLiquidWeight,
     setHideLiquidWeight,
     chartData
