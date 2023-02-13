@@ -38,7 +38,7 @@ export default function CategoryChartToolbar(props: CategoryChartToolbarProps): 
         </View>
 
         <View style={styles.sliderGroup}>
-          <Text variant="labelMedium">Hide Liquid Weight</Text>
+          <Text variant="labelMedium">Liquid Fill Level {liquidLevel}%</Text>
           <Slider
             style={styles.slider}
             value={liquidLevel}
