@@ -21,7 +21,7 @@ export default function useStyles(fillLevel: number, size: number) {
       bottleOutline: {
         borderWidth: theme.borderWeight[3],
         borderColor: theme.colors.primary,
-        borderRadius: size / 15,
+        borderRadius: size / 10,
         width: size,
         height: size * 2.5,
         justifyContent: 'flex-end',
