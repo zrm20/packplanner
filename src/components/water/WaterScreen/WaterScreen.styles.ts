@@ -26,9 +26,8 @@ export default function useStyles() {
         width: '100%'
       },
       statsContainer: {
-        flex: 1,
         width: '100%',
-        justifyContent: 'space-evenly'
+        padding: theme.space[2]
       }
     }
   );

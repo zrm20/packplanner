@@ -6,6 +6,7 @@ import { useTheme } from "../../../theme";
 
 import { SafeAreaScreen } from "../../ui";
 import WaterBottle from "../WaterBottle/WaterBottle";
+import WaterStats from "../WaterStats/WaterStats";
 import useStyles from "./WaterScreen.styles";
 
 interface WaterScreenProps {
@@ -37,7 +38,7 @@ export default function WaterScreen(props: WaterScreenProps): JSX.Element {
       </View>
 
       <View style={styles.statsContainer}>
-
+        <WaterStats fillLevel={fillLevel} />
       </View>
     </SafeAreaScreen>
   );

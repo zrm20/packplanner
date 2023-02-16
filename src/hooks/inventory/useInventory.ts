@@ -16,6 +16,7 @@ interface InventoryHook {
   getSortedInventory(items?: Item[]): CategoryMap[];
   getBaseWeightInPack(): number;
   emptyPack(): void;
+  getLiquidCapacityInPack(): number;
 };
 
 export default function useInventory(): InventoryHook {
@@ -69,6 +70,18 @@ export default function useInventory(): InventoryHook {
       0);
   };
 
+  function getLiquidCapacityInPack(): number {
+    return itemsInPack.reduce(
+      (total: number, currentItem: Item) => {
+        if (currentItem.liquidCapacity) {
+          return total + currentItem.liquidCapacity * currentItem.qty;
+        } else {
+          return total;
+        };
+      },
+      0);
+  };
+
   function getSortedInventory(items?: Item[]): CategoryMap[] {
     if (items) {
       // if items are passed as params, sort them into categories
@@ -107,6 +120,7 @@ export default function useInventory(): InventoryHook {
     getLiquidWeightInPack,
     getSortedInventory,
     getBaseWeightInPack,
-    emptyPack
+    emptyPack,
+    getLiquidCapacityInPack
   };
 };
