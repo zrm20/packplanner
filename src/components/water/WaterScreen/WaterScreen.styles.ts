@@ -7,6 +7,8 @@ interface Style {
   sliderContainer: ViewStyle;
   slider: ViewStyle;
   statsContainer: ViewStyle;
+  topSection: ViewStyle;
+  waterBottleContainer: ViewStyle;
 };
 
 export default function useStyles() {
@@ -16,6 +18,16 @@ export default function useStyles() {
     {
       container: {
 
+      },
+      topSection: {
+        width: '100%',
+        flex: 1,
+        flexDirection: 'row',
+        padding: theme.space[2],
+        alignItems: 'center',
+      },
+      waterBottleContainer: {
+        marginHorizontal: theme.space[3]
       },
       sliderContainer: {
         width: '100%',
