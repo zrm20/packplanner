@@ -9,8 +9,8 @@ export type RootTabParamList = {
   Locker: NavigatorScreenParams<LockerStackParamList>;
   MyPack: NavigatorScreenParams<MyPackStackParamList>;
   Water: NavigatorScreenParams<undefined>;
-  Categories: NavigatorScreenParams<LockerStackParamList>; // TODO Change this
-  Settings: undefined; // TODO Change this
+  Categories: NavigatorScreenParams<CategoriesStackParamList>;
+  Settings: undefined;
 };
 
 
@@ -39,6 +39,10 @@ export type MyPackStackParamList = {
   MyPackHome: undefined,
   Checklist: undefined,
   Chart: undefined
+};
+
+export type CategoriesStackParamList = {
+  CategoriesHome: undefined
 };
 
 export type MyPackHomeScreenProps = CompositeScreenProps<
