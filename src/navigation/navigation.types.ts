@@ -42,7 +42,8 @@ export type MyPackStackParamList = {
 };
 
 export type CategoriesStackParamList = {
-  CategoriesHome: undefined
+  CategoriesHome: undefined,
+  NewCategory: undefined,
 };
 
 export type MyPackHomeScreenProps = CompositeScreenProps<
