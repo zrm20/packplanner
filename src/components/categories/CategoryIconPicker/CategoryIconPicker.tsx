@@ -23,7 +23,7 @@ export default function CategoryIconPicker(props: CategoryIconPickerProps): JSX.
       <IconButton icon={field.value} disabled size={50} />
 
       <View style={styles.searchBar}>
-        <Searchbar value={search} onChangeText={setSearch} />
+        <Searchbar value={search} onChangeText={setSearch} placeholder="Icon search" />
       </View>
 
       <FlatList
