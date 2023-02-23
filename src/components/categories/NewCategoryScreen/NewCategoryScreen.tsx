@@ -1,19 +1,27 @@
 import React from "react";
 import { View } from "react-native";
-import { Text } from "react-native-paper";
+import CategoryForm from "../CategoryForm/CategoryForm";
 
 import useStyles from "./NewCategoryScreen.styles";
+import { SafeAreaScreen } from "../../ui";
+import { useCategories } from "../../../hooks";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { CategoriesStackParamList } from "../../../navigation/navigation.types";
 
-interface NewCategoryScreenProps {
-
-};
+type NewCategoryScreenProps = NativeStackScreenProps<CategoriesStackParamList, "NewCategory">;
 
 export default function NewCategoryScreen(props: NewCategoryScreenProps): JSX.Element {
   const styles = useStyles();
+  const { navigation } = props;
+  const { createNewCategory } = useCategories();
+
+  function handleSubmit(values: CategoryFormData): void {
+    createNewCategory(values, navigation.goBack);
+  };
 
   return (
-    <View style={styles.container} >
-      <Text>New Category</Text>
-    </View>
+    <SafeAreaScreen style={styles.container} >
+      <CategoryForm onSubmit={handleSubmit} />
+    </SafeAreaScreen>
   );
 };
