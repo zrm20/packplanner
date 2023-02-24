@@ -28,8 +28,6 @@ export default function useStyles() {
         padding: theme.space[3],
       },
       unitSelector: {
-        width: '100%',
-        alignItems: 'center',
         marginBottom: theme.space[3]
       },
       userWidget: {
