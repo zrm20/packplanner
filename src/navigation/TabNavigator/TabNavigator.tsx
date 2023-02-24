@@ -7,9 +7,9 @@ import { AppTabs, RootTabParamList } from "../navigation.types";
 import { useInventory } from "../../hooks";
 import LockerStack from "../LockerStack/LockerStack";
 import MyPackStack from "../MyPackStack/MyPackStack";
-import { SettingsScreen } from "../../components/settings";
 import { WaterScreen } from "../../components/water";
 import CategoriesStack from "../CategoriesStack/CategoriesStack";
+import SettingsStack from "../SettingsStack/SettingsStack";
 
 const iconSize: number = 24;
 const Tabs = createBottomTabNavigator<RootTabParamList>();
@@ -44,7 +44,7 @@ export default function TabNavigator() {
     },
     {
       name: "Settings",
-      component: SettingsScreen,
+      component: SettingsStack,
       iconName: "cog",
     }
   ];

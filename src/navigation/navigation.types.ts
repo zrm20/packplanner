@@ -10,7 +10,7 @@ export type RootTabParamList = {
   MyPack: NavigatorScreenParams<MyPackStackParamList>;
   Water: NavigatorScreenParams<undefined>;
   Categories: NavigatorScreenParams<CategoriesStackParamList>;
-  Settings: undefined;
+  Settings: NavigatorScreenParams<SettingsStackParamList>;
 };
 
 
@@ -46,6 +46,12 @@ export type CategoriesStackParamList = {
   NewCategory: undefined,
   EditCategory: { categoryId: string }
 };
+
+export type SettingsStackParamList = {
+  SettingsHome: undefined;
+  Login: undefined;
+  Register: undefined;
+}
 
 export type MyPackHomeScreenProps = CompositeScreenProps<
   NativeStackScreenProps<MyPackStackParamList, 'MyPackHome'>,

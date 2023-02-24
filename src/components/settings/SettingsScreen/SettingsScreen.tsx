@@ -1,16 +1,16 @@
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { View } from "react-native";
-import { SegmentedButtons, Text } from "react-native-paper";
-import { useSettings } from "../../../hooks";
-import { RootTabParamList } from "../../../navigation/navigation.types";
+import { Text } from "react-native-paper";
 
+import { useSettings } from "../../../hooks";
+import { SettingsStackParamList } from "../../../navigation/navigation.types";
 import { SafeAreaScreen } from "../../ui";
 import UnitSelector from "../UnitSelector/UnitSelector";
 import UserWidget from "../UserWidget/UserWidget";
 import useStyles from "./SettingsScreen.styles";
 
-type SettingsScreenProps = BottomTabScreenProps<RootTabParamList, 'Settings'>;
+type SettingsScreenProps = NativeStackScreenProps<SettingsStackParamList, "SettingsHome">;
 
 export default function SettingsScreen(props: SettingsScreenProps): JSX.Element {
   const styles = useStyles();
