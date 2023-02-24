@@ -38,6 +38,11 @@ export default function CategoriesScreen(props: CategoriesScreenProps): JSX.Elem
                   style={styles.listItem}
                   key={item.id}
                   title={item.label}
+                  onPress={
+                    !item.isStockCategory ?
+                      () => navigation.navigate("EditCategory", { categoryId: item.id }) :
+                      undefined
+                  }
                   left={props => <List.Icon icon={item.icon} />}
                   right={props => (
                     <View>

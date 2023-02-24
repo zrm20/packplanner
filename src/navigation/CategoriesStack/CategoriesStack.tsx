@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { CategoriesStackParamList } from "../navigation.types";
-import { CategoriesScreen, NewCategoryScreen } from "../../components/categories";
+import { CategoriesScreen, EditCategoryScreen, NewCategoryScreen } from "../../components/categories";
 
 const Stack = createNativeStackNavigator<CategoriesStackParamList>();
 
@@ -24,6 +24,7 @@ export default function CategoriesStack(): JSX.Element {
         }
       >
         <Stack.Screen name="NewCategory" component={NewCategoryScreen} />
+        <Stack.Screen name="EditCategory" component={EditCategoryScreen} />
       </Stack.Group>
     </Stack.Navigator>
   )
