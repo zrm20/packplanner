@@ -5,6 +5,7 @@ import {
   removeCategory as removeCategoryAction,
   updateCategory as updateCategoryAction
 } from "../../redux/categoriesSlice";
+import { updateItemsCategory } from "../../redux/inventorySlice";
 
 interface CategoryHook {
   categoriesSlice: CategorySliceState;
@@ -35,11 +36,14 @@ export default function useCategories(): CategoryHook {
         };
       },
       delete(callback?) {
-        dispatch(removeCategoryAction({ id: category.id }));
-
-        if (callback) {
-          callback();
-        };
+        confirmDelete(
+          () => {
+            dispatch(updateItemsCategory({ categoryId: category.id }))
+            dispatch(removeCategoryAction({ id: category.id }));
+          },
+          `Do you want to perminantly delete the "${category.label}" category? All items in this category will be reset to Misc`,
+          callback
+        );
       }
     }
   };
