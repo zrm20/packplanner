@@ -6,6 +6,7 @@ import { useSettings } from "../../../hooks";
 import { RootTabParamList } from "../../../navigation/navigation.types";
 
 import { SafeAreaScreen } from "../../ui";
+import UserWidget from "../UserWidget/UserWidget";
 import useStyles from "./SettingsScreen.styles";
 
 type SettingsScreenProps = BottomTabScreenProps<RootTabParamList, 'Settings'>;
@@ -25,6 +26,8 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
   return (
     <SafeAreaScreen style={styles.container} >
       <Text variant="headlineLarge" style={styles.title}>Settings</Text>
+
+      <UserWidget style={styles.userWidget} />
 
       <View style={styles.settingsContainer}>
         <View style={styles.unitSelector}>
