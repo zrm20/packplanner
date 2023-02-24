@@ -6,10 +6,10 @@ import { useTheme } from "react-native-paper";
 import { AppTabs, RootTabParamList } from "../navigation.types";
 import { useInventory } from "../../hooks";
 import LockerStack from "../LockerStack/LockerStack";
-import { InventoryScreen } from "../../components/inventory";
 import MyPackStack from "../MyPackStack/MyPackStack";
 import { SettingsScreen } from "../../components/settings";
 import { WaterScreen } from "../../components/water";
+import CategoriesStack from "../CategoriesStack/CategoriesStack";
 
 const iconSize: number = 24;
 const Tabs = createBottomTabNavigator<RootTabParamList>();
@@ -39,7 +39,7 @@ export default function TabNavigator() {
     },
     {
       name: "Categories",
-      component: InventoryScreen,
+      component: CategoriesStack,
       iconName: "tag-multiple",
     },
     {

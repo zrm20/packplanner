@@ -131,6 +131,22 @@ const inventorySlice = createSlice(
           item.isPacked = false;
           item.qty = 1;
         })
+      },
+      updateItemsCategory: (state, action: PayloadAction<{ categoryId: string, newCategoryId?: string }>) => {
+        const { categoryId, newCategoryId = '00' } = action.payload;
+
+        if (!categoryId) {
+          throw new Error('No Category Id recieved')
+        };
+
+        let updateCount = 0;
+
+        state.inventory.forEach(item => {
+          if (item.category === categoryId) {
+            item.category = newCategoryId;
+            updateCount++;
+          };
+        });
       }
     }
   }
@@ -145,5 +161,6 @@ export const {
   toggleInPack,
   updateQty,
   toggleIsPacked,
-  emptyPack
+  emptyPack,
+  updateItemsCategory
 } = inventorySlice.actions;

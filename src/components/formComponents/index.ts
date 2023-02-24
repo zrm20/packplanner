@@ -4,6 +4,7 @@ import NumberInput from "./NumberInput/NumberInput";
 import SubmitButton from "./SubmitButton/SubmitButton";
 import CapacityInput from "./CapacityInput/CapacityInput";
 import PickerInput from "./PickerInput/PickerInput";
+import ToggleSwitchInput from "./ToggleSwitchInput/ToggleSwitchInput";
 
 export {
   NumberInput,
@@ -11,5 +12,6 @@ export {
   TextInput,
   WeightInput,
   CapacityInput,
-  PickerInput
+  PickerInput,
+  ToggleSwitchInput
 };
