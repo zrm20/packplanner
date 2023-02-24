@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, ViewStyle } from "react-native";
 import { Surface, Text, Button } from "react-native-paper";
@@ -10,6 +11,11 @@ interface UserWidgetProps {
 
 export default function UserWidget(props: UserWidgetProps): JSX.Element {
   const styles = useStyles();
+  const { navigate } = useNavigation();
+
+  function navToRegiser() {
+    navigate("Settings", { screen: "Register" });
+  };
 
   return (
     <View style={[styles.container, props.style]} >
@@ -17,7 +23,7 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
         <Text variant="headlineSmall">User</Text>
 
         <View style={styles.buttonGroup}>
-          <Button mode="contained">Register</Button>
+          <Button mode="contained" onPress={navToRegiser}>Register</Button>
 
           <Button mode="contained">Login</Button>
         </View>
