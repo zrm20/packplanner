@@ -18,6 +18,12 @@ const userSlice = createSlice(
         state.user = null;
         state.isLoading = false;
         state.error = null;
+      },
+      setIsLoading: (state, action: PayloadAction<boolean>) => {
+        state.isLoading = action.payload;
+      },
+      setError: (state, action: PayloadAction<string | null>) => {
+        state.error = action.payload;
       }
     }
   }
@@ -27,5 +33,7 @@ export default userSlice.reducer;
 
 export const {
   setUser,
-  clearUser
+  clearUser,
+  setIsLoading,
+  setError
 } = userSlice.actions;
