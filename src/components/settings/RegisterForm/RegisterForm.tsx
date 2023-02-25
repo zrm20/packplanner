@@ -16,7 +16,6 @@ export default function RegisterForm(props: RegisterFormProps): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
   const { register } = useUser();
-  const auth = getAuth();
 
   const initialValues: RegisterFormData = {
     email: '',
