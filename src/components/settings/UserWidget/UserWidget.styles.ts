@@ -26,6 +26,7 @@ export default function useStyles() {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
+        alignItems: 'center',
         marginTop: theme.space[2]
       }
     }
