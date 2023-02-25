@@ -21,6 +21,10 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
     navigate("Settings", { screen: "Register" });
   };
 
+  function navToLogin() {
+    navigate("Settings", { screen: "Login" });
+  };
+
   return (
     <>
       <LoadingBackdrop show={isLoading} />
@@ -37,7 +41,7 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
                 </> :
                 <>
                   <Button mode="contained" onPress={navToRegiser}>Register</Button>
-                  <Button mode="contained">Login</Button>
+                  <Button mode="contained" onPress={navToLogin}>Login</Button>
                 </>
             }
 
