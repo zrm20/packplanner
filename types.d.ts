@@ -125,4 +125,22 @@ interface ChartDataItem {
   name: string;
 };
 
-type ChartData = ChartDataItem[]
+type ChartData = ChartDataItem[];
+
+interface User {
+  name: string | null;
+  uid: string;
+  email: string | null;
+};
+
+interface UserSliceState {
+  user: User | null;
+  isLoading: boolean;
+  error: string | null;
+};
+
+interface RegisterFormData {
+  email: string,
+  password: string,
+  confirmPassword: string
+};
