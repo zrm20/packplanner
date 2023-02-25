@@ -8,6 +8,8 @@ export default function useUser() {
   const userSlice = useSelector(state => state.user);
 
   function login(email: string, password: string): void {
+    dispatch(setIsLoading(true));
+
     signInWithEmailAndPassword(authInstance, email, password)
       .then(userCredential => {
         const user: User = {
@@ -17,19 +19,26 @@ export default function useUser() {
         };
 
         dispatch(setUser({ user }));
+        dispatch(setIsLoading(false));
       })
       .catch(err => {
-
+        dispatch(setError(err?.message || "Something went wrong"));
+        dispatch(setIsLoading(false));
       });
   };
 
   function logout(): void {
+    dispatch(setIsLoading(true));
+
     signOut(authInstance)
       .then(() => {
-        dispatch(clearUser())
+        dispatch(clearUser());
+        dispatch(setIsLoading(false));
       })
       .catch(err => {
-
+        dispatch(setIsLoading(false));
+        dispatch(setError(err.message || "Something went wrong"));
+        console.error(err);
       })
   }
 
@@ -59,7 +68,9 @@ export default function useUser() {
         };
       })
       .catch(err => {
-        dispatch(setError(err?.message || "Something went wrong"))
+        dispatch(setError(err?.message || "Something went wrong"));
+        dispatch(setIsLoading(false));
+        console.error(err);
       })
   };
 
