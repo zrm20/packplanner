@@ -7,6 +7,7 @@ import useStyles from "./LoginForm.styles";
 import useUser from "../../../hooks/user/useUser";
 import { useNavigation } from "@react-navigation/native";
 import { HelperText, Text } from "react-native-paper";
+import loginFormSchema from "./LoginForm.schema";
 
 interface LoginFormProps {
   style?: ViewStyle;
@@ -30,6 +31,7 @@ export default function LoginForm(props: LoginFormProps): JSX.Element {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
+      validationSchema={loginFormSchema}
     >
       <View style={[styles.container, props.style]} >
         <TextInput

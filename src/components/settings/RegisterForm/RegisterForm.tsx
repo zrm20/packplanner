@@ -6,6 +6,7 @@ import { SubmitButton, TextInput } from "../../formComponents";
 import useStyles from "./RegisterForm.styles";
 import { useNavigation } from "@react-navigation/native";
 import useUser from "../../../hooks/user/useUser";
+import registerFormSchema from "./RegisterForm.schema";
 
 interface RegisterFormProps {
   style?: ViewStyle;
@@ -30,6 +31,7 @@ export default function RegisterForm(props: RegisterFormProps): JSX.Element {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
+      validationSchema={registerFormSchema}
     >
       <View style={[styles.container, props.style]} >
         <TextInput
