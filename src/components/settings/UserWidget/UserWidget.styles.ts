@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
 import { useTheme } from "../../../theme";
 
@@ -6,6 +6,7 @@ interface Style {
   container: ViewStyle;
   authSurface: ViewStyle;
   buttonGroup: ViewStyle;
+  helperText: TextStyle;
 };
 
 export default function useStyles() {
@@ -16,7 +17,7 @@ export default function useStyles() {
 
       container: {
         padding: theme.space[2],
-        width: '100%'
+        width: '100%',
       },
       authSurface: {
         padding: theme.space[2],
@@ -28,6 +29,10 @@ export default function useStyles() {
         justifyContent: 'space-evenly',
         alignItems: 'center',
         marginTop: theme.space[2]
+      },
+      helperText: {
+        textAlign: 'center',
+        marginVertical: theme.space[1]
       }
     }
   );

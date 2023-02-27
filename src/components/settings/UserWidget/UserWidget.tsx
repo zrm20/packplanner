@@ -31,6 +31,7 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
       <View style={[styles.container, props.style]} >
         <Surface style={styles.authSurface}>
           <Text variant="headlineSmall">User</Text>
+          <Text style={styles.helperText}>Login or register to store your inventory and lists to the cloud.</Text>
 
           <View style={styles.buttonGroup}>
             {
