@@ -144,3 +144,8 @@ interface RegisterFormData {
   password: string,
   confirmPassword: string
 };
+
+interface LoginFormData {
+  email: string;
+  password: string;
+};

@@ -1,10 +1,11 @@
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
 import { useTheme } from "../../../theme";
 
 interface Style {
   container: ViewStyle;
-  form: ViewStyle;
+  submit: ViewStyle;
+  errorText: TextStyle;
 };
 
 export default function useStyles() {
@@ -13,11 +14,15 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>(
     {
       container: {
+        width: '100%',
         alignItems: 'center'
       },
-      form: {
-        flex: 1,
-        justifyContent: 'center'
+      submit: {
+        marginTop: theme.space[2]
+      },
+      errorText: {
+        color: theme.colors.error,
+        marginTop: theme.space[2]
       }
     }
   );

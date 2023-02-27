@@ -1,14 +1,18 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { Alert } from "react-native";
+
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import { clearUser, setError, setIsLoading, setUser } from "../../redux/userSlice";
 import { auth as authInstance } from "../../config/firebase";
+import { authErrorExtractor } from "../../utils";
 
 export default function useUser() {
   const dispatch = useDispatch();
   const userSlice = useSelector(state => state.user);
 
-  function login(email: string, password: string): void {
+  function login(email: string, password: string, callback?: Function): void {
     dispatch(setIsLoading(true));
+    dispatch(setError(null));
 
     signInWithEmailAndPassword(authInstance, email, password)
       .then(userCredential => {
@@ -20,9 +24,14 @@ export default function useUser() {
 
         dispatch(setUser({ user }));
         dispatch(setIsLoading(false));
+
+        if (callback) {
+          callback();
+        };
       })
       .catch(err => {
-        dispatch(setError(err?.message || "Something went wrong"));
+        const errorMessage = authErrorExtractor(err);
+        dispatch(setError(errorMessage));
         dispatch(setIsLoading(false));
       });
   };
@@ -36,9 +45,10 @@ export default function useUser() {
         dispatch(setIsLoading(false));
       })
       .catch(err => {
+        const errorMessage = authErrorExtractor(err);
         dispatch(setIsLoading(false));
-        dispatch(setError(err.message || "Something went wrong"));
-        console.error(err);
+        dispatch(setError(errorMessage));
+        Alert.alert("Logout failed", errorMessage)
       })
   }
 
@@ -68,7 +78,8 @@ export default function useUser() {
         };
       })
       .catch(err => {
-        dispatch(setError(err?.message || "Something went wrong"));
+        const errorMessage = authErrorExtractor(err);
+        dispatch(setError(errorMessage));
         dispatch(setIsLoading(false));
         console.error(err);
       })
