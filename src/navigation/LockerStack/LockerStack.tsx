@@ -1,10 +1,8 @@
-import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { InventoryScreen, NewItemScreen, EditItemScreen } from '../../components/inventory';
 import { NewPackScreen, EditPackScreen } from '../../components/packs';
 import type { LockerStackParamList } from '../navigation.types';
-
-type EditPackProps = NativeStackScreenProps<LockerStackParamList, 'EditPack', 'Locker'>
 
 const Stack = createNativeStackNavigator<LockerStackParamList>();
 

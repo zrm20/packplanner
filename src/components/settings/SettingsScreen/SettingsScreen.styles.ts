@@ -7,6 +7,7 @@ interface Style {
   title: TextStyle;
   settingsContainer: ViewStyle;
   unitSelector: ViewStyle;
+  userWidget: ViewStyle;
 };
 
 export default function useStyles() {
@@ -15,22 +16,22 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>(
     {
       container: {
-        alignItems: 'center'
+        alignItems: 'center',
       },
       title: {
 
       },
       settingsContainer: {
-        flex: 1,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: theme.space[3]
+        padding: theme.space[3],
       },
       unitSelector: {
-        width: '100%',
-        alignItems: 'center',
         marginBottom: theme.space[3]
+      },
+      userWidget: {
+        marginVertical: theme.space[4]
       }
     }
   );
