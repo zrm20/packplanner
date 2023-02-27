@@ -5,6 +5,7 @@ import { TextInput as PaperInput } from "react-native-paper";
 
 import useStyles from "./PackForm.styles"
 import { TextInput, WeightInput, NumberInput, SubmitButton } from "../../formComponents";
+import packFormSchema from "./PackForm.schema";
 
 interface PackFormProps {
   initialValues?: PackFormData;
@@ -26,6 +27,7 @@ export default function PackForm(props: PackFormProps): JSX.Element {
     <Formik
       initialValues={initialValues}
       onSubmit={props.onSubmit}
+      validationSchema={packFormSchema}
     >
       <KeyboardAvoidingView style={styles.container} behavior="padding" >
         <TextInput name="brand" label="Brand" />
