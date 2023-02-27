@@ -8,6 +8,7 @@ import ToggleSwitchInput from "../../formComponents/ToggleSwitchInput/ToggleSwit
 import { CloseScreenButton } from "../../ui";
 import CategoryIconPicker from "../CategoryIconPicker/CategoryIconPicker";
 import useStyles from "./CategoryForm.styles";
+import categoryFormSchema from "./CategoryForm.schema";
 
 interface CategoryFormProps {
   category?: CategoryData;
@@ -32,6 +33,7 @@ export default function CategoryForm(props: CategoryFormProps): JSX.Element {
     <Formik
       initialValues={initialValues}
       onSubmit={props.onSubmit}
+      validationSchema={categoryFormSchema}
     >
       <View style={styles.container} >
         <View style={styles.toolbar}>
