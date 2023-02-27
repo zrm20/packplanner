@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import useStyles from "./InventoryForm.styles";
 import { TextInput, WeightInput, SubmitButton, CapacityInput, PickerInput } from "../../formComponents";
 import { useCategories } from "../../../hooks";
+import inventoryFormSchema from "./InventoryForm.schema";
 
 interface InventoryFormProps {
   initialValues?: ItemFormData;
@@ -33,6 +34,7 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
     <Formik
       initialValues={initialValues}
       onSubmit={props.onSubmit}
+      validationSchema={inventoryFormSchema}
     >
       <KeyboardAvoidingView style={styles.container} behavior="height" >
         <PickerInput
