@@ -1,7 +1,6 @@
 import { Formik } from "formik";
 import React from "react";
-import { Alert, View, ViewStyle } from "react-native";
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { Text, View, ViewStyle } from "react-native";
 
 import { SubmitButton, TextInput } from "../../formComponents";
 import useStyles from "./RegisterForm.styles";
@@ -15,7 +14,7 @@ interface RegisterFormProps {
 export default function RegisterForm(props: RegisterFormProps): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { register } = useUser();
+  const { register, error } = useUser();
 
   const initialValues: RegisterFormData = {
     email: '',
@@ -56,6 +55,11 @@ export default function RegisterForm(props: RegisterFormProps): JSX.Element {
         <SubmitButton mode="contained" style={styles.submit}>
           Register
         </SubmitButton>
+
+        {
+          Boolean(error) &&
+          <Text style={styles.errorText}>{error}</Text>
+        }
       </View>
     </Formik>
   );

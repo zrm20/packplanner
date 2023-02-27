@@ -37,7 +37,8 @@ export default function useUser() {
   };
 
   function logout(): void {
-    dispatch(setIsLoading(true));
+    dispatch(setIsLoading(true)); // start loading
+    dispatch(setError(null)); // reset error
 
     signOut(authInstance)
       .then(() => {
@@ -58,6 +59,7 @@ export default function useUser() {
     };
 
     dispatch(setIsLoading(true)); // start loading
+    dispatch(setError(null)); // reset error
 
     createUserWithEmailAndPassword(authInstance, userData.email, userData.password)
       .then(userCredential => {
@@ -81,7 +83,6 @@ export default function useUser() {
         const errorMessage = authErrorExtractor(err);
         dispatch(setError(errorMessage));
         dispatch(setIsLoading(false));
-        console.error(err);
       })
   };
 
