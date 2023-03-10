@@ -35,7 +35,11 @@ export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
         mode={iconMode}
         onPress={props.toggleNewListModal}
       />
-      <IconButton icon="import" mode={iconMode} />
+      <IconButton
+        icon="import"
+        mode={iconMode}
+        onPress={() => navigate("MyPack", { screen: "Lists" })}
+      />
       <IconButton icon="trash-can" mode={iconMode} onPress={emptyPack} />
     </View>
   );

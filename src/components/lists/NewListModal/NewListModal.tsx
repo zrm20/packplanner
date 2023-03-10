@@ -12,7 +12,7 @@ interface ListModalProps {
 export default function NewListModal(props: ListModalProps): JSX.Element {
   const styles = useStyles();
   const [text, setText] = useState<string>('');
-  const { savePackAsList, logLists } = useLists();
+  const { savePackAsList } = useLists();
 
   function submitList(): void {
     savePackAsList(text);
@@ -42,7 +42,6 @@ export default function NewListModal(props: ListModalProps): JSX.Element {
         >
           Save
         </Button>
-        <Button onPress={logLists}>Log</Button>
         <Button mode="outlined" onPress={props.toggleVisibility}>Cancel</Button>
       </Dialog.Actions>
     </Dialog>

@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
-import {
-  createNewList as createNewListAction
-} from "../../redux/listSlice";
-import usePacks from "../packs/usePacks";
+import { createNewList as createNewListAction } from "../../redux/listSlice";
+import { overWriteWithList } from "../../redux/inventorySlice";
+import { setSelectedPack } from "../../redux/packsSlice";
 
 interface ListHook {
   savePackAsList(listName: string): void;
-  logLists(): void;
+  loadList(list: TripListData): void;
+  lists: TripListData[];
 };
 
 export default function useLists(): ListHook {
@@ -28,12 +28,14 @@ export default function useLists(): ListHook {
     dispatch(createNewListAction({ list: newList }));
   };
 
-  function logLists() {
-    console.log(lists);
-  }
+  function loadList(list: TripListData): void {
+    dispatch(overWriteWithList({ list }));
+    dispatch(setSelectedPack({ id: list.pack?.id || null }));
+  };
 
   return {
     savePackAsList,
-    logLists
+    loadList,
+    lists
   };
 };

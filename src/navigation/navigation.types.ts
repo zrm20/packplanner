@@ -38,7 +38,8 @@ export type LockerStackParamList = {
 export type MyPackStackParamList = {
   MyPackHome: undefined,
   Checklist: undefined,
-  Chart: undefined
+  Chart: undefined,
+  Lists: undefined
 };
 
 export type CategoriesStackParamList = {
