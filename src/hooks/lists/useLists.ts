@@ -1,11 +1,16 @@
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
-import { createNewList as createNewListAction } from "../../redux/listSlice";
 import { overWriteWithList } from "../../redux/inventorySlice";
 import { setSelectedPack } from "../../redux/packsSlice";
+import { confirmDelete } from "../../utils";
+import {
+  createNewList as createNewListAction,
+  deleteList as deleteListAction
+} from "../../redux/listSlice";
 
 interface ListHook {
   savePackAsList(listName: string): void;
   loadList(list: TripListData): void;
+  deleteList(listId: string, callbackFn?: () => void): void;
   lists: TripListData[];
 };
 
@@ -33,9 +38,18 @@ export default function useLists(): ListHook {
     dispatch(setSelectedPack({ id: list.pack?.id || null }));
   };
 
+  function deleteList(listId: string, callbackFn?: () => void): void {
+    confirmDelete(
+      () => dispatch(deleteListAction({ listId })),
+      "Do you want to permanently delete this list?",
+      callbackFn
+    );
+  };
+
   return {
     savePackAsList,
     loadList,
+    deleteList,
     lists
   };
 };

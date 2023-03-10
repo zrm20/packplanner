@@ -12,12 +12,16 @@ type LoadListScreenProps = NativeStackScreenProps<MyPackStackParamList, "Lists">
 
 export default function LoadListScreen(props: LoadListScreenProps): JSX.Element {
   const styles = useStyles();
-  const { lists, loadList } = useLists();
+  const { lists, loadList, deleteList } = useLists();
   const { navigation } = props;
 
   function handleLoadList(list: TripListData): void {
     loadList(list);
     navigation.goBack();
+  };
+
+  function handleDeleteList(listId: string): void {
+    deleteList(listId, navigation.goBack);
   };
 
   return (
@@ -32,7 +36,12 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
             <List.Item
               title={item.name}
               description={`${item.items.length} items`}
-              right={props => <IconButton icon="download" onPress={() => handleLoadList(item)} />}
+              right={props => (
+                <>
+                  <IconButton icon="delete" onPress={() => handleDeleteList(item.id)} />
+                  <IconButton icon="download" onPress={() => handleLoadList(item)} />
+                </>
+              )}
             />
           )}
         />
