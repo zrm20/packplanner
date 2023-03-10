@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { LoadListScreen } from "../../components/lists";
 
 import { ChartScreen, ChecklistScreen, MyPackScreen } from "../../components/myPack";
 import { MyPackStackParamList } from "../navigation.types";
@@ -23,6 +24,7 @@ export default function MyPackStack(): JSX.Element {
       >
         <Stack.Screen name="Checklist" component={ChecklistScreen} />
         <Stack.Screen name="Chart" component={ChartScreen} />
+        <Stack.Screen name="Lists" component={LoadListScreen} />
       </Stack.Group>
 
     </Stack.Navigator>

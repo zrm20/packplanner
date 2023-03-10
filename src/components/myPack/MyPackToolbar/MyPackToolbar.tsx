@@ -8,6 +8,7 @@ import { useInventory } from "../../../hooks";
 
 interface MyPackToolbarProps extends ViewProps {
   style?: ViewStyle;
+  toggleNewListModal(): void;
 };
 
 export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
@@ -29,8 +30,16 @@ export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
         mode={iconMode}
         onPress={() => navigate("MyPack", { screen: "Checklist" })}
       />
-      <IconButton icon="content-save" mode={iconMode} />
-      <IconButton icon="import" mode={iconMode} />
+      <IconButton
+        icon="content-save"
+        mode={iconMode}
+        onPress={props.toggleNewListModal}
+      />
+      <IconButton
+        icon="import"
+        mode={iconMode}
+        onPress={() => navigate("MyPack", { screen: "Lists" })}
+      />
       <IconButton icon="trash-can" mode={iconMode} onPress={emptyPack} />
     </View>
   );

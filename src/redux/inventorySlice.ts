@@ -3,6 +3,8 @@ import uuid from "react-native-uuid";
 
 import { inventory } from "../../archive/dummyData";
 
+type OverWriteWithListPayload = PayloadAction<{ list: TripListData }>
+
 const initialState: InventorySliceState = { inventory };
 
 const inventorySlice = createSlice(
@@ -147,6 +149,28 @@ const inventorySlice = createSlice(
             updateCount++;
           };
         });
+      },
+      overWriteWithList: (state, action: OverWriteWithListPayload) => {
+        const { items } = action.payload.list;
+
+        // empty pack, resetting the inPack, isPacked and qty
+        state.inventory.forEach(item => {
+          item.inPack = false;
+          item.isPacked = false;
+          item.qty = 1;
+        });
+
+
+        items.forEach(item => {
+          const indexToUpdate = state.inventory.findIndex(i => i.id === item.id);
+
+          if (indexToUpdate === -1) {
+            return;
+          };
+
+          state.inventory[indexToUpdate].inPack = item.inPack
+          state.inventory[indexToUpdate].qty = item.qty
+        });
       }
     }
   }
@@ -162,5 +186,6 @@ export const {
   updateQty,
   toggleIsPacked,
   emptyPack,
-  updateItemsCategory
+  updateItemsCategory,
+  overWriteWithList
 } = inventorySlice.actions;

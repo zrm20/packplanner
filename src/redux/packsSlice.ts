@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import uuid from "react-native-uuid";
 
+type SetSelectedPackPayload = PayloadAction<{ id: string | null }>;
+
 import { packs } from "../../archive/dummyData";
 
 const initialState: PacksSliceState = {
@@ -23,10 +25,10 @@ const packsSlice = createSlice(
           ...pack,
           id: uuid.v4() as string
         };
-        
+
         state.packs.push(newPack);
       },
-      updatePack: (state, action: PayloadAction<{ id: string, newValues: PackFormData}>) => {
+      updatePack: (state, action: PayloadAction<{ id: string, newValues: PackFormData }>) => {
         const { id, newValues } = action.payload;
 
         if (!id) {
@@ -60,11 +62,16 @@ const packsSlice = createSlice(
         } else {
           state.selectedPack = id
         };
-      }
+      },
+      setSelectedPack: (state, action: SetSelectedPackPayload) => {
+        const { id } = action.payload;
+
+        state.selectedPack = id || null;
+      },
     }
   }
 );
 
 export default packsSlice.reducer;
 
-export const { addPack, updatePack, deletePack, toggleSelectedPack } = packsSlice.actions;
+export const { addPack, updatePack, deletePack, toggleSelectedPack, setSelectedPack } = packsSlice.actions;
