@@ -5,6 +5,7 @@ import useCategories from "./categories/useCategories";
 import useChartContext from "./chart/useChartContext";
 import { ChartContextProvider } from "./chart/useChartContext";
 import useAuth from "./user/useAuth";
+import useLists from "./lists/useLists";
 
 export {
   useInventory,
@@ -13,5 +14,6 @@ export {
   useCategories,
   useChartContext,
   ChartContextProvider,
-  useAuth
+  useAuth,
+  useLists
 };
