@@ -5,6 +5,7 @@ import inventoryReducer from "./inventorySlice";
 import settingsReducer from "./settingsSlice";
 import categoriesReducer from "./categoriesSlice";
 import userReducer from "./userSlice";
+import listReducer from "./listSlice";
 
 const store = configureStore(
   {
@@ -13,7 +14,8 @@ const store = configureStore(
       inventory: inventoryReducer,
       settings: settingsReducer,
       categories: categoriesReducer,
-      user: userReducer
+      user: userReducer,
+      lists: listReducer,
     }
   }
 );

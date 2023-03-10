@@ -149,3 +149,17 @@ interface LoginFormData {
   email: string;
   password: string;
 };
+
+interface TripListFormData {
+  name: string;
+  pack: PackData | null;
+  items: ItemData[];
+};
+
+interface TripListData extends TripListFormData {
+  id: string;
+}
+
+interface ListSliceState {
+  lists: TripListData[]
+};
