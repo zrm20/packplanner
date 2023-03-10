@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import uuid from "react-native-uuid";
 
-import { inventory } from "../../archive/dummyData";
-
 type OverWriteWithListPayload = PayloadAction<{ list: TripListData }>
 
-const initialState: InventorySliceState = { inventory };
+const initialState: InventorySliceState = { inventory: [] };
 
 const inventorySlice = createSlice(
   {

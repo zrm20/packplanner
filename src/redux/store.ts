@@ -1,4 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
+import { persistStore, persistReducer } from "redux-persist";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import packsReducer from './packsSlice';
 import inventoryReducer from "./inventorySlice";
@@ -7,18 +10,33 @@ import categoriesReducer from "./categoriesSlice";
 import userReducer from "./userSlice";
 import listReducer from "./listSlice";
 
-const store = configureStore(
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+  blacklist: ["user"]
+};
+
+const rootReducer = combineReducers(
   {
-    reducer: {
-      packs: packsReducer,
-      inventory: inventoryReducer,
-      settings: settingsReducer,
-      categories: categoriesReducer,
-      user: userReducer,
-      lists: listReducer,
-    }
+    packs: packsReducer,
+    inventory: inventoryReducer,
+    settings: settingsReducer,
+    categories: categoriesReducer,
+    user: userReducer,
+    lists: listReducer,
   }
 );
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const store = configureStore(
+  {
+    reducer: persistedReducer,
+    middleware: [thunk]
+  }
+);
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

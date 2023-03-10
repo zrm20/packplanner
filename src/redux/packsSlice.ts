@@ -3,11 +3,9 @@ import uuid from "react-native-uuid";
 
 type SetSelectedPackPayload = PayloadAction<{ id: string | null }>;
 
-import { packs } from "../../archive/dummyData";
-
 const initialState: PacksSliceState = {
   selectedPack: null,
-  packs
+  packs: []
 };
 
 const packsSlice = createSlice(
