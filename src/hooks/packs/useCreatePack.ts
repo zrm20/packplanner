@@ -11,8 +11,8 @@ import useSettings from "../settings/useSettings";
 /*
   This hook returns a function used to construct a complex Pack object
   from PackData stored in redux (which is only serializable data), and 
-  returns a Pack object. The Pack created has meathods and properties 
-  attatched to it.
+  returns a Pack object. The Pack created has methods and properties 
+  attached to it.
 */
 
 export default function useCreatePack() {
@@ -41,7 +41,7 @@ export default function useCreatePack() {
       delete(callback) {
         confirmDelete(
           () => dispatch(deleteAction({ id: pack.id })),
-          `Do you want to perminantly delete ${pack.brand} ${pack.model}?`,
+          `Do you want to permanently delete ${pack.brand} ${pack.model}?`,
           callback
         );
       },

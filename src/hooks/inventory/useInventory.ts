@@ -93,7 +93,7 @@ export default function useInventory(): InventoryHook {
       });
     };
 
-    // if no item param recieved, sort the whole inventory
+    // if no item param received, sort the whole inventory
     return categories.map(cat => {
       return {
         category: cat.label,
