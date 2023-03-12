@@ -16,11 +16,13 @@ export default function WaterItemsList(): JSX.Element {
       <Surface style={styles.surface}>
         <Text variant="titleMedium" style={styles.title}>Water Containers in Pack</Text>
         {
-          items.map(item => (
-            <Text variant="labelLarge" key={item.id}>
-              ({item.qty}){Boolean(item.brand) && ' ' + item.brand} {item.name} - {liquidUnit.convert(item.liquidCapacity!)} {liquidUnit.label}
-            </Text>
-          ))
+          Boolean(items.length) ?
+            items.map(item => (
+              <Text variant="labelLarge" key={item.id}>
+                ({item.qty}){Boolean(item.brand) && ' ' + item.brand} {item.name} - {liquidUnit.convert(item.liquidCapacity!)} {liquidUnit.label}
+              </Text>
+            )) :
+            <Text>No water containers in pack yet.</Text>
         }
       </Surface>
     </View>
