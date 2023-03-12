@@ -20,8 +20,8 @@ export default function InventoryList(): JSX.Element {
         <Text variant="titleLarge">Inventory</Text>
 
         <View style={styles.iconGroup}>
-          <IconButton icon="cloud-download" size={14} mode="outlined" />
-          <IconButton icon="tag" size={14} mode="outlined" />
+          {/* <IconButton icon="cloud-download" size={14} mode="outlined" /> TODO: Hold until cloud backup feature complete */}
+          {/* <IconButton icon="tag" size={14} mode="outlined" /> TODO: Hold until category filter added */}
           <IconButton icon="plus" size={14} mode="outlined" onPress={() => navigate('Locker', { screen: 'NewItem' })} />
         </View>
       </View>
