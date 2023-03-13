@@ -19,6 +19,7 @@ export default function useStyles() {
       },
       surface: {
         padding: theme.space[2],
+        minHeight: 100
       },
       title: {
         marginBottom: theme.space[2],

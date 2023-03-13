@@ -6,6 +6,7 @@ interface Style {
   container: ViewStyle;
   title: TextStyle;
   listContainer: ViewStyle;
+  emptyText: TextStyle;
 };
 
 export default function useStyles() {
@@ -24,6 +25,10 @@ export default function useStyles() {
         width: '100%',
         paddingHorizontal: theme.space[2],
         flex: 1,
+      },
+      emptyText: {
+        textAlign: 'center',
+        marginTop: theme.space[3]
       }
     }
   );

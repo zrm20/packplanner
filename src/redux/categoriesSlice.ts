@@ -8,7 +8,7 @@ const initialState: CategorySliceState = {
   categories: stockCategories
 };
 
-const categoiesSlice = createSlice(
+const categoriesSlice = createSlice(
   {
     name: 'categories',
     initialState,
@@ -17,7 +17,7 @@ const categoiesSlice = createSlice(
         const { newCategory } = action.payload;
 
         if (!newCategory) {
-          throw new Error('No newCategory recieved');
+          throw new Error('No newCategory received');
         };
 
         const categoryWithSameName = state.categories.find(category => category.label === newCategory.label);
@@ -39,7 +39,7 @@ const categoiesSlice = createSlice(
         const { id } = action.payload;
 
         if (!id) {
-          throw new Error('No category id recieved');
+          throw new Error('No category id received');
         };
 
         state.categories = state.categories.filter(category => category.id !== id);
@@ -70,5 +70,5 @@ const categoiesSlice = createSlice(
   }
 );
 
-export default categoiesSlice.reducer;
-export const { addCategory, removeCategory, updateCategory } = categoiesSlice.actions;
+export default categoriesSlice.reducer;
+export const { addCategory, removeCategory, updateCategory } = categoriesSlice.actions;

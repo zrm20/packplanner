@@ -32,6 +32,7 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
         <FlatList
           data={lists}
           keyExtractor={item => item.id}
+          ListEmptyComponent={<Text style={styles.emptyText}>No lists saved yet</Text>}
           renderItem={({ item }) => (
             <List.Item
               title={item.name}

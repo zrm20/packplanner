@@ -8,6 +8,7 @@ interface Style {
   settingsContainer: ViewStyle;
   unitSelector: ViewStyle;
   userWidget: ViewStyle;
+  copyright: TextStyle;
 };
 
 export default function useStyles() {
@@ -32,6 +33,10 @@ export default function useStyles() {
       },
       userWidget: {
         marginVertical: theme.space[4]
+      },
+      copyright: {
+        marginTop: 'auto',
+        marginBottom: theme.space[3]
       }
     }
   );

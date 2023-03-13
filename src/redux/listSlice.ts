@@ -39,9 +39,9 @@ const listSlice = createSlice(
       deleteList: (state, action: DeleteListPayload) => {
         const { listId } = action.payload;
 
-        const indextoDelete = state.lists.findIndex(list => list.id === listId);
+        const indexToDelete = state.lists.findIndex(list => list.id === listId);
 
-        if (indextoDelete === -1) {
+        if (indexToDelete === -1) {
           throw new Error(`No list with id ${listId} found.`);
         };
 

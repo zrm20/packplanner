@@ -17,7 +17,7 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
   const { getPackById } = usePacks();
 
   const packId = extractId(route.params.pack);
-  // need to use getPackById to recieve the full pack object with methods
+  // need to use getPackById to receive the full pack object with methods
   const pack = getPackById(packId);
 
   if (!pack) {

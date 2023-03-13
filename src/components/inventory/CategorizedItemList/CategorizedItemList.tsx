@@ -29,7 +29,7 @@ export default function CategorizedItemList(props: CategorizedItemListProps): JS
                   <InventoryItem
                     item={item}
                     key={item.id}
-                    onLongPress={item.openEdit}
+                    onPress={item.openEdit}
                     {...props.itemProps}
                   />
                 ))

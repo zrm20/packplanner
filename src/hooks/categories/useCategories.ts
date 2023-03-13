@@ -41,7 +41,7 @@ export default function useCategories(): CategoryHook {
             dispatch(updateItemsCategory({ categoryId: category.id }))
             dispatch(removeCategoryAction({ id: category.id }));
           },
-          `Do you want to perminantly delete the "${category.label}" category? All items in this category will be reset to Misc`,
+          `Do you want to permanently delete the "${category.label}" category? All items in this category will be reset to Misc`,
           callback
         );
       }

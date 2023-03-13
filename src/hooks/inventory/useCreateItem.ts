@@ -14,8 +14,8 @@ import { confirmDelete } from "../../utils";
 /*
   This hook returns a function used to construct a complex Item object
   from ItemData stored in redux (which is only serializable data). The
-  function returns an Item object that is complete with meathods and 
-  properties attatched to it.
+  function returns an Item object that is complete with methods and 
+  properties attached to it.
 */
 
 export default function useCreateItem() {
@@ -53,7 +53,7 @@ export default function useCreateItem() {
       delete(callback) {
         confirmDelete(
           () => dispatch(deleteAction({ id: item.id })),
-          `Do you want to perminantly delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
+          `Do you want to permanently delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
           callback
         );
       },

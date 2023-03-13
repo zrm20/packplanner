@@ -17,7 +17,7 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
   const { navigate } = useNavigation();
   const { user, logout, isLoading } = useUser();
 
-  function navToRegiser() {
+  function navToRegister() {
     navigate("Settings", { screen: "Register" });
   };
 
@@ -41,7 +41,7 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
                   <Button mode="contained" onPress={logout}>Logout</Button>
                 </> :
                 <>
-                  <Button mode="contained" onPress={navToRegiser}>Register</Button>
+                  <Button mode="contained" onPress={navToRegister}>Register</Button>
                   <Button mode="contained" onPress={navToLogin}>Login</Button>
                 </>
             }

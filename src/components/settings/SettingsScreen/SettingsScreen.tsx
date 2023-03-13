@@ -15,6 +15,7 @@ type SettingsScreenProps = NativeStackScreenProps<SettingsStackParamList, "Setti
 export default function SettingsScreen(props: SettingsScreenProps): JSX.Element {
   const styles = useStyles();
   const { weightUnit, setWeightUnits, liquidUnit, setLiquidUnits } = useSettings();
+  const today = new Date(Date.now());
 
   function handleWeightChange(newValue: string): void {
     setWeightUnits(newValue as WeightUnit);
@@ -28,7 +29,7 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
     <SafeAreaScreen style={styles.container} >
       <Text variant="headlineLarge" style={styles.title}>Settings</Text>
 
-      <UserWidget style={styles.userWidget} />
+      {/* <UserWidget style={styles.userWidget} /> TODO: Hold until cloud backup feature complete */}
 
       <View style={styles.settingsContainer}>
         <UnitSelector
@@ -72,6 +73,7 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
           }
         />
       </View>
+      <Text style={styles.copyright}>Copyright {today.getFullYear()} Zach McCoy</Text>
     </SafeAreaScreen>
   );
 };
