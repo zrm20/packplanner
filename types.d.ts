@@ -44,7 +44,7 @@ interface ItemFormData {
 interface ItemData extends ItemFormData {
   id: string;
   qty: number;
-  isPacked: boolean; // this descibes wether the item has acutally been packe, i.e. the checklist is checked
+  isPacked: boolean; // this describes wether the item has actually been packed, i.e. the checklist is checked
 };
 
 // contains all of the data AND methods used for an item

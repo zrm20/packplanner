@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 
 export default function confirmDelete(
   deleteFn: Function,
-  message: string = "Do you want to perminantly delete this?",
+  message: string = "Do you want to permanently delete this?",
   callback?: Function): void {
 
   Alert.alert(

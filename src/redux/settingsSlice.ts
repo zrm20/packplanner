@@ -14,7 +14,7 @@ const settingsSlice = createSlice(
         const { newUnit } = action.payload;
 
         if (!newUnit) {
-          throw new Error('No newUnit recieved');
+          throw new Error('No newUnit received');
         };
 
         state.weightUnits = newUnit;
@@ -23,7 +23,7 @@ const settingsSlice = createSlice(
         const { newUnit } = action.payload;
 
         if (!newUnit) {
-          throw new Error('No newUnit recieved');
+          throw new Error('No newUnit received');
         };
 
         state.liquidUnits = newUnit;

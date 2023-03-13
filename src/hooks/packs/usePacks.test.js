@@ -18,7 +18,7 @@ describe("usePacks()", () => {
   });
 
   describe('packsSlice', () => {
-    it("shoud return the packsSlice", () => {
+    it("should return the packsSlice", () => {
       const fakePackSlice = { packs: [], selectedPack: '123' }
       useSelector.mockReturnValueOnce(fakePackSlice);
 
@@ -29,7 +29,7 @@ describe("usePacks()", () => {
   });
 
   describe('packs', () => {
-    it("shoud return an empty array if packs is empty", () => {
+    it("should return an empty array if packs is empty", () => {
       const fakePackSlice = {
         packs: [],
         selectedPack: null
@@ -41,7 +41,7 @@ describe("usePacks()", () => {
       expect(result.packs).toEqual([])
     });
 
-    it("shoud return an array of pack objects with methods", () => {
+    it("should return an array of pack objects with methods", () => {
       const fakePackSlice = {
         packs: [
           {

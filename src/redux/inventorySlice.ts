@@ -14,7 +14,7 @@ const inventorySlice = createSlice(
         const { item } = action.payload;
 
         if (!item) {
-          throw new Error("No item recieved");
+          throw new Error("No item received");
         };
 
         const newItem: ItemData = {
@@ -30,7 +30,7 @@ const inventorySlice = createSlice(
         const { id } = action.payload;
 
         if (!id) {
-          throw new Error("No item id recieved");
+          throw new Error("No item id received");
         };
 
         state.inventory = state.inventory.filter(item => item.id !== id);
@@ -39,11 +39,11 @@ const inventorySlice = createSlice(
         const { id, newValues } = action.payload;
 
         if (!id) {
-          throw new Error("No item id recieved");
+          throw new Error("No item id received");
         };
 
         if (!newValues) {
-          throw new Error("newValues were not recieved");
+          throw new Error("newValues were not received");
         };
 
         const indexToUpdate = state.inventory.findIndex(item => item.id === id);
@@ -63,7 +63,7 @@ const inventorySlice = createSlice(
         const { id } = action.payload;
 
         if (!id) {
-          throw new Error("No item id recieved");
+          throw new Error("No item id received");
         };
 
         const indexToUpdate = state.inventory.findIndex(item => item.id === id);
@@ -86,11 +86,11 @@ const inventorySlice = createSlice(
         const { id, newQty } = action.payload;
 
         if (!id) {
-          throw new Error("No item id recieved");
+          throw new Error("No item id received");
         };
 
         if (!newQty) {
-          throw new Error("newValues were not recieved");
+          throw new Error("newValues were not received");
         };
 
         const newInt = Math.floor(newQty);
@@ -114,7 +114,7 @@ const inventorySlice = createSlice(
         const { id } = action.payload;
 
         if (!id) {
-          throw new Error("No item id recieved");
+          throw new Error("No item id received");
         };
 
         const indexToUpdate = state.inventory.findIndex(item => item.id === id);
@@ -136,7 +136,7 @@ const inventorySlice = createSlice(
         const { categoryId, newCategoryId = '00' } = action.payload;
 
         if (!categoryId) {
-          throw new Error('No Category Id recieved')
+          throw new Error('No Category Id received')
         };
 
         let updateCount = 0;

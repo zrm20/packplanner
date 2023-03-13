@@ -30,7 +30,7 @@ const packsSlice = createSlice(
         const { id, newValues } = action.payload;
 
         if (!id) {
-          throw new Error('No pack id recieved to update')
+          throw new Error('No pack id received to update')
         };
 
         const indexToUpdate = state.packs.findIndex(pack => pack.id === id);
@@ -48,7 +48,7 @@ const packsSlice = createSlice(
       deletePack: (state, action: PayloadAction<{ id: string }>) => {
         const { id } = action.payload;
         if (!id) {
-          throw new Error('No pack id recieved to delete')
+          throw new Error('No pack id received to delete')
         };
 
         state.packs = state.packs.filter(pack => pack.id !== id);

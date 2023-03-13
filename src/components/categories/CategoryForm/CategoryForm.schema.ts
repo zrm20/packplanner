@@ -4,7 +4,7 @@ const categoryFormSchema = Yup.object(
   {
     label: Yup.string()
       .required("Custom categories require a name"),
-    icon: Yup.string(), // Custom select input, no validateion needed
+    icon: Yup.string(), // Custom select input, no validation needed
     isBaseWeightExempt: Yup.boolean() // switch input, no validation needed
   }
 );

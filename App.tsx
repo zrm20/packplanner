@@ -10,9 +10,9 @@ import { theme as lightTheme } from "./src/theme/theme";
 
 export default function App() {
   const colorScheme = useColorScheme();
-
   const theme = lightTheme;
 
+  // TODO add loading component
   return (
     <ReduxProvider store={store}>
       <PersistGate persistor={persistor} loading={null}>
