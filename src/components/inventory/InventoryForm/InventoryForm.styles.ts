@@ -9,8 +9,7 @@ interface Style {
   enableLiquidLabel: TextStyle;
   liquidSection: ViewStyle;
   liquidTitle: TextStyle;
-  fabs: ViewStyle;
-  saveButton: ViewStyle;
+  actionButtons: ViewStyle;
   deleteButton: ViewStyle;
 };
 
@@ -20,13 +19,14 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>(
     {
       container: {
-        padding: theme.space[2],
-        alignItems: 'center',
+        paddingHorizontal: theme.space[2],
         width: '100%',
-        flex: 1
+        flex: 1,
+        marginBottom: 25,
       },
       scrollView: {
         width: '100%',
+        flex: 1,
       },
       liquidEnableSection: {
         marginBottom: theme.space[2],
@@ -46,21 +46,14 @@ export default function useStyles() {
       liquidTitle: {
         textAlign: 'center'
       },
-      fabs: {
-        // handles both floating buttons at bottom of form
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        position: 'absolute',
-        bottom: theme.space[2],
-      },
-      saveButton: {
-        left: theme.space[4]
-
+      actionButtons: {
+        marginVertical: theme.space[1]
       },
       deleteButton: {
-        right: theme.space[4],
+        backgroundColor: theme.colors.error,
+        color: theme.colors.onError
       }
+
     }
   );
   return styles;

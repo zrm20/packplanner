@@ -1,6 +1,6 @@
 import React from "react";
-import { KeyboardAvoidingView, View } from "react-native";
-import { HelperText, IconButton, Subheading, Surface, Switch } from "react-native-paper";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
+import { Button, HelperText, IconButton, Subheading, Surface, Switch } from "react-native-paper";
 import { Formik } from "formik";
 
 import useStyles from "./InventoryForm.styles";
@@ -34,35 +34,35 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
       onSubmit={props.onSubmit}
       validationSchema={inventoryFormSchema}
     >
-      <KeyboardAvoidingView style={styles.container} behavior="height" >
-        <PickerInput
-          name='category'
-          label="Category"
-          data={categories.map(cat => ({ label: cat.label, value: cat.id }))}
-        />
+      <KeyboardAvoidingView style={styles.container} behavior="padding" >
 
-        <TextInput name="brand" label="Brand" />
-        <TextInput name="name" label="Name" />
-        <WeightInput name="weight" label="Weight" />
-
-        <ShowLiquidInput />
-
-        <SubmitButton
-          mode='contained-tonal'
-          icon="content-save"
-          style={[styles.fabs, styles.saveButton]}
-        />
-
-        {
-          props.onDelete &&
-          <IconButton
-            mode='contained-tonal'
-            icon="delete"
-            style={[styles.fabs, styles.deleteButton]}
-            onPress={props.onDelete}
+        <ScrollView style={styles.scrollView}>
+          <PickerInput
+            name='category'
+            label="Category"
+            data={categories.map(cat => ({ label: cat.label, value: cat.id }))}
           />
-        }
-      </KeyboardAvoidingView >
+
+          <TextInput name="brand" label="Brand" />
+          <TextInput name="name" label="Name" />
+          <WeightInput name="weight" label="Weight" />
+
+          <ShowLiquidInput />
+
+          <SubmitButton mode="contained" style={styles.actionButtons}>Save</SubmitButton>
+
+          {
+            props.onDelete &&
+            <Button
+              style={[styles.actionButtons, styles.deleteButton]}
+              mode="contained"
+              onPress={props.onDelete}
+            >
+              Delete
+            </Button>
+          }
+        </ScrollView >
+      </KeyboardAvoidingView>
     </Formik >
   );
 };
