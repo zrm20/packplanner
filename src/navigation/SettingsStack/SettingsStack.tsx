@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { RegisterGuestScreen } from "../../components/auth";
 import { SettingsScreen } from "../../components/settings";
 import { SettingsStackParamList } from "../navigation.types";
 
@@ -22,6 +23,7 @@ export default function SettingsStack(): JSX.Element {
           }
         }
       >
+        <Stack.Screen name="RegisterGuest" component={RegisterGuestScreen} />
       </Stack.Group>
     </Stack.Navigator>
   )

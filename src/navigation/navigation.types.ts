@@ -50,6 +50,7 @@ export type CategoriesStackParamList = {
 
 export type SettingsStackParamList = {
   SettingsHome: undefined;
+  RegisterGuest: undefined;
 }
 
 export type MyPackHomeScreenProps = CompositeScreenProps<

@@ -16,6 +16,9 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
   const { navigate } = useNavigation();
   const { user, logout, handleGuestLogout, isLoading } = useUser();
 
+  function handleNavToGuestRegister() {
+    navigate("Settings", { screen: "RegisterGuest" })
+  };
 
   return (
     <>
@@ -35,8 +38,7 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
               "email" in user! ?
                 <Button mode="contained" onPress={logout}>Logout</Button> :
                 <>
-                  <Button mode="contained">Register</Button>
-                  <Button mode="contained">Login</Button>
+                  <Button mode="contained" onPress={handleNavToGuestRegister}>Register</Button>
                   <Button mode="contained" onPress={handleGuestLogout}>Logout</Button>
                 </>
             }

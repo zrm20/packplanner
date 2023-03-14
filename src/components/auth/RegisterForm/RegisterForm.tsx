@@ -9,11 +9,12 @@ import registerFormSchema from "./RegisterForm.schema";
 
 interface RegisterFormProps {
   style?: ViewStyle;
+  onSubmit(values: RegisterFormData): void
 };
 
 export default function RegisterForm(props: RegisterFormProps): JSX.Element {
   const styles = useStyles();
-  const { register, error } = useUser();
+  const { error } = useUser();
 
   const initialValues: RegisterFormData = {
     email: '',
@@ -21,14 +22,10 @@ export default function RegisterForm(props: RegisterFormProps): JSX.Element {
     confirmPassword: ''
   };
 
-  function handleSubmit(values: RegisterFormData) {
-    register(values);
-  };
-
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={handleSubmit}
+      onSubmit={props.onSubmit}
       validationSchema={registerFormSchema}
     >
       <View style={[styles.container, props.style]} >

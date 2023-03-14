@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInAnonymously } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInAnonymously, EmailAuthProvider, linkWithCredential } from "firebase/auth";
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import { clearUser, setError, setIsLoading, setUser } from "../../redux/userSlice";
 import { auth as authInstance } from "../../config/firebase";
@@ -122,12 +122,48 @@ export default function useUser() {
       })
   };
 
+  function registerGuest(userData: RegisterFormData, callback?: Function): void {
+    if (userData.password !== userData.confirmPassword) {
+      throw new Error("Passwords do not match");
+    };
+
+    dispatch(setIsLoading(true)); // start loading
+    dispatch(setError(null)); // reset error
+
+    const credential = EmailAuthProvider.credential(userData.email, userData.password);
+
+    linkWithCredential(authInstance.currentUser!, credential)
+      .then(userCredential => {
+        // success, userCredential is returned
+
+        const user: User = {
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          name: userCredential.user.displayName
+        };
+
+        dispatch(setUser({ user })); // add user to store
+
+        dispatch(setIsLoading(false)); // set loading to false
+
+        if (callback) {
+          callback(); // callback for navigating after success
+        };
+      })
+      .catch(err => {
+        const errorMessage = authErrorExtractor(err);
+        dispatch(setError(errorMessage));
+        dispatch(setIsLoading(false));
+      })
+  };
+
   return {
     ...userSlice,
     login,
     loginAsGuest,
     logout,
     handleGuestLogout,
-    register
+    register,
+    registerGuest
   };
 };

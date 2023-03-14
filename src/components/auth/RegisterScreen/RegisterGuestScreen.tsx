@@ -3,21 +3,21 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Text } from "react-native-paper";
 
 import useUser from "../../../hooks/user/useUser";
-import { AuthStackParamList } from "../../../navigation/navigation.types";
+import { SettingsStackParamList } from "../../../navigation/navigation.types";
 import { SafeAreaScreen } from "../../ui";
 import LoadingBackdrop from "../../ui/LoadingBackdrop/LoadingBackdrop";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import useStyles from "./RegisterScreen.styles";
 
-type RegisterScreenProps = NativeStackScreenProps<AuthStackParamList, "Register">;
+type RegisterGuestScreenProps = NativeStackScreenProps<SettingsStackParamList, "RegisterGuest">;
 
-export default function RegisterScreen(props: RegisterScreenProps): JSX.Element {
+export default function RegisterGuestScreen(props: RegisterGuestScreenProps): JSX.Element {
   const styles = useStyles();
-  const { isLoading, register } = useUser();
-  const { goBack } = props.navigation
+  const { isLoading, registerGuest } = useUser();
+  const { goBack, navigate } = props.navigation;
 
-  function handleSubmit(values: RegisterFormData) {
-    register(values);
+  function handleSubmit(values: RegisterFormData): void {
+    registerGuest(values, () => navigate("SettingsHome"));
   };
 
   return (
