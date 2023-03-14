@@ -1,22 +1,25 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { Image, View } from "react-native";
 import { Button, Text } from "react-native-paper";
+import { AuthStackParamList } from "../../../navigation/navigation.types";
 
 import { SafeAreaScreen } from "../../ui";
 import useStyles from "./SplashScreen.styles";
 const logo = require("../../../../assets/packplannerlogo.png");
 
-interface SplashScreenProps {
-
-};
+type SplashScreenProps = NativeStackScreenProps<AuthStackParamList, "Splash">;
 
 export default function SplashScreen(props: SplashScreenProps): JSX.Element {
   const styles = useStyles();
+  const { navigation } = props;
 
   function navToRegister(): void {
+    navigation.navigate("Register");
   };
 
   function navToLogin(): void {
+    navigation.navigate("Login");
   };
 
   function logInAnonymously(): void {
@@ -41,7 +44,7 @@ export default function SplashScreen(props: SplashScreenProps): JSX.Element {
           Register
         </Button>
         <Button onPress={navToLogin} mode="contained" style={styles.button}>
-          Sign In
+          Login
         </Button>
         <Button onPress={logInAnonymously} mode="contained" style={styles.button}>
           Continue as Guest

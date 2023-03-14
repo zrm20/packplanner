@@ -14,7 +14,8 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>(
     {
       container: {
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: theme.colors.background
       },
       title: {
         marginTop: theme.space[3],
