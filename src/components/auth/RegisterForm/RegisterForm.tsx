@@ -4,7 +4,6 @@ import { Text, View, ViewStyle } from "react-native";
 
 import { SubmitButton, TextInput } from "../../formComponents";
 import useStyles from "./RegisterForm.styles";
-import { useNavigation } from "@react-navigation/native";
 import useUser from "../../../hooks/user/useUser";
 import registerFormSchema from "./RegisterForm.schema";
 
@@ -14,7 +13,6 @@ interface RegisterFormProps {
 
 export default function RegisterForm(props: RegisterFormProps): JSX.Element {
   const styles = useStyles();
-  const { navigate } = useNavigation();
   const { register, error } = useUser();
 
   const initialValues: RegisterFormData = {
@@ -24,7 +22,7 @@ export default function RegisterForm(props: RegisterFormProps): JSX.Element {
   };
 
   function handleSubmit(values: RegisterFormData) {
-    register(values, () => navigate("Settings", { screen: "SettingsHome" }));
+    register(values);
   };
 
   return (

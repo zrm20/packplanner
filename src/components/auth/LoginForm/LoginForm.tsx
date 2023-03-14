@@ -5,8 +5,7 @@ import { Formik } from "formik";
 import { TextInput, SubmitButton } from "../../formComponents";
 import useStyles from "./LoginForm.styles";
 import useUser from "../../../hooks/user/useUser";
-import { useNavigation } from "@react-navigation/native";
-import { HelperText, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import loginFormSchema from "./LoginForm.schema";
 
 interface LoginFormProps {
@@ -16,7 +15,6 @@ interface LoginFormProps {
 export default function LoginForm(props: LoginFormProps): JSX.Element {
   const styles = useStyles();
   const { login, error } = useUser();
-  const { navigate } = useNavigation();
 
   const initialValues: LoginFormData = {
     email: "",
@@ -24,7 +22,7 @@ export default function LoginForm(props: LoginFormProps): JSX.Element {
   };
 
   function handleSubmit(values: LoginFormData): void {
-    login(values.email, values.password, () => navigate("Settings", { screen: "SettingsHome" }));
+    login(values.email, values.password);
   };
 
   return (
