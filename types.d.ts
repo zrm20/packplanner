@@ -163,3 +163,5 @@ interface TripListData extends TripListFormData {
 interface ListSliceState {
   lists: TripListData[]
 };
+
+declare module "*.png";
