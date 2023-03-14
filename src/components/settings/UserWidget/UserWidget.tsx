@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, ViewStyle, Alert } from "react-native";
+import { View, ViewStyle } from "react-native";
 import { Surface, Text, Button } from "react-native-paper";
 import useUser from "../../../hooks/user/useUser";
 import { LoadingBackdrop } from "../../ui";
@@ -14,25 +14,8 @@ interface UserWidgetProps {
 export default function UserWidget(props: UserWidgetProps): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { user, logout, isLoading } = useUser();
+  const { user, logout, handleGuestLogout, isLoading } = useUser();
 
-  function handleGuestLogout(): void {
-    Alert.alert(
-      "Warning, you will lose your data!",
-      "You are about to log out as a guest. All of your data including inventory, packs and lists will be lost.\n\nYou can register for an account to save your data online. Do you want to continue logging out?",
-      [
-        {
-          text: "Yes, erase my data and log out",
-          style: "destructive",
-          onPress: logout
-        },
-        {
-          text: "Cancel",
-          style: "cancel"
-        }
-      ]
-    )
-  };
 
   return (
     <>

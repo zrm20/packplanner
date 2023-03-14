@@ -71,6 +71,24 @@ export default function useUser() {
       })
   }
 
+  function handleGuestLogout(): void {
+    Alert.alert(
+      "Warning, you will lose your data!",
+      "You are about to log out as a guest. All of your data including inventory, packs and lists will be lost.\n\nYou can register for an account to save your data online. Do you want to continue logging out?",
+      [
+        {
+          text: "Yes, erase my data and log out",
+          style: "destructive",
+          onPress: logout
+        },
+        {
+          text: "Cancel",
+          style: "cancel"
+        }
+      ]
+    )
+  };
+
   function register(userData: RegisterFormData, callback?: Function): void {
     if (userData.password !== userData.confirmPassword) {
       throw new Error("Passwords do not match");
@@ -109,6 +127,7 @@ export default function useUser() {
     login,
     loginAsGuest,
     logout,
+    handleGuestLogout,
     register
   };
 };
