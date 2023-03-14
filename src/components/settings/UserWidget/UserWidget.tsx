@@ -17,35 +17,21 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
   const { navigate } = useNavigation();
   const { user, logout, isLoading } = useUser();
 
-  function navToRegister() {
-    navigate("Settings", { screen: "Register" });
-  };
-
-  function navToLogin() {
-    navigate("Settings", { screen: "Login" });
-  };
-
   return (
     <>
       <LoadingBackdrop show={isLoading} />
       <View style={[styles.container, props.style]} >
         <Surface style={styles.authSurface}>
           <Text variant="headlineSmall">User</Text>
-          <Text style={styles.helperText}>Login or register to store your inventory and lists to the cloud.</Text>
+          <Text style={styles.helperText}>
+            {
+              "email" in user! ?
+                user.email : "Guest"
+            }
+          </Text>
 
           <View style={styles.buttonGroup}>
-            {
-              Boolean(user) ?
-                <>
-                  <Text>{user?.email}</Text>
-                  <Button mode="contained" onPress={logout}>Logout</Button>
-                </> :
-                <>
-                  <Button mode="contained" onPress={navToRegister}>Register</Button>
-                  <Button mode="contained" onPress={navToLogin}>Login</Button>
-                </>
-            }
-
+            <Button mode="contained" onPress={logout}>Logout</Button>
           </View>
         </Surface>
       </View>

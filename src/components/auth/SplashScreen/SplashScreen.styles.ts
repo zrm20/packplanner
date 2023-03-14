@@ -1,3 +1,4 @@
+import chroma from "chroma-js";
 import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native";
 
 import { useTheme } from "../../../theme";
@@ -9,6 +10,7 @@ interface Style {
   bodyText: TextStyle;
   image: ImageStyle;
   button: ViewStyle;
+  backdrop: TextStyle;
 };
 
 export default function useStyles() {
@@ -46,6 +48,9 @@ export default function useStyles() {
       button: {
         backgroundColor: theme.colors.secondary,
         marginVertical: theme.space[2]
+      },
+      backdrop: {
+        backgroundColor: chroma(theme.colors.surface).alpha(.5).hex(),
       }
     }
   );

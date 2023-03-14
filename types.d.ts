@@ -133,8 +133,12 @@ interface User {
   email: string | null;
 };
 
+interface GuestUser {
+  uid: string;
+}
+
 interface UserSliceState {
-  user: User | null;
+  user: User | GuestUser | null;
   isLoading: boolean;
   error: string | null;
 };

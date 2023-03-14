@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInAnonymously } from "firebase/auth";
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import { clearUser, setError, setIsLoading, setUser } from "../../redux/userSlice";
 import { auth as authInstance } from "../../config/firebase";
@@ -9,6 +9,24 @@ import { authErrorExtractor } from "../../utils";
 export default function useUser() {
   const dispatch = useDispatch();
   const userSlice = useSelector(state => state.user);
+
+  function loginAsGuest(): void {
+    dispatch(setIsLoading(true));
+    dispatch(setError(null));
+
+    signInAnonymously(authInstance)
+      .then(userCredential => {
+        const user: GuestUser = { uid: userCredential.user.uid };
+
+        dispatch(setUser({ user }));
+        dispatch(setIsLoading(false));
+      })
+      .catch(err => {
+        const errorMessage = authErrorExtractor(err);
+        dispatch(setError(errorMessage));
+        dispatch(setIsLoading(false));
+      });
+  };
 
   function login(email: string, password: string, callback?: Function): void {
     dispatch(setIsLoading(true));
@@ -89,6 +107,7 @@ export default function useUser() {
   return {
     ...userSlice,
     login,
+    loginAsGuest,
     logout,
     register
   };
