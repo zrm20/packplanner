@@ -1,12 +1,10 @@
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
-import {
-  toggleSelectedPack,
-  deletePack as deleteAction,
-  updatePack as updateAction
-} from "../../redux/packsSlice";
+import { toggleSelectedPack } from "../../redux/packsSlice";
 import { confirmDelete } from "../../utils";
 import { useNavigation } from "@react-navigation/native";
 import useSettings from "../settings/useSettings";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 /*
   This hook returns a function used to construct a complex Pack object
@@ -21,7 +19,17 @@ export default function useCreatePack() {
   const { navigate } = useNavigation();
   const { weightUnit } = useSettings();
 
-  function createPack(pack: PackData): Pack {
+  async function deletePack(id: string): Promise<void> {
+    await deleteDoc(doc(db, "packs", id));
+  };
+
+  async function updatePack(id: string, newValues: PackFormData): Promise<void> {
+    const docRef = doc(db, "packs", id);
+
+    await setDoc(docRef, newValues, { merge: true });
+  };
+
+  function constructPack(pack: PackData): Pack {
     return {
       // pack properties
       ...pack,
@@ -40,13 +48,13 @@ export default function useCreatePack() {
       },
       delete(callback) {
         confirmDelete(
-          () => dispatch(deleteAction({ id: pack.id })),
+          () => deletePack(pack.id),
           `Do you want to permanently delete ${pack.brand} ${pack.model}?`,
           callback
-        );
+        )
       },
-      update(newValues, callback) {
-        dispatch(updateAction({ id: pack.id, newValues }));
+      async update(newValues, callback) {
+        await updatePack(pack.id, newValues);
         if (callback) {
           callback();
         }
@@ -58,5 +66,5 @@ export default function useCreatePack() {
     }
   };
 
-  return createPack;
+  return constructPack;
 };

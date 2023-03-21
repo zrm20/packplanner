@@ -7,7 +7,12 @@ interface PackFormData {
   weight: number;
 };
 
-// used within the redux store and only contains serializable data
+// pack data that is sent to the Firestore DB
+interface PackDocument extends PackFormData {
+  uid: string;
+};
+
+// pack data that is return from Firestore and stored in Redux
 interface PackData extends PackFormData {
   id: string;
 };
@@ -38,6 +43,10 @@ interface ItemFormData {
   liquidCapacity?: number; // in ml
   inPack?: boolean;
   category: string;
+};
+
+interface ItemDocument extends ItemFormData {
+  uid: string;
 };
 
 // used within the redux store and only contains serializable data

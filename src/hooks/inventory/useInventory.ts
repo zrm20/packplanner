@@ -1,8 +1,11 @@
+import { collection, addDoc } from "firebase/firestore";
+
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
 import { addItem as addAction, emptyPack as emptyPackAction } from "../../redux/inventorySlice";
 import useCategories from "../categories/useCategories";
 import useCreateItem from "./useCreateItem";
 import { confirmDelete } from "../../utils";
+import { db } from "../../config/firebase";
 
 interface InventoryHook {
   inventorySlice: InventorySliceState,
@@ -21,9 +24,11 @@ interface InventoryHook {
 
 export default function useInventory(): InventoryHook {
   const inventorySlice = useSelector(state => state.inventory);
+  const { user } = useSelector(state => state.user)
   const { categories } = useCategories();
   const dispatch = useDispatch();
   const createItem = useCreateItem();
+  const itemsCollection = collection(db, "items");
 
   if (!inventorySlice) {
     throw new Error("useInventory must be used within a Redux Provider that contains an inventory reducer");
@@ -37,8 +42,16 @@ export default function useInventory(): InventoryHook {
     return inventory.find(item => item.id === id) || null;
   };
 
-  function addToInventory(newItem: ItemFormData): void {
-    dispatch(addAction({ item: newItem }));
+  async function addToInventory(newItem: ItemFormData): Promise<void> {
+    const newItemDoc: ItemDocument = {
+      ...newItem,
+      uid: user!.uid
+    }
+    try {
+      await addDoc(itemsCollection, newItemDoc);
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   function getTotalWeightInPack(): number {

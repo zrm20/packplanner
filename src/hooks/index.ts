@@ -6,6 +6,7 @@ import useChartContext from "./chart/useChartContext";
 import { ChartContextProvider } from "./chart/useChartContext";
 import useAuth from "./user/useAuth";
 import useLists from "./lists/useLists";
+import useSubscribeToFirestore from "./firestore/useSubscribeToFirestore";
 
 export {
   useInventory,
@@ -15,5 +16,6 @@ export {
   useChartContext,
   ChartContextProvider,
   useAuth,
-  useLists
+  useLists,
+  useSubscribeToFirestore
 };
