@@ -27,16 +27,16 @@ const rootReducer = combineReducers(
   }
 );
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore(
   {
-    reducer: persistedReducer,
+    reducer: rootReducer,
     middleware: [thunk]
   }
 );
 
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
