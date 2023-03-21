@@ -30,7 +30,6 @@ interface Pack extends PackData {
 
 // used in the redux store
 interface PacksSliceState {
-  selectedPack: string | null,
   packs: PackData[],
 };
 
@@ -73,6 +72,12 @@ interface Item extends ItemData {
 // used in the redux store
 interface InventorySliceState {
   inventory: ItemData[];
+};
+
+// myPack
+interface MyPackSliceState {
+  selectedPack: string | null,
+  itemsInPack: string[]
 };
 
 type WeightUnit = "oz" | "lb" | "kg";

@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
-import { toggleSelectedPack } from "../../redux/packsSlice";
 import { confirmDelete } from "../../utils";
 import { useNavigation } from "@react-navigation/native";
 import useSettings from "../settings/useSettings";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { setSelectedPack } from "../../redux/myPackSlice";
 
 /*
   This hook returns a function used to construct a complex Pack object
@@ -14,7 +14,7 @@ import { db } from "../../config/firebase";
 */
 
 export default function useCreatePack() {
-  const packsSlice = useSelector(state => state.packs);
+  const selectedPackId = useSelector(state => state.myPack.selectedPack);
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
   const { weightUnit } = useSettings();
@@ -33,7 +33,7 @@ export default function useCreatePack() {
     return {
       // pack properties
       ...pack,
-      isSelected: pack.id === packsSlice.selectedPack,
+      isSelected: pack.id === selectedPackId,
       // base fields is used for distributing only the original field values from store
       baseFields: {
         ...pack
@@ -41,7 +41,7 @@ export default function useCreatePack() {
 
       // pack methods
       select() {
-        dispatch(toggleSelectedPack({ id: pack.id }));
+        dispatch(setSelectedPack({ packId: pack.id }));
       },
       openEdit() {
         navigate("Locker", { screen: "EditPack", params: { pack: pack.id } })

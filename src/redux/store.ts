@@ -9,17 +9,19 @@ import settingsReducer from "./settingsSlice";
 import categoriesReducer from "./categoriesSlice";
 import userReducer from "./userSlice";
 import listReducer from "./listSlice";
+import myPackReducer from "./myPackSlice";
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ["user"]
+  whitelist: ["settings", "myPack"], // other slices will be persisted by Firebase
 };
 
 const rootReducer = combineReducers(
   {
     packs: packsReducer,
     inventory: inventoryReducer,
+    myPack: myPackReducer,
     settings: settingsReducer,
     categories: categoriesReducer,
     user: userReducer,
@@ -27,16 +29,16 @@ const rootReducer = combineReducers(
   }
 );
 
-// const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore(
   {
-    reducer: rootReducer,
+    reducer: persistedReducer,
     middleware: [thunk]
   }
 );
 
-// export const persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
