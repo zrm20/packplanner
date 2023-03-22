@@ -14,8 +14,8 @@ export default function NewItemScreen({ navigation }: NewItemScreenProps): JSX.E
   const styles = useStyles();
   const { addToInventory } = useInventoryActions();
 
-  function handleSubmit(newItem: ItemFormData): void {
-    addToInventory(newItem);
+  async function handleSubmit(newItem: ItemFormData): Promise<void> {
+    await addToInventory(newItem);
     navigation.navigate('Inventory');
   };
 

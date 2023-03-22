@@ -1,6 +1,7 @@
 import React from "react";
-import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
+import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Button, Title } from "react-native-paper";
+import { FormikBag } from "formik";
 
 import useStyles from "./EditItemScreen.styles";
 import { CloseScreenButton, SafeAreaScreen } from "../../ui";
@@ -26,13 +27,11 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
     </SafeAreaScreen>
   };
 
-  function handleSubmit(newValues: ItemFormData): void {
-    if (item) {
-      item.update(newValues, () => navigation.navigate('Inventory'));
-    }
+  async function handleSubmit(newValues: ItemFormData): Promise<void> {
+    await item!.update(newValues, () => navigation.navigate('Inventory'));
   };
 
-  function handleDelete(): void {
+  async function handleDelete(): Promise<void> {
     if (item) {
       item.delete(navigation.goBack)
     }
