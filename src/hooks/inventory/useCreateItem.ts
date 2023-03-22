@@ -1,15 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "../../redux/reduxHooks";
+import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import useCategories from "../categories/useCategories";
-import {
-  toggleInPack as toggleAction,
-  updateItem as updateAction,
-  deleteItem as deleteAction,
-  updateQty as updateQtyAction,
-  toggleIsPacked as toggleIsPackedAction
-} from '../../redux/inventorySlice';
 import useSettings from "../settings/useSettings";
 import { confirmDelete } from "../../utils";
+import {
+  setItemQty,
+  toggleIsPacked as toggleIsPackedAction,
+  addToPack as addToPackAction
+} from "../../redux/myPackSlice";
 
 /*
   This hook returns a function used to construct a complex Item object
@@ -18,16 +16,21 @@ import { confirmDelete } from "../../utils";
   properties attached to it.
 */
 
-export default function useCreateItem() {
+export default function useConstructItem() {
   const dispatch = useDispatch();
-  const { getCategoryById, miscCategory } = useCategories();
+  const myPackItems = useSelector(state => state.myPack.itemsInPack);
+  const { getCategoryById, miscCategory, categories } = useCategories();
   const { navigate } = useNavigation();
   const { weightUnit, liquidUnit } = useSettings();
 
-  function createItem(item: ItemData): Item {
+  function constructItem(item: ItemData): Item {
+    const packedItem = myPackItems.find(packedItem => packedItem.id === item.id);
     return {
       // item properties
       ...item,
+      qty: packedItem?.qty || 0,
+      isPacked: packedItem?.isPacked || false,
+
 
       // base fields is used for distributing only the original fields
       baseFields: {
@@ -38,27 +41,27 @@ export default function useCreateItem() {
       category: getCategoryById(item.category) || miscCategory, // defaults back to Misc category if no category found
 
       // item methods
-      toggleInPack() {
-        dispatch(toggleAction({ id: item.id }));
-      },
       openEdit() {
         navigate('Locker', { screen: 'EditItem', params: { item: item.id } })
       },
       update(newValues, callback) {
-        dispatch(updateAction({ newValues, id: item.id }));
+        () => { };
         if (callback) {
           callback();
         };
       },
       delete(callback) {
         confirmDelete(
-          () => dispatch(deleteAction({ id: item.id })),
+          () => { },
           `Do you want to permanently delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
           callback
         );
       },
-      updateQty(newQty: number) {
-        dispatch(updateQtyAction({ id: item.id, newQty }))
+      addToPack() {
+        dispatch(addToPackAction({ itemId: item.id }))
+      },
+      setQty(newQty: number) {
+        dispatch(setItemQty({ itemId: item.id, qty: newQty }))
       },
       getWeight() {
         const convertedWeight = weightUnit.convert(item.weight);
@@ -72,10 +75,10 @@ export default function useCreateItem() {
         return `${convertedCapacity} ${liquidUnit.label}`;
       },
       toggleIsPacked() {
-        dispatch(toggleIsPackedAction({ id: item.id }));
+        dispatch(toggleIsPackedAction({ itemId: item.id }));
       }
     }
   };
 
-  return createItem;
+  return constructItem;
 };

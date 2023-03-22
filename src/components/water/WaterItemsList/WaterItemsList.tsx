@@ -9,7 +9,7 @@ export default function WaterItemsList(): JSX.Element {
   const styles = useStyles();
   const { inventory } = useInventory();
   const { liquidUnit } = useSettings();
-  const items = inventory.filter(item => item.liquidCapacity && item.liquidCapacity > 0 && item.inPack);
+  const items = inventory.filter(item => item.liquidCapacity && item.liquidCapacity > 0 && item.qty > 0);
 
   return (
     <View style={styles.container} >

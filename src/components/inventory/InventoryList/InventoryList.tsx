@@ -10,9 +10,9 @@ import CategorizedItemList from "../CategorizedItemList/CategorizedItemList";
 export default function InventoryList(): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { getSortedInventory } = useInventory();
+  const { getSortedInventory, inventory } = useInventory();
 
-  const sortedInventory = getSortedInventory();
+  const sortedInventory = getSortedInventory(inventory);
 
   return (
     <View style={styles.container} >
@@ -28,7 +28,7 @@ export default function InventoryList(): JSX.Element {
 
       <View style={styles.listContainer}>
         <Surface style={styles.listSurface} >
-          <CategorizedItemList data={sortedInventory} />
+          <CategorizedItemList data={inventory} />
         </Surface>
       </View>
     </View>

@@ -1,4 +1,5 @@
 import useInventory from "./inventory/useInventory";
+import useInventoryActions from "./inventory/useInventoryActions";
 import usePacks from "./packs/usePacks";
 import useSettings from "./settings/useSettings";
 import useCategories from "./categories/useCategories";
@@ -10,6 +11,7 @@ import useSubscribeToFirestore from "./firestore/useSubscribeToFirestore";
 
 export {
   useInventory,
+  useInventoryActions,
   usePacks,
   useSettings,
   useCategories,

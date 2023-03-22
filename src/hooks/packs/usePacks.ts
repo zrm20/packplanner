@@ -14,6 +14,7 @@ interface PackHook {
 
 export default function usePacks(): PackHook {
   const packsSlice = useSelector(state => state.packs);
+  const selectedPackId = useSelector(state => state.myPack.selectedPack)
   const user = useSelector(state => state.user.user)
   const createPack = useCreatePack();
   const packsCollection = collection(db, "packs");
@@ -23,7 +24,7 @@ export default function usePacks(): PackHook {
   };
 
   const packs: Pack[] = packsSlice.packs.map(createPack);
-  const selectedPack = packs.find(pack => pack.id === packsSlice.selectedPack) || null;
+  const selectedPack = packs.find(pack => pack.id === selectedPackId) || null;
 
   function getPackById(id: string): Pack | null {
     return packs.find(pack => pack.id === id) || null;

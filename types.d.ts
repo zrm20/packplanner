@@ -40,7 +40,6 @@ interface ItemFormData {
   name: string;
   weight: number; // in kg
   liquidCapacity?: number; // in ml
-  inPack?: boolean;
   category: string;
 };
 
@@ -51,20 +50,24 @@ interface ItemDocument extends ItemFormData {
 // used within the redux store and only contains serializable data
 interface ItemData extends ItemFormData {
   id: string;
-  qty: number;
-  isPacked: boolean; // this describes wether the item has actually been packed, i.e. the checklist is checked
+};
+
+interface PackedItem {
+  id: string,
+  qty: number,
+  isPacked: boolean
 };
 
 // contains all of the data AND methods used for an item
-interface Item extends ItemData {
+interface Item extends ItemData, PackedItem {
   baseFields: ItemData;
   category: Category;
-  toggleInPack(): void;
+  addToPack(): void;
   toggleIsPacked(): void;
   openEdit(): void;
   update(newValues: ItemFormData, callback?: Function): void;
   delete(callback?: Function): void;
-  updateQty(newQty: number): void;
+  setQty(newQty: number): void;
   getWeight(): string;
   getLiquidCapacity(): string;
 };
@@ -77,7 +80,7 @@ interface InventorySliceState {
 // myPack
 interface MyPackSliceState {
   selectedPack: string | null,
-  itemsInPack: string[]
+  itemsInPack: PackedItem[]
 };
 
 type WeightUnit = "oz" | "lb" | "kg";

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View } from "react-native";
 import { Surface, Text } from "react-native-paper";
 import { useInventory, usePacks, useSettings } from "../../../hooks";
+import { getTotalLiquidCapacity, getTotalLiquidWeight, getTotalWeight } from "../../../utils/inventoryUtils/inventoryUtils";
 
 import useStyles from "./WaterStats.styles";
 
@@ -12,7 +13,7 @@ interface WaterStatsProps {
 export default function WaterStats(props: WaterStatsProps): JSX.Element {
   const styles = useStyles();
   const { fillLevel } = props;
-  const { getLiquidCapacityInPack, getLiquidWeightInPack, getTotalWeightInPack } = useInventory();
+  const { itemsInPack } = useInventory();
   const { selectedPack } = usePacks();
   const { liquidUnit, weightUnit } = useSettings();
 
@@ -22,15 +23,19 @@ export default function WaterStats(props: WaterStatsProps): JSX.Element {
 
   const fillPercentage: number = fillLevel / 100;
 
-  const maxLiquidCapacity = liquidUnit.convert(getLiquidCapacityInPack());
+  const totalWeight = useMemo(() => getTotalWeight(itemsInPack), [itemsInPack]);
+  const totalLiquidWeight = useMemo(() => getTotalLiquidWeight(itemsInPack), [itemsInPack]);
+  const totalLiquidCapacity = useMemo(() => getTotalLiquidCapacity(itemsInPack), [itemsInPack]);
+
+  const maxLiquidCapacity = liquidUnit.convert(totalLiquidCapacity);
   const currentLiquidCapacity = round(maxLiquidCapacity * fillPercentage);
 
-  const maxLiquidWeight = weightUnit.convert(getLiquidWeightInPack());
+  const maxLiquidWeight = weightUnit.convert(totalLiquidWeight);
   const currentLiquidWeight = round(maxLiquidWeight * fillPercentage);
 
-  const itemAndPackWeight = getTotalWeightInPack() + (selectedPack?.weight || 0);
-  const maxTotalWeight = weightUnit.convert(getLiquidWeightInPack() + itemAndPackWeight);
-  const currentTotalWeight = weightUnit.convert(getLiquidWeightInPack() * fillPercentage + itemAndPackWeight)
+  const itemAndPackWeight = totalWeight + (selectedPack?.weight || 0);
+  const maxTotalWeight = weightUnit.convert(totalLiquidWeight + itemAndPackWeight);
+  const currentTotalWeight = weightUnit.convert(totalLiquidWeight * fillPercentage + itemAndPackWeight)
 
   return (
     <Surface style={styles.container} >

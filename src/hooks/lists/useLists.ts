@@ -1,6 +1,4 @@
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
-import { overWriteWithList } from "../../redux/inventorySlice";
-import { setSelectedPack } from "../../redux/packsSlice";
 import { confirmDelete } from "../../utils";
 import {
   createNewList as createNewListAction,
@@ -18,24 +16,25 @@ export default function useLists(): ListHook {
   const dispatch = useDispatch();
   const { lists } = useSelector(state => state.lists);
   const { inventory } = useSelector(state => state.inventory);
-  const { packs, selectedPack } = useSelector(state => state.packs);
+  const packs = useSelector(state => state.packs.packs);
+  const selectedPack = useSelector(state => state.myPack.selectedPack)
 
   function savePackAsList(listName: string): void {
-    const itemsInPack = inventory.filter(item => item.inPack);
-    const pack = packs.find(p => p.id === selectedPack) || null;
+    // const itemsInPack = inventory.filter(item => item.qty > 0);
+    // const pack = packs.find(p => p.id === selectedPack) || null;
 
-    const newList: TripListFormData = {
-      name: listName,
-      pack,
-      items: itemsInPack
-    };
+    // const newList: TripListFormData = {
+    //   name: listName,
+    //   pack,
+    //   items: itemsInPack
+    // };
 
-    dispatch(createNewListAction({ list: newList }));
+    // dispatch(createNewListAction({ list: newList }));
   };
 
   function loadList(list: TripListData): void {
-    dispatch(overWriteWithList({ list }));
-    dispatch(setSelectedPack({ id: list.pack?.id || null }));
+    // dispatch(overWriteWithList({ list }));
+    // dispatch(setSelectedPack({ id: list.pack?.id || null }));
   };
 
   function deleteList(listId: string, callbackFn?: () => void): void {
