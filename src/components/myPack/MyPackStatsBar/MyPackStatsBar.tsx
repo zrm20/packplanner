@@ -3,7 +3,7 @@ import { View, ViewStyle } from "react-native";
 import { Surface, Text } from "react-native-paper";
 
 import { useInventory, usePacks, useSettings } from "../../../hooks";
-import { getTotalWeight } from "../../../utils/inventoryUtils/inventoryUtils";
+import { getTotalWeight, getTotalLiquidWeight } from "../../../utils/inventoryUtils/inventoryUtils";
 import useStyles from "./MyPackStatsBar.styles";
 
 interface MyPackStatsBarProps {
@@ -25,7 +25,7 @@ export default function MyPackStatsBar(props: MyPackStatsBarProps): JSX.Element 
   // weight totals in kg
   const baseWeight: number = packWeight + baseWeightInPack;
   const totalWeightKg: number = packWeight + totalItemWeightInPack;
-  const totalWeightWithLiquid: number = totalWeightKg + getTotalWeight(itemsInPack)
+  const totalWeightWithLiquid: number = totalWeightKg + getTotalLiquidWeight(itemsInPack)
 
   // converted totals to the current weight unit
   const convertedBaseWeight = Math.round(weightUnit.convert(baseWeight) * 100) / 100;
