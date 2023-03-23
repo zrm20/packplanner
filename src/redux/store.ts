@@ -10,6 +10,7 @@ import categoriesReducer from "./categoriesSlice";
 import userReducer from "./userSlice";
 import listReducer from "./listSlice";
 import myPackReducer from "./myPackSlice";
+import alertReducer from "./alertSlice";
 
 const persistConfig = {
   key: 'root',
@@ -26,6 +27,7 @@ const rootReducer = combineReducers(
     categories: categoriesReducer,
     user: userReducer,
     lists: listReducer,
+    alert: alertReducer
   }
 );
 

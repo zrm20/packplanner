@@ -191,4 +191,19 @@ interface ListSliceState {
   lists: TripListData[]
 };
 
+interface AlertNotification {
+  type: "info" | "warning" | "error";
+  message: string;
+  title?: string;
+  code?: string;
+  duration?: number;
+  icon?: string;
+  buttonText?: string;
+  action?(): void;
+}
+
+interface AlertSliceState {
+  alert: AlertNotification | null
+};
+
 declare module "*.png";
