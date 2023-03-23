@@ -46,7 +46,6 @@ export default function useSubscribeToFirestore() {
             ...doc.data() as ItemDocument,
             id: doc.id
           };
-          console.log(item);
           inventory.push(item);
         });
 
