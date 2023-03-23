@@ -2,9 +2,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
-import { useCategories } from "../../../hooks";
+import { useCategories, useDeleteCategory } from "../../../hooks";
 
 import { CategoriesStackParamList } from "../../../navigation/navigation.types";
+import { confirmDelete } from "../../../utils";
 import { SafeAreaScreen } from "../../ui";
 import CategoryForm from "../CategoryForm/CategoryForm";
 import useStyles from "./EditCategoryScreen.styles";
@@ -16,6 +17,7 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
   const { categoryId } = props.route.params;
   const { goBack } = props.navigation;
   const { getCategoryById } = useCategories();
+  const deleteCategory = useDeleteCategory(categoryId);
 
   const category = getCategoryById(categoryId);
 
@@ -35,7 +37,11 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
   };
 
   function handleDelete(): void {
-    category?.delete(goBack);
+    confirmDelete(
+      deleteCategory,
+      "This will permanently delete this category. All items assigned to this category will be set to \"Misc\"",
+      () => props.navigation.navigate("CategoriesHome")
+    );
   };
 
   return (

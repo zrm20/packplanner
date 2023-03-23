@@ -125,7 +125,6 @@ interface CategoryData extends CategoryDocument {
 
 interface Category extends CategoryData {
   baseFields: CategoryData
-  delete(callback?: Function): void,
   update(newValues: CategoryFormData, callback?: Function): void;
 };
 

@@ -39,20 +39,6 @@ export default function useCategories(): CategoryHook {
         if (callback) {
           callback();
         };
-      },
-      delete(callback?) {
-        confirmDelete(
-          async () => {
-            try {
-              await deleteDoc(docRef);
-              // TODO update item categories
-            } catch (err) {
-              console.log(err) // TODO Better error handling
-            }
-          },
-          `Do you want to permanently delete the "${category.label}" category? All items in this category will be reset to Misc`,
-          callback
-        );
       }
     }
   };
