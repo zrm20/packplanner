@@ -7,6 +7,7 @@ import { setPacks } from "../../redux/packsSlice";
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import { setInventory } from "../../redux/inventorySlice";
 import { setCategories } from "../../redux/categoriesSlice";
+import { setLists } from "../../redux/listSlice";
 
 export default function useSubscribeToFirestore() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ export default function useSubscribeToFirestore() {
   const packsCollection = collection(db, "packs");
   const inventoryCollection = collection(db, "items");
   const categoriesCollection = collection(db, "categories");
+  const listsCollection = collection(db, "lists");
 
   // subscribe to packs collection
   useEffect(() => {
@@ -82,4 +84,27 @@ export default function useSubscribeToFirestore() {
       return unsubscribe;
     }
   }, [user]);
+
+  // subscribe to lists
+  useEffect(() => {
+    if (user?.uid) {
+      const listsQuery = query(listsCollection, where("uid", "==", user.uid));
+
+      const unsubscribe = onSnapshot(listsQuery, (snapshot) => {
+        const lists: TripListData[] = [];
+        snapshot.forEach(doc => {
+          const list: TripListData = {
+            ...doc.data() as TripListDocument,
+            id: doc.id,
+          };
+          lists.push(list);
+        });
+
+        dispatch(setLists({ lists }))
+      });
+
+      return unsubscribe;
+    }
+  }, [user]);
+
 };

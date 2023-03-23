@@ -6,6 +6,7 @@ type AddToPackPayload = PayloadAction<{ itemId: string, qty?: number }>;
 type SetItemQtyPayload = PayloadAction<{ itemId: string, qty: number }>;
 type ToggleIsPackedPayload = PayloadAction<{ itemId: string }>;
 type RemoveFromPackPayload = PayloadAction<{ itemId: string }>;
+type LoadFromListPayload = PayloadAction<{ list: TripListData }>;
 
 const initialState: MyPackSliceState = {
   selectedPack: null,
@@ -69,6 +70,10 @@ const myPackSlice = createSlice(
         AsyncStorage.clear();
         state.itemsInPack = [];
         state.selectedPack = null;
+      },
+      loadFromList(state, action: LoadFromListPayload) {
+        state.itemsInPack = action.payload.list.myPackState.itemsInPack;
+        state.selectedPack = action.payload.list.myPackState.selectedPack;
       }
     }
   }
@@ -83,5 +88,6 @@ export const {
   toggleIsPacked,
   emptyPack,
   removeFromPack,
-  clearMyPack
+  clearMyPack,
+  loadFromList
 } = myPackSlice.actions;

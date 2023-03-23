@@ -36,7 +36,7 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
           renderItem={({ item }) => (
             <List.Item
               title={item.name}
-              description={`${item.items.length} items`}
+              description={`${item.myPackState.itemsInPack.length} items`}
               right={props => (
                 <>
                   <IconButton icon="delete" onPress={() => handleDeleteList(item.id)} />

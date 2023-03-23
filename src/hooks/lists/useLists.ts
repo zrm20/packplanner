@@ -1,54 +1,59 @@
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { loadFromList } from "../../redux/myPackSlice";
 import { confirmDelete } from "../../utils";
-import {
-  createNewList as createNewListAction,
-  deleteList as deleteListAction
-} from "../../redux/listSlice";
 
 interface ListHook {
-  savePackAsList(listName: string): void;
+  savePackAsList(listName: string): Promise<void>;
   loadList(list: TripListData): void;
   deleteList(listId: string, callbackFn?: () => void): void;
   lists: TripListData[];
 };
 
 export default function useLists(): ListHook {
+  const lists = useSelector(state => state.lists.lists);
+  const myPackState = useSelector(state => state.myPack);
+  const user = useSelector(state => state.user.user);
   const dispatch = useDispatch();
-  const { lists } = useSelector(state => state.lists);
-  const { inventory } = useSelector(state => state.inventory);
-  const packs = useSelector(state => state.packs.packs);
-  const selectedPack = useSelector(state => state.myPack.selectedPack)
+  const listsCollection = collection(db, "lists");
 
-  function savePackAsList(listName: string): void {
-    // const itemsInPack = inventory.filter(item => item.qty > 0);
-    // const pack = packs.find(p => p.id === selectedPack) || null;
+  async function savePackAsList(listName: string): Promise<void> {
+    const newDoc: TripListDocument = {
+      name: listName,
+      uid: user!.uid,
+      myPackState
+    };
 
-    // const newList: TripListFormData = {
-    //   name: listName,
-    //   pack,
-    //   items: itemsInPack
-    // };
-
-    // dispatch(createNewListAction({ list: newList }));
+    try {
+      await addDoc(listsCollection, newDoc);
+    } catch (err) {
+      console.log(err); // TODO Better error handling
+    }
   };
 
   function loadList(list: TripListData): void {
-    // dispatch(overWriteWithList({ list }));
-    // dispatch(setSelectedPack({ id: list.pack?.id || null }));
+    dispatch(loadFromList({ list }))
   };
 
-  function deleteList(listId: string, callbackFn?: () => void): void {
-    confirmDelete(
-      () => dispatch(deleteListAction({ listId })),
-      "Do you want to permanently delete this list?",
-      callbackFn
-    );
+  async function deleteList(listId: string, callbackFn?: () => void): Promise<void> {
+    const listRef = doc(listsCollection, listId);
+
+    try {
+      confirmDelete(
+        async () => await deleteDoc(listRef),
+        "Do you want to permanently delete this list?",
+        callbackFn
+      )
+    } catch (err) {
+      console.log(err) // TODO improve error handling
+    };
   };
 
   return {
+    lists,
     savePackAsList,
     loadList,
-    deleteList,
-    lists
+    deleteList
   };
 };

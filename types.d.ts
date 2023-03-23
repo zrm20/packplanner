@@ -176,11 +176,14 @@ interface LoginFormData {
 
 interface TripListFormData {
   name: string;
-  pack: PackData | null;
-  items: ItemData[];
+  myPackState: MyPackSliceState;
 };
 
-interface TripListData extends TripListFormData {
+interface TripListDocument extends TripListFormData {
+  uid: string;
+}
+
+interface TripListData extends TripListDocument {
   id: string;
 }
 
