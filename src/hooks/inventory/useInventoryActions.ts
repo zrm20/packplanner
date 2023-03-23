@@ -26,8 +26,9 @@ export default function useInventoryActions() {
       } catch (err) {
         console.log(err)
       }
-    }
-    , [user]);
+    },
+    [user]);
+
 
   function emptyPack(): void {
     confirmDelete(

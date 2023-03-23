@@ -4,6 +4,7 @@ type SetSelectedPackPayload = PayloadAction<{ packId: string | null }>;
 type AddToPackPayload = PayloadAction<{ itemId: string, qty?: number }>;
 type SetItemQtyPayload = PayloadAction<{ itemId: string, qty: number }>;
 type ToggleIsPackedPayload = PayloadAction<{ itemId: string }>;
+type RemoveFromPackPayload = PayloadAction<{ itemId: string }>;
 
 const initialState: MyPackSliceState = {
   selectedPack: null,
@@ -26,6 +27,11 @@ const myPackSlice = createSlice(
         const { itemId, qty = 1 } = action.payload;
 
         state.itemsInPack.push({ id: itemId, qty, isPacked: false })
+      },
+      removeFromPack(state, action: RemoveFromPackPayload) {
+        const { itemId } = action.payload;
+
+        state.itemsInPack = state.itemsInPack.filter(item => item.id !== itemId);
       },
       setItemQty(state, action: SetItemQtyPayload) {
         const { itemId, qty } = action.payload;
@@ -63,4 +69,11 @@ const myPackSlice = createSlice(
 
 export default myPackSlice.reducer;
 
-export const { setSelectedPack, addToPack, setItemQty, toggleIsPacked, emptyPack } = myPackSlice.actions;
+export const {
+  setSelectedPack,
+  addToPack,
+  setItemQty,
+  toggleIsPacked,
+  emptyPack,
+  removeFromPack
+} = myPackSlice.actions;

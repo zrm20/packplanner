@@ -14,12 +14,13 @@ interface InventoryHook {
 
 export default function useInventory(): InventoryHook {
   const items = useSelector(state => state.inventory.inventory);
+  const idsInPack = useSelector(state => state.myPack.itemsInPack);
   const categories = useSelector(state => state.categories.categories);
   const createItem = useCreateItem();
 
 
-  const inventory: Item[] = items.map(createItem);
-  const itemsInPack: Item[] = useMemo(() => inventory.filter(item => item.qty > 0), [inventory]);
+  const inventory: Item[] = useMemo(() => items.map(createItem), [items, idsInPack]);
+  const itemsInPack: Item[] = useMemo(() => inventory.filter(item => item.qty > 0), [inventory, idsInPack]);
   const waterContainersInPack: Item[] =
     useMemo(() => itemsInPack.filter(item => item.liquidCapacity && item.liquidCapacity > 0), [itemsInPack]);
   const baseWeightItemsInPack = useMemo(() => itemsInPack.filter(item => !item.category.isBaseWeightExempt), [itemsInPack, categories])

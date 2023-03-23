@@ -6,8 +6,11 @@ import { confirmDelete } from "../../utils";
 import {
   setItemQty,
   toggleIsPacked as toggleIsPackedAction,
-  addToPack as addToPackAction
+  addToPack as addToPackAction,
+  removeFromPack as removeFromPackAction
 } from "../../redux/myPackSlice";
+import { deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 /*
   This hook returns a function used to construct a complex Item object
@@ -16,15 +19,18 @@ import {
   properties attached to it.
 */
 
+
 export default function useConstructItem() {
   const dispatch = useDispatch();
   const myPackItems = useSelector(state => state.myPack.itemsInPack);
-  const { getCategoryById, miscCategory, categories } = useCategories();
+  const { getCategoryById, miscCategory } = useCategories();
   const { navigate } = useNavigation();
   const { weightUnit, liquidUnit } = useSettings();
 
   function constructItem(item: ItemData): Item {
+    const docRef = doc(db, "items", item.id);
     const packedItem = myPackItems.find(packedItem => packedItem.id === item.id);
+
     return {
       // item properties
       ...item,
@@ -44,15 +50,19 @@ export default function useConstructItem() {
       openEdit() {
         navigate('Locker', { screen: 'EditItem', params: { item: item.id } })
       },
-      update(newValues, callback) {
-        () => { };
+      async update(newValues: ItemFormData, callback: () => void) {
+        await updateDoc(docRef, { ...newValues });
+
         if (callback) {
           callback();
         };
       },
       delete(callback) {
         confirmDelete(
-          () => { },
+          async () => {
+            await deleteDoc(docRef);
+            dispatch(removeFromPackAction({ itemId: item.id }));
+          },
           `Do you want to permanently delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
           callback
         );
