@@ -10,7 +10,7 @@ const inventoryFormSchema = Yup.object(
       .min(0, "Negative numbers not allowed"),
     weight: Yup.number()
       .required("Weight is required")
-      .min(.1, "Must be a positive number"),
+      .positive("Must be a positive number"),
     category: Yup.string() // uses a Picker input, little validation required
       .required("Category is required")
   }
