@@ -48,7 +48,12 @@ export default function useCreatePack() {
       },
       delete(callback) {
         confirmDelete(
-          () => deletePack(pack.id),
+          async () => {
+            await deletePack(pack.id);
+            if (pack.id === selectedPackId) {
+              dispatch(setSelectedPack({ packId: null }))
+            }
+          },
           `Do you want to permanently delete ${pack.brand} ${pack.model}?`,
           callback
         )
