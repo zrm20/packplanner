@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import { clearUser, setError, setIsLoading, setUser } from "../../redux/userSlice";
 import { auth as authInstance } from "../../config/firebase";
 import { authErrorExtractor } from "../../utils";
+import { clearMyPack } from "../../redux/myPackSlice";
 
 export default function useUser() {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ export default function useUser() {
       .then(() => {
         dispatch(clearUser());
         dispatch(setIsLoading(false));
+        dispatch(clearMyPack());
       })
       .catch(err => {
         const errorMessage = authErrorExtractor(err);

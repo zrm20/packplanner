@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type SetSelectedPackPayload = PayloadAction<{ packId: string | null }>;
@@ -62,6 +63,12 @@ const myPackSlice = createSlice(
       },
       emptyPack(state) {
         state.itemsInPack = [];
+      },
+      clearMyPack(state) {
+        console.log('Clearing')
+        AsyncStorage.clear();
+        state.itemsInPack = [];
+        state.selectedPack = null;
       }
     }
   }
@@ -75,5 +82,6 @@ export const {
   setItemQty,
   toggleIsPacked,
   emptyPack,
-  removeFromPack
+  removeFromPack,
+  clearMyPack
 } = myPackSlice.actions;
