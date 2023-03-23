@@ -19,8 +19,8 @@ export default function useInventory(): InventoryHook {
   const createItem = useCreateItem();
 
 
-  const inventory: Item[] = useMemo(() => items.map(createItem), [items, idsInPack]);
-  const itemsInPack: Item[] = useMemo(() => inventory.filter(item => item.qty > 0), [inventory, idsInPack]);
+  const inventory: Item[] = useMemo(() => items.map(createItem), [items, idsInPack, categories]);
+  const itemsInPack: Item[] = useMemo(() => inventory.filter(item => item.qty > 0), [inventory]);
   const waterContainersInPack: Item[] =
     useMemo(() => itemsInPack.filter(item => item.liquidCapacity && item.liquidCapacity > 0), [itemsInPack]);
   const baseWeightItemsInPack = useMemo(() => itemsInPack.filter(item => !item.category.isBaseWeightExempt), [itemsInPack, categories])

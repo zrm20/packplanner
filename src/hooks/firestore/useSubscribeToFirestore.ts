@@ -1,16 +1,19 @@
 import { useEffect } from "react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
+import camelize from "camelize-ts";
 
 import { db } from "../../config/firebase";
 import { setPacks } from "../../redux/packsSlice";
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import { setInventory } from "../../redux/inventorySlice";
+import { setCategories } from "../../redux/categoriesSlice";
 
 export default function useSubscribeToFirestore() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
   const packsCollection = collection(db, "packs");
   const inventoryCollection = collection(db, "items");
+  const categoriesCollection = collection(db, "categories");
 
   // subscribe to packs collection
   useEffect(() => {
@@ -54,5 +57,29 @@ export default function useSubscribeToFirestore() {
 
       return unsubscribe;
     }
-  }, [user])
+  }, [user]);
+
+  // subscribe to categories
+  useEffect(() => {
+    if (user?.uid) {
+      const categoriesQuery = query(categoriesCollection, where("uid", "==", user.uid));
+
+      const unsubscribe = onSnapshot(categoriesQuery, (snapshot) => {
+        const categories: CategoryData[] = [];
+        snapshot.forEach(doc => {
+          const category: CategoryData = {
+            ...doc.data() as CategoryDocument,
+            id: doc.id,
+            isStockCategory: false,
+            value: camelize<string>(doc.data().label)
+          };
+          categories.push(category);
+        });
+
+        dispatch(setCategories({ categories }))
+      });
+
+      return unsubscribe;
+    }
+  }, [user]);
 };

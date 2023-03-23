@@ -113,7 +113,11 @@ interface CategoryFormData {
   isBaseWeightExempt: boolean;
 };
 
-interface CategoryData extends CategoryFormData {
+interface CategoryDocument extends CategoryFormData {
+  uid: string;
+}
+
+interface CategoryData extends CategoryDocument {
   id: string,
   value: string;
   isStockCategory: boolean;
