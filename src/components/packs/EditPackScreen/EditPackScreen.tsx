@@ -27,15 +27,15 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
     </SafeAreaScreen>
   }
 
-  function handleSubmit(newValues: PackFormData): void {
+  async function handleSubmit(newValues: PackFormData): Promise<void> {
     if (pack) {
-      pack.update(newValues, navigation.goBack);
+      await pack.update(newValues, navigation.goBack);
     };
   };
 
-  function handleDelete(): void {
+  async function handleDelete(): Promise<void> {
     if (pack) {
-      pack.delete(navigation.goBack);
+      await pack.delete(navigation.goBack);
     }
   };
 

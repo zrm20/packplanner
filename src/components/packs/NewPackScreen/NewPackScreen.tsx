@@ -15,8 +15,8 @@ export default function NewPackScreen({ navigation }: NewPackScreenProps): JSX.E
   const styles = useStyles();
   const { addPack } = usePacks();
 
-  function handleSubmit(pack: PackData): void {
-    addPack(pack);
+  async function handleSubmit(pack: PackData): Promise<void> {
+    await addPack(pack);
     navigation.goBack();
   };
 
