@@ -4,6 +4,7 @@ import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
 import { Button, Title } from "react-native-paper";
 
 import { usePacks } from "../../../hooks";
+import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 import { LockerStackParamList } from "../../../navigation/navigation.types";
 import { extractId } from "../../../utils";
 import { CloseScreenButton, SafeAreaScreen } from "../../ui";
@@ -15,6 +16,7 @@ type EditPackScreenProps = NativeStackScreenProps<LockerStackParamList, 'EditPac
 export default function EditPackScreen({ route, navigation }: EditPackScreenProps): JSX.Element {
   const styles = useStyles();
   const { getPackById } = usePacks();
+  const { catchUnknownError} = useThrowAlert();
 
   const packId = extractId(route.params.pack);
   // need to use getPackById to receive the full pack object with methods
@@ -28,14 +30,24 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
   }
 
   async function handleSubmit(newValues: PackFormData): Promise<void> {
-    if (pack) {
-      await pack.update(newValues, navigation.goBack);
-    };
+    try {
+      if (pack) {
+        await pack.update(newValues);
+        navigation.goBack();
+      };
+    } catch (err) {
+      catchUnknownError(err, "Failed to update pack. Please try again.")
+    }
   };
 
   async function handleDelete(): Promise<void> {
-    if (pack) {
-      await pack.delete(navigation.goBack);
+    try {
+      if (pack) {
+        await pack.delete();
+        navigation.goBack()
+      }
+    } catch (err) {
+      catchUnknownError(err, "Failed to delete pack. Please try again");
     }
   };
 

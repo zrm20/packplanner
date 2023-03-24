@@ -1,8 +1,7 @@
-import { useSelector, useDispatch } from "../../redux/reduxHooks";
+import { useSelector } from "../../redux/reduxHooks";
 import useCreatePack from "./useCreatePack";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../config/firebase";
-import { Alert } from "react-native";
 
 interface PackHook {
   packsSlice: PacksSliceState,
@@ -15,7 +14,7 @@ interface PackHook {
 export default function usePacks(): PackHook {
   const packsSlice = useSelector(state => state.packs);
   const selectedPackId = useSelector(state => state.myPack.selectedPack)
-  const user = useSelector(state => state.user.user)
+  const user = useSelector(state => state.user.user);
   const createPack = useCreatePack();
   const packsCollection = collection(db, "packs");
 
@@ -35,12 +34,7 @@ export default function usePacks(): PackHook {
       ...pack,
       uid: user!.uid
     };
-    try {
-      await addDoc(packsCollection, newPackDoc);
-    } catch (err) {
-      Alert.alert("Error", "See console"); // TODO Improve error
-      console.log(err)
-    };
+    await addDoc(packsCollection, newPackDoc);
   };
 
   return { packsSlice, packs, selectedPack, getPackById, addPack };

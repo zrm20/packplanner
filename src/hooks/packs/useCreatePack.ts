@@ -46,8 +46,8 @@ export default function useCreatePack() {
       openEdit() {
         navigate("Locker", { screen: "EditPack", params: { pack: pack.id } })
       },
-      delete(callback) {
-        confirmDelete(
+      async delete() {
+        await confirmDelete(
           async () => {
             await deletePack(pack.id);
             if (pack.id === selectedPackId) {
@@ -55,14 +55,10 @@ export default function useCreatePack() {
             }
           },
           `Do you want to permanently delete ${pack.brand} ${pack.model}?`,
-          callback
         )
       },
-      async update(newValues, callback) {
+      async update(newValues) {
         await updatePack(pack.id, newValues);
-        if (callback) {
-          callback();
-        }
       },
       getWeight() {
         const convertedValue = weightUnit.convert(pack.weight);

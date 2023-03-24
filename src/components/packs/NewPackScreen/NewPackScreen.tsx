@@ -8,16 +8,22 @@ import { CloseScreenButton, SafeAreaScreen } from "../../ui";
 import { usePacks } from "../../../hooks";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./NewPackScreen.styles";
+import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
 type NewPackScreenProps = NativeStackScreenProps<LockerStackParamList, 'NewPack'>;
 
 export default function NewPackScreen({ navigation }: NewPackScreenProps): JSX.Element {
   const styles = useStyles();
   const { addPack } = usePacks();
+  const { catchUnknownError } = useThrowAlert();
 
   async function handleSubmit(pack: PackData): Promise<void> {
-    await addPack(pack);
-    navigation.goBack();
+    try {
+      await addPack(pack);
+      navigation.goBack();
+    } catch (err) {
+      catchUnknownError(err, "Failed to add pack, please try again");
+    }
   };
 
   return (
