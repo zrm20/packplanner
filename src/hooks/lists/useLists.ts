@@ -25,29 +25,20 @@ export default function useLists(): ListHook {
       myPackState
     };
 
-    try {
-      await addDoc(listsCollection, newDoc);
-    } catch (err) {
-      console.log(err); // TODO Better error handling
-    }
+    await addDoc(listsCollection, newDoc);
   };
 
   function loadList(list: TripListData): void {
     dispatch(loadFromList({ list }))
   };
 
-  async function deleteList(listId: string, callbackFn?: () => void): Promise<void> {
+  async function deleteList(listId: string): Promise<void> {
     const listRef = doc(listsCollection, listId);
 
-    try {
-      confirmDelete(
-        async () => await deleteDoc(listRef),
-        "Do you want to permanently delete this list?",
-        callbackFn
-      )
-    } catch (err) {
-      console.log(err) // TODO improve error handling
-    };
+    await confirmDelete(
+      async () => await deleteDoc(listRef),
+      "Do you want to permanently delete this list?",
+    )
   };
 
   return {
