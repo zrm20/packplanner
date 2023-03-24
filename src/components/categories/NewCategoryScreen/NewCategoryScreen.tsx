@@ -7,6 +7,7 @@ import { SafeAreaScreen } from "../../ui";
 import { useCategories } from "../../../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CategoriesStackParamList } from "../../../navigation/navigation.types";
+import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
 type NewCategoryScreenProps = NativeStackScreenProps<CategoriesStackParamList, "NewCategory">;
 
@@ -14,9 +15,14 @@ export default function NewCategoryScreen(props: NewCategoryScreenProps): JSX.El
   const styles = useStyles();
   const { navigation } = props;
   const { createNewCategory } = useCategories();
+  const { catchUnknownError } = useThrowAlert();
 
-  function handleSubmit(values: CategoryFormData): void {
-    createNewCategory(values, navigation.goBack);
+  async function handleSubmit(values: CategoryFormData): Promise<void> {
+    try {
+      await createNewCategory(values, navigation.goBack);
+    } catch (err) {
+      catchUnknownError(err, "Failed to add category. Please try again")
+    }
   };
 
   return (
