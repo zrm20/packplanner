@@ -3,6 +3,7 @@ import React from "react";
 import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { useCategories, useDeleteCategory } from "../../../hooks";
+import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
 import { CategoriesStackParamList } from "../../../navigation/navigation.types";
 import { confirmDelete } from "../../../utils";
@@ -18,6 +19,7 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
   const { goBack } = props.navigation;
   const { getCategoryById } = useCategories();
   const deleteCategory = useDeleteCategory(categoryId);
+  const { catchUnknownError } = useThrowAlert();
 
   const category = getCategoryById(categoryId);
 
@@ -32,16 +34,25 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
     )
   };
 
-  function handleSubmit(newValues: CategoryFormData): void {
-    category?.update(newValues, goBack);
+  async function handleSubmit(newValues: CategoryFormData): Promise<void> {
+    try {
+      await category?.update(newValues);
+      goBack();
+    } catch (err) {
+      catchUnknownError(err, "Failed to update category. Please try again.")
+    }
   };
 
-  function handleDelete(): void {
-    confirmDelete(
-      deleteCategory,
-      "This will permanently delete this category. All items assigned to this category will be set to \"Misc\"",
-      () => props.navigation.navigate("CategoriesHome")
-    );
+  async function handleDelete(): Promise<void> {
+    try {
+      confirmDelete(
+        deleteCategory,
+        "This will permanently delete this category. All items assigned to this category will be set to \"Misc\"",
+        () => props.navigation.navigate("CategoriesHome")
+      );
+    } catch (err) {
+      catchUnknownError(err, "Failed to delete category. Please try again.")
+    }
   };
 
   return (

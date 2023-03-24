@@ -1,7 +1,6 @@
 import { collection, doc, writeBatch } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { useSelector } from "../../redux/reduxHooks";
-import { confirmDelete } from "../../utils";
 
 export default function useDeleteCategory(id: string) {
   const itemsWithCategory = useSelector(state => {
@@ -19,11 +18,7 @@ export default function useDeleteCategory(id: string) {
 
     batch.delete(categoryRef);
 
-    try {
-      await batch.commit();
-    } catch (err) {
-      console.log(err); // TODO Better error handling
-    };
+    await batch.commit();
   };
 
   return deleteCategory;

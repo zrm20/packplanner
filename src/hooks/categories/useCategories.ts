@@ -29,16 +29,8 @@ export default function useCategories(): CategoryHook {
         ...category
       },
 
-      async update(newValues, callback?) {
-        try {
-          await updateDoc(docRef, { ...newValues });
-        } catch (err) {
-          console.log(err) // TODO Better error handling
-        }
-
-        if (callback) {
-          callback();
-        };
+      async update(newValues) {
+        await updateDoc(docRef, { ...newValues });
       }
     }
   };
@@ -50,20 +42,13 @@ export default function useCategories(): CategoryHook {
     return categories.find(category => category.id === id) || null;
   };
 
-  async function createNewCategory(newCategory: CategoryFormData, callback?: Function): Promise<void> {
+  async function createNewCategory(newCategory: CategoryFormData): Promise<void> {
     const newDoc: CategoryDocument = {
       ...newCategory,
       uid: user!.uid
     }
-    try {
-      await addDoc(categoriesCollection, newDoc);
-    } catch (err) {
-      console.log(err) // TODO add better error handling
-    }
 
-    if (callback) {
-      callback();
-    };
+    await addDoc(categoriesCollection, newDoc);;
   };
 
   return {
