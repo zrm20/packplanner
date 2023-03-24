@@ -15,7 +15,7 @@ export default function useThrowAlert() {
 
   function catchUnknownError(err: unknown, altMessage?: string): void {
     if(err instanceof Error) {
-      throwAlert(err.message)
+      throwAlert(err.message + "\n" + altMessage)
     } else {
       throwAlert(altMessage || "Something went wrong")
     };
