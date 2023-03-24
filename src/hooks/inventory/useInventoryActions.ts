@@ -19,13 +19,9 @@ export default function useInventoryActions() {
     async function (newItem: ItemFormData): Promise<void> {
       const newItemDoc: ItemDocument = {
         ...newItem,
-        uid: user!.uid
+        uid: ""
       }
-      try {
-        await addDoc(itemsCollection, newItemDoc);
-      } catch (err) {
-        console.log(err)
-      }
+      await addDoc(itemsCollection, newItemDoc)
     },
     [user]);
 

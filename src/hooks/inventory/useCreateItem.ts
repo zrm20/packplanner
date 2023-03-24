@@ -9,7 +9,7 @@ import {
   addToPack as addToPackAction,
   removeFromPack as removeFromPackAction
 } from "../../redux/myPackSlice";
-import { deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 /*
@@ -50,21 +50,16 @@ export default function useConstructItem() {
       openEdit() {
         navigate('Locker', { screen: 'EditItem', params: { item: item.id } })
       },
-      async update(newValues: ItemFormData, callback: () => void) {
+      async update(newValues: ItemFormData) {
         await updateDoc(docRef, { ...newValues });
-
-        if (callback) {
-          callback();
-        };
       },
-      delete(callback) {
-        confirmDelete(
+      async delete() {
+        await confirmDelete(
           async () => {
             await deleteDoc(docRef);
             dispatch(removeFromPackAction({ itemId: item.id }));
           },
           `Do you want to permanently delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
-          callback
         );
       },
       addToPack() {

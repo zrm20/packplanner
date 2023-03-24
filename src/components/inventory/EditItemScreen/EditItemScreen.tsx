@@ -10,12 +10,14 @@ import { extractId } from "../../../utils";
 import InventoryForm from "../InventoryForm/InventoryForm";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LockerStackParamList } from "../../../navigation/navigation.types";
+import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
 type EditItemScreenProps = NativeStackScreenProps<LockerStackParamList, 'EditItem'>;
 
 export default function EditItemScreen({ route, navigation }: EditItemScreenProps): JSX.Element {
   const styles = useStyles();
   const { getItemById } = useInventory();
+  const { catchUnknownError } = useThrowAlert();
 
   const itemId = extractId(route.params.item);
   const item = getItemById(itemId);
@@ -28,13 +30,23 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
   };
 
   async function handleSubmit(newValues: ItemFormData): Promise<void> {
-    await item!.update(newValues, () => navigation.navigate('Inventory'));
+    try {
+      await item!.update(newValues);
+      navigation.navigate('Inventory');
+    } catch (err) {
+      catchUnknownError(err, "Failed to update item. Please try again.")
+    };
   };
 
   async function handleDelete(): Promise<void> {
-    if (item) {
-      item.delete(navigation.goBack)
-    }
+    try {
+      if (item) {
+        await item.delete();
+        navigation.goBack();
+      }
+    } catch(err) {
+      catchUnknownError(err, "Failed to delete item. Please try again.");
+    };
   };
 
   return (
