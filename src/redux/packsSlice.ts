@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: PacksSliceState = {
-  packs: []
+  packs: [],
+  isLoading: false
 };
 
 const packsSlice = createSlice(
@@ -11,6 +12,9 @@ const packsSlice = createSlice(
     reducers: {
       setPacks(state, action: PayloadAction<{ packs: PackData[] }>) {
         state.packs = action.payload.packs;
+      },
+      setIsLoading(state, action: PayloadAction<boolean>) {
+        state.isLoading = action.payload;
       }
     }
   }
@@ -18,4 +22,4 @@ const packsSlice = createSlice(
 
 export default packsSlice.reducer;
 
-export const { setPacks } = packsSlice.actions;
+export const { setPacks, setIsLoading } = packsSlice.actions;

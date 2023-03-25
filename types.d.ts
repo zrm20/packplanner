@@ -28,7 +28,8 @@ interface PackModel extends PackData {
 
 // used in the redux store
 interface PacksSliceState {
-  packs: PackData[],
+  packs: PackData[];
+  isLoading: boolean;
 };
 
 /* --INVENTORY TYPES-- */
