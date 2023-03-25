@@ -16,6 +16,7 @@ export default function useInventory() {
       }
     });
   });
+  const isLoading = useSelector(state => state.inventory.isLoading);
 
 
   const baseWeightExemptCategories = useSelector(state => (
@@ -37,6 +38,7 @@ export default function useInventory() {
   return {
     inventory,
     itemsInPack,
+    isLoading,
     getItemById,
     getBaseWeightItems
   };

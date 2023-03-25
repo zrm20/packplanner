@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: InventorySliceState = { inventory: [] };
+const initialState: InventorySliceState = { inventory: [], isLoading: false };
 
 const inventorySlice = createSlice(
   {
@@ -9,6 +9,9 @@ const inventorySlice = createSlice(
     reducers: {
       setInventory(state, action: PayloadAction<{ inventory: ItemData[] }>) {
         state.inventory = action.payload.inventory;
+      },
+      setIsLoading(state, action: PayloadAction<boolean>) {
+        state.isLoading = action.payload;
       }
     }
   }
@@ -16,4 +19,4 @@ const inventorySlice = createSlice(
 
 export default inventorySlice.reducer;
 
-export const { setInventory } = inventorySlice.actions;
+export const { setInventory, setIsLoading } = inventorySlice.actions;

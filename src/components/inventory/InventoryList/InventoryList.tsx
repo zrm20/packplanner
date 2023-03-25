@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Text, IconButton, Surface } from "react-native-paper";
+import { Text, IconButton, Surface, ActivityIndicator } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 import useStyles from "./InventoryList.styles"
@@ -10,7 +10,7 @@ import CategorizedItemList from "../CategorizedItemList/CategorizedItemList";
 export default function InventoryList(): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { inventory } = useInventory();
+  const { inventory, isLoading } = useInventory();
 
   return (
     <View style={styles.container} >
@@ -24,7 +24,11 @@ export default function InventoryList(): JSX.Element {
 
       <View style={styles.listContainer}>
         <Surface style={styles.listSurface} >
-          <CategorizedItemList data={inventory} />
+          {
+            isLoading ?
+              <ActivityIndicator /> :
+              <CategorizedItemList data={inventory} />
+          }
         </Surface>
       </View>
     </View>

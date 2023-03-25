@@ -5,7 +5,7 @@ import camelize from "camelize-ts";
 import { db } from "../../config/firebase";
 import { setPacks, setIsLoading as setPacksLoading } from "../../redux/packsSlice";
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
-import { setInventory } from "../../redux/inventorySlice";
+import { setInventory, setIsLoading as setInventoryLoading } from "../../redux/inventorySlice";
 import { setCategories } from "../../redux/categoriesSlice";
 import { setLists } from "../../redux/listSlice";
 import useThrowAlert from "../alerts/useThrowAlert";
@@ -53,6 +53,7 @@ export default function useSubscribeToFirestore() {
   // subscribe to inventory
   useEffect(() => {
     if (user?.uid) {
+      dispatch(setInventoryLoading(true));
       const inventoryQuery = query(inventoryCollection, where("uid", "==", user.uid));
 
       const unsubscribe = onSnapshot(
@@ -65,12 +66,14 @@ export default function useSubscribeToFirestore() {
               id: doc.id
             };
             inventory.push(item);
+            dispatch(setInventoryLoading(false));
           });
 
           dispatch(setInventory({ inventory }))
         },
         (err) => {
-          catchUnknownError(err, "Failed to fetch inventory")
+          catchUnknownError(err, "Failed to fetch inventory");
+          dispatch(setInventoryLoading(false));
         }
       );
 

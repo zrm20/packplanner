@@ -75,6 +75,7 @@ interface ItemModel extends Item {
 // used in the redux store
 interface InventorySliceState {
   inventory: ItemData[];
+  isLoading: boolean;
 };
 
 // myPack
