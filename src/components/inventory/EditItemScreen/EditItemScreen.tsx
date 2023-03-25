@@ -1,10 +1,9 @@
 import React from "react";
-import { TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { Button, Title } from "react-native-paper";
-import { FormikBag } from "formik";
 
 import useStyles from "./EditItemScreen.styles";
-import { CloseScreenButton, ContainedModalTitle, SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import { useInventory } from "../../../hooks";
 import { extractId } from "../../../utils";
 import InventoryForm from "../InventoryForm/InventoryForm";

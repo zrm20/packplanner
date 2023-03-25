@@ -7,7 +7,7 @@ import { usePacks } from "../../../hooks";
 import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 import { LockerStackParamList } from "../../../navigation/navigation.types";
 import { extractId } from "../../../utils";
-import { CloseScreenButton, ContainedModalTitle, SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./EditPackScreen.styles"
 
