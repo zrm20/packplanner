@@ -1,10 +1,10 @@
 import React from "react";
-import { TouchableWithoutFeedback, Keyboard } from "react-native";
+import { TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
 import { Button, Title } from "react-native-paper";
 import { FormikBag } from "formik";
 
 import useStyles from "./EditItemScreen.styles";
-import { CloseScreenButton, SafeAreaScreen } from "../../ui";
+import { CloseScreenButton, ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import { useInventory } from "../../../hooks";
 import { extractId } from "../../../utils";
 import InventoryForm from "../InventoryForm/InventoryForm";
@@ -44,16 +44,15 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
         await item.delete();
         navigation.goBack();
       }
-    } catch(err) {
+    } catch (err) {
       catchUnknownError(err, "Failed to delete item. Please try again.");
     };
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaScreen style={styles.container}>
-        <CloseScreenButton androidOnly />
-
+    <SafeAreaScreen style={styles.container}>
+      <ContainedModalTitle title="Edit Item" />
+      <ScrollView style={styles.scrollView}>
         {
           item?.baseFields &&
           <InventoryForm
@@ -63,7 +62,7 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
             onDelete={handleDelete}
           />
         }
-      </SafeAreaScreen>
-    </TouchableWithoutFeedback>
+      </ScrollView>
+    </SafeAreaScreen>
   );
 };
