@@ -19,7 +19,7 @@ export default function CategoriesStack(): JSX.Element {
       <Stack.Group
         screenOptions={
           {
-            presentation: "modal"
+            presentation: "containedModal"
           }
         }
       >

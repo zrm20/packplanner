@@ -7,7 +7,7 @@ import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
 import { CategoriesStackParamList } from "../../../navigation/navigation.types";
 import { confirmDelete } from "../../../utils";
-import { SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import CategoryForm from "../CategoryForm/CategoryForm";
 import useStyles from "./EditCategoryScreen.styles";
 
@@ -57,6 +57,7 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
 
   return (
     <SafeAreaScreen style={styles.container} >
+      <ContainedModalTitle title="Edit Custom Category" />
       <CategoryForm
         category={category}
         onSubmit={handleSubmit}

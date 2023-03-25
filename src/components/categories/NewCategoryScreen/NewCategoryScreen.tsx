@@ -1,9 +1,8 @@
 import React from "react";
-import { View } from "react-native";
 import CategoryForm from "../CategoryForm/CategoryForm";
 
 import useStyles from "./NewCategoryScreen.styles";
-import { SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import { useCategories } from "../../../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CategoriesStackParamList } from "../../../navigation/navigation.types";
@@ -19,7 +18,8 @@ export default function NewCategoryScreen(props: NewCategoryScreenProps): JSX.El
 
   async function handleSubmit(values: CategoryFormData): Promise<void> {
     try {
-      await createNewCategory(values, navigation.goBack);
+      await createNewCategory(values);
+      navigation.goBack();
     } catch (err) {
       catchUnknownError(err, "Failed to add category. Please try again")
     }
@@ -27,6 +27,7 @@ export default function NewCategoryScreen(props: NewCategoryScreenProps): JSX.El
 
   return (
     <SafeAreaScreen style={styles.container} >
+      <ContainedModalTitle title="New Custom Category" />
       <CategoryForm onSubmit={handleSubmit} />
     </SafeAreaScreen>
   );

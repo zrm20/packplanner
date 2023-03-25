@@ -3,9 +3,8 @@ import { Formik } from "formik";
 import { Alert, View } from "react-native";
 import { Divider, IconButton, Tooltip } from "react-native-paper";
 
-import { FormikBackdrop, SubmitButton, TextInput } from "../../formComponents";
+import { FormActions, FormikBackdrop, TextInput } from "../../formComponents";
 import ToggleSwitchInput from "../../formComponents/ToggleSwitchInput/ToggleSwitchInput";
-import { CloseScreenButton } from "../../ui";
 import CategoryIconPicker from "../CategoryIconPicker/CategoryIconPicker";
 import useStyles from "./CategoryForm.styles";
 import categoryFormSchema from "./CategoryForm.schema";
@@ -38,15 +37,6 @@ export default function CategoryForm(props: CategoryFormProps): JSX.Element {
       <>
         <FormikBackdrop />
         <View style={styles.container} >
-          <View style={styles.toolbar}>
-            <CloseScreenButton androidOnly />
-
-            <SubmitButton icon="content-save" mode="outlined" />
-            {
-              Boolean(props.onDelete) &&
-              <IconButton icon="delete" mode="outlined" onPress={props.onDelete} />
-            }
-          </View>
           <TextInput name="label" label="Category Name" />
 
           <View style={styles.baseWeightContainer}>
@@ -61,7 +51,11 @@ export default function CategoryForm(props: CategoryFormProps): JSX.Element {
 
           <View style={styles.iconContainer}>
             <CategoryIconPicker />
+            <Divider />
           </View>
+
+
+          <FormActions onDelete={props.onDelete} />
         </View>
       </>
     </Formik>
