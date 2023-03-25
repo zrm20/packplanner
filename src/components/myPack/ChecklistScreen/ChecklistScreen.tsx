@@ -4,7 +4,7 @@ import { Checkbox, Divider, List, Text } from "react-native-paper";
 
 import useStyles from "./ChecklistScreen.styles";
 import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
-import { useInventory } from "../../../hooks";
+import { useInventory, useItemModel } from "../../../hooks";
 import { useTheme } from "../../../theme";
 
 export default function ChecklistScreen(): JSX.Element {
@@ -12,12 +12,14 @@ export default function ChecklistScreen(): JSX.Element {
   const { colors } = useTheme()
   const { itemsInPack } = useInventory();
 
-  itemsInPack.sort((a, b) => {
+  const items = itemsInPack.map(item => useItemModel(item));
+
+  items.sort((a, b) => {
     return a.isPacked ? 1 : -1 // sort unpacked items to end
   });
 
-  const totalItems = itemsInPack.length;
-  const packedItems = itemsInPack.filter(item => item.isPacked).length
+  const totalItems = items.length;
+  const packedItems = items.filter(item => item.isPacked).length
 
   return (
     <SafeAreaScreen style={styles.container} >
@@ -26,7 +28,7 @@ export default function ChecklistScreen(): JSX.Element {
 
       <View style={styles.listContainer}>
         <FlatList
-          data={itemsInPack}
+          data={items}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <>

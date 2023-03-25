@@ -1,16 +1,21 @@
 import React, { useMemo } from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList, Text, TextStyle } from "react-native";
 
 import useStyles from "./CategorizedItemList.styles";
 import InventoryItem from "../InventoryItem/InventoryItem";
+import { useSelector } from "../../../redux/reduxHooks";
 
 interface CategorizedItemListProps {
   data: Item[];
   itemProps?: {
-    disabled?: boolean,
-    onPress?: () => void,
-    onLongPress?: () => void
+    disabled?: boolean
   }
+};
+
+function CategoryLabel(props: { id: string, style: TextStyle }): JSX.Element {
+  const category = useSelector(state => state.categories.categories.find(c => c.id === props.id))!;
+
+  return <Text style={props.style}>{category.label}</Text>
 };
 
 export default function CategorizedItemList(props: CategorizedItemListProps): JSX.Element {
@@ -18,8 +23,8 @@ export default function CategorizedItemList(props: CategorizedItemListProps): JS
   const { data } = props;
 
   const sortedInventory = data.sort((a, b) => {
-    const catA = a.category.label;
-    const catB = b.category.label;
+    const catA = a.category;
+    const catB = b.category;
 
     if (catA < catB) {
       return -1
@@ -34,13 +39,14 @@ export default function CategorizedItemList(props: CategorizedItemListProps): JS
     <FlatList
       keyExtractor={item => item.id}
       renderItem={({ item, index }) => {
-        if (item.category.id !== props.data[index - 1]?.category.id) {
+        // if category is different from the previous item, render a category label
+        if (item.category !== props.data[index - 1]?.category) {
           return <>
-            <Text style={styles.catHeader}>{item.category.label}</Text>
-            <InventoryItem item={item} onPress={item.openEdit} />
+            <CategoryLabel id={item.category} style={styles.catHeader} />
+            <InventoryItem item={item} openOnPress />
           </>
         } else {
-          return <InventoryItem item={item} onPress={item.openEdit} />
+          return <InventoryItem item={item} openOnPress />
         }
       }}
       {...props}

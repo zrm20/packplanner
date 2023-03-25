@@ -57,9 +57,10 @@ interface PackedItem {
 };
 
 // contains all of the data AND methods used for an item
-interface Item extends ItemData, PackedItem {
-  baseFields: ItemData;
-  category: Category;
+interface Item extends ItemData, PackedItem { };
+
+interface ItemModel extends Item {
+  category: CategoryData;
   addToPack(): void;
   toggleIsPacked(): void;
   openEdit(): void;

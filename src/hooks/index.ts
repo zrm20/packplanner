@@ -10,6 +10,7 @@ import useAuth from "./user/useAuth";
 import useLists from "./lists/useLists";
 import useSubscribeToFirestore from "./firestore/useSubscribeToFirestore";
 import useDeleteCategory from "./categories/useDeleteCategory";
+import useItemModel from "./inventory/useItemModel";
 
 export {
   useInventory,
@@ -23,5 +24,6 @@ export {
   useAuth,
   useLists,
   useSubscribeToFirestore,
-  useDeleteCategory
+  useDeleteCategory,
+  useItemModel
 };

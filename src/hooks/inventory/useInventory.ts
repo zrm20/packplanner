@@ -1,47 +1,43 @@
 import { useMemo } from "react";
 
 import { useSelector } from "../../redux/reduxHooks";
-import useCreateItem from "./useCreateItem";
 
-interface InventoryHook {
-  inventory: Item[];
-  itemsInPack: Item[];
-  waterContainersInPack: Item[];
-  baseWeightItemsInPack: Item[];
-  getItemById(id: string): Item | null;
-  getSortedInventory(items?: Item[]): CategoryMap[];
-};
+export default function useInventory() {
+  const inventory: Item[] = useSelector(state => {
+    const items = state.inventory.inventory;
+    const inPackItems = state.myPack.itemsInPack;
 
-export default function useInventory(): InventoryHook {
-  const items = useSelector(state => state.inventory.inventory);
-  const idsInPack = useSelector(state => state.myPack.itemsInPack);
-  const categories = useSelector(state => state.categories.categories);
-  const createItem = useCreateItem();
+    return items.map(item => {
+      const matchingItem = inPackItems.find(i => i.id === item.id);
+      return {
+        ...item,
+        qty: matchingItem?.qty || 0,
+        isPacked: matchingItem?.isPacked || false
+      }
+    });
+  });
 
 
-  const inventory: Item[] = useMemo(() => items.map(createItem), [items, idsInPack, categories]);
-  const itemsInPack: Item[] = useMemo(() => inventory.filter(item => item.qty > 0), [inventory]);
-  const waterContainersInPack: Item[] =
-    useMemo(() => itemsInPack.filter(item => item.liquidCapacity && item.liquidCapacity > 0), [itemsInPack]);
-  const baseWeightItemsInPack = useMemo(() => itemsInPack.filter(item => !item.category.isBaseWeightExempt), [itemsInPack, categories])
+  const baseWeightExemptCategories = useSelector(state => (
+    state.categories.categories
+      .filter(c => c.isBaseWeightExempt)
+      .map(c => c.id)
+  ));
 
-  function getItemById(id: string): Item | null {
+  const itemsInPack: Item[] = useMemo(() => inventory.filter(i => i.qty > 0), [inventory]);
+
+  function getItemById(id: string): ItemData | null {
     return inventory.find(item => item.id === id) || null;
   };
 
-  function getSortedInventory(items: Item[]): CategoryMap[] {
-    return categories.map(cat => ({
-      category: cat.label,
-      items: items.filter(item => item.category.id === cat.id)
-    }));
+  function getBaseWeightItems(items: Item[]): Item[] {
+    return items.filter(item => !baseWeightExemptCategories.includes(item.category))
   };
 
   return {
     inventory,
     itemsInPack,
-    waterContainersInPack,
-    baseWeightItemsInPack,
     getItemById,
-    getSortedInventory,
+    getBaseWeightItems
   };
 };

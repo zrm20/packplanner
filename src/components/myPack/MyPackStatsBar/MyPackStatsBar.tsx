@@ -14,7 +14,8 @@ export default function MyPackStatsBar(props: MyPackStatsBarProps): JSX.Element 
   const styles = useStyles();
   const { weightUnit } = useSettings();
   const { selectedPack } = usePacks();
-  const { itemsInPack, baseWeightItemsInPack } = useInventory();
+  const { itemsInPack, getBaseWeightItems } = useInventory();
+  const baseWeightItemsInPack = getBaseWeightItems(itemsInPack);
 
 
   // numbers for pack weight and item weight in kg

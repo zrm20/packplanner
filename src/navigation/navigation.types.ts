@@ -32,7 +32,7 @@ export type LockerStackParamList = {
   NewPack: undefined;
   EditPack: { pack: PackData };
   NewItem: undefined;
-  EditItem: { item: ItemData | string };
+  EditItem: { item: Item };
 };
 
 export type MyPackStackParamList = {
