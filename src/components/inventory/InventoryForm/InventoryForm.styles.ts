@@ -4,7 +4,6 @@ import { useTheme } from "../../../theme";
 
 interface Style {
   container: ViewStyle;
-  scrollView: ViewStyle;
   liquidEnableSection: ViewStyle;
   enableLiquidLabel: TextStyle;
   liquidSection: ViewStyle;
@@ -21,12 +20,6 @@ export default function useStyles() {
       container: {
         paddingHorizontal: theme.space[2],
         width: '100%',
-        flex: 1,
-        marginBottom: 25,
-      },
-      scrollView: {
-        width: '100%',
-        flex: 1,
       },
       liquidEnableSection: {
         marginBottom: theme.space[2],

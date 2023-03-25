@@ -4,6 +4,7 @@ import { useTheme } from "../../../theme";
 
 interface Style {
   container: ViewStyle;
+  scrollView: ViewStyle;
 };
 
 export default function useStyles() {
@@ -13,6 +14,11 @@ export default function useStyles() {
     {
       container: {
         backgroundColor: theme.colors.background,
+      },
+      scrollView: {
+        width: '100%',
+        flex: 1,
+        marginBottom: theme.space[1]
       }
     }
   );

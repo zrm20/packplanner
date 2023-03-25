@@ -1,8 +1,8 @@
 import React from "react";
-import { TouchableWithoutFeedback, Keyboard } from "react-native";
+import { ScrollView } from "react-native";
 
 import useStyles from "./NewItemScreen.styles";
-import { CloseScreenButton, SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import { useInventoryActions } from "../../../hooks";
 import InventoryForm from "../InventoryForm/InventoryForm";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -20,18 +20,17 @@ export default function NewItemScreen({ navigation }: NewItemScreenProps): JSX.E
     try {
       await addToInventory(newItem);
       navigation.navigate('Inventory');
-    } catch(err) {
+    } catch (err) {
       catchUnknownError(err, "Failed to add new item. Please try again.")
     }
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaScreen style={styles.container}>
-        <CloseScreenButton androidOnly />
-
+    <SafeAreaScreen style={styles.container}>
+      <ContainedModalTitle title="New Item" />
+      <ScrollView style={styles.scrollView} >
         <InventoryForm onSubmit={handleSubmit} />
-      </SafeAreaScreen>
-    </TouchableWithoutFeedback>
+      </ScrollView>
+    </SafeAreaScreen>
   );
 };
