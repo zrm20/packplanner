@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Dialog, Text, TextInput } from "react-native-paper";
 import { useLists } from "../../../hooks";
+import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
 import useStyles from "./NewListModal.styles";
 
@@ -13,11 +14,16 @@ export default function NewListModal(props: ListModalProps): JSX.Element {
   const styles = useStyles();
   const [text, setText] = useState<string>('');
   const { savePackAsList } = useLists();
+  const { catchUnknownError }= useThrowAlert();
 
-  function submitList(): void {
-    savePackAsList(text);
-    setText("");
-    props.toggleVisibility();
+  async function submitList(): Promise<void> {
+    try {
+      await savePackAsList(text);
+      setText("");
+      props.toggleVisibility();
+    } catch (err) {
+      catchUnknownError("Failed to save list. Please try again.")
+    }
   };
 
   return (
@@ -39,9 +45,7 @@ export default function NewListModal(props: ListModalProps): JSX.Element {
           mode="contained"
           disabled={!Boolean(text)}
           onPress={submitList}
-        >
-          Save
-        </Button>
+        >Save</Button>
         <Button mode="outlined" onPress={props.toggleVisibility}>Cancel</Button>
       </Dialog.Actions>
     </Dialog>

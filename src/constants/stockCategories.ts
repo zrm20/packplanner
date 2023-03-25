@@ -5,7 +5,8 @@ const stockCategories: CategoryData[] = [
     label: 'Water Containers',
     icon: 'cup-water',
     isBaseWeightExempt: false,
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '02',
@@ -13,7 +14,8 @@ const stockCategories: CategoryData[] = [
     label: 'Food',
     icon: 'food-drumstick',
     isBaseWeightExempt: true,
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '03',
@@ -21,7 +23,8 @@ const stockCategories: CategoryData[] = [
     label: 'Fuel',
     icon: 'fuel',
     isBaseWeightExempt: true,
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '04',
@@ -29,7 +32,8 @@ const stockCategories: CategoryData[] = [
     label: 'Shelter',
     icon: 'tent',
     isBaseWeightExempt: false,
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '05',
@@ -37,7 +41,8 @@ const stockCategories: CategoryData[] = [
     label: 'Clothing',
     icon: 'tshirt-crew',
     isBaseWeightExempt: false,
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '06',
@@ -45,7 +50,8 @@ const stockCategories: CategoryData[] = [
     isBaseWeightExempt: false,
     label: 'Cooking',
     icon: 'grill',
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '07',
@@ -53,7 +59,8 @@ const stockCategories: CategoryData[] = [
     label: 'Survival',
     isBaseWeightExempt: false,
     icon: 'knife-military',
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '08',
@@ -61,7 +68,8 @@ const stockCategories: CategoryData[] = [
     label: 'Navigation',
     isBaseWeightExempt: false,
     icon: 'map',
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '09',
@@ -69,7 +77,8 @@ const stockCategories: CategoryData[] = [
     label: 'Health',
     isBaseWeightExempt: false,
     icon: 'medical-bag',
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '10',
@@ -77,7 +86,8 @@ const stockCategories: CategoryData[] = [
     label: 'Electronics',
     isBaseWeightExempt: false,
     icon: 'battery-charging-100',
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   },
   {
     id: '00',
@@ -85,7 +95,8 @@ const stockCategories: CategoryData[] = [
     label: 'Misc',
     isBaseWeightExempt: false,
     icon: 'chart-bubble',
-    isStockCategory: true
+    isStockCategory: true,
+    uid: "_"
   }
 ];
 

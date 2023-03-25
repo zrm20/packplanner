@@ -10,9 +10,7 @@ import CategorizedItemList from "../CategorizedItemList/CategorizedItemList";
 export default function InventoryList(): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { getSortedInventory } = useInventory();
-
-  const sortedInventory = getSortedInventory();
+  const { inventory } = useInventory();
 
   return (
     <View style={styles.container} >
@@ -20,15 +18,13 @@ export default function InventoryList(): JSX.Element {
         <Text variant="titleLarge">Inventory</Text>
 
         <View style={styles.iconGroup}>
-          {/* <IconButton icon="cloud-download" size={14} mode="outlined" /> TODO: Hold until cloud backup feature complete */}
-          {/* <IconButton icon="tag" size={14} mode="outlined" /> TODO: Hold until category filter added */}
           <IconButton icon="plus" size={14} mode="outlined" onPress={() => navigate('Locker', { screen: 'NewItem' })} />
         </View>
       </View>
 
       <View style={styles.listContainer}>
         <Surface style={styles.listSurface} >
-          <CategorizedItemList data={sortedInventory} />
+          <CategorizedItemList data={inventory} />
         </Surface>
       </View>
     </View>

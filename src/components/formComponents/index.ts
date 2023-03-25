@@ -5,6 +5,8 @@ import SubmitButton from "./SubmitButton/SubmitButton";
 import CapacityInput from "./CapacityInput/CapacityInput";
 import PickerInput from "./PickerInput/PickerInput";
 import ToggleSwitchInput from "./ToggleSwitchInput/ToggleSwitchInput";
+import FormikBackdrop from "./FormikBackdrop/FormikBackdrop";
+import FormActions from "./FormActions/FormActions";
 
 export {
   NumberInput,
@@ -13,5 +15,7 @@ export {
   WeightInput,
   CapacityInput,
   PickerInput,
-  ToggleSwitchInput
+  ToggleSwitchInput,
+  FormikBackdrop,
+  FormActions
 };

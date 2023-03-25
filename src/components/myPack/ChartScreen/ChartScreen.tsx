@@ -1,9 +1,9 @@
 import React from "react";
 import { View } from "react-native";
-import { Divider, Text } from "react-native-paper";
+import { Divider } from "react-native-paper";
 
 import { ChartContextProvider } from "../../../hooks";
-import { CloseScreenButton, SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import CategoryPieChart from "../CategoryPieChart/CategoryPieChart";
 import useStyles from "./ChartScreen.styles";
 import CategoryChartLegend from "../CategoryChartLegend/CategoryChartLegend";
@@ -14,10 +14,7 @@ export default function ChartScreen(): JSX.Element {
 
   return (
     <SafeAreaScreen style={styles.container} >
-      <CloseScreenButton androidOnly />
-      <Text variant="headlineMedium" style={styles.title}>
-        Weight by Category
-      </Text>
+      <ContainedModalTitle title="Weight by Category" />
 
       <ChartContextProvider>
         <View style={styles.chartContainer}>

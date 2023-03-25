@@ -4,18 +4,17 @@ import { Text, View, ViewStyle } from "react-native";
 
 import { SubmitButton, TextInput } from "../../formComponents";
 import useStyles from "./RegisterForm.styles";
-import { useNavigation } from "@react-navigation/native";
 import useUser from "../../../hooks/user/useUser";
 import registerFormSchema from "./RegisterForm.schema";
 
 interface RegisterFormProps {
   style?: ViewStyle;
+  onSubmit(values: RegisterFormData): void
 };
 
 export default function RegisterForm(props: RegisterFormProps): JSX.Element {
   const styles = useStyles();
-  const { navigate } = useNavigation();
-  const { register, error } = useUser();
+  const { error } = useUser();
 
   const initialValues: RegisterFormData = {
     email: '',
@@ -23,14 +22,10 @@ export default function RegisterForm(props: RegisterFormProps): JSX.Element {
     confirmPassword: ''
   };
 
-  function handleSubmit(values: RegisterFormData) {
-    register(values, () => navigate("Settings", { screen: "SettingsHome" }));
-  };
-
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={handleSubmit}
+      onSubmit={props.onSubmit}
       validationSchema={registerFormSchema}
     >
       <View style={[styles.container, props.style]} >

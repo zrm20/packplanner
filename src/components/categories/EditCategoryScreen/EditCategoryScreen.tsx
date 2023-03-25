@@ -2,10 +2,12 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
-import { useCategories } from "../../../hooks";
+import { useCategories, useDeleteCategory } from "../../../hooks";
+import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
 import { CategoriesStackParamList } from "../../../navigation/navigation.types";
-import { SafeAreaScreen } from "../../ui";
+import { confirmDelete } from "../../../utils";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import CategoryForm from "../CategoryForm/CategoryForm";
 import useStyles from "./EditCategoryScreen.styles";
 
@@ -16,6 +18,8 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
   const { categoryId } = props.route.params;
   const { goBack } = props.navigation;
   const { getCategoryById } = useCategories();
+  const deleteCategory = useDeleteCategory(categoryId);
+  const { catchUnknownError } = useThrowAlert();
 
   const category = getCategoryById(categoryId);
 
@@ -30,16 +34,30 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
     )
   };
 
-  function handleSubmit(newValues: CategoryFormData): void {
-    category?.update(newValues, goBack);
+  async function handleSubmit(newValues: CategoryFormData): Promise<void> {
+    try {
+      await category?.update(newValues);
+      goBack();
+    } catch (err) {
+      catchUnknownError(err, "Failed to update category. Please try again.")
+    }
   };
 
-  function handleDelete(): void {
-    category?.delete(goBack);
+  async function handleDelete(): Promise<void> {
+    try {
+      confirmDelete(
+        deleteCategory, // TODO fix this async, navigation is happening before delete completes
+        "This will permanently delete this category. All items assigned to this category will be set to \"Misc\"",
+        () => props.navigation.navigate("CategoriesHome")
+      );
+    } catch (err) {
+      catchUnknownError(err, "Failed to delete category. Please try again.")
+    }
   };
 
   return (
     <SafeAreaScreen style={styles.container} >
+      <ContainedModalTitle title="Edit Custom Category" />
       <CategoryForm
         category={category}
         onSubmit={handleSubmit}

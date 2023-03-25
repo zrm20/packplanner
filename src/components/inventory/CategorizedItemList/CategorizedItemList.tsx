@@ -1,11 +1,11 @@
-import React from "react";
-import { FlatList, View, Text } from "react-native";
+import React, { useMemo } from "react";
+import { FlatList, Text } from "react-native";
 
 import useStyles from "./CategorizedItemList.styles";
 import InventoryItem from "../InventoryItem/InventoryItem";
 
 interface CategorizedItemListProps {
-  data: CategoryMap[];
+  data: Item[];
   itemProps?: {
     disabled?: boolean,
     onPress?: () => void,
@@ -15,32 +15,36 @@ interface CategorizedItemListProps {
 
 export default function CategorizedItemList(props: CategorizedItemListProps): JSX.Element {
   const styles = useStyles();
+  const { data } = props;
+
+  const sortedInventory = data.sort((a, b) => {
+    const catA = a.category.label;
+    const catB = b.category.label;
+
+    if (catA < catB) {
+      return -1
+    } else if (catA > catB) {
+      return 1
+    } else {
+      return 0
+    };
+  });
 
   return (
     <FlatList
-      keyExtractor={category => category.category}
-      renderItem={data => {
-        if (data.item.items.length > 0) {
-          return (
-            <View>
-              <Text style={styles.catHeader}>{data.item.category}</Text>
-              {
-                data.item.items.map(item => (
-                  <InventoryItem
-                    item={item}
-                    key={item.id}
-                    onPress={item.openEdit}
-                    {...props.itemProps}
-                  />
-                ))
-              }
-            </View>
-          );
+      keyExtractor={item => item.id}
+      renderItem={({ item, index }) => {
+        if (item.category.id !== props.data[index - 1]?.category.id) {
+          return <>
+            <Text style={styles.catHeader}>{item.category.label}</Text>
+            <InventoryItem item={item} onPress={item.openEdit} />
+          </>
         } else {
-          return null;
+          return <InventoryItem item={item} onPress={item.openEdit} />
         }
       }}
       {...props}
+      data={sortedInventory}
     />
   );
 };

@@ -35,7 +35,7 @@ const lightColors: AppColors = {
 
   "tertiary": brandColors.tertiary,
   "onTertiary": white,
-  "tertiaryContainer": chroma(brandColors.tertiary).brighten().hex(),
+  "tertiaryContainer": chroma(brandColors.tertiary).brighten().brighten().hex(),
   "onTertiaryContainer": chroma(brandColors.tertiary).darken().hex(),
 
   "background": secondaryScale(.95).hex(),

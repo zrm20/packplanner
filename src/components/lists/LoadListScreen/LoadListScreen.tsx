@@ -3,6 +3,7 @@ import React from "react";
 import { FlatList, View } from "react-native";
 import { IconButton, List, Text } from "react-native-paper";
 import { useLists } from "../../../hooks";
+import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 import { MyPackStackParamList } from "../../../navigation/navigation.types";
 
 import { SafeAreaScreen } from "../../ui";
@@ -14,14 +15,20 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
   const styles = useStyles();
   const { lists, loadList, deleteList } = useLists();
   const { navigation } = props;
+  const { catchUnknownError } = useThrowAlert();
 
   function handleLoadList(list: TripListData): void {
     loadList(list);
     navigation.goBack();
   };
 
-  function handleDeleteList(listId: string): void {
-    deleteList(listId, navigation.goBack);
+  async function handleDeleteList(listId: string): Promise<void> {
+    try {
+      await deleteList(listId);
+      navigation.goBack();
+    } catch (err) {
+      catchUnknownError(err, "Failed to delete list. Please try again");
+    }
   };
 
   return (
@@ -36,7 +43,7 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
           renderItem={({ item }) => (
             <List.Item
               title={item.name}
-              description={`${item.items.length} items`}
+              description={`${item.myPackState.itemsInPack.length} items`}
               right={props => (
                 <>
                   <IconButton icon="delete" onPress={() => handleDeleteList(item.id)} />

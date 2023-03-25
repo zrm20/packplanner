@@ -1,12 +1,10 @@
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
-import {
-  toggleSelectedPack,
-  deletePack as deleteAction,
-  updatePack as updateAction
-} from "../../redux/packsSlice";
 import { confirmDelete } from "../../utils";
 import { useNavigation } from "@react-navigation/native";
 import useSettings from "../settings/useSettings";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { setSelectedPack } from "../../redux/myPackSlice";
 
 /*
   This hook returns a function used to construct a complex Pack object
@@ -16,16 +14,26 @@ import useSettings from "../settings/useSettings";
 */
 
 export default function useCreatePack() {
-  const packsSlice = useSelector(state => state.packs);
+  const selectedPackId = useSelector(state => state.myPack.selectedPack);
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
   const { weightUnit } = useSettings();
 
-  function createPack(pack: PackData): Pack {
+  async function deletePack(id: string): Promise<void> {
+    await deleteDoc(doc(db, "packs", id));
+  };
+
+  async function updatePack(id: string, newValues: PackFormData): Promise<void> {
+    const docRef = doc(db, "packs", id);
+
+    await setDoc(docRef, newValues, { merge: true });
+  };
+
+  function constructPack(pack: PackData): Pack {
     return {
       // pack properties
       ...pack,
-      isSelected: pack.id === packsSlice.selectedPack,
+      isSelected: pack.id === selectedPackId,
       // base fields is used for distributing only the original field values from store
       baseFields: {
         ...pack
@@ -33,23 +41,24 @@ export default function useCreatePack() {
 
       // pack methods
       select() {
-        dispatch(toggleSelectedPack({ id: pack.id }));
+        dispatch(setSelectedPack({ packId: pack.id }));
       },
       openEdit() {
         navigate("Locker", { screen: "EditPack", params: { pack: pack.id } })
       },
-      delete(callback) {
-        confirmDelete(
-          () => dispatch(deleteAction({ id: pack.id })),
+      async delete() {
+        await confirmDelete(
+          async () => {
+            await deletePack(pack.id);
+            if (pack.id === selectedPackId) {
+              dispatch(setSelectedPack({ packId: null }))
+            }
+          },
           `Do you want to permanently delete ${pack.brand} ${pack.model}?`,
-          callback
-        );
+        )
       },
-      update(newValues, callback) {
-        dispatch(updateAction({ id: pack.id, newValues }));
-        if (callback) {
-          callback();
-        }
+      async update(newValues) {
+        await updatePack(pack.id, newValues);
       },
       getWeight() {
         const convertedValue = weightUnit.convert(pack.weight);
@@ -58,5 +67,5 @@ export default function useCreatePack() {
     }
   };
 
-  return createPack;
+  return constructPack;
 };

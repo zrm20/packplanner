@@ -1,18 +1,18 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { FAB } from "react-native-paper";
+import { IconButton, IconButtonProps } from "react-native-paper";
 
 import { isAndroid } from "../../../utils";
 import { ViewStyle } from "react-native";
 
-interface CloseScreenButtonProps {
-  position?: "left" | "right";
+export interface CloseScreenButtonProps extends Partial<IconButtonProps> {
+  icon?: "close" | "chevron-down" | "arrow-left-bold"
   androidOnly?: boolean;
   style?: ViewStyle;
 };
 
 export default function CloseScreenButton(props: CloseScreenButtonProps): JSX.Element | null {
-  const { androidOnly = false, position = "left" } = props;
+  const { androidOnly = false, icon = "close" } = props;
   const { goBack } = useNavigation();
   const deviceIsAndroid = isAndroid();
 
@@ -25,10 +25,10 @@ export default function CloseScreenButton(props: CloseScreenButtonProps): JSX.El
   };
 
   return (
-    <FAB
+    <IconButton
       onPress={goBack}
-      size="small"
-      icon="close"
+      icon={icon}
+      mode="outlined"
       {...props}
     />
   );

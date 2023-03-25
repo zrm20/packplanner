@@ -15,7 +15,7 @@ export default function LockerStack(): JSX.Element {
       <Stack.Screen name="Inventory" component={InventoryScreen} />
       <Stack.Group
         screenOptions={{
-          presentation: "modal"
+          presentation: "containedModal"
         }}
       >
         <Stack.Screen name="NewPack" component={NewPackScreen} />

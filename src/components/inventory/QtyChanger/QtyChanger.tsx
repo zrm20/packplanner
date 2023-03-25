@@ -14,15 +14,13 @@ export default function QtyChanger(props: QtyChangerProps): JSX.Element {
   const { item, size = 24 } = props;
 
   function increment(): void {
-    item.updateQty(item.qty + 1);
+    item.setQty(item.qty + 1);
   };
 
   function decrement(): void {
-    if (item.qty > 1) {
-      item.updateQty(item.qty - 1);
-    } else {
-      item.toggleInPack();
-    };
+    if (item.qty > 0) {
+      item.setQty(item.qty - 1);
+    }
   };
 
   return (

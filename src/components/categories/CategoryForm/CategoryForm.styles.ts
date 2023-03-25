@@ -6,7 +6,6 @@ interface Style {
   container: ViewStyle;
   baseWeightContainer: ViewStyle;
   iconContainer: ViewStyle;
-  toolbar: ViewStyle
 };
 
 export default function useStyles() {
@@ -25,11 +24,6 @@ export default function useStyles() {
       },
       iconContainer: {
         flex: 1,
-      },
-      toolbar: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         marginBottom: theme.space[2]
       }
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, TouchableOpacityProps, View, ViewStyle } from "react-native";
 import { Text, IconButton } from "react-native-paper";
+import { add } from "react-native-reanimated";
 
 import QtyChanger from "../QtyChanger/QtyChanger";
 import useStyles from "./InventoryItem.styles"
@@ -16,12 +17,13 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
   const {
     name,
     brand,
-    inPack,
     liquidCapacity,
     category,
-    toggleInPack,
+    qty,
     getWeight,
-    getLiquidCapacity
+    getLiquidCapacity,
+    setQty,
+    addToPack
   } = item;
 
   return (
@@ -29,12 +31,12 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
       <View style={[styles.container, props.style]}>
         <View style={styles.leftContainer}>
           {
-            inPack ?
+            qty > 0 ?
               <QtyChanger item={item} /> :
               <IconButton
                 icon="plus"
                 mode="outlined"
-                onPress={toggleInPack}
+                onPress={addToPack}
               />
           }
         </View>

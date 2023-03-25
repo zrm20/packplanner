@@ -9,21 +9,25 @@ import settingsReducer from "./settingsSlice";
 import categoriesReducer from "./categoriesSlice";
 import userReducer from "./userSlice";
 import listReducer from "./listSlice";
+import myPackReducer from "./myPackSlice";
+import alertReducer from "./alertSlice";
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ["user"]
+  whitelist: ["settings", "myPack"], // other slices will be persisted by Firebase
 };
 
 const rootReducer = combineReducers(
   {
     packs: packsReducer,
     inventory: inventoryReducer,
+    myPack: myPackReducer,
     settings: settingsReducer,
     categories: categoriesReducer,
     user: userReducer,
     lists: listReducer,
+    alert: alertReducer
   }
 );
 

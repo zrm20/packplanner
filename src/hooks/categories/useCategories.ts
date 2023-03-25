@@ -1,11 +1,7 @@
 import { useSelector, useDispatch } from "../../redux/reduxHooks";
 import { confirmDelete } from "../../utils";
-import {
-  addCategory as addCategoryAction,
-  removeCategory as removeCategoryAction,
-  updateCategory as updateCategoryAction
-} from "../../redux/categoriesSlice";
-import { updateItemsCategory } from "../../redux/inventorySlice";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 interface CategoryHook {
   categoriesSlice: CategorySliceState;
@@ -17,9 +13,14 @@ interface CategoryHook {
 
 export default function useCategories(): CategoryHook {
   const categoriesSlice = useSelector(state => state.categories);
+  const user = useSelector(state => state.user.user);
   const dispatch = useDispatch();
 
+  const categoriesCollection = collection(db, "categories");
+
   function createCategory(category: CategoryData): Category {
+    const docRef = doc(db, "categories", category.id);
+
     return {
       ...category,
 
@@ -28,22 +29,8 @@ export default function useCategories(): CategoryHook {
         ...category
       },
 
-      update(newValues, callback?) {
-        dispatch(updateCategoryAction({ newValues, id: category.id }))
-
-        if (callback) {
-          callback();
-        };
-      },
-      delete(callback?) {
-        confirmDelete(
-          () => {
-            dispatch(updateItemsCategory({ categoryId: category.id }))
-            dispatch(removeCategoryAction({ id: category.id }));
-          },
-          `Do you want to permanently delete the "${category.label}" category? All items in this category will be reset to Misc`,
-          callback
-        );
+      async update(newValues) {
+        await updateDoc(docRef, { ...newValues });
       }
     }
   };
@@ -55,12 +42,13 @@ export default function useCategories(): CategoryHook {
     return categories.find(category => category.id === id) || null;
   };
 
-  function createNewCategory(newCategory: CategoryFormData, callback?: Function): void {
-    dispatch(addCategoryAction({ newCategory }));
+  async function createNewCategory(newCategory: CategoryFormData): Promise<void> {
+    const newDoc: CategoryDocument = {
+      ...newCategory,
+      uid: user!.uid
+    }
 
-    if (callback) {
-      callback();
-    };
+    await addDoc(categoriesCollection, newDoc);
   };
 
   return {

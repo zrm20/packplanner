@@ -1,55 +1,50 @@
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
-import { overWriteWithList } from "../../redux/inventorySlice";
-import { setSelectedPack } from "../../redux/packsSlice";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { loadFromList } from "../../redux/myPackSlice";
 import { confirmDelete } from "../../utils";
-import {
-  createNewList as createNewListAction,
-  deleteList as deleteListAction
-} from "../../redux/listSlice";
 
 interface ListHook {
-  savePackAsList(listName: string): void;
+  savePackAsList(listName: string): Promise<void>;
   loadList(list: TripListData): void;
   deleteList(listId: string, callbackFn?: () => void): void;
   lists: TripListData[];
 };
 
 export default function useLists(): ListHook {
+  const lists = useSelector(state => state.lists.lists);
+  const myPackState = useSelector(state => state.myPack);
+  const user = useSelector(state => state.user.user);
   const dispatch = useDispatch();
-  const { lists } = useSelector(state => state.lists);
-  const { inventory } = useSelector(state => state.inventory);
-  const { packs, selectedPack } = useSelector(state => state.packs);
+  const listsCollection = collection(db, "lists");
 
-  function savePackAsList(listName: string): void {
-    const itemsInPack = inventory.filter(item => item.inPack);
-    const pack = packs.find(p => p.id === selectedPack) || null;
-
-    const newList: TripListFormData = {
+  async function savePackAsList(listName: string): Promise<void> {
+    const newDoc: TripListDocument = {
       name: listName,
-      pack,
-      items: itemsInPack
+      uid: user!.uid,
+      myPackState
     };
 
-    dispatch(createNewListAction({ list: newList }));
+    await addDoc(listsCollection, newDoc);
   };
 
   function loadList(list: TripListData): void {
-    dispatch(overWriteWithList({ list }));
-    dispatch(setSelectedPack({ id: list.pack?.id || null }));
+    dispatch(loadFromList({ list }))
   };
 
-  function deleteList(listId: string, callbackFn?: () => void): void {
-    confirmDelete(
-      () => dispatch(deleteListAction({ listId })),
+  async function deleteList(listId: string): Promise<void> {
+    const listRef = doc(listsCollection, listId);
+
+    await confirmDelete(
+      async () => await deleteDoc(listRef),
       "Do you want to permanently delete this list?",
-      callbackFn
-    );
+    )
   };
 
   return {
+    lists,
     savePackAsList,
     loadList,
-    deleteList,
-    lists
+    deleteList
   };
 };

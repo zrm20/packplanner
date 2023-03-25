@@ -7,7 +7,12 @@ interface PackFormData {
   weight: number;
 };
 
-// used within the redux store and only contains serializable data
+// pack data that is sent to the Firestore DB
+interface PackDocument extends PackFormData {
+  uid: string;
+};
+
+// pack data that is return from Firestore and stored in Redux
 interface PackData extends PackFormData {
   id: string;
 };
@@ -25,7 +30,6 @@ interface Pack extends PackData {
 
 // used in the redux store
 interface PacksSliceState {
-  selectedPack: string | null,
   packs: PackData[],
 };
 
@@ -36,27 +40,34 @@ interface ItemFormData {
   name: string;
   weight: number; // in kg
   liquidCapacity?: number; // in ml
-  inPack?: boolean;
   category: string;
+};
+
+interface ItemDocument extends ItemFormData {
+  uid: string;
 };
 
 // used within the redux store and only contains serializable data
 interface ItemData extends ItemFormData {
   id: string;
-  qty: number;
-  isPacked: boolean; // this describes wether the item has actually been packed, i.e. the checklist is checked
+};
+
+interface PackedItem {
+  id: string,
+  qty: number,
+  isPacked: boolean
 };
 
 // contains all of the data AND methods used for an item
-interface Item extends ItemData {
+interface Item extends ItemData, PackedItem {
   baseFields: ItemData;
   category: Category;
-  toggleInPack(): void;
+  addToPack(): void;
   toggleIsPacked(): void;
   openEdit(): void;
   update(newValues: ItemFormData, callback?: Function): void;
   delete(callback?: Function): void;
-  updateQty(newQty: number): void;
+  setQty(newQty: number): void;
   getWeight(): string;
   getLiquidCapacity(): string;
 };
@@ -64,6 +75,12 @@ interface Item extends ItemData {
 // used in the redux store
 interface InventorySliceState {
   inventory: ItemData[];
+};
+
+// myPack
+interface MyPackSliceState {
+  selectedPack: string | null,
+  itemsInPack: PackedItem[]
 };
 
 type WeightUnit = "oz" | "lb" | "kg";
@@ -96,7 +113,11 @@ interface CategoryFormData {
   isBaseWeightExempt: boolean;
 };
 
-interface CategoryData extends CategoryFormData {
+interface CategoryDocument extends CategoryFormData {
+  uid: string;
+}
+
+interface CategoryData extends CategoryDocument {
   id: string,
   value: string;
   isStockCategory: boolean;
@@ -104,7 +125,6 @@ interface CategoryData extends CategoryFormData {
 
 interface Category extends CategoryData {
   baseFields: CategoryData
-  delete(callback?: Function): void,
   update(newValues: CategoryFormData, callback?: Function): void;
 };
 
@@ -133,8 +153,12 @@ interface User {
   email: string | null;
 };
 
+interface GuestUser {
+  uid: string;
+}
+
 interface UserSliceState {
-  user: User | null;
+  user: User | GuestUser | null;
   isLoading: boolean;
   error: string | null;
 };
@@ -152,14 +176,34 @@ interface LoginFormData {
 
 interface TripListFormData {
   name: string;
-  pack: PackData | null;
-  items: ItemData[];
+  myPackState: MyPackSliceState;
 };
 
-interface TripListData extends TripListFormData {
+interface TripListDocument extends TripListFormData {
+  uid: string;
+}
+
+interface TripListData extends TripListDocument {
   id: string;
 }
 
 interface ListSliceState {
   lists: TripListData[]
 };
+
+interface AlertNotification {
+  type: "info" | "warning" | "error";
+  message: string;
+  title?: string;
+  code?: string;
+  duration?: number;
+  icon?: string;
+  buttonText?: string;
+  action?(): void;
+}
+
+interface AlertSliceState {
+  alert: AlertNotification | null
+};
+
+declare module "*.png";

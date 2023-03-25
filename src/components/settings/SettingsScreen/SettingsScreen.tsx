@@ -29,7 +29,7 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
     <SafeAreaScreen style={styles.container} >
       <Text variant="headlineLarge" style={styles.title}>Settings</Text>
 
-      {/* <UserWidget style={styles.userWidget} /> TODO: Hold until cloud backup feature complete */}
+      <UserWidget style={styles.userWidget} />
 
       <View style={styles.settingsContainer}>
         <UnitSelector

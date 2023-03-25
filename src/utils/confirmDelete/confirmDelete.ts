@@ -19,8 +19,8 @@ export default function confirmDelete(
       {
         // second button option
         text: "Remove",
-        onPress: () => {
-          deleteFn();
+        onPress: async () => {
+          await deleteFn();
           if (callback) {
             callback();
           };

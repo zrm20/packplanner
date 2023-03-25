@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { IconButton } from "react-native-paper";
 
 import useStyles from "./MyPackToolbar.styles";
-import { useInventory } from "../../../hooks";
+import { useInventoryActions } from "../../../hooks";
 
 interface MyPackToolbarProps extends ViewProps {
   style?: ViewStyle;
@@ -14,7 +14,7 @@ interface MyPackToolbarProps extends ViewProps {
 export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { emptyPack } = useInventory();
+  const { emptyPack } = useInventoryActions();
 
   const iconMode: React.ComponentProps<typeof IconButton>['mode'] = "outlined"
 

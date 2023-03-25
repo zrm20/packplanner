@@ -12,9 +12,8 @@ interface InPackListProps {
 
 export default function InPackList(props: InPackListProps): JSX.Element {
   const styles = useStyles();
-  const { itemsInPack, getSortedInventory } = useInventory();
+  const { itemsInPack } = useInventory();
 
-  const sortedInventory = getSortedInventory(itemsInPack);
 
   return (
     <View style={[styles.container, props.style]} >
@@ -22,7 +21,7 @@ export default function InPackList(props: InPackListProps): JSX.Element {
       {
         itemsInPack.length ?
           <Surface style={styles.listContainer}>
-            <CategorizedItemList data={sortedInventory} itemProps={{ disabled: true }} />
+            <CategorizedItemList data={itemsInPack} itemProps={{ disabled: true }} />
           </Surface>
           :
           <Text variant="headlineMedium" style={styles.emptyText}>No Items in Pack</Text>

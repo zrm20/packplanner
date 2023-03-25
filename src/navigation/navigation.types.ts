@@ -50,8 +50,7 @@ export type CategoriesStackParamList = {
 
 export type SettingsStackParamList = {
   SettingsHome: undefined;
-  Login: undefined;
-  Register: undefined;
+  RegisterGuest: undefined;
 }
 
 export type MyPackHomeScreenProps = CompositeScreenProps<
@@ -65,4 +64,10 @@ declare global {
   namespace ReactNavigation {
     interface RootParamList extends RootTabParamList { }
   }
+};
+
+export type AuthStackParamList = {
+  Splash: undefined,
+  Login: undefined,
+  Register: undefined
 };

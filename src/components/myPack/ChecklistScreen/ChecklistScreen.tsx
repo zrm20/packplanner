@@ -3,7 +3,7 @@ import { FlatList, View } from "react-native";
 import { Checkbox, Divider, List, Text } from "react-native-paper";
 
 import useStyles from "./ChecklistScreen.styles";
-import { CloseScreenButton, SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import { useInventory } from "../../../hooks";
 import { useTheme } from "../../../theme";
 
@@ -21,9 +21,7 @@ export default function ChecklistScreen(): JSX.Element {
 
   return (
     <SafeAreaScreen style={styles.container} >
-      <CloseScreenButton androidOnly />
-
-      <Text variant="headlineMedium" style={styles.title}>Trip Checklist</Text>
+      <ContainedModalTitle title="✅ Trip Checklist" />
       <Text variant="labelLarge" style={styles.title}>{`${packedItems} of ${totalItems} packed`}</Text>
 
       <View style={styles.listContainer}>

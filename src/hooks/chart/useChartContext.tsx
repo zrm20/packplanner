@@ -4,6 +4,7 @@ import chroma from "chroma-js";
 import useInventory from "../inventory/useInventory";
 import usePacks from "../packs/usePacks";
 import { chartColors } from "../../constants";
+import { getTotalLiquidWeight } from "../../utils/inventoryUtils/inventoryUtils";
 
 interface ChartContextValues {
   liquidLevel: number,
@@ -25,7 +26,7 @@ export function ChartContextProvider(props: Props): JSX.Element {
   const [liquidLevel, setLiquidLevel] = useState(100);
   const [baseWeightOnly, setBaseWeightOnly] = useState(false);
   const [hideLiquidWeight, setHideLiquidWeight] = useState(false);
-  const { itemsInPack, getSortedInventory, getLiquidWeightInPack } = useInventory();
+  const { itemsInPack, getSortedInventory } = useInventory();
   const { selectedPack } = usePacks();
 
   const sortedItems = getSortedInventory(itemsInPack);
@@ -64,7 +65,7 @@ export function ChartContextProvider(props: Props): JSX.Element {
   if (!hideLiquidWeight) {
     chartData.push(
       {
-        weight: getLiquidWeightInPack() * liquidLevel / 100,
+        weight: getTotalLiquidWeight(itemsInPack) * liquidLevel / 100,
         name: "Liquid",
         key: "Liquid-stock",
         color: "#00ffff"
