@@ -46,7 +46,7 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
   async function handleDelete(): Promise<void> {
     try {
       confirmDelete(
-        deleteCategory,
+        deleteCategory, // TODO fix this async, navigation is happening before delete completes
         "This will permanently delete this category. All items assigned to this category will be set to \"Misc\"",
         () => props.navigation.navigate("CategoriesHome")
       );

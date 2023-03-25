@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
+import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Button, Title } from "react-native-paper";
 
 import { usePacks } from "../../../hooks";
@@ -55,25 +55,14 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaScreen style={styles.container}>
         <ContainedModalTitle title="Edit Pack" />
-
         {
           pack?.baseFields &&
           <PackForm
             onSubmit={handleSubmit}
             initialValues={pack.baseFields}
-            submitText="Update Pack"
+            onDelete={handleDelete}
           />
         }
-
-        <View style={styles.deleteContainer}>
-          <Button
-            style={styles.deleteButton}
-            mode="contained"
-            onPress={handleDelete}
-          >
-            Delete Pack
-          </Button>
-        </View>
       </SafeAreaScreen>
     </TouchableWithoutFeedback>
   );

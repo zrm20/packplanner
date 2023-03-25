@@ -4,13 +4,13 @@ import { Formik, FormikHelpers } from 'formik'
 import { TextInput as PaperInput } from "react-native-paper";
 
 import useStyles from "./PackForm.styles"
-import { TextInput, WeightInput, NumberInput, SubmitButton, FormikBackdrop } from "../../formComponents";
+import { TextInput, WeightInput, NumberInput, SubmitButton, FormikBackdrop, FormActions } from "../../formComponents";
 import packFormSchema from "./PackForm.schema";
 
 interface PackFormProps {
   initialValues?: PackFormData;
   onSubmit(values: PackFormData, actions?: FormikHelpers<PackFormData>): void;
-  submitText?: string;
+  onDelete?(): void;
 };
 
 export default function PackForm(props: PackFormProps): JSX.Element {
@@ -37,7 +37,7 @@ export default function PackForm(props: PackFormProps): JSX.Element {
           <NumberInput name="capacity" label="Capacity" right={<PaperInput.Affix text='liters' />} />
           <WeightInput name="weight" label="Weight" />
 
-          <SubmitButton mode='contained'>{props.submitText || "Add Pack"}</SubmitButton>
+          <FormActions onDelete={props.onDelete} />
         </KeyboardAvoidingView >
       </>
     </Formik>
