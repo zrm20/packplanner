@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Dialog, Text, TextInput } from "react-native-paper";
+import { ActivityIndicator, Button, Dialog, Text, TextInput } from "react-native-paper";
 import { useLists } from "../../../hooks";
 import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
@@ -13,17 +13,20 @@ interface ListModalProps {
 export default function NewListModal(props: ListModalProps): JSX.Element {
   const styles = useStyles();
   const [text, setText] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { savePackAsList } = useLists();
-  const { catchUnknownError }= useThrowAlert();
+  const { catchUnknownError } = useThrowAlert();
 
   async function submitList(): Promise<void> {
+    setIsLoading(true);
     try {
       await savePackAsList(text);
       setText("");
       props.toggleVisibility();
     } catch (err) {
       catchUnknownError("Failed to save list. Please try again.")
-    }
+    };
+    setIsLoading(false);
   };
 
   return (
@@ -40,10 +43,14 @@ export default function NewListModal(props: ListModalProps): JSX.Element {
           onChangeText={setText}
         />
       </Dialog.Content>
+      {
+        isLoading &&
+        <ActivityIndicator />
+      }
       <Dialog.Actions style={styles.actions}>
         <Button
           mode="contained"
-          disabled={!Boolean(text)}
+          disabled={!Boolean(text) || isLoading}
           onPress={submitList}
         >Save</Button>
         <Button mode="outlined" onPress={props.toggleVisibility}>Cancel</Button>
