@@ -1,10 +1,9 @@
 import React from "react";
-import { TouchableWithoutFeedback, View, Keyboard } from "react-native";
-import { Title } from "react-native-paper";
+import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import type { LockerStackParamList } from "../../../navigation/navigation.types";
-import { CloseScreenButton, SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import { usePacks } from "../../../hooks";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./NewPackScreen.styles";
@@ -29,10 +28,7 @@ export default function NewPackScreen({ navigation }: NewPackScreenProps): JSX.E
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaScreen style={styles.container} >
-        <View style={styles.titleContainer}>
-          <CloseScreenButton style={styles.closeButton}  />
-          <Title>New Pack</Title>
-        </View>
+        <ContainedModalTitle title="New Pack" />
 
         <PackForm onSubmit={handleSubmit} />
       </SafeAreaScreen>

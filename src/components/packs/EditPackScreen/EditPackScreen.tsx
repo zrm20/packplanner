@@ -7,7 +7,7 @@ import { usePacks } from "../../../hooks";
 import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 import { LockerStackParamList } from "../../../navigation/navigation.types";
 import { extractId } from "../../../utils";
-import { CloseScreenButton, SafeAreaScreen } from "../../ui";
+import { CloseScreenButton, ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./EditPackScreen.styles"
 
@@ -16,7 +16,7 @@ type EditPackScreenProps = NativeStackScreenProps<LockerStackParamList, 'EditPac
 export default function EditPackScreen({ route, navigation }: EditPackScreenProps): JSX.Element {
   const styles = useStyles();
   const { getPackById } = usePacks();
-  const { catchUnknownError} = useThrowAlert();
+  const { catchUnknownError } = useThrowAlert();
 
   const packId = extractId(route.params.pack);
   // need to use getPackById to receive the full pack object with methods
@@ -54,11 +54,7 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaScreen style={styles.container}>
-        <View style={styles.titleContainer}>
-          <CloseScreenButton androidOnly />
-
-          <Title>Edit Pack</Title>
-        </View>
+        <ContainedModalTitle title="Edit Pack" />
 
         {
           pack?.baseFields &&
