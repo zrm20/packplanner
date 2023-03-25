@@ -6,6 +6,7 @@ import CapacityInput from "./CapacityInput/CapacityInput";
 import PickerInput from "./PickerInput/PickerInput";
 import ToggleSwitchInput from "./ToggleSwitchInput/ToggleSwitchInput";
 import FormikBackdrop from "./FormikBackdrop/FormikBackdrop";
+import FormActions from "./FormActions/FormActions";
 
 export {
   NumberInput,
@@ -15,5 +16,6 @@ export {
   CapacityInput,
   PickerInput,
   ToggleSwitchInput,
-  FormikBackdrop
+  FormikBackdrop,
+  FormActions
 };
