@@ -2,11 +2,11 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { FlatList, View } from "react-native";
 import { IconButton, List, Text } from "react-native-paper";
+
 import { useLists } from "../../../hooks";
 import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 import { MyPackStackParamList } from "../../../navigation/navigation.types";
-
-import { SafeAreaScreen } from "../../ui";
+import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import useStyles from "./LoadListScreen.styles";
 
 type LoadListScreenProps = NativeStackScreenProps<MyPackStackParamList, "Lists">
@@ -24,7 +24,7 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
 
   async function handleDeleteList(listId: string): Promise<void> {
     try {
-      await deleteList(listId);
+      await deleteList(listId); // TODO Fix these async callbacks
       navigation.goBack();
     } catch (err) {
       catchUnknownError(err, "Failed to delete list. Please try again");
@@ -33,7 +33,7 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
 
   return (
     <SafeAreaScreen style={styles.container} >
-      <Text variant="headlineLarge" style={styles.title}>Load List</Text>
+      <ContainedModalTitle title="Load List" />
 
       <View style={styles.listContainer}>
         <FlatList
