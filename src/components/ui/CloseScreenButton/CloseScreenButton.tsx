@@ -5,7 +5,7 @@ import { IconButton, IconButtonProps } from "react-native-paper";
 import { isAndroid } from "../../../utils";
 import { ViewStyle } from "react-native";
 
-interface CloseScreenButtonProps extends Partial<IconButtonProps> {
+export interface CloseScreenButtonProps extends Partial<IconButtonProps> {
   icon?: "close" | "chevron-down" | "arrow-left-bold"
   androidOnly?: boolean;
   style?: ViewStyle;
