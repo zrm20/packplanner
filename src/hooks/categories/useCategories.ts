@@ -48,7 +48,7 @@ export default function useCategories(): CategoryHook {
       uid: user!.uid
     }
 
-    await addDoc(categoriesCollection, newDoc);;
+    await addDoc(categoriesCollection, newDoc);
   };
 
   return {
