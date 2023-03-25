@@ -1,6 +1,7 @@
 import useInventory from "./inventory/useInventory";
 import useInventoryActions from "./inventory/useInventoryActions";
 import usePacks from "./packs/usePacks";
+import usePackModel from "./packs/usePackModel";
 import useSettings from "./settings/useSettings";
 import useCategories from "./categories/useCategories";
 import useChartContext from "./chart/useChartContext";
@@ -14,6 +15,7 @@ export {
   useInventory,
   useInventoryActions,
   usePacks,
+  usePackModel,
   useSettings,
   useCategories,
   useChartContext,

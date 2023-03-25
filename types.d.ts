@@ -17,10 +17,8 @@ interface PackData extends PackFormData {
   id: string;
 };
 
-// contains all of the data AND methods used for a pack
-interface Pack extends PackData {
-  isSelected: boolean;
-  baseFields: PackData,
+// attaches methods to pack
+interface PackModel extends PackData {
   select(): void;
   openEdit(): void;
   delete(callback?: Function): void;

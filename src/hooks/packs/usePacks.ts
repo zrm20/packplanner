@@ -1,31 +1,24 @@
 import { useSelector } from "../../redux/reduxHooks";
-import useCreatePack from "./useCreatePack";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 interface PackHook {
-  packsSlice: PacksSliceState,
-  packs: Pack[],
-  selectedPack: Pack | null,
-  getPackById(id: string): Pack | null,
-  addPack(pack: PackFormData): void,
+  packs: PackData[],
+  selectedPack: PackData | null,
+  getPackById(id: string): PackData | null,
+  addPack(pack: PackFormData): Promise<void>,
 };
 
 export default function usePacks(): PackHook {
-  const packsSlice = useSelector(state => state.packs);
+  const packs = useSelector(state => state.packs.packs);
   const selectedPackId = useSelector(state => state.myPack.selectedPack)
   const user = useSelector(state => state.user.user);
-  const createPack = useCreatePack();
   const packsCollection = collection(db, "packs");
 
-  if (!packsSlice) {
-    throw new Error('usePacks must be used within a Redux Provider with a packsReducer in store');
-  };
 
-  const packs: Pack[] = packsSlice.packs.map(createPack);
   const selectedPack = packs.find(pack => pack.id === selectedPackId) || null;
 
-  function getPackById(id: string): Pack | null {
+  function getPackById(id: string): PackData | null {
     return packs.find(pack => pack.id === id) || null;
   };
 
@@ -37,5 +30,5 @@ export default function usePacks(): PackHook {
     await addDoc(packsCollection, newPackDoc);
   };
 
-  return { packsSlice, packs, selectedPack, getPackById, addPack };
+  return { packs, selectedPack, getPackById, addPack };
 };

@@ -30,7 +30,7 @@ export type AppTabs = AppTab[];
 export type LockerStackParamList = {
   Inventory: undefined;
   NewPack: undefined;
-  EditPack: { pack: PackData | string };
+  EditPack: { pack: PackData };
   NewItem: undefined;
   EditItem: { item: ItemData | string };
 };

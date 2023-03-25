@@ -1,12 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
-import { Button, Title } from "react-native-paper";
 
-import { usePacks } from "../../../hooks";
+import { usePackModel } from "../../../hooks";
 import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 import { LockerStackParamList } from "../../../navigation/navigation.types";
-import { extractId } from "../../../utils";
 import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import PackForm from "../PackForm/PackForm";
 import useStyles from "./EditPackScreen.styles"
@@ -15,24 +13,15 @@ type EditPackScreenProps = NativeStackScreenProps<LockerStackParamList, 'EditPac
 
 export default function EditPackScreen({ route, navigation }: EditPackScreenProps): JSX.Element {
   const styles = useStyles();
-  const { getPackById } = usePacks();
   const { catchUnknownError } = useThrowAlert();
+  const { pack } = route.params;
+  const packModel = usePackModel(pack);
 
-  const packId = extractId(route.params.pack);
-  // need to use getPackById to receive the full pack object with methods
-  const pack = getPackById(packId);
-
-  if (!pack) {
-    <SafeAreaScreen style={styles.container}>
-      <Title>Something went wrong</Title>
-      <Button onPress={() => navigation.goBack()}>Go Back</Button>
-    </SafeAreaScreen>
-  }
 
   async function handleSubmit(newValues: PackFormData): Promise<void> {
     try {
-      if (pack) {
-        await pack.update(newValues);
+      if (packModel) {
+        await packModel.update(newValues);
         navigation.goBack();
       };
     } catch (err) {
@@ -42,10 +31,8 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
 
   async function handleDelete(): Promise<void> {
     try {
-      if (pack) {
-        await pack.delete();
-        navigation.goBack()
-      }
+      await packModel.delete();
+      navigation.goBack()
     } catch (err) {
       catchUnknownError(err, "Failed to delete pack. Please try again");
     }
@@ -56,10 +43,10 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
       <SafeAreaScreen style={styles.container}>
         <ContainedModalTitle title="Edit Pack" />
         {
-          pack?.baseFields &&
+          pack &&
           <PackForm
             onSubmit={handleSubmit}
-            initialValues={pack.baseFields}
+            initialValues={pack}
             onDelete={handleDelete}
           />
         }
