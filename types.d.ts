@@ -131,6 +131,7 @@ interface Category extends CategoryData {
 
 interface CategorySliceState {
   categories: CategoryData[];
+  isLoading: boolean;
 };
 
 interface CategoryMap {

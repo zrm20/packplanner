@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, View } from "react-native";
-import { Text, IconButton, Surface, List } from "react-native-paper";
+import { Text, IconButton, Surface, List, ActivityIndicator } from "react-native-paper";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { useCategories } from "../../../hooks";
@@ -13,7 +13,7 @@ type CategoriesScreenProps = NativeStackScreenProps<CategoriesStackParamList, 'C
 
 export default function CategoriesScreen(props: CategoriesScreenProps): JSX.Element {
   const styles = useStyles();
-  const { categories } = useCategories();
+  const { categories, categoriesSlice } = useCategories();
   const { navigation } = props;
 
   function navToNewCategory() {
@@ -30,31 +30,35 @@ export default function CategoriesScreen(props: CategoriesScreenProps): JSX.Elem
 
         <View style={styles.listContainer}>
           <Surface style={styles.surface}>
-            <FlatList
-              data={categories}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) => (
-                <List.Item
-                  style={styles.listItem}
-                  key={item.id}
-                  title={item.label}
-                  onPress={
-                    !item.isStockCategory ?
-                      () => navigation.navigate("EditCategory", { categoryId: item.id }) :
-                      undefined
-                  }
-                  left={props => <List.Icon icon={item.icon} />}
-                  right={props => (
-                    <View>
-                      {
-                        item.isStockCategory &&
-                        <Text variant="labelSmall">Stock</Text>
+            {
+              categoriesSlice.isLoading ?
+                <ActivityIndicator /> :
+                <FlatList
+                  data={categories}
+                  keyExtractor={item => item.id}
+                  renderItem={({ item }) => (
+                    <List.Item
+                      style={styles.listItem}
+                      key={item.id}
+                      title={item.label}
+                      onPress={
+                        !item.isStockCategory ?
+                          () => navigation.navigate("EditCategory", { categoryId: item.id }) :
+                          undefined
                       }
-                    </View>
+                      left={props => <List.Icon icon={item.icon} />}
+                      right={props => (
+                        <View>
+                          {
+                            item.isStockCategory &&
+                            <Text variant="labelSmall">Stock</Text>
+                          }
+                        </View>
+                      )}
+                    />
                   )}
                 />
-              )}
-            />
+            }
           </Surface>
         </View>
       </View>

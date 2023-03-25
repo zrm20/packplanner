@@ -40,7 +40,8 @@ export default function useStyles() {
       surface: {
         padding: theme.space[2],
         width: '100%',
-        height: '100%'
+        height: '100%',
+        justifyContent: 'center'
       }
     }
   );

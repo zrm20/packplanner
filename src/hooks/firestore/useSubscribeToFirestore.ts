@@ -6,7 +6,7 @@ import { db } from "../../config/firebase";
 import { setPacks, setIsLoading as setPacksLoading } from "../../redux/packsSlice";
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import { setInventory, setIsLoading as setInventoryLoading } from "../../redux/inventorySlice";
-import { setCategories } from "../../redux/categoriesSlice";
+import { setCategories, setIsLoading as setCategoriesLoading } from "../../redux/categoriesSlice";
 import { setLists } from "../../redux/listSlice";
 import useThrowAlert from "../alerts/useThrowAlert";
 
@@ -84,6 +84,7 @@ export default function useSubscribeToFirestore() {
   // subscribe to categories
   useEffect(() => {
     if (user?.uid) {
+      dispatch(setCategoriesLoading(true));
       const categoriesQuery = query(categoriesCollection, where("uid", "==", user.uid));
 
       const unsubscribe = onSnapshot(
@@ -101,8 +102,10 @@ export default function useSubscribeToFirestore() {
           });
 
           dispatch(setCategories({ categories }))
+          dispatch(setCategoriesLoading(false));
         },
         (err) => {
+          dispatch(setCategoriesLoading(false));
           catchUnknownError(err, "Failed to fetch categories")
         }
       );

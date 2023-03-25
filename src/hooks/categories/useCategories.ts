@@ -1,6 +1,5 @@
-import { useSelector, useDispatch } from "../../redux/reduxHooks";
-import { confirmDelete } from "../../utils";
-import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { useSelector } from "../../redux/reduxHooks";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 interface CategoryHook {
@@ -14,7 +13,6 @@ interface CategoryHook {
 export default function useCategories(): CategoryHook {
   const categoriesSlice = useSelector(state => state.categories);
   const user = useSelector(state => state.user.user);
-  const dispatch = useDispatch();
 
   const categoriesCollection = collection(db, "categories");
 
