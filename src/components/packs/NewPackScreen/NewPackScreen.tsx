@@ -28,10 +28,9 @@ export default function NewPackScreen({ navigation }: NewPackScreenProps): JSX.E
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaScreen style={styles.container}>
+      <SafeAreaScreen style={styles.container} >
         <View style={styles.titleContainer}>
-          <CloseScreenButton androidOnly style={styles.closeButton} />
-
+          <CloseScreenButton style={styles.closeButton}  />
           <Title>New Pack</Title>
         </View>
 

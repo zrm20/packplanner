@@ -19,12 +19,11 @@ export default function useStyles() {
       titleContainer: {
         padding: theme.space[2],
         marginTop: theme.space[2],
-        alignItems: 'center'
+        alignItems: 'center',
+        flexDirection: 'row'
       },
       closeButton: {
-        position: 'absolute',
-        left: theme.space[2],
-        top: theme.space[2],
+        marginRight: theme.space[3]
       }
     }
   );
