@@ -19,7 +19,7 @@ export default function MyPackStack(): JSX.Element {
 
       <Stack.Group
         screenOptions={{
-          presentation: "modal"
+          presentation: "containedModal"
         }}
       >
         <Stack.Screen name="Checklist" component={ChecklistScreen} />
