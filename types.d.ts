@@ -65,8 +65,8 @@ interface ItemModel extends Item {
   addToPack(): void;
   toggleIsPacked(): void;
   openEdit(): void;
-  update(newValues: ItemFormData, callback?: Function): void;
-  delete(callback?: Function): void;
+  update(newValues: ItemFormData, callback?: Function): Promise<void>;
+  delete(callback?: Function): Promise<void>;
   setQty(newQty: number): void;
   getWeight(): string;
   getLiquidCapacity(): string;

@@ -29,10 +29,8 @@ export default function EditItemScreen({ route, navigation }: EditItemScreenProp
 
   async function handleDelete(): Promise<void> {
     try {
-      if (item) {
-        await itemModel.delete(); // TODO fix this async, navigation is happening before delete completes
-        navigation.goBack();
-      }
+      await itemModel.delete()
+      navigation.goBack();
     } catch (err) {
       catchUnknownError(err, "Failed to delete item. Please try again.");
     };

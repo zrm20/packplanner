@@ -35,17 +35,12 @@ export default function useItemModel(item: Item): ItemModel {
     openEdit() {
       navigate('Locker', { screen: 'EditItem', params: { item: item } })
     },
-    async update(newValues: ItemFormData) {
-      await updateDoc(docRef, { ...newValues });
+    update(newValues: ItemFormData): Promise<void> {
+      return updateDoc(docRef, { ...newValues });
     },
-    async delete() {
-      await confirmDelete(
-        async () => {
-          await deleteDoc(docRef);
-          dispatch(removeFromPackAction({ itemId: item.id }));
-        },
-        `Do you want to permanently delete ${item.brand ? item.brand + ' ' : null}${item.name}?`,
-      );
+    async delete(): Promise<void> {
+      await deleteDoc(docRef);
+      dispatch(removeFromPackAction({ itemId: item.id }));
     },
     addToPack() {
       dispatch(addToPackAction({ itemId: item.id }))
