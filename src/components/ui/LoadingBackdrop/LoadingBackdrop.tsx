@@ -1,6 +1,6 @@
 import React from "react";
 import { ViewStyle, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Portal } from "react-native-paper";
 
 import useStyles from "./LoadingBackdrop.styles";
 
@@ -14,8 +14,10 @@ export default function LoadingBackdrop(props: LoadingBackdropProps): JSX.Elemen
   const styles = useStyles(props.show);
 
   return (
-    <View style={[styles.container, props.style]}>
-      <ActivityIndicator color={props.spinnerColor} />
-    </View>
+    <Portal>
+      <View style={[styles.container, props.style]}>
+        <ActivityIndicator color={props.spinnerColor} />
+      </View>
+    </Portal>
   );
 };
