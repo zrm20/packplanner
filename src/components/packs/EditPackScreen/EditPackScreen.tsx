@@ -27,9 +27,10 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
     }
   };
 
-  function handleDelete(): void {
+  async function handleDelete(): Promise<void> {
     try {
-      packModel.delete(navigation.goBack);
+      await packModel.delete();
+      navigation.goBack();
     } catch (err) {
       catchUnknownError(err, "Failed to delete pack. Please try again");
     }

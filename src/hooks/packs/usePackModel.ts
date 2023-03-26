@@ -25,28 +25,22 @@ export default function usePackModel(pack: PackData): PackModel {
     ...pack,
 
     // pack methods
-    select() {
+    select(): void {
       dispatch(setSelectedPack({ packId: pack.id }));
     },
-    openEdit() {
+    openEdit(): void {
       navigate("Locker", { screen: "EditPack", params: { pack: pack } })
     },
-    delete(callback?) {
-      confirmDelete(
-        async () => {
-          await deletePack(pack.id);
-          if (pack.id === selectedPackId) {
-            dispatch(setSelectedPack({ packId: null }))
-          }
-        },
-        `Do you want to permanently delete ${pack.brand} ${pack.model}?`,
-        callback
-      )
+    async delete(): Promise<void> {
+      await deletePack(pack.id);
+      if (pack.id === selectedPackId) {
+        dispatch(setSelectedPack({ packId: null }))
+      }
     },
     update(newValues: PackFormData): Promise<void> {
       return setDoc(docRef, newValues, { merge: true });
     },
-    getWeight() {
+    getWeight(): string {
       const convertedValue = weightUnit.convert(pack.weight);
       return `${convertedValue} ${weightUnit.label}`
     }

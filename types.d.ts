@@ -21,7 +21,7 @@ interface PackData extends PackFormData {
 interface PackModel extends PackData {
   select(): void;
   openEdit(): void;
-  delete(callback?: Function): void;
+  async delete(callback?: Function): Promise<void>;
   async update(newValues: PackFormData, callback?: Function): Promise<void>;
   getWeight(): string;
 };
