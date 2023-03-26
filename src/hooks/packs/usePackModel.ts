@@ -14,14 +14,10 @@ export default function usePackModel(pack: PackData): PackModel {
   const { navigate } = useNavigation();
   const { weightUnit } = useSettings();
 
+  const docRef = doc(db, "packs", pack.id);
+
   async function deletePack(id: string): Promise<void> {
     await deleteDoc(doc(db, "packs", id));
-  };
-
-  async function updatePack(id: string, newValues: PackFormData): Promise<void> {
-    const docRef = doc(db, "packs", id);
-
-    await setDoc(docRef, newValues, { merge: true });
   };
 
   const packModel: PackModel = useMemo(() => ({
@@ -35,8 +31,8 @@ export default function usePackModel(pack: PackData): PackModel {
     openEdit() {
       navigate("Locker", { screen: "EditPack", params: { pack: pack } })
     },
-    async delete() {
-      await confirmDelete(
+    delete(callback?) {
+      confirmDelete(
         async () => {
           await deletePack(pack.id);
           if (pack.id === selectedPackId) {
@@ -44,10 +40,11 @@ export default function usePackModel(pack: PackData): PackModel {
           }
         },
         `Do you want to permanently delete ${pack.brand} ${pack.model}?`,
+        callback
       )
     },
-    async update(newValues) {
-      await updatePack(pack.id, newValues);
+    update(newValues: PackFormData): Promise<void> {
+      return setDoc(docRef, newValues, { merge: true });
     },
     getWeight() {
       const convertedValue = weightUnit.convert(pack.weight);

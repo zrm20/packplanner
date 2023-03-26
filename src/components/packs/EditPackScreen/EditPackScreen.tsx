@@ -20,19 +20,16 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
 
   async function handleSubmit(newValues: PackFormData): Promise<void> {
     try {
-      if (packModel) {
-        await packModel.update(newValues);
-        navigation.goBack();
-      };
+      await packModel.update(newValues);
+      navigation.goBack();
     } catch (err) {
       catchUnknownError(err, "Failed to update pack. Please try again.")
     }
   };
 
-  async function handleDelete(): Promise<void> {
+  function handleDelete(): void {
     try {
-      await packModel.delete();
-      navigation.goBack()
+      packModel.delete(navigation.goBack);
     } catch (err) {
       catchUnknownError(err, "Failed to delete pack. Please try again");
     }

@@ -22,7 +22,7 @@ interface PackModel extends PackData {
   select(): void;
   openEdit(): void;
   delete(callback?: Function): void;
-  update(newValues: PackFormData, callback?: Function): void;
+  async update(newValues: PackFormData, callback?: Function): Promise<void>;
   getWeight(): string;
 };
 
