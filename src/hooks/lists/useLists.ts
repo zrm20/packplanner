@@ -2,16 +2,8 @@ import { useDispatch, useSelector } from "../../redux/reduxHooks";
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { loadFromList } from "../../redux/myPackSlice";
-import { confirmDelete } from "../../utils";
 
-interface ListHook {
-  savePackAsList(listName: string): Promise<void>;
-  loadList(list: TripListData): void;
-  deleteList(listId: string, callbackFn?: () => void): void;
-  lists: TripListData[];
-};
-
-export default function useLists(): ListHook {
+export default function useLists() {
   const lists = useSelector(state => state.lists.lists);
   const myPackState = useSelector(state => state.myPack);
   const user = useSelector(state => state.user.user);
@@ -32,13 +24,10 @@ export default function useLists(): ListHook {
     dispatch(loadFromList({ list }))
   };
 
-  async function deleteList(listId: string): Promise<void> {
+  function deleteList(listId: string): Promise<void> {
     const listRef = doc(listsCollection, listId);
 
-    await confirmDelete(
-      async () => await deleteDoc(listRef),
-      "Do you want to permanently delete this list?",
-    )
+    return deleteDoc(listRef);
   };
 
   return {

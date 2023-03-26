@@ -1,21 +1,27 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Text, Surface, Title, Subheading } from "react-native-paper";
+import { usePackModel } from "../../../hooks";
+import { useSelector } from "../../../redux/reduxHooks";
 
 import useStyles from "./PackItem.styles";
 
 interface PackItemProps {
-  pack: Pack;
+  pack: PackData;
   disabled?: boolean;
 };
 
 export default function PackItem(props: PackItemProps): JSX.Element {
   const { pack, disabled = false } = props;
+  const selectedPackId = useSelector(state => state.myPack.selectedPack);
+  const packModel = usePackModel(pack);
   const styles = useStyles();
 
+  const isSelected = pack.id === selectedPackId;
+
   return (
-    <TouchableOpacity onLongPress={pack.openEdit} onPress={pack.select} disabled={disabled} >
-      <Surface style={[styles.container, pack.isSelected ? styles.selectedPack : null]} >
+    <TouchableOpacity onLongPress={packModel.openEdit} onPress={packModel.select} disabled={disabled} >
+      <Surface style={[styles.container, isSelected ? styles.selectedPack : null]} >
         <Title
           style={styles.title}
           adjustsFontSizeToFit
@@ -29,7 +35,7 @@ export default function PackItem(props: PackItemProps): JSX.Element {
         >
           {pack.model}
         </Subheading>
-        <Text>{pack.getWeight()}</Text>
+        <Text>{packModel.getWeight()}</Text>
       </Surface>
     </TouchableOpacity>
   );

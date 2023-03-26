@@ -3,10 +3,10 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import camelize from "camelize-ts";
 
 import { db } from "../../config/firebase";
-import { setPacks } from "../../redux/packsSlice";
+import { setPacks, setIsLoading as setPacksLoading } from "../../redux/packsSlice";
 import { useDispatch, useSelector } from "../../redux/reduxHooks";
-import { setInventory } from "../../redux/inventorySlice";
-import { setCategories } from "../../redux/categoriesSlice";
+import { setInventory, setIsLoading as setInventoryLoading } from "../../redux/inventorySlice";
+import { setCategories, setIsLoading as setCategoriesLoading } from "../../redux/categoriesSlice";
 import { setLists } from "../../redux/listSlice";
 import useThrowAlert from "../alerts/useThrowAlert";
 
@@ -22,6 +22,7 @@ export default function useSubscribeToFirestore() {
   // subscribe to packs collection
   useEffect(() => {
     if (user?.uid) {
+      dispatch(setPacksLoading(true));
       const packQuery = query(packsCollection, where("uid", "==", user.uid));
 
       const unsubscribe = onSnapshot(
@@ -36,10 +37,12 @@ export default function useSubscribeToFirestore() {
             packs.push(pack);
           });
 
-          dispatch(setPacks({ packs }))
+          dispatch(setPacks({ packs }));
+          dispatch(setPacksLoading(false));
         },
         (err) => {
-          catchUnknownError(err, "Failed to fetch packs")
+          catchUnknownError(err, "Failed to fetch packs");
+          dispatch(setPacksLoading(false));
         }
       );
 
@@ -50,6 +53,7 @@ export default function useSubscribeToFirestore() {
   // subscribe to inventory
   useEffect(() => {
     if (user?.uid) {
+      dispatch(setInventoryLoading(true));
       const inventoryQuery = query(inventoryCollection, where("uid", "==", user.uid));
 
       const unsubscribe = onSnapshot(
@@ -62,12 +66,14 @@ export default function useSubscribeToFirestore() {
               id: doc.id
             };
             inventory.push(item);
+            dispatch(setInventoryLoading(false));
           });
 
           dispatch(setInventory({ inventory }))
         },
         (err) => {
-          catchUnknownError(err, "Failed to fetch inventory")
+          catchUnknownError(err, "Failed to fetch inventory");
+          dispatch(setInventoryLoading(false));
         }
       );
 
@@ -78,10 +84,11 @@ export default function useSubscribeToFirestore() {
   // subscribe to categories
   useEffect(() => {
     if (user?.uid) {
+      dispatch(setCategoriesLoading(true));
       const categoriesQuery = query(categoriesCollection, where("uid", "==", user.uid));
 
       const unsubscribe = onSnapshot(
-        categoriesQuery, 
+        categoriesQuery,
         (snapshot) => {
           const categories: CategoryData[] = [];
           snapshot.forEach(doc => {
@@ -95,8 +102,10 @@ export default function useSubscribeToFirestore() {
           });
 
           dispatch(setCategories({ categories }))
+          dispatch(setCategoriesLoading(false));
         },
         (err) => {
+          dispatch(setCategoriesLoading(false));
           catchUnknownError(err, "Failed to fetch categories")
         }
       );
@@ -111,7 +120,7 @@ export default function useSubscribeToFirestore() {
       const listsQuery = query(listsCollection, where("uid", "==", user.uid));
 
       const unsubscribe = onSnapshot(
-        listsQuery, 
+        listsQuery,
         (snapshot) => {
           const lists: TripListData[] = [];
           snapshot.forEach(doc => {

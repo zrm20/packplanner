@@ -5,7 +5,7 @@ import { IconButton, Text } from "react-native-paper";
 import useStyles from "./QtyChanger.styles";
 
 interface QtyChangerProps {
-  item: Item;
+  item: ItemModel;
   size?: number;
 };
 

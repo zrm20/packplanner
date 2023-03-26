@@ -13,7 +13,7 @@ interface InventoryFormProps {
   initialValues?: ItemFormData;
   onSubmit(values: ItemFormData): void;
   submitText?: string;
-  onDelete?(): void;
+  onDelete?(): Promise<void>;
 };
 
 export default function InventoryForm(props: InventoryFormProps): JSX.Element {
@@ -51,7 +51,7 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
 
             <ShowLiquidInput />
 
-            <FormActions onDelete={props.onDelete} />
+            <FormActions onDelete={props.onDelete} deleteMessage="Do you want to permanently delete this item?" />
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
       </>

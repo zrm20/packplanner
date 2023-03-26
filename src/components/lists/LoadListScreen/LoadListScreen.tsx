@@ -1,18 +1,20 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, View } from "react-native";
 import { IconButton, List, Text } from "react-native-paper";
+
 import { useLists } from "../../../hooks";
 import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 import { MyPackStackParamList } from "../../../navigation/navigation.types";
-
-import { SafeAreaScreen } from "../../ui";
+import { confirmDelete } from "../../../utils";
+import { ContainedModalTitle, LoadingBackdrop, SafeAreaScreen } from "../../ui";
 import useStyles from "./LoadListScreen.styles";
 
 type LoadListScreenProps = NativeStackScreenProps<MyPackStackParamList, "Lists">
 
 export default function LoadListScreen(props: LoadListScreenProps): JSX.Element {
   const styles = useStyles();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { lists, loadList, deleteList } = useLists();
   const { navigation } = props;
   const { catchUnknownError } = useThrowAlert();
@@ -23,17 +25,27 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
   };
 
   async function handleDeleteList(listId: string): Promise<void> {
+    setIsLoading(true);
     try {
-      await deleteList(listId);
-      navigation.goBack();
+      await deleteList(listId); // TODO Fix these async callbacks
+      setIsLoading(false);
     } catch (err) {
       catchUnknownError(err, "Failed to delete list. Please try again");
+      setIsLoading(false);
     }
+  };
+
+  function confirmHandleDelete(listId: string): void {
+    confirmDelete(
+      () => handleDeleteList(listId),
+      "Are you sure you want to delete this list?"
+    )
   };
 
   return (
     <SafeAreaScreen style={styles.container} >
-      <Text variant="headlineLarge" style={styles.title}>Load List</Text>
+      <LoadingBackdrop show={isLoading} />
+      <ContainedModalTitle title="Load List" />
 
       <View style={styles.listContainer}>
         <FlatList
@@ -46,7 +58,7 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
               description={`${item.myPackState.itemsInPack.length} items`}
               right={props => (
                 <>
-                  <IconButton icon="delete" onPress={() => handleDeleteList(item.id)} />
+                  <IconButton icon="delete" onPress={() => confirmHandleDelete(item.id)} />
                   <IconButton icon="download" onPress={() => handleLoadList(item)} />
                 </>
               )}

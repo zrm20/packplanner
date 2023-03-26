@@ -38,6 +38,7 @@ export default function useStyles() {
       },
       listSurface: {
         height: '100%',
+        justifyContent: 'center'
       }
     }
   );

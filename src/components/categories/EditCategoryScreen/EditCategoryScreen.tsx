@@ -6,7 +6,6 @@ import { useCategories, useDeleteCategory } from "../../../hooks";
 import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
 
 import { CategoriesStackParamList } from "../../../navigation/navigation.types";
-import { confirmDelete } from "../../../utils";
 import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
 import CategoryForm from "../CategoryForm/CategoryForm";
 import useStyles from "./EditCategoryScreen.styles";
@@ -45,11 +44,8 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
 
   async function handleDelete(): Promise<void> {
     try {
-      confirmDelete(
-        deleteCategory, // TODO fix this async, navigation is happening before delete completes
-        "This will permanently delete this category. All items assigned to this category will be set to \"Misc\"",
-        () => props.navigation.navigate("CategoriesHome")
-      );
+      await deleteCategory();
+      props.navigation.navigate("CategoriesHome");
     } catch (err) {
       catchUnknownError(err, "Failed to delete category. Please try again.")
     }

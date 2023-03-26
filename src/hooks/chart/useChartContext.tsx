@@ -4,7 +4,8 @@ import chroma from "chroma-js";
 import useInventory from "../inventory/useInventory";
 import usePacks from "../packs/usePacks";
 import { chartColors } from "../../constants";
-import { getTotalLiquidWeight } from "../../utils/inventoryUtils/inventoryUtils";
+import { getTotalLiquidWeight, getTotalWeight } from "../../utils/inventoryUtils/inventoryUtils";
+import { useSelector } from "../../redux/reduxHooks";
 
 interface ChartContextValues {
   liquidLevel: number,
@@ -26,10 +27,16 @@ export function ChartContextProvider(props: Props): JSX.Element {
   const [liquidLevel, setLiquidLevel] = useState(100);
   const [baseWeightOnly, setBaseWeightOnly] = useState(false);
   const [hideLiquidWeight, setHideLiquidWeight] = useState(false);
-  const { itemsInPack, getSortedInventory } = useInventory();
+  const { itemsInPack } = useInventory();
   const { selectedPack } = usePacks();
+  const categories = useSelector(state => state.categories.categories);
 
-  const sortedItems = getSortedInventory(itemsInPack);
+  const sortedItems = categories.map(cat => (
+    {
+      category: cat,
+      items: itemsInPack.filter(i => i.category === cat.id)
+    }
+  ));
 
   function handleChangeBaseWeightOnly(newVal: boolean): void {
     setBaseWeightOnly(newVal);
@@ -43,11 +50,11 @@ export function ChartContextProvider(props: Props): JSX.Element {
     sortedItems
       .filter(cat => cat.items.length > 0) // remove categories without items
       // if baseWeightOnly is true, filter out categories that are baseWeightExempt
-      .filter(cat => baseWeightOnly ? !cat.items[0].category.isBaseWeightExempt : true)
+      .filter(cat => baseWeightOnly ? !cat.category.isBaseWeightExempt : true)
       .map((cat, i) => ({
-        weight: cat.items.reduce((tot, currItem) => (tot + currItem.weight), 0),
-        name: cat.category,
-        key: cat.category,
+        weight: getTotalWeight(cat.items),
+        name: cat.category.label,
+        key: cat.category.id,
         color: i < chartColors.length ? chartColors[i] : chroma.random().hex()
       }));
 

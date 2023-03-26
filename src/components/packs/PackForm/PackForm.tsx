@@ -10,7 +10,7 @@ import packFormSchema from "./PackForm.schema";
 interface PackFormProps {
   initialValues?: PackFormData;
   onSubmit(values: PackFormData, actions?: FormikHelpers<PackFormData>): void;
-  onDelete?(): void;
+  onDelete?(): Promise<void>;
 };
 
 export default function PackForm(props: PackFormProps): JSX.Element {
@@ -37,7 +37,10 @@ export default function PackForm(props: PackFormProps): JSX.Element {
           <NumberInput name="capacity" label="Capacity" right={<PaperInput.Affix text='liters' />} />
           <WeightInput name="weight" label="Weight" />
 
-          <FormActions onDelete={props.onDelete} />
+          <FormActions
+            onDelete={props.onDelete}
+            deleteMessage={`Are you sure you want to delete this pack?`}
+          />
         </KeyboardAvoidingView >
       </>
     </Formik>

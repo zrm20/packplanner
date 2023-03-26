@@ -1,20 +1,10 @@
-import { useSelector, useDispatch } from "../../redux/reduxHooks";
-import { confirmDelete } from "../../utils";
-import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { useSelector } from "../../redux/reduxHooks";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
-interface CategoryHook {
-  categoriesSlice: CategorySliceState;
-  categories: Category[];
-  miscCategory: Category;
-  getCategoryById(id: string): Category | null;
-  createNewCategory(newCategory: CategoryFormData, callback?: Function): void;
-};
-
-export default function useCategories(): CategoryHook {
+export default function useCategories() {
   const categoriesSlice = useSelector(state => state.categories);
   const user = useSelector(state => state.user.user);
-  const dispatch = useDispatch();
 
   const categoriesCollection = collection(db, "categories");
 
@@ -29,8 +19,8 @@ export default function useCategories(): CategoryHook {
         ...category
       },
 
-      async update(newValues) {
-        await updateDoc(docRef, { ...newValues });
+      update(newValues): Promise<void> {
+        return updateDoc(docRef, { ...newValues });
       }
     }
   };

@@ -17,20 +17,19 @@ interface PackData extends PackFormData {
   id: string;
 };
 
-// contains all of the data AND methods used for a pack
-interface Pack extends PackData {
-  isSelected: boolean;
-  baseFields: PackData,
+// attaches methods to pack
+interface PackModel extends PackData {
   select(): void;
   openEdit(): void;
-  delete(callback?: Function): void;
-  update(newValues: PackFormData, callback?: Function): void;
+  async delete(callback?: Function): Promise<void>;
+  async update(newValues: PackFormData, callback?: Function): Promise<void>;
   getWeight(): string;
 };
 
 // used in the redux store
 interface PacksSliceState {
-  packs: PackData[],
+  packs: PackData[];
+  isLoading: boolean;
 };
 
 /* --INVENTORY TYPES-- */
@@ -59,14 +58,15 @@ interface PackedItem {
 };
 
 // contains all of the data AND methods used for an item
-interface Item extends ItemData, PackedItem {
-  baseFields: ItemData;
-  category: Category;
+interface Item extends ItemData, PackedItem { };
+
+interface ItemModel extends Item {
+  category: CategoryData;
   addToPack(): void;
   toggleIsPacked(): void;
   openEdit(): void;
-  update(newValues: ItemFormData, callback?: Function): void;
-  delete(callback?: Function): void;
+  update(newValues: ItemFormData, callback?: Function): Promise<void>;
+  delete(callback?: Function): Promise<void>;
   setQty(newQty: number): void;
   getWeight(): string;
   getLiquidCapacity(): string;
@@ -75,6 +75,7 @@ interface Item extends ItemData, PackedItem {
 // used in the redux store
 interface InventorySliceState {
   inventory: ItemData[];
+  isLoading: boolean;
 };
 
 // myPack
@@ -130,6 +131,7 @@ interface Category extends CategoryData {
 
 interface CategorySliceState {
   categories: CategoryData[];
+  isLoading: boolean;
 };
 
 interface CategoryMap {

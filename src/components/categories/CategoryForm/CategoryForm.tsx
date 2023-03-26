@@ -11,8 +11,8 @@ import categoryFormSchema from "./CategoryForm.schema";
 
 interface CategoryFormProps {
   category?: CategoryData;
-  onSubmit(values: CategoryFormData): void
-  onDelete?(): void;
+  onSubmit(values: CategoryFormData): Promise<void>
+  onDelete?(): Promise<void>;
 };
 
 export default function CategoryForm(props: CategoryFormProps): JSX.Element {
@@ -55,7 +55,7 @@ export default function CategoryForm(props: CategoryFormProps): JSX.Element {
           </View>
 
 
-          <FormActions onDelete={props.onDelete} />
+          <FormActions onDelete={props.onDelete} deleteMessage='Do you want to permanently delete this category? All items with this category will be set to "Misc"' />
         </View>
       </>
     </Formik>

@@ -8,6 +8,7 @@ interface Style {
   packsContainer: ViewStyle;
   text: TextStyle;
   emptyText: TextStyle;
+  spinner: ViewStyle;
 };
 
 export default function useStyles() {
@@ -36,6 +37,9 @@ export default function useStyles() {
       },
       emptyText: {
         textAlign: 'center',
+      },
+      spinner: {
+        marginTop: theme.space[3]
       }
     }
   );
