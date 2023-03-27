@@ -1,4 +1,4 @@
-name: EAS Build
+name: Build Staging
 on:
   workflow_dispatch:
 jobs:

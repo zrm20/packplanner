@@ -1,9 +1,12 @@
-name: update
+name: Update Staging Branch
 on: 
   workflow_dispatch:
   push:
     branches:
       - main
+    paths-ignore:
+      - /.github/workflows/*
+      - /README.md
 
 jobs:
   update:
@@ -36,4 +39,4 @@ jobs:
         run: yarn install
 
       - name: Publish update
-        run: eas update --auto
+        run: eas update --branch=staging
