@@ -1,4 +1,4 @@
-name: update
+name: Update Staging Branch
 on: 
   workflow_dispatch:
   push:
