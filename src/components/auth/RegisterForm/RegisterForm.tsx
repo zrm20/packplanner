@@ -47,6 +47,7 @@ export default function RegisterForm(props: RegisterFormProps): JSX.Element {
           label="Confirm Password"
           secureTextEntry
           autoCapitalize="none"
+          submitOnEnter
         />
 
         <SubmitButton mode="contained" style={styles.submit}>

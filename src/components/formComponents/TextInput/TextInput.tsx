@@ -1,18 +1,26 @@
 import React from "react";
-import { View } from "react-native";
+import { NativeSyntheticEvent, TextInputSubmitEditingEventData, View } from "react-native";
 import { HelperText, TextInput as PaperInput, TextInputProps, withTheme } from "react-native-paper";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 
 import useStyles from "./TextInput.styles"
 
-export type CustomTextInputProps = TextInputProps  & {
+export type CustomTextInputProps = TextInputProps & {
   name: string
   label?: string,
+  submitOnEnter?: boolean
 };
+
+type SubmitEvent = NativeSyntheticEvent<TextInputSubmitEditingEventData>;
 
 function TextInput(props: CustomTextInputProps): JSX.Element {
   const styles = useStyles();
   const [field, meta, util] = useField(props.name);
+  const { submitForm } = useFormikContext();
+
+  function handleSubmit(evt: SubmitEvent): void {
+    submitForm();
+  };
 
   const showError: boolean = Boolean(meta.touched && meta.error);
 
@@ -24,7 +32,9 @@ function TextInput(props: CustomTextInputProps): JSX.Element {
         error={showError}
         label={props.label || props.name}
         mode="outlined"
+        returnKeyType="done"
         {...props}
+        onSubmitEditing={props.submitOnEnter ? handleSubmit : props.onSubmitEditing}
       />
       {
         showError &&

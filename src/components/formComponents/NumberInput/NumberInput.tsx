@@ -10,7 +10,7 @@ function NumberInput(props: CustomTextInputProps): JSX.Element {
   const initialText = value ? value.toString() : '';
   const [text, setText] = useState<string>(initialText); // holds the string value of the input
 
-  if(typeof value !== 'number' && typeof value !== 'undefined') {
+  if (typeof value !== 'number' && typeof value !== 'undefined') {
     throw new Error(`Field "${props.name}" return a value of type ${typeof value}, but should be a number`);
   };
 
@@ -19,7 +19,12 @@ function NumberInput(props: CustomTextInputProps): JSX.Element {
   }, [text]);
 
   return (
-    <TextInput value={text} onChangeText={setText} keyboardType="numeric" {...props} />
+    <TextInput
+      value={text}
+      onChangeText={setText}
+      keyboardType="numeric"
+      {...props}
+    />
   );
 };
 

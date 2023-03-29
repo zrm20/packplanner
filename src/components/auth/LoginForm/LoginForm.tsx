@@ -44,6 +44,8 @@ export default function LoginForm(props: LoginFormProps): JSX.Element {
           label="Password"
           secureTextEntry
           autoCapitalize="none"
+          returnKeyType="go"
+          submitOnEnter
         />
 
         <SubmitButton mode="contained" style={styles.submit}>

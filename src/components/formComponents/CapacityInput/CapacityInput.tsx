@@ -17,7 +17,7 @@ function CapacityInput(props: CapacityInputProps): JSX.Element {
   const [inputUnits, setInputUnits] = useState<LiquidCapacityUnit>('ml');
   const [textInput, setTextInput] = useState<string>(mlNumberToText(field.value, inputUnits));
 
-  if(typeof field.value !== 'number' && typeof field.value !== 'undefined') {
+  if (typeof field.value !== 'number' && typeof field.value !== 'undefined') {
     throw new Error(`CapacityInput: Field "${props.name}" return a value of type ${typeof field.value}, but should be a number`);
   };
 
@@ -26,11 +26,11 @@ function CapacityInput(props: CapacityInputProps): JSX.Element {
     // output number in ml ex: 296 (which is 10flOz in ml)
     const valueAsNumber = parseFloat(text);
 
-    if(isNaN(valueAsNumber)) {
+    if (isNaN(valueAsNumber)) {
       return 0;
     };
 
-    switch(inputUnits) {
+    switch (inputUnits) {
       case 'ml': return valueAsNumber;
       case 'oz': return flOzToMl(valueAsNumber);
     };
@@ -39,11 +39,11 @@ function CapacityInput(props: CapacityInputProps): JSX.Element {
   function mlNumberToText(ml: number, targetUnit: LiquidCapacityUnit): string {
     // input is number value in ml, and target unit ex: (10, 'oz') => this is an input of 10ml expected to be converted to fl oz
     // output ex: ".34" => .34 fl oz is equal to 10ml
-    if(ml === 0) {
+    if (ml === 0) {
       return '';
     };
 
-    switch(targetUnit) {
+    switch (targetUnit) {
       case 'ml': return ml.toString();
       case 'oz': return mlToFlOz(ml).toString();
     };
@@ -75,6 +75,7 @@ function CapacityInput(props: CapacityInputProps): JSX.Element {
           onChangeText={handleTextChange}
           right={<TextInput.Affix text={inputUnits} />}
           keyboardType="numeric"
+          returnKeyType="done"
           error={Boolean(meta.touched && meta.error)}
           {...props}
         />

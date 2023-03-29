@@ -14,7 +14,7 @@ import { kgToLbs, kgToOz, ozToKg, lbsToKg, roundedKg } from "../../../utils/weig
   On changing the input, the value is converted from the input text to kg and stored in formik.
 */
 
-type WeightInputProps = TextInputProps  & {
+type WeightInputProps = TextInputProps & {
   name: string
   label?: string,
 };
@@ -25,18 +25,18 @@ function WeightInput(props: WeightInputProps): JSX.Element {
   const [textInput, setTextInput] = useState<string>(kgNumberToText(field.value, inputUnits));
   const styles = useStyles();
 
-  if(typeof field.value !== 'number' && typeof field.value !== 'undefined') {
+  if (typeof field.value !== 'number' && typeof field.value !== 'undefined') {
     throw new Error(`WeightInput: Field "${props.name}" return a value of type ${typeof field.value}, but should be a number`);
   };
 
   function textToKgNumber(text: string): number {
     const valueAsNumber = parseFloat(text);
 
-    if(isNaN(valueAsNumber)) {
+    if (isNaN(valueAsNumber)) {
       return 0;
     };
 
-    switch(inputUnits) {
+    switch (inputUnits) {
       case 'kg': return roundedKg(valueAsNumber);
       case 'lb': return lbsToKg(valueAsNumber);
       case 'oz': return ozToKg(valueAsNumber);
@@ -44,11 +44,11 @@ function WeightInput(props: WeightInputProps): JSX.Element {
   };
 
   function kgNumberToText(kg: number, targetUnit: WeightUnit): string {
-    if(kg === 0) {
+    if (kg === 0) {
       return '';
     };
 
-    switch(targetUnit) {
+    switch (targetUnit) {
       case 'kg': return kg.toString();
       case 'lb': return kgToLbs(kg).toString();
       case 'oz': return kgToOz(kg).toString();
@@ -82,6 +82,7 @@ function WeightInput(props: WeightInputProps): JSX.Element {
           keyboardType="numeric"
           right={<PaperInput.Affix text={inputUnits} />}
           style={styles.textInput}
+          returnKeyType="done"
           {...props}
         />
 
