@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { useField } from "formik";
-import { FlatList, View } from "react-native";
-import { IconButton, Searchbar } from "react-native-paper";
+import { useField } from 'formik';
+import React, { useState } from 'react';
+import { FlatList, View } from 'react-native';
+import { IconButton, Searchbar } from 'react-native-paper';
 
-import useStyles from "./CategoryIconPicker.styles";
-import icons from "./iconsArray";
+import useStyles from './CategoryIconPicker.styles';
+import icons from './iconsArray';
 
-interface CategoryIconPickerProps {
-};
+interface CategoryIconPickerProps {}
 
 export default function CategoryIconPicker(props: CategoryIconPickerProps): JSX.Element {
   const styles = useStyles();
@@ -16,10 +15,10 @@ export default function CategoryIconPicker(props: CategoryIconPickerProps): JSX.
 
   function searchFilter(icon: string): boolean {
     return icon.includes(search.toLowerCase().replaceAll(' ', '-'));
-  };
+  }
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <IconButton icon={field.value} disabled size={50} />
 
       <View style={styles.searchBar}>
@@ -28,16 +27,11 @@ export default function CategoryIconPicker(props: CategoryIconPickerProps): JSX.
 
       <FlatList
         data={icons.filter(searchFilter)}
-        keyExtractor={item => item}
+        keyExtractor={(item) => item}
         numColumns={6}
-        renderItem={({ item }) => (
-          <IconButton
-            icon={item}
-            onPress={() => util.setValue(item)}
-          />
-        )}
+        renderItem={({ item }) => <IconButton icon={item} onPress={() => util.setValue(item)} />}
         contentContainerStyle={styles.flatListContent}
       />
     </View>
   );
-};
+}

@@ -1,16 +1,16 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
-import { View } from "react-native";
-import { Button, Text } from "react-native-paper";
-import { useCategories, useDeleteCategory } from "../../../hooks";
-import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 
-import { CategoriesStackParamList } from "../../../navigation/navigation.types";
-import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
-import CategoryForm from "../CategoryForm/CategoryForm";
-import useStyles from "./EditCategoryScreen.styles";
+import useStyles from './EditCategoryScreen.styles';
+import { useCategories, useDeleteCategory } from '../../../hooks';
+import useThrowAlert from '../../../hooks/alerts/useThrowAlert';
+import { CategoriesStackParamList } from '../../../navigation/navigation.types';
+import { ContainedModalTitle, SafeAreaScreen } from '../../ui';
+import CategoryForm from '../CategoryForm/CategoryForm';
 
-type EditCategoryScreenProps = NativeStackScreenProps<CategoriesStackParamList, "EditCategory">;
+type EditCategoryScreenProps = NativeStackScreenProps<CategoriesStackParamList, 'EditCategory'>;
 
 export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.Element {
   const styles = useStyles();
@@ -27,38 +27,36 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
       <SafeAreaScreen style={styles.container}>
         <View style={styles.errorContainer}>
           <Text>Could not find a category with that id</Text>
-          <Button onPress={goBack} mode='contained' >Go Back</Button>
+          <Button onPress={goBack} mode="contained">
+            Go Back
+          </Button>
         </View>
       </SafeAreaScreen>
-    )
-  };
+    );
+  }
 
   async function handleSubmit(newValues: CategoryFormData): Promise<void> {
     try {
       await category?.update(newValues);
       goBack();
     } catch (err) {
-      catchUnknownError(err, "Failed to update category. Please try again.")
+      catchUnknownError(err, 'Failed to update category. Please try again.');
     }
-  };
+  }
 
   async function handleDelete(): Promise<void> {
     try {
       await deleteCategory();
-      props.navigation.navigate("CategoriesHome");
+      props.navigation.navigate('CategoriesHome');
     } catch (err) {
-      catchUnknownError(err, "Failed to delete category. Please try again.")
+      catchUnknownError(err, 'Failed to delete category. Please try again.');
     }
-  };
+  }
 
   return (
-    <SafeAreaScreen style={styles.container} >
+    <SafeAreaScreen style={styles.container}>
       <ContainedModalTitle title="Edit Custom Category" />
-      <CategoryForm
-        category={category}
-        onSubmit={handleSubmit}
-        onDelete={handleDelete}
-      />
+      <CategoryForm category={category} onSubmit={handleSubmit} onDelete={handleDelete} />
     </SafeAreaScreen>
   );
-};
+}

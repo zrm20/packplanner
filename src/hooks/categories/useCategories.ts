@@ -1,45 +1,46 @@
-import { useSelector } from "../../redux/reduxHooks";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
+
+import { db } from '../../config/firebase';
+import { useSelector } from '../../redux/reduxHooks';
 
 export default function useCategories() {
-  const categoriesSlice = useSelector(state => state.categories);
-  const user = useSelector(state => state.user.user);
+  const categoriesSlice = useSelector((state) => state.categories);
+  const user = useSelector((state) => state.user.user);
 
-  const categoriesCollection = collection(db, "categories");
+  const categoriesCollection = collection(db, 'categories');
 
   function createCategory(category: CategoryData): Category {
-    const docRef = doc(db, "categories", category.id);
+    const docRef = doc(db, 'categories', category.id);
 
     return {
       ...category,
 
       // original base fields
       baseFields: {
-        ...category
+        ...category,
       },
 
       update(newValues): Promise<void> {
         return updateDoc(docRef, { ...newValues });
-      }
-    }
-  };
+      },
+    };
+  }
 
   const categories = categoriesSlice.categories.map(createCategory);
-  const miscCategory = categories.find(category => category.id === '00')!
+  const miscCategory = categories.find((category) => category.id === '00')!;
 
   function getCategoryById(id: string): Category | null {
-    return categories.find(category => category.id === id) || null;
-  };
+    return categories.find((category) => category.id === id) || null;
+  }
 
   async function createNewCategory(newCategory: CategoryFormData): Promise<void> {
     const newDoc: CategoryDocument = {
       ...newCategory,
-      uid: user!.uid
-    }
+      uid: user!.uid,
+    };
 
     await addDoc(categoriesCollection, newDoc);
-  };
+  }
 
   return {
     categories,
@@ -48,4 +49,4 @@ export default function useCategories() {
     getCategoryById,
     createNewCategory,
   };
-};
+}

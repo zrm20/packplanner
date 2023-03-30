@@ -1,19 +1,19 @@
-import React from "react";
-import { View } from "react-native";
-import { Divider } from "react-native-paper";
+import React from 'react';
+import { View } from 'react-native';
+import { Divider } from 'react-native-paper';
 
-import { ChartContextProvider } from "../../../hooks";
-import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
-import CategoryPieChart from "../CategoryPieChart/CategoryPieChart";
-import useStyles from "./ChartScreen.styles";
-import CategoryChartLegend from "../CategoryChartLegend/CategoryChartLegend";
-import CategoryChartToolbar from "../CategoryChartToolbar/CategoryChartToolbar";
+import useStyles from './ChartScreen.styles';
+import { ChartContextProvider } from '../../../hooks';
+import { ContainedModalTitle, SafeAreaScreen } from '../../ui';
+import CategoryChartLegend from '../CategoryChartLegend/CategoryChartLegend';
+import CategoryChartToolbar from '../CategoryChartToolbar/CategoryChartToolbar';
+import CategoryPieChart from '../CategoryPieChart/CategoryPieChart';
 
 export default function ChartScreen(): JSX.Element {
   const styles = useStyles();
 
   return (
-    <SafeAreaScreen style={styles.container} >
+    <SafeAreaScreen style={styles.container}>
       <ContainedModalTitle title="Weight by Category" />
 
       <ChartContextProvider>
@@ -33,4 +33,4 @@ export default function ChartScreen(): JSX.Element {
       </ChartContextProvider>
     </SafeAreaScreen>
   );
-};
+}

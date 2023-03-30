@@ -1,18 +1,16 @@
-import Slider from "@react-native-community/slider";
-import React, { useState } from "react";
-import { View } from "react-native";
-import { Text } from "react-native-paper";
-import { useTheme } from "../../../theme";
+import Slider from '@react-native-community/slider';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { Text } from 'react-native-paper';
 
-import { SafeAreaScreen } from "../../ui";
-import WaterBottle from "../WaterBottle/WaterBottle";
-import WaterItemsList from "../WaterItemsList/WaterItemsList";
-import WaterStats from "../WaterStats/WaterStats";
-import useStyles from "./WaterScreen.styles";
+import useStyles from './WaterScreen.styles';
+import { useTheme } from '../../../theme';
+import { SafeAreaScreen } from '../../ui';
+import WaterBottle from '../WaterBottle/WaterBottle';
+import WaterItemsList from '../WaterItemsList/WaterItemsList';
+import WaterStats from '../WaterStats/WaterStats';
 
-interface WaterScreenProps {
-
-};
+interface WaterScreenProps {}
 
 export default function WaterScreen(props: WaterScreenProps): JSX.Element {
   const styles = useStyles();
@@ -20,7 +18,7 @@ export default function WaterScreen(props: WaterScreenProps): JSX.Element {
   const { colors } = useTheme();
 
   return (
-    <SafeAreaScreen style={styles.container} >
+    <SafeAreaScreen style={styles.container}>
       <View style={styles.topSection}>
         <View style={styles.waterBottleContainer}>
           <WaterBottle fillLevel={fillLevel} size={80} />
@@ -46,4 +44,4 @@ export default function WaterScreen(props: WaterScreenProps): JSX.Element {
       </View>
     </SafeAreaScreen>
   );
-};
+}

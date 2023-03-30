@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { ActivityIndicator, Button, Dialog, Text, TextInput } from "react-native-paper";
-import { useLists } from "../../../hooks";
-import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
+import React, { useState } from 'react';
+import { ActivityIndicator, Button, Dialog, Text, TextInput } from 'react-native-paper';
 
-import useStyles from "./NewListModal.styles";
+import useStyles from './NewListModal.styles';
+import { useLists } from '../../../hooks';
+import useThrowAlert from '../../../hooks/alerts/useThrowAlert';
 
 interface ListModalProps {
   visible: boolean;
   toggleVisibility(): void;
-};
+}
 
 export default function NewListModal(props: ListModalProps): JSX.Element {
   const styles = useStyles();
@@ -21,13 +21,13 @@ export default function NewListModal(props: ListModalProps): JSX.Element {
     setIsLoading(true);
     try {
       await savePackAsList(text);
-      setText("");
+      setText('');
       props.toggleVisibility();
     } catch (err) {
-      catchUnknownError("Failed to save list. Please try again.")
-    };
+      catchUnknownError('Failed to save list. Please try again.');
+    }
     setIsLoading(false);
-  };
+  }
 
   return (
     <Dialog style={styles.container} visible={props.visible} onDismiss={props.toggleVisibility}>
@@ -43,18 +43,15 @@ export default function NewListModal(props: ListModalProps): JSX.Element {
           onChangeText={setText}
         />
       </Dialog.Content>
-      {
-        isLoading &&
-        <ActivityIndicator />
-      }
+      {isLoading && <ActivityIndicator />}
       <Dialog.Actions style={styles.actions}>
-        <Button
-          mode="contained"
-          disabled={!Boolean(text) || isLoading}
-          onPress={submitList}
-        >Save</Button>
-        <Button mode="outlined" onPress={props.toggleVisibility}>Cancel</Button>
+        <Button mode="contained" disabled={!text || isLoading} onPress={submitList}>
+          Save
+        </Button>
+        <Button mode="outlined" onPress={props.toggleVisibility}>
+          Cancel
+        </Button>
       </Dialog.Actions>
     </Dialog>
   );
-};
+}

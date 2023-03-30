@@ -31,11 +31,11 @@ export function kgToOz(kg: number): number {
 export function kgToLbsOz(kg: number): number[] {
   //returns array of [0]lbs, and [1]remaining oz;
   let oz = kgToOz(kg);
-  let lbs = Math.floor(oz / 16);
+  const lbs = Math.floor(oz / 16);
   oz = oz % 16;
   return [lbs, oz];
 }
 
 export function roundedKg(kg: number): number {
   return Math.round(kg * 100) / 100;
-};
+}

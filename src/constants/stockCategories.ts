@@ -6,7 +6,7 @@ const stockCategories: CategoryData[] = [
     icon: 'cup-water',
     isBaseWeightExempt: false,
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '02',
@@ -15,7 +15,7 @@ const stockCategories: CategoryData[] = [
     icon: 'food-drumstick',
     isBaseWeightExempt: true,
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '03',
@@ -24,7 +24,7 @@ const stockCategories: CategoryData[] = [
     icon: 'fuel',
     isBaseWeightExempt: true,
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '04',
@@ -33,7 +33,7 @@ const stockCategories: CategoryData[] = [
     icon: 'tent',
     isBaseWeightExempt: false,
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '05',
@@ -42,7 +42,7 @@ const stockCategories: CategoryData[] = [
     icon: 'tshirt-crew',
     isBaseWeightExempt: false,
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '06',
@@ -51,7 +51,7 @@ const stockCategories: CategoryData[] = [
     label: 'Cooking',
     icon: 'grill',
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '07',
@@ -60,7 +60,7 @@ const stockCategories: CategoryData[] = [
     isBaseWeightExempt: false,
     icon: 'knife-military',
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '08',
@@ -69,7 +69,7 @@ const stockCategories: CategoryData[] = [
     isBaseWeightExempt: false,
     icon: 'map',
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '09',
@@ -78,7 +78,7 @@ const stockCategories: CategoryData[] = [
     isBaseWeightExempt: false,
     icon: 'medical-bag',
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '10',
@@ -87,7 +87,7 @@ const stockCategories: CategoryData[] = [
     isBaseWeightExempt: false,
     icon: 'battery-charging-100',
     isStockCategory: true,
-    uid: "_"
+    uid: '_',
   },
   {
     id: '00',
@@ -96,10 +96,10 @@ const stockCategories: CategoryData[] = [
     isBaseWeightExempt: false,
     icon: 'chart-bubble',
     isStockCategory: true,
-    uid: "_"
-  }
+    uid: '_',
+  },
 ];
 
-export const stockCategoriesList: string[] = stockCategories.map(category => category.value);
+export const stockCategoriesList: string[] = stockCategories.map((category) => category.value);
 
 export default stockCategories;

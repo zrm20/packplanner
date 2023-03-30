@@ -1,11 +1,23 @@
-import React, { useState } from "react";
-import { View } from "react-native";
-import { TextInput as PaperInput, HelperText, ToggleButton, TextInputProps, withTheme } from "react-native-paper";
-import { useField } from "formik";
+import { useField } from 'formik';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import {
+  TextInput as PaperInput,
+  HelperText,
+  ToggleButton,
+  TextInputProps,
+  withTheme,
+} from 'react-native-paper';
 
-import { ToggleButtonText } from "../../ui";
-import useStyles from "./WeightInput.styles"
-import { kgToLbs, kgToOz, ozToKg, lbsToKg, roundedKg } from "../../../utils/weightConversions/weightConversions";
+import useStyles from './WeightInput.styles';
+import {
+  kgToLbs,
+  kgToOz,
+  ozToKg,
+  lbsToKg,
+  roundedKg,
+} from '../../../utils/weightConversions/weightConversions';
+import { ToggleButtonText } from '../../ui';
 
 /*
   The purpose of this function is to have a formik controlled input with the ability to select input unit type.
@@ -15,8 +27,8 @@ import { kgToLbs, kgToOz, ozToKg, lbsToKg, roundedKg } from "../../../utils/weig
 */
 
 type WeightInputProps = TextInputProps & {
-  name: string
-  label?: string,
+  name: string;
+  label?: string;
 };
 
 function WeightInput(props: WeightInputProps): JSX.Element {
@@ -26,41 +38,51 @@ function WeightInput(props: WeightInputProps): JSX.Element {
   const styles = useStyles();
 
   if (typeof field.value !== 'number' && typeof field.value !== 'undefined') {
-    throw new Error(`WeightInput: Field "${props.name}" return a value of type ${typeof field.value}, but should be a number`);
-  };
+    throw new Error(
+      `WeightInput: Field "${
+        props.name
+      }" return a value of type ${typeof field.value}, but should be a number`
+    );
+  }
 
   function textToKgNumber(text: string): number {
     const valueAsNumber = parseFloat(text);
 
     if (isNaN(valueAsNumber)) {
       return 0;
-    };
+    }
 
     switch (inputUnits) {
-      case 'kg': return roundedKg(valueAsNumber);
-      case 'lb': return lbsToKg(valueAsNumber);
-      case 'oz': return ozToKg(valueAsNumber);
-    };
-  };
+      case 'kg':
+        return roundedKg(valueAsNumber);
+      case 'lb':
+        return lbsToKg(valueAsNumber);
+      case 'oz':
+        return ozToKg(valueAsNumber);
+    }
+  }
 
   function kgNumberToText(kg: number, targetUnit: WeightUnit): string {
     if (kg === 0) {
       return '';
-    };
+    }
 
     switch (targetUnit) {
-      case 'kg': return kg.toString();
-      case 'lb': return kgToLbs(kg).toString();
-      case 'oz': return kgToOz(kg).toString();
-    };
-  };
+      case 'kg':
+        return kg.toString();
+      case 'lb':
+        return kgToLbs(kg).toString();
+      case 'oz':
+        return kgToOz(kg).toString();
+    }
+  }
 
   function handleTextChange(inputText: string): void {
     setTextInput(inputText);
 
     const kgValue = textToKgNumber(inputText);
     util.setValue(kgValue);
-  };
+  }
 
   function handleInputUnitChange(inputUnit: string): void {
     setInputUnits(inputUnit as WeightUnit);
@@ -68,10 +90,10 @@ function WeightInput(props: WeightInputProps): JSX.Element {
     // with new input unit, convert the stored number value(in kg) to the target unit as a string
     const convertedTextValue = kgNumberToText(field.value, inputUnit as WeightUnit);
     setTextInput(convertedTextValue);
-  };
+  }
 
   return (
-    <View style={[styles.container, props.style]} >
+    <View style={[styles.container, props.style]}>
       <View style={styles.inputContainer}>
         <PaperInput
           value={textInput}
@@ -89,20 +111,15 @@ function WeightInput(props: WeightInputProps): JSX.Element {
         <ToggleButton.Row
           value={inputUnits}
           onValueChange={handleInputUnitChange}
-          style={styles.unitSelector}
-        >
+          style={styles.unitSelector}>
           <ToggleButton icon={() => <ToggleButtonText label="oz" />} value="oz" />
           <ToggleButton icon={() => <ToggleButtonText label="lb" />} value="lb" />
           <ToggleButton icon={() => <ToggleButtonText label="kg" />} value="kg" />
         </ToggleButton.Row>
-
       </View>
-      {
-        meta.touched && meta.error &&
-        <HelperText type="error">{meta.error}</HelperText>
-      }
+      {meta.touched && meta.error && <HelperText type="error">{meta.error}</HelperText>}
     </View>
   );
-};
+}
 
 export default withTheme(WeightInput);

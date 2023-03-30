@@ -1,5 +1,3 @@
-import SettingsScreen from "./SettingsScreen/SettingsScreen";
+import SettingsScreen from './SettingsScreen/SettingsScreen';
 
-export {
-  SettingsScreen,
-};
+export { SettingsScreen };

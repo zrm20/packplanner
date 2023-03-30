@@ -1,9 +1,9 @@
-import SafeAreaScreen from "./SafeAreaScreen/SafeAreaScreen";
-import ToggleButtonText from "./ToggleButtonText/ToggleButtonText";
-import CloseScreenButton from "./CloseScreenButton/CloseScreenButton";
-import LoadingBackdrop from "./LoadingBackdrop/LoadingBackdrop";
-import AppAlert from "./AppAlert/AppAlert";
-import ContainedModalTitle from "./ContainedModalTitle/ContainedModalTitle";
+import AppAlert from './AppAlert/AppAlert';
+import CloseScreenButton from './CloseScreenButton/CloseScreenButton';
+import ContainedModalTitle from './ContainedModalTitle/ContainedModalTitle';
+import LoadingBackdrop from './LoadingBackdrop/LoadingBackdrop';
+import SafeAreaScreen from './SafeAreaScreen/SafeAreaScreen';
+import ToggleButtonText from './ToggleButtonText/ToggleButtonText';
 
 export {
   SafeAreaScreen,
@@ -11,5 +11,5 @@ export {
   CloseScreenButton,
   LoadingBackdrop,
   AppAlert,
-  ContainedModalTitle
+  ContainedModalTitle,
 };

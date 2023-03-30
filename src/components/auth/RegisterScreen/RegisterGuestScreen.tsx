@@ -1,15 +1,15 @@
-import React from "react";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Button, Text } from "react-native-paper";
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
+import { Button, Text } from 'react-native-paper';
 
-import useUser from "../../../hooks/user/useUser";
-import { SettingsStackParamList } from "../../../navigation/navigation.types";
-import { SafeAreaScreen } from "../../ui";
-import LoadingBackdrop from "../../ui/LoadingBackdrop/LoadingBackdrop";
-import RegisterForm from "../RegisterForm/RegisterForm";
-import useStyles from "./RegisterScreen.styles";
+import useStyles from './RegisterScreen.styles';
+import useUser from '../../../hooks/user/useUser';
+import { SettingsStackParamList } from '../../../navigation/navigation.types';
+import { SafeAreaScreen } from '../../ui';
+import LoadingBackdrop from '../../ui/LoadingBackdrop/LoadingBackdrop';
+import RegisterForm from '../RegisterForm/RegisterForm';
 
-type RegisterGuestScreenProps = NativeStackScreenProps<SettingsStackParamList, "RegisterGuest">;
+type RegisterGuestScreenProps = NativeStackScreenProps<SettingsStackParamList, 'RegisterGuest'>;
 
 export default function RegisterGuestScreen(props: RegisterGuestScreenProps): JSX.Element {
   const styles = useStyles();
@@ -17,8 +17,8 @@ export default function RegisterGuestScreen(props: RegisterGuestScreenProps): JS
   const { goBack, navigate } = props.navigation;
 
   function handleSubmit(values: RegisterFormData): void {
-    registerGuest(values, () => navigate("SettingsHome"));
-  };
+    registerGuest(values, () => navigate('SettingsHome'));
+  }
 
   return (
     <>
@@ -29,8 +29,10 @@ export default function RegisterGuestScreen(props: RegisterGuestScreenProps): JS
         </Text>
 
         <RegisterForm style={styles.form} onSubmit={handleSubmit} />
-        <Button mode="contained" onPress={goBack}>Back</Button>
+        <Button mode="contained" onPress={goBack}>
+          Back
+        </Button>
       </SafeAreaScreen>
     </>
   );
-};
+}

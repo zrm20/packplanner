@@ -24,5 +24,4 @@ describe('isAndroid()', () => {
 
     expect(result).toBe(false);
   });
-
 });

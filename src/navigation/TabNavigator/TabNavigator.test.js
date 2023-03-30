@@ -1,9 +1,9 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { View } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { render, screen, fireEvent } from '@testing-library/react-native';
+import React from 'react';
+import { View } from 'react-native';
 
-import TabNavigator from './TabNavigator'
+import TabNavigator from './TabNavigator';
 
 // handle console warning by mocking this dependency
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
@@ -11,23 +11,23 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 describe('<TabNavigator />', () => {
   let appTabs;
 
-  const TestComponent1 = () => <View testID='1' />
-  const TestComponent2 = () => <View testID='2' />
-  const TestComponent3 = () => <View testID='3' />
+  const TestComponent1 = () => <View testID="1" />;
+  const TestComponent2 = () => <View testID="2" />;
+  const TestComponent3 = () => <View testID="3" />;
 
   beforeEach(() => {
     appTabs = {
-      "Screen1": {
+      Screen1: {
         component: TestComponent1,
-        iconName: "star"
+        iconName: 'star',
       },
-      "Screen2": {
+      Screen2: {
         component: TestComponent2,
-        iconName: "star"
+        iconName: 'star',
       },
-      "Screen3": {
+      Screen3: {
         component: TestComponent3,
-        iconName: "star"
+        iconName: 'star',
       },
     };
   });
@@ -55,7 +55,7 @@ describe('<TabNavigator />', () => {
       </NavigationContainer>
     );
 
-    const screenComponent = screen.getByTestId("1");
+    const screenComponent = screen.getByTestId('1');
 
     expect(screenComponent).toBeTruthy();
   });

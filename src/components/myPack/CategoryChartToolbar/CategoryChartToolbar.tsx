@@ -1,15 +1,13 @@
-import React from "react";
-import { View } from "react-native";
-import { Surface, Switch, Text } from "react-native-paper";
-import Slider from "@react-native-community/slider";
+import Slider from '@react-native-community/slider';
+import React from 'react';
+import { View } from 'react-native';
+import { Surface, Switch, Text } from 'react-native-paper';
 
-import { useChartContext } from "../../../hooks";
-import useStyles from "./CategoryChartToolbar.styles";
-import { useTheme } from "../../../theme";
+import useStyles from './CategoryChartToolbar.styles';
+import { useChartContext } from '../../../hooks';
+import { useTheme } from '../../../theme';
 
-interface CategoryChartToolbarProps {
-
-};
+interface CategoryChartToolbarProps {}
 
 export default function CategoryChartToolbar(props: CategoryChartToolbarProps): JSX.Element {
   const styles = useStyles();
@@ -20,11 +18,11 @@ export default function CategoryChartToolbar(props: CategoryChartToolbarProps): 
     hideLiquidWeight,
     setHideLiquidWeight,
     liquidLevel,
-    setLiquidLevel
+    setLiquidLevel,
   } = useChartContext();
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <Surface style={styles.surface}>
         <View style={styles.row}>
           <View style={styles.switchGroup}>
@@ -52,4 +50,4 @@ export default function CategoryChartToolbar(props: CategoryChartToolbarProps): 
       </Surface>
     </View>
   );
-};
+}

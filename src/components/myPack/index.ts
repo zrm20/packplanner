@@ -1,9 +1,5 @@
-import MyPackScreen from "./MyPackScreen/MyPackScreen";
-import ChecklistScreen from "./ChecklistScreen/ChecklistScreen";
-import ChartScreen from "./ChartScreen/ChartScreen";
+import ChartScreen from './ChartScreen/ChartScreen';
+import ChecklistScreen from './ChecklistScreen/ChecklistScreen';
+import MyPackScreen from './MyPackScreen/MyPackScreen';
 
-export {
-  MyPackScreen,
-  ChecklistScreen,
-  ChartScreen
-};
+export { MyPackScreen, ChecklistScreen, ChartScreen };
