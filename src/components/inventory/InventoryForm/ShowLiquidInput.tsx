@@ -7,6 +7,7 @@ import useStyles from './InventoryForm.styles';
 import { CapacityInput } from '../../formComponents';
 
 export default function ShowLiquidInput(): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, utils] = useField('liquidCapacity');
   const [showLiquid, setShowLiquid] = useState<boolean>(Boolean(field.value));
   const styles = useStyles();

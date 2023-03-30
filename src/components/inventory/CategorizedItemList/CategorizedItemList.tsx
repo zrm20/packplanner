@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { FlatList, Text, TextStyle } from 'react-native';
 
 import useStyles from './CategorizedItemList.styles';

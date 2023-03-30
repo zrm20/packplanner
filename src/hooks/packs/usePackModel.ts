@@ -5,7 +5,6 @@ import { useMemo } from 'react';
 import { db } from '../../config/firebase';
 import { setSelectedPack } from '../../redux/myPackSlice';
 import { useSelector, useDispatch } from '../../redux/reduxHooks';
-import { confirmDelete } from '../../utils';
 import useSettings from '../settings/useSettings';
 
 export default function usePackModel(pack: PackData): PackModel {

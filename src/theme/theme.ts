@@ -6,7 +6,7 @@ import brandColors from './brandColors';
 
 type Sizes = number[];
 
-interface AppColors extends MD3Colors {}
+interface AppColors extends MD3Colors { }
 
 export interface AppTheme extends MD3Theme {
   colors: AppColors;
@@ -17,9 +17,7 @@ export interface AppTheme extends MD3Theme {
 const space: Sizes = [0, 4, 8, 16, 32, 64];
 const borderWeight: Sizes = [0, 1, 2, 3, 5, 8];
 const white = '#fff';
-const primaryScale = chroma.scale([brandColors.primary, 'white']);
 const secondaryScale = chroma.scale([brandColors.secondary, 'white']);
-const tertiaryScale = chroma.scale([brandColors.tertiary, 'white']);
 
 const lightColors: AppColors = {
   ...MD3LightTheme.colors,

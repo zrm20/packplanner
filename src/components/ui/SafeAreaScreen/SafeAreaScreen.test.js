@@ -3,7 +3,6 @@ import React from 'react';
 import { Platform, StatusBar } from 'react-native';
 
 import SafeAreaScreen from './SafeAreaScreen';
-import { isAndroid } from '../../../utils';
 
 describe('<SafeAreaScreen />', () => {
   const originalPlatform = Platform.OS;

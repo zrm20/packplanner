@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import camelize from 'camelize-ts';
-import uuid from 'react-native-uuid';
 
 import { stockCategories } from '../constants';
 

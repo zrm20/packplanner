@@ -10,7 +10,6 @@ import {
   removeFromPack as removeFromPackAction,
 } from '../../redux/myPackSlice';
 import { useDispatch, useSelector } from '../../redux/reduxHooks';
-import { confirmDelete } from '../../utils';
 import useSettings from '../settings/useSettings';
 
 export default function useItemModel(item: Item): ItemModel {
@@ -26,7 +25,6 @@ export default function useItemModel(item: Item): ItemModel {
   const { navigate } = useNavigation();
 
   const docRef = doc(db, 'items', item.id);
-  const packedItem = myPackItems.find((packedItem) => packedItem.id === item.id);
 
   const itemModel: ItemModel = useMemo(
     () => ({

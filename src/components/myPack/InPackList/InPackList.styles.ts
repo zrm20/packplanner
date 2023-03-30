@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle, Animated, StyleProp, TextStyle } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 import { useTheme } from '../../../theme';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dialog, Portal, Snackbar, Text } from 'react-native-paper';
+import { Button, Dialog, Portal, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import useStyles from './AppAlert.styles';
@@ -24,7 +24,7 @@ export default function AppAlert(): JSX.Element {
       case 'error':
         return 'Error';
       default:
-        'Info';
+        return 'Info';
     }
   }
 

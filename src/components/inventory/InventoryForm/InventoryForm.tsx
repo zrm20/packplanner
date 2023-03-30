@@ -1,7 +1,6 @@
 import { Formik } from 'formik';
 import React from 'react';
-import { Keyboard, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 
 import inventoryFormSchema from './InventoryForm.schema';
 import useStyles from './InventoryForm.styles';
@@ -10,7 +9,6 @@ import { useCategories } from '../../../hooks';
 import {
   TextInput,
   WeightInput,
-  SubmitButton,
   PickerInput,
   FormikBackdrop,
   FormActions,

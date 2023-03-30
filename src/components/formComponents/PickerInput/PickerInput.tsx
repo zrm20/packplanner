@@ -18,6 +18,7 @@ interface PickerInputProps extends PickerProps {
 
 export default function PickerInput(props: PickerInputProps): JSX.Element {
   const { name, data, style, label, ...rest } = props;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, utils] = useField<string>(name);
 
   if (!field) {

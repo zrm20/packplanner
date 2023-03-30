@@ -6,10 +6,9 @@ import { IconButton, Searchbar } from 'react-native-paper';
 import useStyles from './CategoryIconPicker.styles';
 import icons from './iconsArray';
 
-interface CategoryIconPickerProps {}
-
-export default function CategoryIconPicker(props: CategoryIconPickerProps): JSX.Element {
+export default function CategoryIconPicker(): JSX.Element {
   const styles = useStyles();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, util] = useField<string>('icon');
   const [search, setSearch] = useState('');
 

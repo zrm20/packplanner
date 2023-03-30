@@ -17,6 +17,7 @@ interface ToggleSwitchInputProps {
 export default function ToggleSwitchInput(props: ToggleSwitchInputProps): JSX.Element {
   const { row = true } = props;
   const styles = useStyles(row);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, util] = useField<boolean>(props.name);
 
   function handleToggle(newValue: boolean) {

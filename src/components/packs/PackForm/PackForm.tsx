@@ -9,7 +9,6 @@ import {
   TextInput,
   WeightInput,
   NumberInput,
-  SubmitButton,
   FormikBackdrop,
   FormActions,
 } from '../../formComponents';

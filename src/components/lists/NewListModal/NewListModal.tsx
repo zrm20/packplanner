@@ -24,7 +24,7 @@ export default function NewListModal(props: ListModalProps): JSX.Element {
       setText('');
       props.toggleVisibility();
     } catch (err) {
-      catchUnknownError('Failed to save list. Please try again.');
+      catchUnknownError(err, 'Failed to save list. Please try again.');
     }
     setIsLoading(false);
   }
