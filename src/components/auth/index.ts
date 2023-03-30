@@ -1,11 +1,6 @@
-import SplashScreen from "./SplashScreen/SplashScreen";
-import RegisterScreen from "./RegisterScreen/RegisterScreen";
-import LoginScreen from "./LoginScreen/LoginScreen";
-import RegisterGuestScreen from "./RegisterScreen/RegisterGuestScreen";
+import LoginScreen from './LoginScreen/LoginScreen';
+import RegisterGuestScreen from './RegisterScreen/RegisterGuestScreen';
+import RegisterScreen from './RegisterScreen/RegisterScreen';
+import SplashScreen from './SplashScreen/SplashScreen';
 
-export {
-  SplashScreen,
-  RegisterScreen,
-  LoginScreen,
-  RegisterGuestScreen
-};
+export { SplashScreen, RegisterScreen, LoginScreen, RegisterGuestScreen };

@@ -1,16 +1,15 @@
-import useInventory from "./inventory/useInventory";
-import useInventoryActions from "./inventory/useInventoryActions";
-import usePacks from "./packs/usePacks";
-import usePackModel from "./packs/usePackModel";
-import useSettings from "./settings/useSettings";
-import useCategories from "./categories/useCategories";
-import useChartContext from "./chart/useChartContext";
-import { ChartContextProvider } from "./chart/useChartContext";
-import useAuth from "./user/useAuth";
-import useLists from "./lists/useLists";
-import useSubscribeToFirestore from "./firestore/useSubscribeToFirestore";
-import useDeleteCategory from "./categories/useDeleteCategory";
-import useItemModel from "./inventory/useItemModel";
+import useCategories from './categories/useCategories';
+import useDeleteCategory from './categories/useDeleteCategory';
+import useChartContext, { ChartContextProvider } from './chart/useChartContext';
+import useSubscribeToFirestore from './firestore/useSubscribeToFirestore';
+import useInventory from './inventory/useInventory';
+import useInventoryActions from './inventory/useInventoryActions';
+import useItemModel from './inventory/useItemModel';
+import useLists from './lists/useLists';
+import usePackModel from './packs/usePackModel';
+import usePacks from './packs/usePacks';
+import useSettings from './settings/useSettings';
+import useAuth from './user/useAuth';
 
 export {
   useInventory,
@@ -25,5 +24,5 @@ export {
   useLists,
   useSubscribeToFirestore,
   useDeleteCategory,
-  useItemModel
+  useItemModel,
 };

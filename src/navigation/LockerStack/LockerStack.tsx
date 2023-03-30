@@ -8,16 +8,12 @@ const Stack = createNativeStackNavigator<LockerStackParamList>();
 
 export default function LockerStack(): JSX.Element {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      id="LockerStack"
-    >
+    <Stack.Navigator screenOptions={{ headerShown: false }} id="LockerStack">
       <Stack.Screen name="Inventory" component={InventoryScreen} />
       <Stack.Group
         screenOptions={{
-          presentation: "containedModal"
-        }}
-      >
+          presentation: 'containedModal',
+        }}>
         <Stack.Screen name="NewPack" component={NewPackScreen} />
         <Stack.Screen name="EditPack" component={EditPackScreen} />
         <Stack.Screen name="NewItem" component={NewItemScreen} />
@@ -25,4 +21,4 @@ export default function LockerStack(): JSX.Element {
       </Stack.Group>
     </Stack.Navigator>
   );
-};
+}

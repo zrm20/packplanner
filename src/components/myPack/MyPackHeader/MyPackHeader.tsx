@@ -1,13 +1,13 @@
-import React from "react";
-import { View, ViewStyle } from "react-native";
-import { Avatar, Text } from "react-native-paper";
-import { usePackModel, usePacks } from "../../../hooks";
+import React from 'react';
+import { View, ViewStyle } from 'react-native';
+import { Avatar, Text } from 'react-native-paper';
 
-import useStyles from "./MyPackHeader.styles";
+import useStyles from './MyPackHeader.styles';
+import { usePackModel, usePacks } from '../../../hooks';
 
 interface MyPackHeaderProps {
   style?: ViewStyle;
-};
+}
 
 interface PackProps extends MyPackHeaderProps {
   pack: PackData;
@@ -18,7 +18,7 @@ function Pack(props: PackProps): JSX.Element {
   const packModel = usePackModel(props.pack);
 
   return (
-    <View style={[styles.container, props.style]} >
+    <View style={[styles.container, props.style]}>
       <Avatar.Icon icon="bag-personal" />
 
       <View style={styles.dataContainer}>
@@ -31,7 +31,7 @@ function Pack(props: PackProps): JSX.Element {
       </View>
     </View>
   );
-};
+}
 
 function NoPack(props: MyPackHeaderProps): JSX.Element {
   const styles = useStyles();
@@ -41,9 +41,7 @@ function NoPack(props: MyPackHeaderProps): JSX.Element {
       <Text variant="titleLarge" style={styles.emptyText}>
         No Pack Selected
       </Text>
-      <Text>
-        Select a pack by tapping on a pack in the Locker Tab
-      </Text>
+      <Text>Select a pack by tapping on a pack in the Locker Tab</Text>
     </View>
   );
 }
@@ -52,8 +50,8 @@ export default function MyPackHeader(props: MyPackHeaderProps): JSX.Element {
   const { selectedPack } = usePacks();
 
   if (selectedPack) {
-    return <Pack pack={selectedPack} style={props.style} />
+    return <Pack pack={selectedPack} style={props.style} />;
   } else {
-    return <NoPack style={props.style} />
+    return <NoPack style={props.style} />;
   }
-};
+}

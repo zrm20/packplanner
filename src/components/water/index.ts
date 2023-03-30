@@ -1,5 +1,3 @@
-import WaterScreen from "./WaterScreen/WaterScreen";
+import WaterScreen from './WaterScreen/WaterScreen';
 
-export {
-  WaterScreen,
-};
+export { WaterScreen };

@@ -1,16 +1,16 @@
-import { Formik } from "formik";
-import React from "react";
-import { Text, View, ViewStyle } from "react-native";
+import { Formik } from 'formik';
+import React from 'react';
+import { Text, View, ViewStyle } from 'react-native';
 
-import { SubmitButton, TextInput } from "../../formComponents";
-import useStyles from "./RegisterForm.styles";
-import useUser from "../../../hooks/user/useUser";
-import registerFormSchema from "./RegisterForm.schema";
+import registerFormSchema from './RegisterForm.schema';
+import useStyles from './RegisterForm.styles';
+import useUser from '../../../hooks/user/useUser';
+import { SubmitButton, TextInput } from '../../formComponents';
 
 interface RegisterFormProps {
   style?: ViewStyle;
-  onSubmit(values: RegisterFormData): void
-};
+  onSubmit(values: RegisterFormData): void;
+}
 
 export default function RegisterForm(props: RegisterFormProps): JSX.Element {
   const styles = useStyles();
@@ -19,45 +19,32 @@ export default function RegisterForm(props: RegisterFormProps): JSX.Element {
   const initialValues: RegisterFormData = {
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   };
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={props.onSubmit}
-      validationSchema={registerFormSchema}
-    >
-      <View style={[styles.container, props.style]} >
-        <TextInput
-          name='email'
-          label="Email Address"
-          autoCapitalize="none"
-          autoComplete="email"
-        />
+      validationSchema={registerFormSchema}>
+      <View style={[styles.container, props.style]}>
+        <TextInput name="email" label="Email Address" autoCapitalize="none" autoComplete="email" />
 
+        <TextInput name="password" label="Password" secureTextEntry autoCapitalize="none" />
         <TextInput
-          name='password'
-          label="Password"
-          secureTextEntry
-          autoCapitalize="none"
-        />
-        <TextInput
-          name='confirmPassword'
+          name="confirmPassword"
           label="Confirm Password"
           secureTextEntry
           autoCapitalize="none"
+          submitOnEnter
         />
 
         <SubmitButton mode="contained" style={styles.submit}>
           Register
         </SubmitButton>
 
-        {
-          Boolean(error) &&
-          <Text style={styles.errorText}>{error}</Text>
-        }
+        {Boolean(error) && <Text style={styles.errorText}>{error}</Text>}
       </View>
     </Formik>
   );
-};
+}

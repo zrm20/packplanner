@@ -1,19 +1,18 @@
-import React from "react";
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
 
-import { SafeAreaScreen } from "../../ui";
-import { PacksScroller } from "../../packs";
-import InventoryList from "../InventoryList/InventoryList";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { LockerStackParamList } from "../../../navigation/navigation.types";
+import { LockerStackParamList } from '../../../navigation/navigation.types';
+import { PacksScroller } from '../../packs';
+import { SafeAreaScreen } from '../../ui';
+import InventoryList from '../InventoryList/InventoryList';
 
 type InventoryScreenProps = NativeStackScreenProps<LockerStackParamList, 'Inventory'>;
 
 export default function InventoryScreen(props: InventoryScreenProps): JSX.Element {
-
   return (
-    <SafeAreaScreen >
+    <SafeAreaScreen>
       <PacksScroller />
       <InventoryList />
     </SafeAreaScreen>
   );
-};
+}

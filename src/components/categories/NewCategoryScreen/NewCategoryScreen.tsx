@@ -1,14 +1,14 @@
-import React from "react";
-import CategoryForm from "../CategoryForm/CategoryForm";
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
 
-import useStyles from "./NewCategoryScreen.styles";
-import { ContainedModalTitle, SafeAreaScreen } from "../../ui";
-import { useCategories } from "../../../hooks";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { CategoriesStackParamList } from "../../../navigation/navigation.types";
-import useThrowAlert from "../../../hooks/alerts/useThrowAlert";
+import useStyles from './NewCategoryScreen.styles';
+import { useCategories } from '../../../hooks';
+import useThrowAlert from '../../../hooks/alerts/useThrowAlert';
+import { CategoriesStackParamList } from '../../../navigation/navigation.types';
+import { ContainedModalTitle, SafeAreaScreen } from '../../ui';
+import CategoryForm from '../CategoryForm/CategoryForm';
 
-type NewCategoryScreenProps = NativeStackScreenProps<CategoriesStackParamList, "NewCategory">;
+type NewCategoryScreenProps = NativeStackScreenProps<CategoriesStackParamList, 'NewCategory'>;
 
 export default function NewCategoryScreen(props: NewCategoryScreenProps): JSX.Element {
   const styles = useStyles();
@@ -21,14 +21,14 @@ export default function NewCategoryScreen(props: NewCategoryScreenProps): JSX.El
       await createNewCategory(values);
       navigation.goBack();
     } catch (err) {
-      catchUnknownError(err, "Failed to add category. Please try again")
+      catchUnknownError(err, 'Failed to add category. Please try again');
     }
-  };
+  }
 
   return (
-    <SafeAreaScreen style={styles.container} >
+    <SafeAreaScreen style={styles.container}>
       <ContainedModalTitle title="New Custom Category" />
       <CategoryForm onSubmit={handleSubmit} />
     </SafeAreaScreen>
   );
-};
+}

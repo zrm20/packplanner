@@ -1,10 +1,10 @@
-import React from "react";
-import { Button, ButtonProps, IconButton } from "react-native-paper";
-import { useFormikContext } from "formik";
+import { useFormikContext } from 'formik';
+import React from 'react';
+import { Button, ButtonProps, IconButton } from 'react-native-paper';
 
-interface SubmitButtonProps extends Partial<ButtonProps>{
-  icon?: string
-};
+interface SubmitButtonProps extends Partial<ButtonProps> {
+  icon?: string;
+}
 
 type IconButtonMode = 'outlined' | 'contained' | 'contained-tonal';
 export default function SubmitButton(props: SubmitButtonProps): JSX.Element {
@@ -14,26 +14,19 @@ export default function SubmitButton(props: SubmitButtonProps): JSX.Element {
 
   if (icon) {
     let iconButtonMode: IconButtonMode;
-  
-    if(mode === 'text' || mode === 'elevated') {
+
+    if (mode === 'text' || mode === 'elevated') {
       iconButtonMode = 'contained';
     } else {
       iconButtonMode = mode;
-    };
+    }
 
-    return (
-      <IconButton 
-        onPress={submitForm} 
-        icon={icon} 
-        {...props}
-        mode={iconButtonMode}
-      />
-    )
-  };
+    return <IconButton onPress={submitForm} icon={icon} {...props} mode={iconButtonMode} />;
+  }
 
   return (
-    <Button onPress={submitForm} {...props} >
+    <Button onPress={submitForm} {...props}>
       {props.children}
     </Button>
   );
-};
+}

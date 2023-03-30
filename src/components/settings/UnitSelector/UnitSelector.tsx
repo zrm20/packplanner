@@ -1,8 +1,8 @@
-import React from "react";
-import { View, ViewStyle } from "react-native";
-import { Text, SegmentedButtons } from "react-native-paper";
+import React from 'react';
+import { View, ViewStyle } from 'react-native';
+import { Text, SegmentedButtons } from 'react-native-paper';
 
-import useStyles from "./UnitSelector.styles";
+import useStyles from './UnitSelector.styles';
 
 type ButtonValue = {
   value: string;
@@ -14,8 +14,8 @@ interface UnitSelectorProps {
   label: string;
   value: string;
   onChange(value: string): void;
-  buttons: ButtonValue[]
-};
+  buttons: ButtonValue[];
+}
 
 export default function UnitSelector(props: UnitSelectorProps): JSX.Element {
   const styles = useStyles();
@@ -30,4 +30,4 @@ export default function UnitSelector(props: UnitSelectorProps): JSX.Element {
       />
     </View>
   );
-};
+}

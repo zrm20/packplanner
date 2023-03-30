@@ -1,48 +1,51 @@
-import React from "react";
-import { Keyboard, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback } from "react-native";
-import { Button } from "react-native-paper";
-import { Formik } from "formik";
+import { Formik } from 'formik';
+import React from 'react';
+import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 
-import useStyles from "./InventoryForm.styles";
-import { TextInput, WeightInput, SubmitButton, PickerInput, FormikBackdrop, FormActions } from "../../formComponents";
-import { useCategories } from "../../../hooks";
-import inventoryFormSchema from "./InventoryForm.schema";
-import ShowLiquidInput from "./ShowLiquidInput";
+import inventoryFormSchema from './InventoryForm.schema';
+import useStyles from './InventoryForm.styles';
+import ShowLiquidInput from './ShowLiquidInput';
+import { useCategories } from '../../../hooks';
+import {
+  TextInput,
+  WeightInput,
+  PickerInput,
+  FormikBackdrop,
+  FormActions,
+} from '../../formComponents';
 
 interface InventoryFormProps {
   initialValues?: ItemFormData;
   onSubmit(values: ItemFormData): void;
   submitText?: string;
   onDelete?(): Promise<void>;
-};
+}
 
 export default function InventoryForm(props: InventoryFormProps): JSX.Element {
   const styles = useStyles();
   const { categories } = useCategories();
 
   const initialValues: ItemFormData = props.initialValues || {
-    brand: "",
-    name: "",
+    brand: '',
+    name: '',
     liquidCapacity: 0,
     weight: 0,
-    category: '00' // defaults to miscCategory id
+    category: '00', // defaults to miscCategory id
   };
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={props.onSubmit}
-      validationSchema={inventoryFormSchema}
-    >
+      validationSchema={inventoryFormSchema}>
       <>
         <FormikBackdrop />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView style={styles.container} behavior="padding" >
-
+          <KeyboardAvoidingView style={styles.container} behavior="padding">
             <PickerInput
-              name='category'
+              name="category"
               label="Category"
-              data={categories.map(cat => ({ label: cat.label, value: cat.id }))}
+              data={categories.map((cat) => ({ label: cat.label, value: cat.id }))}
             />
 
             <TextInput name="brand" label="Brand" />
@@ -51,10 +54,13 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
 
             <ShowLiquidInput />
 
-            <FormActions onDelete={props.onDelete} deleteMessage="Do you want to permanently delete this item?" />
+            <FormActions
+              onDelete={props.onDelete}
+              deleteMessage="Do you want to permanently delete this item?"
+            />
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
       </>
-    </Formik >
+    </Formik>
   );
-};
+}

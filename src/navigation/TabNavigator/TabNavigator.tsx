@@ -1,15 +1,19 @@
-import React from "react";
-import { createBottomTabNavigator, BottomTabNavigationOptions, BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useTheme } from "react-native-paper";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  createBottomTabNavigator,
+  BottomTabNavigationOptions,
+  BottomTabScreenProps,
+} from '@react-navigation/bottom-tabs';
+import React from 'react';
+import { useTheme } from 'react-native-paper';
 
-import { AppTabs, RootTabParamList } from "../navigation.types";
-import { useInventory } from "../../hooks";
-import LockerStack from "../LockerStack/LockerStack";
-import MyPackStack from "../MyPackStack/MyPackStack";
-import { WaterScreen } from "../../components/water";
-import CategoriesStack from "../CategoriesStack/CategoriesStack";
-import SettingsStack from "../SettingsStack/SettingsStack";
+import { WaterScreen } from '../../components/water';
+import { useInventory } from '../../hooks';
+import CategoriesStack from '../CategoriesStack/CategoriesStack';
+import LockerStack from '../LockerStack/LockerStack';
+import MyPackStack from '../MyPackStack/MyPackStack';
+import SettingsStack from '../SettingsStack/SettingsStack';
+import { AppTabs, RootTabParamList } from '../navigation.types';
 
 const iconSize: number = 24;
 const Tabs = createBottomTabNavigator<RootTabParamList>();
@@ -19,42 +23,43 @@ export default function TabNavigator() {
   const { colors } = theme;
   const { itemsInPack } = useInventory();
 
-
   const tabs: AppTabs = [
     {
-      name: "Locker",
+      name: 'Locker',
       component: LockerStack,
-      iconName: "locker",
+      iconName: 'locker',
     },
     {
-      name: "MyPack",
+      name: 'MyPack',
       component: MyPackStack,
-      iconName: "bag-personal",
-      screenOptions: { tabBarBadge: itemsInPack.length ? itemsInPack.length : undefined }
+      iconName: 'bag-personal',
+      screenOptions: { tabBarBadge: itemsInPack.length ? itemsInPack.length : undefined },
     },
     {
-      name: "Water",
+      name: 'Water',
       component: WaterScreen,
-      iconName: "cup-water",
+      iconName: 'cup-water',
     },
     {
-      name: "Categories",
+      name: 'Categories',
       component: CategoriesStack,
-      iconName: "tag-multiple",
+      iconName: 'tag-multiple',
     },
     {
-      name: "Settings",
+      name: 'Settings',
       component: SettingsStack,
-      iconName: "cog",
-    }
+      iconName: 'cog',
+    },
   ];
 
-  function getScreenOptions({ route }: BottomTabScreenProps<RootTabParamList>): BottomTabNavigationOptions {
+  function getScreenOptions({
+    route,
+  }: BottomTabScreenProps<RootTabParamList>): BottomTabNavigationOptions {
     return {
       headerShown: false,
       tabBarIcon: ({ focused }) => (
         <MaterialCommunityIcons
-          name={tabs.find(tab => tab.name === route.name)!.iconName}
+          name={tabs.find((tab) => tab.name === route.name)!.iconName}
           size={iconSize}
           color={focused ? colors.tertiaryContainer : colors.surface}
         />
@@ -66,18 +71,16 @@ export default function TabNavigator() {
       tabBarStyle: {
         borderTopWidth: 1,
         borderTopColor: theme.colors.outline,
-        backgroundColor: theme.colors.onSurface
-      }
-    }
-  };
+        backgroundColor: theme.colors.onSurface,
+      },
+    };
+  }
 
   return (
-    <Tabs.Navigator
-      screenOptions={getScreenOptions}
-    >
-      {
-        tabs.map(tab => <Tabs.Screen name={tab.name} component={tab.component} key={tab.name} />)
-      }
+    <Tabs.Navigator screenOptions={getScreenOptions}>
+      {tabs.map((tab) => (
+        <Tabs.Screen name={tab.name} component={tab.component} key={tab.name} />
+      ))}
     </Tabs.Navigator>
   );
-};
+}

@@ -1,4 +1,4 @@
-import extractId from "./extractId";
+import extractId from './extractId';
 
 describe('extractId()', () => {
   it('should return input if string is passed in', () => {

@@ -1,21 +1,21 @@
-import { mlToFlOz } from "../utils/liquidConversions/liquidConversions";
+import { mlToFlOz } from '../utils/liquidConversions/liquidConversions';
 
 interface LiquidMap {
-  oz: LiquidMapField,
-  ml: LiquidMapField,
-};
+  oz: LiquidMapField;
+  ml: LiquidMapField;
+}
 
 const liquidMap: LiquidMap = {
   ml: {
     value: 'ml',
     label: 'ml',
-    convert: (mlValue: number) => mlValue
+    convert: (mlValue: number) => mlValue,
   },
   oz: {
     value: 'oz',
     label: 'fl oz',
-    convert: mlToFlOz
-  }
+    convert: mlToFlOz,
+  },
 };
 
 export default liquidMap;

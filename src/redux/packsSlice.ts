@@ -1,24 +1,22 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: PacksSliceState = {
   packs: [],
-  isLoading: false
+  isLoading: false,
 };
 
-const packsSlice = createSlice(
-  {
-    name: 'packs',
-    initialState,
-    reducers: {
-      setPacks(state, action: PayloadAction<{ packs: PackData[] }>) {
-        state.packs = action.payload.packs;
-      },
-      setIsLoading(state, action: PayloadAction<boolean>) {
-        state.isLoading = action.payload;
-      }
-    }
-  }
-);
+const packsSlice = createSlice({
+  name: 'packs',
+  initialState,
+  reducers: {
+    setPacks(state, action: PayloadAction<{ packs: PackData[] }>) {
+      state.packs = action.payload.packs;
+    },
+    setIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
+    },
+  },
+});
 
 export default packsSlice.reducer;
 

@@ -1,7 +1,4 @@
-import NewListModal from "./NewListModal/NewListModal";
-import LoadListScreen from "./LoadListScreen/LoadListScreen";
+import LoadListScreen from './LoadListScreen/LoadListScreen';
+import NewListModal from './NewListModal/NewListModal';
 
-export {
-  NewListModal,
-  LoadListScreen
-};
+export { NewListModal, LoadListScreen };
