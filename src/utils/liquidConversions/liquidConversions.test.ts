@@ -31,5 +31,5 @@ describe('liquid conversions', () => {
       // Test with a value that should round up to two decimal places
       expect(mlToFlOz(52)).toBe(1.76);
     });
-  })
+  });
 });
