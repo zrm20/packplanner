@@ -1,31 +1,26 @@
 export function lbsToKg(lbs: number): number {
-  //converts lbs to kg
-  const exactKg = lbs * 0.453592;
-  return Math.round(exactKg * 100) / 100;
+  const kg = lbs * 0.453592;
+  return +kg.toFixed(2);
 }
 
 export function ozToKg(oz: number): number {
-  //converts oz to kg
-  const exactKg = oz * 0.0283495;
-  return Math.round(exactKg * 100) / 100;
+  const kg = oz * 0.0283495;
+  return +kg.toFixed(2);
 }
 
 export function ozToLbs(oz: number): number {
-  //converts oz to lbs
-  return oz / 16;
+  const lbs = oz / 16;
+  return +lbs.toFixed(2);
 }
 
 export function kgToLbs(kg: number): number {
-  //converts kg to lbs
-  const exactLbs = kg * 2.20462;
-  const roundedLbs = Math.round(exactLbs * 100) / 100;
-  return roundedLbs;
+  const lbs = kg * 2.20462;
+  return +lbs.toFixed(2);
 }
 
 export function kgToOz(kg: number): number {
-  //converts kgToOz
-  const exactOz = kg * 35.274;
-  return Math.round(exactOz);
+  const oz = kg * 35.274;
+  return +oz.toFixed(2);
 }
 
 export function kgToLbsOz(kg: number): number[] {
@@ -33,9 +28,9 @@ export function kgToLbsOz(kg: number): number[] {
   let oz = kgToOz(kg);
   const lbs = Math.floor(oz / 16);
   oz = oz % 16;
-  return [lbs, oz];
+  return [lbs, +oz.toFixed(2)];
 }
 
 export function roundedKg(kg: number): number {
-  return Math.round(kg * 100) / 100;
+  return +kg.toFixed(2);
 }
