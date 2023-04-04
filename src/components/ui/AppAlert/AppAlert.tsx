@@ -1,10 +1,9 @@
 import React from 'react';
 import { Button, Dialog, Portal, Text } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
 
 import useStyles from './AppAlert.styles';
 import { clearAlert } from '../../../redux/alertSlice';
-import { useSelector } from '../../../redux/reduxHooks';
+import { useSelector, useDispatch } from '../../../redux/reduxHooks';
 
 export default function AppAlert(): JSX.Element {
   const alert = useSelector((state) => state.alert.alert);
