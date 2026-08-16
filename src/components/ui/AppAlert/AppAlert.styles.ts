@@ -66,9 +66,7 @@ export default function useStyles(alert: AlertNotification | null) {
     actionsContainer: {
       justifyContent: 'space-evenly',
     },
-    button: {
-      color: typeColor.text,
-    },
+    button: {},
   });
   return styles;
 }

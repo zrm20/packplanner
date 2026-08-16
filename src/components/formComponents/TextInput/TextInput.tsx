@@ -1,7 +1,7 @@
 import { useField, useFormikContext } from 'formik';
 import React from 'react';
 import { NativeSyntheticEvent, TextInputSubmitEditingEventData, View } from 'react-native';
-import { HelperText, TextInput as PaperInput, TextInputProps, withTheme } from 'react-native-paper';
+import { HelperText, TextInput as PaperInput, TextInputProps } from 'react-native-paper';
 
 import useStyles from './TextInput.styles';
 
@@ -41,4 +41,4 @@ function TextInput(props: CustomTextInputProps): JSX.Element {
   );
 }
 
-export default withTheme(TextInput);
+export default TextInput;

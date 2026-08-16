@@ -1,77 +1,53 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { render, screen, fireEvent } from '@testing-library/react-native';
+import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { View } from 'react-native';
 
 import TabNavigator from './TabNavigator';
 
-// handle console warning by mocking this dependency
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+jest.mock('firebase/firestore', () => ({
+  addDoc: jest.fn(),
+  collection: jest.fn(),
+  deleteDoc: jest.fn(),
+  doc: jest.fn(),
+  getDoc: jest.fn(),
+  getDocs: jest.fn(),
+  onSnapshot: jest.fn(),
+  setDoc: jest.fn(),
+  updateDoc: jest.fn(),
+}));
+jest.mock('firebase/auth', () => ({
+  createUserWithEmailAndPassword: jest.fn(),
+  onAuthStateChanged: jest.fn(),
+  signInAnonymously: jest.fn(),
+  signInWithEmailAndPassword: jest.fn(),
+  signOut: jest.fn(),
+}));
+jest.mock('../../config/firebase', () => ({ auth: {}, db: {} }));
+jest.mock('camelize-ts', () => ({ __esModule: true, default: (value) => value }));
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
+jest.mock('../../hooks', () => ({
+  useInventory: () => ({ itemsInPack: [] }),
+}));
+jest.mock('../LockerStack/LockerStack', () => () => null);
+jest.mock('../MyPackStack/MyPackStack', () => () => null);
+jest.mock('../CategoriesStack/CategoriesStack', () => () => null);
+jest.mock('../SettingsStack/SettingsStack', () => () => null);
+jest.mock('../../components/water', () => ({ WaterScreen: () => null }));
 
 describe('<TabNavigator />', () => {
-  let appTabs;
-
-  const TestComponent1 = () => <View testID="1" />;
-  const TestComponent2 = () => <View testID="2" />;
-  const TestComponent3 = () => <View testID="3" />;
-
-  beforeEach(() => {
-    appTabs = {
-      Screen1: {
-        component: TestComponent1,
-        iconName: 'star',
-      },
-      Screen2: {
-        component: TestComponent2,
-        iconName: 'star',
-      },
-      Screen3: {
-        component: TestComponent3,
-        iconName: 'star',
-      },
-    };
-  });
-
   it('should show all tabs on the screen', () => {
     render(
       <NavigationContainer>
-        <TabNavigator tabs={appTabs} />
+        <TabNavigator />
       </NavigationContainer>
     );
 
-    const tab1 = screen.getByText(/Screen1/);
-    const tab2 = screen.getByText(/Screen2/);
-    const tab3 = screen.getByText(/Screen3/);
-
-    expect(tab1).toBeTruthy();
-    expect(tab2).toBeTruthy();
-    expect(tab3).toBeTruthy();
-  });
-
-  it('should render the screen1 first', () => {
-    render(
-      <NavigationContainer>
-        <TabNavigator tabs={appTabs} />
-      </NavigationContainer>
-    );
-
-    const screenComponent = screen.getByTestId('1');
-
-    expect(screenComponent).toBeTruthy();
-  });
-
-  it('should render screen 2 when pressed', () => {
-    render(
-      <NavigationContainer>
-        <TabNavigator tabs={appTabs} />
-      </NavigationContainer>
-    );
-
-    const tab2 = screen.getByText(/Screen2/);
-
-    fireEvent.press(tab2);
-    const screen2 = screen.getByTestId('2');
-
-    expect(screen2).toBeTruthy();
+    expect(screen.getByText('Locker')).toBeTruthy();
+    expect(screen.getByText('MyPack')).toBeTruthy();
+    expect(screen.getByText('Water')).toBeTruthy();
+    expect(screen.getByText('Categories')).toBeTruthy();
+    expect(screen.getByText('Settings')).toBeTruthy();
   });
 });
