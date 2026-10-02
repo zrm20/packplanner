@@ -1,7 +1,7 @@
 import { Picker, PickerProps } from '@react-native-picker/picker';
 import { useField } from 'formik';
 import React from 'react';
-import { View, ViewProps } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import { Text } from 'react-native-paper';
 
 type PickerItem = {
@@ -9,10 +9,10 @@ type PickerItem = {
   value: string;
 };
 
-interface PickerInputProps extends PickerProps {
+interface PickerInputProps extends PickerProps<string> {
   name: string;
   data: PickerItem[];
-  style?: ViewProps;
+  style?: StyleProp<ViewStyle>;
   label?: string;
 }
 
@@ -25,10 +25,8 @@ export default function PickerInput(props: PickerInputProps): JSX.Element {
     throw new Error(`Could not find field with value${name}`);
   }
 
-  function handleChange(newValue: string | number) {
-    const parsedValue = String(newValue);
-
-    utils.setValue(parsedValue);
+  function handleChange(newValue: string) {
+    utils.setValue(newValue);
   }
 
   return (

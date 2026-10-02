@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { ToggleButton, TextInput, HelperText, TextInputProps, withTheme } from 'react-native-paper';
+import { ToggleButton, TextInput, HelperText, TextInputProps } from 'react-native-paper';
 
 import useStyles from './CapacityInput.styles';
 import { flOzToMl, mlToFlOz } from '../../../utils/liquidConversions/liquidConversions';
@@ -101,4 +101,4 @@ function CapacityInput(props: CapacityInputProps): JSX.Element {
   );
 }
 
-export default withTheme(CapacityInput);
+export default CapacityInput;

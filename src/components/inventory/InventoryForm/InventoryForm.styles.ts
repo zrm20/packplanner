@@ -43,7 +43,6 @@ export default function useStyles() {
     },
     deleteButton: {
       backgroundColor: theme.colors.error,
-      color: theme.colors.onError,
     },
   });
   return styles;

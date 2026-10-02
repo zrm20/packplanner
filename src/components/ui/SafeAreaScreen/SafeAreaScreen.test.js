@@ -40,8 +40,8 @@ describe('<SafeAreaScreen />', () => {
     const { style } = component.props;
 
     expect(style[0].flex).toBe(1);
-    expect(style[0].justifyContent).toBe(null);
-    expect(style[0].alignItems).toBe(null);
+    expect(style[0].justifyContent).toBe('flex-start');
+    expect(style[0].alignItems).toBe('flex-start');
   });
 
   it('should pass style prop to style array', () => {

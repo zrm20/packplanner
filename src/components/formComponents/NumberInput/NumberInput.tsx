@@ -1,6 +1,5 @@
 import { useField } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { withTheme } from 'react-native-paper';
 
 import TextInput, { CustomTextInputProps } from '../TextInput/TextInput';
 
@@ -23,4 +22,4 @@ function NumberInput(props: CustomTextInputProps): JSX.Element {
   return <TextInput value={text} onChangeText={setText} keyboardType="numeric" {...props} />;
 }
 
-export default withTheme(NumberInput);
+export default NumberInput;

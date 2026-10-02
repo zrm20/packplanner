@@ -1,7 +1,7 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, ViewStyle } from 'react-native';
+import { StyleSheet, StatusBar, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { SafeAreaViewProps } from 'react-native-safe-area-context';
+import { SafeAreaView, SafeAreaViewProps } from 'react-native-safe-area-context';
 
 import { isAndroid } from '../../../utils';
 

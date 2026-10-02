@@ -6,7 +6,6 @@ import {
   HelperText,
   ToggleButton,
   TextInputProps,
-  withTheme,
 } from 'react-native-paper';
 
 import useStyles from './WeightInput.styles';
@@ -122,4 +121,4 @@ function WeightInput(props: WeightInputProps): JSX.Element {
   );
 }
 
-export default withTheme(WeightInput);
+export default WeightInput;
