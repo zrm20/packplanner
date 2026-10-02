@@ -1,11 +1,12 @@
 import { Formik } from 'formik';
 import React from 'react';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { Divider, IconButton, Tooltip } from 'react-native-paper';
 
 import categoryFormSchema from './CategoryForm.schema';
 import useStyles from './CategoryForm.styles';
 import { FormActions, FormikBackdrop, TextInput } from '../../formComponents';
+import appAlert from '../../../utils/appAlert/appAlert';
 import ToggleSwitchInput from '../../formComponents/ToggleSwitchInput/ToggleSwitchInput';
 import CategoryIconPicker from '../CategoryIconPicker/CategoryIconPicker';
 
@@ -25,7 +26,7 @@ export default function CategoryForm(props: CategoryFormProps): JSX.Element {
   };
 
   function aboutBaseWeight(): void {
-    Alert.alert(
+    appAlert(
       'Items that are "Base Weight Exempt" will NOT count towards your pack\'s base weight. Typically food, fuel, water, and other consumable items are considered "Base Weight Exempt".'
     );
   }
