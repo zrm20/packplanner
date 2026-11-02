@@ -5,13 +5,6 @@
     "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/packplannerlogo.png",
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/1950b3d7-b7a3-4def-910e-d004c6c1ed13"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.zachrmccoy.packplanner"
@@ -23,17 +16,11 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single"
     },
     "description": "",
-    "extra": {
-      "eas": {
-        "projectId": "1950b3d7-b7a3-4def-910e-d004c6c1ed13"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
     "plugins": [
       "expo-status-bar",
       "expo-font",

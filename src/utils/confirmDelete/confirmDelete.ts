@@ -1,4 +1,4 @@
-import { Alert } from 'react-native';
+import appAlert from '../appAlert/appAlert';
 
 export default function confirmDelete<T = void>(
   deleteFn: () => T,
@@ -12,7 +12,7 @@ export default function confirmDelete<T = void>(
     }
   }
 
-  Alert.alert(
+  appAlert(
     'Are you sure?', // Alert title
     message, // Alert message
     [

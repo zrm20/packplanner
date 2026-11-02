@@ -6,13 +6,13 @@ import {
   EmailAuthProvider,
   linkWithCredential,
 } from 'firebase/auth';
-import { Alert } from 'react-native';
 
 import { auth as authInstance } from '../../config/firebase';
 import { clearMyPack } from '../../redux/myPackSlice';
 import { useDispatch, useSelector } from '../../redux/reduxHooks';
 import { clearUser, setError, setIsLoading, setUser } from '../../redux/userSlice';
 import { authErrorExtractor } from '../../utils';
+import appAlert from '../../utils/appAlert/appAlert';
 
 export default function useUser() {
   const dispatch = useDispatch();
@@ -76,12 +76,12 @@ export default function useUser() {
         const errorMessage = authErrorExtractor(err);
         dispatch(setIsLoading(false));
         dispatch(setError(errorMessage));
-        Alert.alert('Logout failed', errorMessage);
+        appAlert('Logout failed', errorMessage);
       });
   }
 
   function handleGuestLogout(): void {
-    Alert.alert(
+    appAlert(
       'Warning, you will lose your data!',
       'You are about to log out as a guest. All of your data including inventory, packs and lists will be lost.\n\nYou can register for an account to save your data online. Do you want to continue logging out?',
       [
