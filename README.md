@@ -106,3 +106,53 @@ team under Signing & Capabilities, connect the phone, and run the app on that
 device. A free Apple ID works for personal development installs, though the
 signature expires periodically; a paid Apple Developer membership avoids that
 short renewal window and also enables TestFlight.
+
+## Install the web app
+
+On iPhone, open the deployed app in Safari. In Settings, choose **Install app**
+for Share → Add to Home Screen guidance. On Android, use Chrome and the same
+Settings entry. An Install button appears only when the browser supplies an
+installation prompt; it never opens automatically. Installed launches use the
+Trail Pack Pro name and logo in standalone mode.
+
+The web app requires internet access. The browser's offline event blocks interaction
+and shows Retry immediately. A connection probe also runs every 15 seconds while
+visible, with an 8-second timeout, to detect Wi-Fi without internet access.
+Retry verifies an uncached request before restoring the app;
+pending writes are not reported as saved. The service worker caches only a
+branded connection-required page, with no gear, packs, or app bundles. This
+fallback becomes available after the service worker finishes its first online
+installation. Existing React Navigation tabs, modal close buttons, and form
+back/cancel actions remain available in standalone mode.
+
+`yarn build:web` prepares the manifest, Apple icon, launch colors, safe-area
+viewport, and service worker after Expo export. Set `EXPO_PUBLIC_BASE_URL` to the
+hosting prefix (the Pages workflow already sets `/packplanner`). Use an empty
+value for root hosting. Serve the export over HTTPS, or localhost for testing.
+
+To check the actual production export in Chromium:
+
+```sh
+EXPO_PUBLIC_BASE_URL=/packplanner yarn build:web
+npx playwright install chromium
+yarn test:pwa
+# Or use an existing Chromium: CHROME_BIN=/usr/bin/chromium yarn test:pwa
+```
+
+The browser check stubs Firebase authentication and blocks all Firestore traffic;
+test saves never reach the backend. It covers installation guidance, explicit
+prompt timing, authenticated form close/back navigation, prefix assets,
+disconnection during a pending save, offline launch, failed Retry, and recovery.
+The Pages workflow runs this check before deployment. It does not replace these
+installed-device acceptance checks:
+
+- iPhone Safari: add to Home Screen, verify name/logo, launch without browser
+  controls, inspect notch/home-indicator spacing, and navigate tabs and forms.
+- Android Chrome: install, verify name/logo and supported branded splash,
+  standalone launch, system-bar spacing, and in-app back/cancel actions.
+- On both: launch in airplane mode after an online visit, try Retry while still
+  offline, reconnect and Retry; disconnect during a save and verify no success
+  is shown before the write is acknowledged.
+
+Real iPhone and Android installation must be verified on those devices after
+deployment; Chromium automation only checks the exported app behavior.
