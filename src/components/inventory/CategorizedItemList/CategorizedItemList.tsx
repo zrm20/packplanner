@@ -15,9 +15,11 @@ interface CategorizedItemListProps {
 function CategoryLabel(props: { id: string; style: TextStyle }): JSX.Element {
   const category = useSelector((state) =>
     state.categories.categories.find((c) => c.id === props.id)
-  )!;
+  );
 
-  return <Text style={props.style}>{category.label}</Text>;
+  // Inventory and custom categories arrive in independent Firestore snapshots.
+  // A category may also have been deleted while an item still references it.
+  return <Text style={props.style}>{category?.label ?? 'Misc'}</Text>;
 }
 
 export default function CategorizedItemList(props: CategorizedItemListProps): JSX.Element {
