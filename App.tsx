@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider as ThemeProvider } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -16,8 +17,10 @@ export default function App() {
     <ReduxProvider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <ThemeProvider theme={theme}>
-          <AppNavigator />
-          <AppAlert />
+          <SafeAreaProvider style={{ backgroundColor: theme.colors.background }}>
+            <AppNavigator />
+            <AppAlert />
+          </SafeAreaProvider>
         </ThemeProvider>
       </PersistGate>
     </ReduxProvider>

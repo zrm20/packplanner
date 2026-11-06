@@ -11,8 +11,8 @@ const manifest = {
   start_url: base,
   scope: base,
   display: 'standalone',
-  background_color: '#4f5d75',
-  theme_color: '#4f5d75',
+  background_color: '#f6f7f8',
+  theme_color: '#f6f7f8',
   icons: [192, 512].map((size) => ({
     src: `${base}pwa/icon-${size}.png`,
     sizes: `${size}x${size}`,
@@ -23,7 +23,7 @@ const manifest = {
 fs.writeFileSync('dist/manifest.webmanifest', JSON.stringify(manifest, null, 2));
 const head = `<link rel="manifest" href="${base}manifest.webmanifest">
 <link rel="apple-touch-icon" sizes="180x180" href="${base}pwa/icon-180.png">
-<meta name="theme-color" content="#4f5d75">
+<meta name="theme-color" content="#f6f7f8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Trail Pack Pro">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -37,7 +37,7 @@ html = html.replace(
 );
 fs.writeFileSync('dist/index.html', html.replace('</head>', `${head}</head>`));
 // A self-contained fallback is the only cached document: never cache app data or app bundles.
-const offline = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Trail Pack Pro</title><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#4f5d75"><style>${fs.readFileSync(
+const offline = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Trail Pack Pro</title><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f6f7f8"><style>${fs.readFileSync(
   'public/pwa/app.css',
   'utf8'
 )}</style></head><body><section data-connection-required><img alt="" width="96" height="96" src="data:image/png;base64,${fs

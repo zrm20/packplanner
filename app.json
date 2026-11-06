@@ -16,6 +16,8 @@
       }
     },
     "web": {
+      "themeColor": "#f6f7f8",
+      "backgroundColor": "#f6f7f8",
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
       "output": "single"
