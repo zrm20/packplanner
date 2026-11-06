@@ -31,13 +31,15 @@ const head = `<link rel="manifest" href="${base}manifest.webmanifest">
 <script src="${base}pwa/connection.js" defer></script>
 <script src="${base}pwa/runtime.js" defer></script>`;
 let html = fs.readFileSync('dist/index.html', 'utf8');
+// Keep page content inside WebKit's safe viewport, below iOS status-bar glass.
+// The document background still supplies the pale color behind system UI.
 html = html.replace(
   /<meta name="viewport"[^>]*>/,
-  '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
+  '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=contain">'
 );
 fs.writeFileSync('dist/index.html', html.replace('</head>', `${head}</head>`));
 // A self-contained fallback is the only cached document: never cache app data or app bundles.
-const offline = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Trail Pack Pro</title><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f6f7f8"><style>${fs.readFileSync(
+const offline = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Trail Pack Pro</title><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=contain"><meta name="theme-color" content="#f6f7f8"><style>${fs.readFileSync(
   'public/pwa/app.css',
   'utf8'
 )}</style></head><body><section data-connection-required><img alt="" width="96" height="96" src="data:image/png;base64,${fs
