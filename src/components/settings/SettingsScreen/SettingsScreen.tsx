@@ -9,6 +9,7 @@ import { SettingsStackParamList } from '../../../navigation/navigation.types';
 import { SafeAreaScreen } from '../../ui';
 import UnitSelector from '../UnitSelector/UnitSelector';
 import UserWidget from '../UserWidget/UserWidget';
+import InstallApp from '../InstallApp/InstallApp';
 
 type SettingsScreenProps = NativeStackScreenProps<SettingsStackParamList, 'SettingsHome'>;
 
@@ -71,6 +72,7 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
           ]}
         />
       </View>
+      <InstallApp />
       <Text style={styles.copyright}>Copyright {today.getFullYear()} Zach McCoy</Text>
     </SafeAreaScreen>
   );

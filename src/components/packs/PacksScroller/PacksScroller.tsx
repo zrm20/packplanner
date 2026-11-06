@@ -23,7 +23,13 @@ export default function PacksScroller(): JSX.Element {
       <View style={styles.toolbar}>
         <Text variant="titleLarge">My Packs</Text>
         <View>
-          <IconButton icon="plus" size={14} mode="outlined" onPress={openNewPackScreen} />
+          <IconButton
+            accessibilityLabel="Add pack"
+            icon="plus"
+            size={14}
+            mode="outlined"
+            onPress={openNewPackScreen}
+          />
         </View>
       </View>
 

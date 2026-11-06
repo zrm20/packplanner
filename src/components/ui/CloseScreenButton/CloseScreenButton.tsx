@@ -24,5 +24,13 @@ export default function CloseScreenButton(props: CloseScreenButtonProps): JSX.El
     return null;
   }
 
-  return <IconButton onPress={goBack} icon={icon} mode="outlined" {...props} />;
+  return (
+    <IconButton
+      accessibilityLabel="Close screen"
+      onPress={goBack}
+      icon={icon}
+      mode="outlined"
+      {...props}
+    />
+  );
 }
