@@ -3,13 +3,15 @@ name: Deploy web app to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: github-pages
+  group: github-pages-${{ github.event.pull_request.number || 'deploy' }}
   cancel-in-progress: false
 
 jobs:
@@ -30,15 +32,18 @@ jobs:
       - name: Run tests
         run: yarn test --watchAll=false --runInBand
       - uses: actions/configure-pages@v5
+        if: github.event_name != 'pull_request'
       - name: Install browser for PWA checks
         run: npx playwright install --with-deps chromium
       - name: Check development and production PWA shells
         run: yarn test:pwa:all
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
         with:
           path: dist
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     permissions:
