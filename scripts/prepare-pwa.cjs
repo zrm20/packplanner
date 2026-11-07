@@ -31,11 +31,12 @@ const head = `<link rel="manifest" href="${base}manifest.webmanifest">
 <script src="${base}pwa/connection.js" defer></script>
 <script src="${base}pwa/runtime.js" defer></script>`;
 let html = fs.readFileSync('dist/index.html', 'utf8');
-// Keep page content inside WebKit's safe viewport, below iOS status-bar glass.
-// The document background still supplies the pale color behind system UI.
+// Expose the real device insets to SafeAreaProvider and the bottom tab navigator.
+// The opaque document background and bounded root prevent content scrolling
+// behind Safari's status-bar glass.
 html = html.replace(
   /<meta name="viewport"[^>]*>/,
-  '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=contain">'
+  '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
 );
 fs.writeFileSync('dist/index.html', html.replace('</head>', `${head}</head>`));
 // A self-contained fallback is the only cached document: never cache app data or app bundles.

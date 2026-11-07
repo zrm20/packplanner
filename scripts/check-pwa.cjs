@@ -91,6 +91,46 @@ const path = require('node:path');
     await page.getByRole('button', { name: 'Login', exact: true }).click();
     await page.getByRole('button', { name: 'Go Back', exact: true }).click();
     await page.getByRole('button', { name: 'Continue as Guest', exact: true }).click();
+    // Emulate actual safe-area values: a phone-sized viewport alone has zero
+    // insets and would miss tabs hidden by the home indicator on installed iOS.
+    const device = await context.newCDPSession(page);
+    assert.match(
+      await page.locator('meta[name="viewport"]').getAttribute('content'),
+      /viewport-fit=cover/
+    );
+    for (const [width, height, insets] of [
+      [390, 844, { top: 47, bottom: 34, left: 0, right: 0 }],
+      [844, 390, { top: 0, bottom: 21, left: 47, right: 47 }],
+      [390, 664, { top: 47, bottom: 34, left: 0, right: 0 }],
+    ]) {
+      await device.send('Emulation.setSafeAreaInsetsOverride', { insets });
+      await page.setViewportSize({ width, height });
+      await page.waitForFunction(
+        ({ height, bottom }) => {
+          const root = document.getElementById('root').getBoundingClientRect();
+          const tabs = [...document.querySelectorAll('a')].filter((a) =>
+            /(Locker|MyPack|Water|Categories|Settings)$/.test(a.textContent.trim())
+          );
+          return (
+            Math.abs(root.height - height) < 1 &&
+            tabs.length === 5 &&
+            tabs.every((tab) => {
+              const bounds = tab.getBoundingClientRect();
+              return bounds.height >= 32 && bounds.bottom <= height - bottom + 1;
+            })
+          );
+        },
+        { height, bottom: insets.bottom }
+      );
+      assert.equal(
+        await page.evaluate(() => document.documentElement.scrollHeight > innerHeight),
+        false
+      );
+    }
+    await device.send('Emulation.setSafeAreaInsetsOverride', {
+      insets: { top: 0, bottom: 0, left: 0, right: 0 },
+    });
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.getByRole('button', { name: 'Add pack', exact: true }).click();
     await page.getByText('New Pack', { exact: true }).waitFor();
     await page.getByRole('button', { name: 'Close screen', exact: true }).click();

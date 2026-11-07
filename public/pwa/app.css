@@ -1,8 +1,23 @@
-html {
+html,
+body {
   background: #f6f7f8;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 body {
   margin: 0;
+}
+
+/* Size the navigation tree to the visible viewport, not Safari's layout viewport.
+   SafeAreaProvider owns the insets (including the tab bar's bottom padding). */
+#root {
+  height: 100%;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  background: #f6f7f8;
 }
 
 [data-connection-required] {
