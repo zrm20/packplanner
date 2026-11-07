@@ -49,6 +49,21 @@ const base = devURL
   });
   try {
     const context = browser;
+    // Chromium may offer a real install prompt once the app is installable.
+    // Keep the no-prompt and simulated-prompt cases independent of browser timing.
+    // Capture before app startup; allow the synthetic event below through.
+    await context.addInitScript(() => {
+      window.addEventListener(
+        'beforeinstallprompt',
+        (event) => {
+          if (event.isTrusted) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        },
+        { capture: true }
+      );
+    });
     context.on('page', (page) =>
       page.on('pageerror', (error) => console.error('Browser error:', error.message))
     );

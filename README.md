@@ -28,7 +28,8 @@ gear data continue to use the existing Firebase project.
 
 The **Deploy web app to GitHub Pages** workflow checks types, runs tests, and
 exports and deploys the web app on pushes to `main`. It can also be started
-manually. It uses GitHub's token and does not require an Expo account or token.
+manually. Pull requests run the same validation without deploying. It uses
+GitHub's token and does not require an Expo account or token.
 
 One-time setup:
 
