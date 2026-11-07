@@ -30,14 +30,10 @@ jobs:
       - name: Run tests
         run: yarn test --watchAll=false --runInBand
       - uses: actions/configure-pages@v5
-      - name: Export web app
-        run: yarn build:web
-        env:
-          EXPO_PUBLIC_BASE_URL: /${{ github.event.repository.name }}
       - name: Install browser for PWA checks
         run: npx playwright install --with-deps chromium
-      - name: Check exported PWA behavior
-        run: yarn test:pwa
+      - name: Check development and production PWA shells
+        run: yarn test:pwa:all
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

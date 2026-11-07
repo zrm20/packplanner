@@ -125,29 +125,60 @@ fallback becomes available after the service worker finishes its first online
 installation. Existing React Navigation tabs, modal close buttons, and form
 back/cancel actions remain available in standalone mode.
 
-`yarn build:web` prepares the manifest, Apple icon, launch colors, safe-area
-viewport, and service worker after Expo export. Set `EXPO_PUBLIC_BASE_URL` to the
-hosting prefix (the Pages workflow already sets `/packplanner`). Use an empty
-value for root hosting. Serve the export over HTTPS, or localhost for testing.
+The source-controlled `public/index.html` is Expo's shared web document for both
+`yarn web` and static exports. It exposes `viewport-fit=cover` before React starts
+and uses the iOS `black-translucent` status bar. The app background shows behind
+the status bar; the existing safe-area provider and tab navigator inset content
+and tab controls. `public/pwa/app.css` supplies the shared viewport reset.
 
-To check the actual production export in Chromium:
+Stable install metadata lives in `web/manifest.json`; the connection-required
+page lives in `web/offline.html`. Expo configuration resolves their shared public
+assets in development and export, using the existing `app.json` web theme and
+background colors. The offline document embeds its dependencies so it remains
+the only cached resource. `public/sw.js` and `public/pwa/register-sw.js` contain
+the production worker and its entry point.
+
+Post-export preparation only sets the hosting base, includes the production
+worker entry point, and versions the fallback cache. Set `EXPO_PUBLIC_BASE_URL`
+to `/packplanner` for Pages or leave it empty for root hosting. Manifest resource
+URLs are relative to the manifest; runtime probes and worker registration use
+their script URL to resolve the app base. Serve production over HTTPS (or localhost).
+
+Development deliberately does **not** include the worker registration entry point
+or populate offline caches: a stale production worker can interfere with hot
+reload and local debugging. Use a separate origin/port for production previews;
+if one previously ran on the development origin, unregister it in browser
+DevTools and clear its site data before testing development.
+
+To run the same browser checks against root and `/packplanner/` exports and the
+Expo development server (the final `dist/` is the Pages export):
 
 ```sh
-EXPO_PUBLIC_BASE_URL=/packplanner yarn build:web
 npx playwright install chromium
-yarn test:pwa
-# Or use an existing Chromium: CHROME_BIN=/usr/bin/chromium yarn test:pwa
+yarn test:pwa:all
+# Or use an existing compatible Chromium:
+CHROME_BIN=/usr/bin/chromium yarn test:pwa:all
 ```
+
+To check a single existing export, use `yarn test:pwa`. To check a running Expo
+server, use `PWA_DEV_URL=http://127.0.0.1:8081 yarn test:pwa`.
 
 The browser check stubs Firebase authentication and blocks all Firestore traffic;
 test saves never reach the backend. It covers installation guidance, explicit
 prompt timing, authenticated form close/back navigation, prefix assets,
 disconnection during a pending save, offline launch, failed Retry, and recovery.
-The Pages workflow runs this check before deployment. It does not replace these
+It also checks shared launch metadata, manifest/icon resolution, worker scope,
+no development registration/caches, and viewport geometry across portrait,
+landscape, short-height, and changing simulated top/bottom safe-area insets.
+The Pages workflow runs the complete matrix before deployment. It does not replace these
 installed-device acceptance checks:
 
-- iPhone Safari: add to Home Screen, verify name/logo, launch without browser
-  controls, inspect notch/home-indicator spacing, and navigate tabs and forms.
+- iPhone Safari or iOS Simulator: **remove the previous Home Screen installation
+  and re-add the deployed app** so cached installation metadata cannot mask
+  changes. Verify name/logo and standalone launch, background behind the
+  translucent status bar, readable top headings/controls below the safe area,
+  and all five tab icons/labels above the home indicator. Rotate and resize,
+  navigate every tab, and exercise form inputs and close/back/cancel actions.
 - Android Chrome: install, verify name/logo and supported branded splash,
   standalone launch, system-bar spacing, and in-app back/cancel actions.
 - On both: launch in airplane mode after an online visit, try Retry while still
@@ -155,4 +186,5 @@ installed-device acceptance checks:
   is shown before the write is acknowledged.
 
 Real iPhone and Android installation must be verified on those devices after
-deployment; Chromium automation only checks the exported app behavior.
+deployment; Chromium automation checks browser behavior and simulated insets,
+not installed-device system UI.

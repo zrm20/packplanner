@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Trail Pack Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="%THEME_COLOR%" />
+    <!-- offline-assets -->
+  </head>
+  <body>
+    <section data-connection-required>
+      <img alt="" width="96" height="96" src="icon-192.png" />
+      <h1>Internet connection required</h1>
+      <p>Connect to the internet to use Trail Pack Pro.</p>
+      <p role="status"></p>
+      <button>Retry</button>
+    </section>
+    <!-- offline-connection -->
+    <script>
+      // Both the offline document and production worker live under the app base.
+      // Offline navigation retains the requested URL, which may be the app root.
+      navigator.serviceWorker.ready.then((registration) => {
+        const base = new URL(registration.scope);
+        const button = document.querySelector('button');
+        button.onclick = async () => {
+          button.disabled = true;
+          try {
+            await window.trailPackCheckConnection(base);
+            location.replace(base.href);
+          } catch {
+            document.querySelector('[role="status"]').textContent = 'Still unable to connect.';
+          } finally {
+            button.disabled = false;
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

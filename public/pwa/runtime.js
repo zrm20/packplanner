@@ -105,10 +105,6 @@
   const start = () => {
     if (!navigator.onLine) showConnectionRequired();
     else verifyConnection();
-    if ('serviceWorker' in navigator)
-      navigator.serviceWorker
-        .register(new URL('sw.js', base), { scope: base.pathname })
-        .catch(() => {});
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();

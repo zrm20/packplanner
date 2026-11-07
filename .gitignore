@@ -12,3 +12,8 @@ dist/
 ios/
 # macOS
 .DS_Store
+
+# Shared web assets resolved from Expo configuration
+public/manifest.webmanifest
+public/pwa/theme.css
+public/pwa/offline.html

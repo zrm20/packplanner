@@ -11,7 +11,8 @@
     "test": "jest --watchAll",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19000'",
     "lint": "npx eslint src/*",
-    "test:pwa": "node scripts/check-pwa.cjs"
+    "test:pwa": "node scripts/check-pwa.cjs",
+    "test:pwa:all": "node scripts/check-pwa-matrix.cjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
