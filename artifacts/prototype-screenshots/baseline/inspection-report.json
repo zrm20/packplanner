@@ -1,0 +1,45 @@
+{
+  "direction": "baseline",
+  "viewports": {
+    "primary": {
+      "name": "primary",
+      "width": 390,
+      "height": 844
+    },
+    "narrow": {
+      "name": "narrow",
+      "width": 360,
+      "height": 640
+    }
+  },
+  "checks": [
+    {
+      "viewport": "primary",
+      "file": "artifacts/prototype-screenshots/baseline/primary/locker.png",
+      "populatedLocker": true,
+      "tabsAvailable": true,
+      "firestoreRequests": 0,
+      "geometry": "root fills viewport; tabs clear bottom; My Packs clears top"
+    },
+    {
+      "viewport": "narrow",
+      "file": "artifacts/prototype-screenshots/baseline/narrow/locker.png",
+      "populatedLocker": true,
+      "tabsAvailable": true,
+      "firestoreRequests": 0,
+      "geometry": "root fills viewport; tabs clear bottom; My Packs clears top"
+    },
+    {
+      "viewport": "primary",
+      "file": "artifacts/prototype-screenshots/baseline/primary/locker--safe-area.png",
+      "safeAreaInsets": {
+        "top": 47,
+        "bottom": 34
+      },
+      "note": "Insets applied for clipping / clearance visual inspection"
+    },
+    {
+      "scrolling": "Attempted inventory list scroll to end for long-name accessibility"
+    }
+  ]
+}
