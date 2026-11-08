@@ -1,0 +1,899 @@
+<!doctype html>
+<!--
+  PROTOTYPE — throwaway. Not part of the app build.
+  Question: what should a Trail Pack Pro rebrand look like, keeping React Native Paper,
+  navigation, and functionality, but changing the theme and the components we own?
+  Three variants (A/B/C) switchable via ?variant= and the floating bar (or ← / →).
+  Run: open src/theme/rebrand.prototype.html
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PROTOTYPE · Trail Pack Pro rebrand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Inter, system-ui, sans-serif; background: #E6E6E9; color: #1b1b1f; padding: 28px 24px 120px; }
+  button { font: inherit; border: 0; background: none; color: inherit; cursor: pointer; }
+
+  /* ---------- presentation chrome (not part of any design) ---------- */
+  .panel { max-width: 1180px; margin: 0 auto 26px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; background: #fff; border-radius: 16px; padding: 22px 26px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .pk { font: 600 11px Inter; letter-spacing: .12em; text-transform: uppercase; color: #8a8a93; margin-bottom: 6px; }
+  .panel h1 { font: 700 26px Inter; letter-spacing: -.02em; }
+  .panel p { color: #4a4a52; margin: 6px 0 12px; line-height: 1.45; font-size: 14px; }
+  .panel ul { padding-left: 18px; color: #3a3a42; font-size: 13px; line-height: 1.6; }
+  .panel code { font: 500 11.5px 'JetBrains Mono', monospace; color: #6a6a73; }
+  .sw { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 14px; }
+  .sw .s { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
+  .sw .s span { width: 22px; height: 22px; border-radius: 6px; border: 1px solid rgba(0,0,0,.12); flex: none; }
+  .sw .s b { font-weight: 600; min-width: 84px; }
+  .pal { display: flex; gap: 3px; }
+  .pal span { flex: 1; height: 18px; border-radius: 4px; }
+  .pmeta { margin-top: 14px; display: grid; gap: 6px; font-size: 13px; color: #3a3a42; }
+  .pmeta span { display: inline-block; min-width: 56px; font-weight: 600; color: #8a8a93; }
+  .hint { max-width: 1180px; margin: -12px auto 18px; font-size: 12.5px; color: #6a6a73; text-align: center; }
+  .phones { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; }
+  .phone-cap { text-align: center; font: 600 11px Inter; color: #77777f; margin-bottom: 8px; letter-spacing: .1em; text-transform: uppercase; }
+  .phone { width: 360px; height: 760px; border-radius: 48px; border: 10px solid #121214; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 30px 60px -24px rgba(0,0,0,.45); }
+  .statusbar { height: 46px; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 4px 28px 0; font: 600 14px Inter; }
+  .statusbar .icons { display: flex; gap: 5px; font-size: 15px; }
+  .screen-body { flex: 1; overflow-y: auto; scrollbar-width: none; }
+  .screen-body::-webkit-scrollbar { display: none; }
+  #switcher { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; border-radius: 999px; display: flex; align-items: center; gap: 4px; padding: 6px; box-shadow: 0 10px 30px rgba(0,0,0,.35); z-index: 99; font: 600 14px Inter; outline: 2px solid #fff; }
+  #switcher button { width: 38px; height: 38px; border-radius: 50%; background: #2a2a2d; color: #fff; font-size: 22px; display: grid; place-items: center; }
+  #switcher button:hover { background: #3a3a3e; }
+  #switcher span { padding: 0 16px; min-width: 230px; text-align: center; }
+
+  [data-slider] { position: relative; height: 30px; cursor: pointer; touch-action: none; user-select: none; }
+  [data-slider] .track { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); overflow: hidden; }
+  [data-slider] .fill { position: absolute; left: 0; top: 0; bottom: 0; }
+  [data-slider] .thumb { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+
+  /* =================== A — TRAILHEAD =================== */
+  .vA { background: #F4EFE4; color: #1F2A22; font-family: Inter, sans-serif; }
+  .vA .screen-body { padding: 4px 18px 22px; }
+  .a-eyebrow { font: 600 10.5px Inter; letter-spacing: .18em; text-transform: uppercase; color: #D9682B; margin-top: 6px; }
+  .a-h1 { font: 600 34px/1.05 Fraunces, serif; letter-spacing: -.01em; margin: 4px 0 12px; }
+  .a-sec { display: flex; align-items: center; justify-content: space-between; margin: 20px 0 10px; }
+  .a-sec h2 { font: 600 19px Fraunces, serif; }
+  .a-sec .meta { font-size: 12px; color: #6B6F64; }
+  .a-icbtn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #2F4A3A; color: #2F4A3A; display: grid; place-items: center; font-size: 18px; }
+  .a-packs { display: flex; gap: 10px; overflow-x: auto; margin: 0 -18px; padding: 2px 18px 6px; scrollbar-width: none; }
+  .a-pack { flex: none; width: 140px; background: #FFFDF8; border: 1px solid #E3DBCB; border-radius: 14px; padding: 12px; position: relative; cursor: pointer; }
+  .a-pack.sel { border: 2px solid #2F4A3A; padding: 11px; }
+  .a-pack .ic { width: 34px; height: 34px; border-radius: 10px; background: #E7EDE4; color: #2F4A3A; display: grid; place-items: center; font-size: 19px; margin-bottom: 10px; }
+  .a-pack.sel .ic { background: #2F4A3A; color: #F4EFE4; }
+  .a-pack .brand { font: 600 15px/1.15 Fraunces, serif; }
+  .a-pack .model { font-size: 12.5px; color: #4B5348; }
+  .a-pack .meta { font-size: 11.5px; color: #7A7F72; margin-top: 8px; }
+  .a-pack .chk { position: absolute; top: 10px; right: 10px; color: #D9682B; font-size: 19px; }
+  .a-cat { display: flex; align-items: center; gap: 8px; margin: 16px 2px 8px; font: 600 11px Inter; letter-spacing: .12em; text-transform: uppercase; color: #4B5348; }
+  .a-ci { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; color: #fff; flex: none; }
+  .a-cat .sub { margin-left: auto; letter-spacing: 0; text-transform: none; font-weight: 500; color: #7A7F72; }
+  .a-card { background: #FFFDF8; border: 1px solid #E3DBCB; border-radius: 14px; overflow: hidden; }
+  .a-pad { padding: 14px; }
+  .a-row { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-top: 1px solid #EFE8DA; }
+  .a-row:first-child { border-top: 0; }
+  .a-row .txt { flex: 1; min-width: 0; }
+  .a-row .nm { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .a-row .br { font-size: 12px; color: #7A7F72; }
+  .a-row .wt { text-align: right; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .a-row .wt small { display: block; font-weight: 400; color: #7A7F72; font-size: 11px; }
+  .a-row.out .nm { color: #5E6359; font-weight: 500; }
+  .a-row.out .wt { color: #7A7F72; font-weight: 500; }
+  .a-add { width: 30px; height: 30px; border-radius: 50%; border: 1.5px dashed #B9B09D; color: #7A7F72; display: grid; place-items: center; font-size: 16px; flex: none; }
+  .a-step { display: flex; align-items: center; background: #E7EDE4; border-radius: 999px; flex: none; }
+  .a-step button { width: 26px; height: 30px; color: #2F4A3A; font-size: 15px; }
+  .a-step b { min-width: 12px; text-align: center; font-size: 13px; color: #2F4A3A; }
+  .a-hero { background: #2F4A3A; color: #F4EFE4; border-radius: 22px; padding: 18px; position: relative; overflow: hidden; }
+  .a-hero .topo { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .16; }
+  .a-hero > div { position: relative; }
+  .a-hero .top { display: flex; gap: 10px; align-items: center; }
+  .a-hero .top .ic { width: 40px; height: 40px; border-radius: 12px; background: rgba(244,239,228,.14); display: grid; place-items: center; font-size: 22px; }
+  .a-hero .brand { font-size: 12px; opacity: .75; }
+  .a-hero .model { font: 600 20px Fraunces, serif; }
+  .a-hero .lbl { margin-top: 22px; font: 600 10.5px Inter; letter-spacing: .18em; text-transform: uppercase; color: #F3A77F; }
+  .a-hero .num { font: 500 56px/1 Fraunces, serif; letter-spacing: -.02em; margin-top: 4px; }
+  .a-hero .num small { font: 500 18px Inter; opacity: .7; margin-left: 6px; }
+  .a-hero .row { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; border-top: 1px solid rgba(244,239,228,.18); padding-top: 12px; }
+  .a-hero .row span { display: block; font-size: 11px; opacity: .7; }
+  .a-hero .row b { font: 600 14.5px Inter; }
+  .a-chips { display: flex; gap: 8px; overflow-x: auto; margin: 14px -18px 0; padding: 0 18px; scrollbar-width: none; }
+  .a-chip { flex: none; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; border: 1px solid #D8CFBD; background: #FFFDF8; font-size: 13px; font-weight: 500; }
+  .a-chip i { font-size: 16px; color: #2F4A3A; }
+  .a-chip.danger i { color: #B54A2A; }
+  .a-water { display: flex; gap: 16px; padding: 16px; align-items: center; }
+  .a-water .lt { font: 600 10.5px Inter; letter-spacing: .14em; text-transform: uppercase; color: #7A7F72; margin-bottom: 8px; }
+  .a-water .cn { font-size: 13px; padding: 6px 0; border-top: 1px solid #EFE8DA; display: flex; justify-content: space-between; gap: 8px; }
+  .a-water .cn:first-of-type { border-top: 0; }
+  .a-water .cn span { color: #7A7F72; white-space: nowrap; }
+  .a-sl-l { display: flex; justify-content: space-between; font-size: 13px; color: #4B5348; margin-bottom: 4px; }
+  .a-sl-l b { font: 600 16px Fraunces, serif; color: #1F2A22; }
+  .a-slider .track { height: 6px; border-radius: 3px; background: #E3DBCB; }
+  .a-slider .fill { background: #D9682B; }
+  .a-slider .thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid #D9682B; box-shadow: 0 2px 6px rgba(0,0,0,.15); }
+  .a-tbl .h, .a-tbl .r { display: grid; grid-template-columns: 1fr 86px 86px; padding: 10px 14px; align-items: baseline; }
+  .a-tbl .h { font: 600 10.5px Inter; letter-spacing: .14em; text-transform: uppercase; color: #7A7F72; border-bottom: 1px solid #EFE8DA; text-align: right; }
+  .a-tbl .r { border-top: 1px solid #EFE8DA; font-size: 13px; }
+  .a-tbl .r:nth-child(2) { border-top: 0; }
+  .a-tbl .r b { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .a-tbl .r.tot { background: #F7F2E8; }
+  .a-tbl .r.tot b:first-of-type { color: #D9682B; }
+  .a-tag { font: 600 10px Inter; letter-spacing: .08em; text-transform: uppercase; color: #7A8B6F; border: 1px solid #C9D2C1; padding: 3px 7px; border-radius: 999px; }
+  .a-chev { color: #B9B09D; font-size: 20px; }
+  .a-user { display: flex; align-items: center; gap: 12px; padding: 14px; }
+  .a-user .av { width: 46px; height: 46px; border-radius: 50%; background: #2F4A3A; color: #F4EFE4; display: grid; place-items: center; font: 600 17px Fraunces, serif; }
+  .a-user .txt { flex: 1; }
+  .a-user .nm { font: 600 16px Fraunces, serif; }
+  .a-user .br { font-size: 12px; color: #7A7F72; }
+  .a-ghost { border: 1px solid #D8CFBD; border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 500; }
+  .a-lbl { font-size: 12.5px; font-weight: 600; color: #4B5348; margin-bottom: 6px; }
+  .a-seg { display: flex; background: #EFE8DA; border-radius: 999px; padding: 3px; }
+  .a-seg button { flex: 1; padding: 7px 0; border-radius: 999px; font-size: 13px; font-weight: 500; color: #4B5348; }
+  .a-seg button.on { background: #2F4A3A; color: #F4EFE4; }
+  .a-foot { text-align: center; font-size: 11.5px; color: #9A9C90; margin-top: 26px; }
+  .a-empty { text-align: center; padding: 30px 10px; color: #6B6F64; font-size: 13.5px; }
+  .a-empty .t { font: 600 20px Fraunces, serif; color: #1F2A22; margin-bottom: 4px; }
+  .a-empty button { margin-top: 12px; border: 1.5px solid #2F4A3A; color: #2F4A3A; border-radius: 999px; padding: 7px 14px; font-weight: 600; font-size: 13px; }
+  .a-tabs { flex: none; display: flex; justify-content: space-around; padding: 8px 6px 24px; background: #FFFDF8; border-top: 1px solid #E3DBCB; }
+  .a-tab { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; color: #7A7F72; font-weight: 500; position: relative; width: 64px; }
+  .a-tab .pill { width: 50px; height: 28px; border-radius: 999px; display: grid; place-items: center; font-size: 21px; }
+  .a-tab.on { color: #1F2A22; font-weight: 600; }
+  .a-tab.on .pill { background: #2F4A3A; color: #F4EFE4; }
+  .a-badge { position: absolute; top: -3px; right: 6px; background: #D9682B; color: #fff; font-size: 10px; font-weight: 700; border-radius: 999px; min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 4px; border: 2px solid #FFFDF8; }
+
+  /* =================== B — GOLDEN HOUR =================== */
+  .vB { background: #FBF3E4; color: #2A2420; font-family: 'DM Sans', sans-serif; }
+  .vB .screen-body { padding: 4px 18px 22px; }
+  .b-title { display: flex; align-items: flex-end; justify-content: space-between; margin: 8px 0 14px; }
+  .b-title h1 { font: 800 32px/1 'Bricolage Grotesque', sans-serif; letter-spacing: -.02em; color: #1F4E5A; }
+  .b-title .sub { font-size: 12px; font-weight: 600; color: #8A7A66; margin-bottom: 4px; }
+  .b-stripes { display: flex; flex-direction: column; gap: 2px; width: 46px; margin-bottom: 4px; }
+  .b-stripes i { height: 4px; border-radius: 2px; }
+  .b-stripes i:nth-child(1) { background: #F2C26B; }
+  .b-stripes i:nth-child(2) { background: #E9A23B; }
+  .b-stripes i:nth-child(3) { background: #D97B4A; }
+  .b-stripes i:nth-child(4) { background: #C4532D; }
+  .b-sec { display: flex; align-items: center; justify-content: space-between; margin: 20px 0 10px; }
+  .b-sec h2 { font: 700 18px 'Bricolage Grotesque', sans-serif; color: #1F4E5A; }
+  .b-sec .meta { font-size: 12px; font-weight: 600; color: #8A7A66; }
+  .b-plus { width: 34px; height: 34px; border-radius: 50%; background: #E9A23B; color: #2A2420; display: grid; place-items: center; font-size: 20px; box-shadow: 0 2px 0 #C4832A; }
+  .b-pack { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #FFF9EE; border: 1.5px solid #EAD9BC; border-radius: 16px; margin-bottom: 8px; cursor: pointer; position: relative; overflow: hidden; }
+  .b-pack .ic { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #1F4E5A; color: #1F4E5A; display: grid; place-items: center; font-size: 20px; flex: none; }
+  .b-pack .txt { flex: 1; min-width: 0; }
+  .b-pack .nm { font: 700 15px 'Bricolage Grotesque', sans-serif; }
+  .b-pack .mt { font-size: 12px; color: #8A7A66; font-weight: 500; }
+  .b-pack .wt { font-weight: 700; font-size: 13.5px; }
+  .b-pack.sel { background: #1F4E5A; border-color: #1F4E5A; color: #FBF3E4; padding-left: 22px; }
+  .b-pack.sel .ic { border-color: #F2C26B; color: #F2C26B; }
+  .b-pack.sel .mt { color: #BFD3D3; }
+  .b-pack.sel::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: linear-gradient(#F2C26B 0 25%, #E9A23B 25% 50%, #D97B4A 50% 75%, #C4532D 75%); }
+  .b-tabhd { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px 5px 9px; border-radius: 12px 12px 0 0; font: 700 12.5px 'Bricolage Grotesque', sans-serif; color: #fff; margin-top: 16px; }
+  .b-tabhd i { font-size: 15px; }
+  .b-tabhd span { opacity: .85; font: 600 11.5px 'DM Sans', sans-serif; margin-left: 4px; }
+  .b-list { background: #FFF9EE; border: 1.5px solid #EAD9BC; border-top-width: 3px; border-radius: 0 16px 16px 16px; overflow: hidden; }
+  .b-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1.5px dashed #EAD9BC; }
+  .b-row:first-child { border-top: 0; }
+  .b-row .txt { flex: 1; min-width: 0; }
+  .b-row .nm { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .b-row .br { font-size: 12px; color: #8A7A66; }
+  .b-row .wt { font-weight: 700; font-size: 13px; text-align: right; white-space: nowrap; }
+  .b-row .wt small { display: block; font-weight: 600; font-size: 11px; color: #3F7F8C; }
+  .b-row.out .nm { color: #6E6152; font-weight: 600; }
+  .b-row.out .wt { color: #A8977F; }
+  .b-add { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #E9A23B; color: #C4832A; display: grid; place-items: center; font-size: 17px; flex: none; }
+  .b-step { display: flex; align-items: center; gap: 4px; flex: none; }
+  .b-step button { width: 26px; height: 26px; border-radius: 50%; background: #F6E6C4; color: #1F4E5A; font-size: 14px; display: grid; place-items: center; }
+  .b-step b { min-width: 16px; text-align: center; font: 800 15px 'Bricolage Grotesque', sans-serif; color: #1F4E5A; }
+  .b-hero { background: #1F4E5A; color: #FBF3E4; border-radius: 24px; padding: 18px; position: relative; overflow: hidden; }
+  .b-hero .sun { position: absolute; right: -16px; top: 18px; width: 140px; }
+  .b-hero > div { position: relative; }
+  .b-hero .eb { font: 700 11px 'DM Sans', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #F2C26B; }
+  .b-hero .nm { font: 800 24px/1.1 'Bricolage Grotesque', sans-serif; margin-top: 4px; max-width: 180px; }
+  .b-hero .br { font-size: 13px; opacity: .75; }
+  .b-patches { display: flex; align-items: center; gap: 8px; margin-top: 22px; }
+  .b-patch { border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex: none; position: relative; }
+  .b-patch::after { content: ''; position: absolute; inset: 5px; border-radius: 50%; border: 1.5px dashed currentColor; opacity: .45; }
+  .b-patch.big { width: 104px; height: 104px; background: #E9A23B; color: #2A2420; }
+  .b-patch.sm { width: 74px; height: 74px; background: #FBF3E4; color: #1F4E5A; }
+  .b-patch span { font: 700 9.5px 'DM Sans', sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+  .b-patch b { font: 800 28px/1 'Bricolage Grotesque', sans-serif; margin: 2px 0; }
+  .b-patch.sm b { font-size: 15px; }
+  .b-patch small { font-size: 11px; font-weight: 700; }
+  .b-actions { display: flex; background: #FFF9EE; border: 1.5px solid #EAD9BC; border-radius: 18px; margin-top: 14px; overflow: hidden; }
+  .b-act { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 0 9px; font-size: 11px; font-weight: 700; color: #1F4E5A; border-left: 1.5px solid #EAD9BC; }
+  .b-act:first-child { border-left: 0; }
+  .b-act i { font-size: 21px; }
+  .b-act.danger { color: #C4532D; }
+  .b-scene { border-radius: 24px; overflow: hidden; position: relative; border: 1.5px solid #EAD9BC; }
+  .b-scene svg { display: block; width: 100%; }
+  .b-scene .pct { position: absolute; left: 16px; top: 12px; font: 800 36px/1 'Bricolage Grotesque', sans-serif; color: #1F4E5A; }
+  .b-scene .pct small { display: block; font: 700 10.5px 'DM Sans', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #8A7A66; margin-bottom: 2px; }
+  .b-conts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .b-conts span { border: 1.5px solid #1F4E5A; color: #1F4E5A; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+  .b-sl-l { display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #6E6152; margin: 16px 2px 0; }
+  .b-sl-l b { color: #1F4E5A; }
+  .b-slider .track { height: 10px; border-radius: 5px; background: #F6E6C4; }
+  .b-slider .fill { background: linear-gradient(90deg, #3F7F8C, #1F4E5A); }
+  .b-slider .thumb { width: 26px; height: 26px; border-radius: 50%; background: #E9A23B; border: 4px solid #FFF9EE; box-shadow: 0 0 0 1.5px #C4832A; }
+  .b-ticket { background: #FFF9EE; border-radius: 18px; margin-top: 14px; border: 1.5px solid #EAD9BC; overflow: hidden; }
+  .b-ticket .r { display: grid; grid-template-columns: 1fr 84px 84px; padding: 11px 16px; font-size: 13px; align-items: baseline; }
+  .b-ticket .r + .r { border-top: 1.5px dashed #EAD9BC; }
+  .b-ticket .h { font: 700 10px 'DM Sans', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #8A7A66; }
+  .b-ticket .h span:not(:first-child), .b-ticket .r b { text-align: right; }
+  .b-ticket .r b { font-weight: 700; }
+  .b-ticket .r.tot { background: #1F4E5A; color: #FBF3E4; border-top: 0; }
+  .b-ticket .r.tot b:first-of-type { color: #F2C26B; }
+  .b-catrow { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1.5px dashed #EAD9BC; }
+  .b-catrow:first-child { border-top: 0; }
+  .b-cbadge { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #fff; flex: none; box-shadow: inset 0 0 0 3px rgba(255,255,255,.35); }
+  .b-catrow .nm { flex: 1; font-weight: 700; font-size: 14px; }
+  .b-catrow .nm small { display: block; font-weight: 500; font-size: 11.5px; color: #8A7A66; }
+  .b-stock { font: 700 10px 'DM Sans', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #C4532D; background: #F9E3D3; padding: 3px 8px; border-radius: 999px; }
+  .b-chev { color: #C9B89C; font-size: 20px; }
+  .b-post { background: #1F4E5A; color: #FBF3E4; border-radius: 22px; padding: 16px; display: flex; align-items: center; gap: 12px; position: relative; overflow: hidden; }
+  .b-post .sun { position: absolute; right: -20px; bottom: -2px; width: 110px; opacity: .25; }
+  .b-post > * { position: relative; }
+  .b-post .av { width: 50px; height: 50px; border-radius: 50%; background: #E9A23B; color: #2A2420; display: grid; place-items: center; font: 800 18px 'Bricolage Grotesque', sans-serif; flex: none; }
+  .b-post .nm { font: 800 17px 'Bricolage Grotesque', sans-serif; }
+  .b-post small { display: block; font-size: 12px; opacity: .75; }
+  .b-post button { margin-left: auto; border: 1.5px solid #F2C26B; color: #F2C26B; border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 700; }
+  .b-card { background: #FFF9EE; border: 1.5px solid #EAD9BC; border-radius: 18px; padding: 14px; }
+  .b-lbl { font: 700 13.5px 'Bricolage Grotesque', sans-serif; color: #1F4E5A; margin-bottom: 8px; }
+  .b-seg { display: flex; gap: 6px; }
+  .b-seg button { flex: 1; padding: 9px 0; border-radius: 12px; border: 1.5px solid #EAD9BC; font-weight: 700; font-size: 13px; color: #6E6152; background: #FBF3E4; }
+  .b-seg button.on { background: #E9A23B; border-color: #C4832A; color: #2A2420; box-shadow: 0 2px 0 #C4832A; }
+  .b-foot { text-align: center; font-size: 11.5px; color: #A8977F; margin-top: 24px; font-weight: 600; }
+  .b-empty { background: #FFF9EE; border: 1.5px dashed #EAD9BC; border-radius: 18px; padding: 26px 14px; text-align: center; color: #6E6152; font-size: 13.5px; font-weight: 500; }
+  .b-empty .t { font: 800 20px 'Bricolage Grotesque', sans-serif; color: #1F4E5A; margin-bottom: 4px; }
+  .b-empty button { margin-top: 12px; background: #E9A23B; color: #2A2420; border-radius: 999px; padding: 8px 14px; font-weight: 700; font-size: 13px; box-shadow: 0 2px 0 #C4832A; }
+  .b-tabs { flex: none; display: flex; justify-content: space-around; background: #1F4E5A; border-radius: 22px 22px 0 0; padding: 10px 6px 24px; }
+  .b-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; color: #9FBDBD; font-size: 10.5px; font-weight: 700; width: 62px; position: relative; }
+  .b-tab .ci { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 21px; }
+  .b-tab.on { color: #F2C26B; }
+  .b-tab.on .ci { background: #E9A23B; color: #1F4E5A; transform: translateY(-14px); margin-bottom: -14px; box-shadow: 0 0 0 5px #1F4E5A; }
+  .b-tbadge { position: absolute; top: -4px; right: 8px; background: #C4532D; color: #fff; font-size: 10px; font-weight: 800; border-radius: 999px; min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 4px; border: 2px solid #1F4E5A; }
+  .b-tab.on .b-tbadge { top: -18px; right: 4px; }
+
+  /* =================== C — BASECAMP =================== */
+  .vC { background: #F3F6FB; color: #162033; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .vC .screen-body { padding: 4px 18px 110px; }
+  .c-head { display: flex; justify-content: space-between; align-items: center; margin: 6px 0 14px; }
+  .c-head .hi { font-size: 13px; color: #6B7A93; font-weight: 600; }
+  .c-head h1 { font: 800 28px 'Plus Jakarta Sans'; letter-spacing: -.02em; }
+  .c-av { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #2B59C3, #FF8A5B); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+  .c-sec { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 10px; }
+  .c-sec h2 { font: 800 17px 'Plus Jakarta Sans'; }
+  .c-count { font-size: 12.5px; font-weight: 700; color: #6B7A93; }
+  .c-plus { height: 32px; padding: 0 12px 0 8px; border-radius: 999px; background: #E3EBFB; color: #2B59C3; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 3px; }
+  .c-plus i { font-size: 18px; }
+  .c-packs { display: flex; gap: 12px; overflow-x: auto; margin: 0 -18px; padding: 4px 18px 14px; scrollbar-width: none; }
+  .c-pack { flex: none; width: 196px; border-radius: 24px; padding: 16px; background: #fff; box-shadow: 0 6px 18px -8px rgba(22,32,51,.18); cursor: pointer; position: relative; }
+  .c-pack.sel { background: linear-gradient(140deg, #2B59C3 0%, #5B7FE0 60%, #FF8A5B 140%); color: #fff; box-shadow: 0 14px 24px -10px rgba(43,89,195,.6); }
+  .c-pack .ic { width: 44px; height: 44px; border-radius: 15px; background: #E3EBFB; color: #2B59C3; display: grid; place-items: center; font-size: 23px; }
+  .c-pack.sel .ic { background: rgba(255,255,255,.22); color: #fff; }
+  .c-pack .brand { margin-top: 14px; font-size: 12px; opacity: .7; font-weight: 700; }
+  .c-pack .model { font-weight: 800; font-size: 17px; }
+  .c-pack .meta { display: flex; gap: 6px; margin-top: 10px; }
+  .c-pack .meta span { font-size: 11.5px; font-weight: 700; padding: 4px 9px; border-radius: 999px; background: #F3F6FB; }
+  .c-pack.sel .meta span { background: rgba(255,255,255,.2); }
+  .c-pack .on { position: absolute; top: 16px; right: 14px; font-size: 11px; font-weight: 800; background: #fff; color: #2B59C3; padding: 4px 9px; border-radius: 999px; display: flex; align-items: center; gap: 3px; }
+  .c-group { background: #fff; border-radius: 22px; padding: 4px 14px 2px; margin-bottom: 12px; box-shadow: 0 4px 14px -8px rgba(22,32,51,.14); }
+  .c-ghead { display: flex; align-items: center; gap: 10px; padding: 10px 0 8px; }
+  .c-tile { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; font-size: 19px; flex: none; }
+  .c-ghead .t { font-weight: 800; font-size: 14.5px; flex: 1; }
+  .c-ghead .s { font-size: 12px; color: #6B7A93; font-weight: 700; }
+  .c-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #EEF2F8; }
+  .c-row .txt { flex: 1; min-width: 0; }
+  .c-row .nm { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .c-row .br { font-size: 12px; color: #6B7A93; font-weight: 500; }
+  .c-row .wt { font-weight: 800; font-size: 13px; text-align: right; white-space: nowrap; }
+  .c-row .wt small { display: block; font-size: 11px; color: #3FA7D6; font-weight: 700; }
+  .c-row.out .nm { color: #56647D; }
+  .c-row.out .wt { color: #97A3B8; }
+  .c-add { width: 36px; height: 36px; border-radius: 12px; background: #F3F6FB; color: #2B59C3; font-size: 19px; display: grid; place-items: center; flex: none; }
+  .c-step { display: flex; align-items: center; background: #2B59C3; border-radius: 12px; color: #fff; height: 36px; padding: 0 2px; flex: none; }
+  .c-step button { width: 26px; height: 32px; color: #fff; font-size: 15px; }
+  .c-step b { min-width: 12px; text-align: center; font-size: 13px; }
+  .c-hero { border-radius: 28px; padding: 18px; color: #fff; background: linear-gradient(155deg, #1E3F99 0%, #2B59C3 48%, #FF8A5B 135%); position: relative; overflow: hidden; box-shadow: 0 18px 30px -16px rgba(43,89,195,.65); }
+  .c-hero .mtn { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 90px; }
+  .c-hero > div { position: relative; }
+  .c-hero .top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .c-hero .brand { font-size: 12px; font-weight: 700; opacity: .75; }
+  .c-hero .model { font-size: 20px; font-weight: 800; }
+  .c-hero .cap { background: rgba(255,255,255,.2); padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; }
+  .c-hero .main { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+  .c-hero .side { flex: 1; display: grid; gap: 8px; }
+  .c-hero .st { background: rgba(255,255,255,.16); border-radius: 16px; padding: 10px 12px; backdrop-filter: blur(6px); }
+  .c-hero .st span { display: block; font-size: 11px; font-weight: 700; opacity: .8; }
+  .c-hero .st b { font-size: 16px; font-weight: 800; }
+  .c-acts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 16px; }
+  .c-act { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #3C4A63; }
+  .c-act .tile { width: 54px; height: 54px; border-radius: 18px; background: #fff; display: grid; place-items: center; font-size: 23px; box-shadow: 0 6px 14px -8px rgba(22,32,51,.25); }
+  .c-wcard { background: #fff; border-radius: 28px; padding: 18px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 6px 18px -10px rgba(22,32,51,.18); }
+  .c-conts { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 10px; }
+  .c-conts span { background: #E8F4FB; color: #1F6E95; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; }
+  .c-sl-l { display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #56647D; margin: 18px 4px 2px; width: 100%; }
+  .c-sl-l b { color: #2B59C3; }
+  .c-slider { width: 100%; height: 36px; }
+  .c-slider .track { height: 14px; border-radius: 7px; background: #E3EBFB; }
+  .c-slider .fill { background: linear-gradient(90deg, #6FB8FF, #2B59C3); border-radius: 7px; }
+  .c-slider .thumb { width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: 0 3px 10px rgba(22,32,51,.25); border: 6px solid #2B59C3; }
+  .c-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+  .c-st { border-radius: 20px; padding: 12px 10px; }
+  .c-st span { display: block; font-size: 11px; font-weight: 700; opacity: .75; }
+  .c-st b { display: block; font-size: 16px; font-weight: 800; margin-top: 4px; white-space: nowrap; }
+  .c-st small { font-size: 11px; font-weight: 600; opacity: .7; white-space: nowrap; }
+  .c-catgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .c-cat { background: #fff; border-radius: 20px; padding: 14px; box-shadow: 0 4px 14px -8px rgba(22,32,51,.14); position: relative; }
+  .c-cat .nm { font-weight: 800; font-size: 14px; margin-top: 10px; }
+  .c-cat .sm { font-size: 11.5px; font-weight: 600; color: #6B7A93; }
+  .c-cat .stk { position: absolute; top: 14px; right: 12px; font-size: 10px; font-weight: 800; color: #97A3B8; }
+  .c-cat.new { border: 2px dashed #C9D5EC; background: transparent; box-shadow: none; display: grid; place-items: center; color: #2B59C3; font-weight: 800; font-size: 13.5px; min-height: 110px; }
+  .c-prof { border-radius: 26px; padding: 18px; color: #fff; background: linear-gradient(140deg, #2B59C3, #FF8A5B); display: flex; align-items: center; gap: 14px; }
+  .c-prof .av { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.25); display: grid; place-items: center; font-weight: 800; font-size: 18px; }
+  .c-prof .nm { font-weight: 800; font-size: 17px; }
+  .c-prof small { display: block; font-size: 12px; opacity: .85; font-weight: 600; }
+  .c-prof button { margin-left: auto; background: #fff; color: #2B59C3; font-weight: 800; font-size: 12px; padding: 7px 12px; border-radius: 999px; }
+  .c-set { background: #fff; border-radius: 22px; padding: 16px; box-shadow: 0 4px 14px -8px rgba(22,32,51,.14); }
+  .c-set .lb { font-weight: 800; font-size: 13.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .c-set .lb i { color: #2B59C3; font-size: 18px; }
+  .c-seg { display: flex; gap: 6px; }
+  .c-seg button { flex: 1; padding: 9px 0; border-radius: 14px; background: #F3F6FB; font-weight: 700; font-size: 13px; color: #56647D; }
+  .c-seg button.on { background: #2B59C3; color: #fff; box-shadow: 0 6px 12px -6px rgba(43,89,195,.7); }
+  .c-foot { text-align: center; font-size: 12px; color: #97A3B8; font-weight: 600; margin-top: 24px; }
+  .c-empty { background: #fff; border-radius: 22px; padding: 28px 16px; text-align: center; color: #6B7A93; font-weight: 600; font-size: 13.5px; }
+  .c-empty .t { font-size: 34px; }
+  .c-empty button { margin-top: 12px; background: #2B59C3; color: #fff; border-radius: 999px; padding: 8px 14px; font-weight: 800; font-size: 13px; }
+  .c-tabs { position: absolute; left: 14px; right: 14px; bottom: 24px; height: 66px; background: #fff; border-radius: 24px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 14px 34px -10px rgba(22,32,51,.35); }
+  .c-tab { width: 58px; height: 50px; border-radius: 17px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #97A3B8; font-size: 23px; position: relative; }
+  .c-tab span { font-size: 9.5px; font-weight: 800; margin-top: -1px; }
+  .c-tab.on { background: #E3EBFB; color: #2B59C3; }
+  .c-badge { position: absolute; top: 2px; right: 6px; background: #FF8A5B; color: #fff; font-size: 9.5px; font-weight: 800; border-radius: 999px; min-width: 17px; height: 17px; display: grid; place-items: center; padding: 0 4px; border: 2px solid #fff; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="switcher">
+  <button data-cycle="-1" aria-label="Previous variant"><i class="mdi mdi-chevron-left"></i></button>
+  <span id="switcher-label"></span>
+  <button data-cycle="1" aria-label="Next variant"><i class="mdi mdi-chevron-right"></i></button>
+</div>
+
+<script>
+/* ------------------------------------------------------------------ data */
+const CATS = [
+  { id: 'water', label: 'Water Containers', icon: 'cup-water', stock: true },
+  { id: 'food', label: 'Food', icon: 'food-drumstick', stock: true, exempt: true },
+  { id: 'fuel', label: 'Fuel', icon: 'fuel', stock: true, exempt: true },
+  { id: 'shelter', label: 'Shelter', icon: 'tent', stock: true },
+  { id: 'clothing', label: 'Clothing', icon: 'tshirt-crew', stock: true },
+  { id: 'cooking', label: 'Cooking', icon: 'grill', stock: true },
+  { id: 'survival', label: 'Survival', icon: 'knife-military', stock: true },
+  { id: 'navigation', label: 'Navigation', icon: 'map', stock: true },
+  { id: 'health', label: 'Health', icon: 'medical-bag', stock: true },
+  { id: 'electronics', label: 'Electronics', icon: 'battery-charging-100', stock: true },
+  { id: 'misc', label: 'Misc', icon: 'chart-bubble', stock: true },
+  { id: 'camera', label: 'Camera Gear', icon: 'camera', stock: false },
+];
+const PACKS = [
+  { id: 'p1', brand: 'Hyperlite', model: 'Southwest 3400', l: 55, g: 907 },
+  { id: 'p2', brand: 'ULA', model: 'Circuit', l: 68, g: 1162 },
+  { id: 'p3', brand: 'Osprey', model: 'Exos 58', l: 58, g: 1219 },
+];
+const SAMPLE_ITEMS = [
+  { id: 1, cat: 'shelter', brand: 'Zpacks', name: 'Duplex Tent', g: 539, qty: 1 },
+  { id: 2, cat: 'shelter', brand: 'Nemo', name: 'Tensor Sleeping Pad', g: 425, qty: 1 },
+  { id: 3, cat: 'shelter', brand: 'Enlightened Equipment', name: 'Revelation 20° Quilt', g: 567, qty: 1 },
+  { id: 4, cat: 'clothing', brand: 'Patagonia', name: 'Nano Puff Jacket', g: 337, qty: 1 },
+  { id: 5, cat: 'clothing', brand: 'Darn Tough', name: 'Hiker Socks', g: 71, qty: 2 },
+  { id: 6, cat: 'clothing', brand: 'Outdoor Research', name: 'Helium Rain Jacket', g: 179, qty: 0 },
+  { id: 7, cat: 'cooking', brand: 'MSR', name: 'PocketRocket 2', g: 73, qty: 1 },
+  { id: 8, cat: 'cooking', brand: 'Toaks', name: 'Titanium 750 Pot', g: 111, qty: 1 },
+  { id: 9, cat: 'water', brand: 'Smartwater', name: '1L Bottle', g: 37, ml: 1000, qty: 2 },
+  { id: 10, cat: 'water', brand: 'Sawyer', name: 'Squeeze Filter', g: 85, qty: 1 },
+  { id: 11, cat: 'water', brand: 'Platypus', name: '2L Softbottle', g: 37, ml: 2000, qty: 0 },
+  { id: 12, cat: 'food', brand: 'Mountain House', name: 'Pad Thai', g: 136, qty: 3 },
+  { id: 13, cat: 'fuel', brand: 'MSR', name: 'IsoPro 8 oz', g: 369, qty: 1 },
+  { id: 14, cat: 'navigation', brand: 'Garmin', name: 'inReach Mini 2', g: 100, qty: 1 },
+  { id: 15, cat: 'health', brand: 'Adventure Medical', name: 'Ultralight .7 Kit', g: 113, qty: 1 },
+  { id: 16, cat: 'electronics', brand: 'Anker', name: 'PowerCore 10K', g: 180, qty: 1 },
+  { id: 17, cat: 'electronics', brand: 'Petzl', name: 'Bindi Headlamp', g: 35, qty: 0 },
+  { id: 18, cat: 'misc', brand: 'Deuce of Spades', name: 'Trowel', g: 17, qty: 0 },
+];
+const TABS = [
+  { key: 'locker', label: 'Locker', icon: 'locker' },
+  { key: 'mypack', label: 'My Pack', icon: 'bag-personal' },
+  { key: 'water', label: 'Water', icon: 'cup-water' },
+  { key: 'categories', label: 'Categories', icon: 'tag-multiple' },
+  { key: 'settings', label: 'Settings', icon: 'cog' },
+];
+
+const clone = () => SAMPLE_ITEMS.map((i) => ({ ...i }));
+const state = {
+  variant: 'A',
+  unit: 'lb',
+  liq: 'oz',
+  fill: 100,
+  pack: 'p1',
+  phoneTabs: ['locker', 'mypack', 'water'],
+  items: clone(),
+};
+
+/* --------------------------------------------------------------- helpers */
+const ic = (n) => `<i class="mdi mdi-${n}"></i>`;
+const cat = (id) => CATS.find((c) => c.id === id);
+const sumG = (list) => list.reduce((a, i) => a + i.g * i.qty, 0);
+const UL = () => state.unit;
+function wn(g) {
+  if (state.unit === 'oz') return (g / 28.3495).toFixed(1);
+  if (state.unit === 'kg') return (g / 1000).toFixed(2);
+  return (g / 453.592).toFixed(2);
+}
+const fmtW = (g) => `${wn(g)} ${UL()}`;
+const fmtL = (ml) => (state.liq === 'ml' ? `${Math.round(ml)} ml` : `${(ml / 29.5735).toFixed(1)} fl oz`);
+function groups(list) {
+  return CATS.map((c) => ({ cat: c, items: list.filter((i) => i.cat === c.id) })).filter((g) => g.items.length);
+}
+function S() {
+  const pack = PACKS.find((p) => p.id === state.pack);
+  const inPack = state.items.filter((i) => i.qty > 0);
+  const liquidMl = inPack.reduce((a, i) => a + (i.ml || 0) * i.qty, 0);
+  const base = pack.g + sumG(inPack.filter((i) => !cat(i.cat).exempt));
+  const itemsG = sumG(inPack);
+  const total = pack.g + itemsG;
+  const byCat = groups(inPack).map((g) => ({ cat: g.cat, g: sumG(g.items) })).sort((a, b) => b.g - a.g);
+  return { pack, inPack, liquidMl, base, itemsG, total, wet: total + liquidMl, byCat };
+}
+const catColor = (v, c) => VARIANTS[v].palette[CATS.indexOf(c) % VARIANTS[v].palette.length];
+function slider(p) {
+  return `<div class="${p}-slider" data-slider><div class="track"><div class="fill" style="width:${state.fill}%"></div></div><div class="thumb" style="left:${state.fill}%"></div></div>`;
+}
+function seg(p, action, opts, cur) {
+  return `<div class="${p}-seg">${opts.map(([v, l]) => `<button class="${v === cur ? 'on' : ''}" data-action="${action}" data-val="${v}">${l}</button>`).join('')}</div>`;
+}
+const UNIT_OPTS = [['oz', 'oz'], ['lb', 'lbs'], ['kg', 'kg']];
+const LIQ_OPTS = [['oz', 'fl oz'], ['ml', 'ml']];
+
+/* =========================================================== A — TRAILHEAD */
+function topo() {
+  const paths = [];
+  for (let k = 0; k < 10; k++) {
+    const r = 24 + k * 22;
+    let d = '';
+    for (let s = 0; s <= 64; s++) {
+      const a = (s / 64) * Math.PI * 2;
+      const rr = r * (1 + 0.13 * Math.sin(3 * a + k * 0.5) + 0.07 * Math.cos(5 * a - k));
+      d += `${s ? 'L' : 'M'}${(250 + rr * Math.cos(a)).toFixed(1)} ${(50 + rr * 0.75 * Math.sin(a)).toFixed(1)}`;
+    }
+    paths.push(`<path d="${d}Z"/>`);
+  }
+  return `<svg class="topo" viewBox="0 0 320 300" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#F4EFE4" stroke-width="1.1">${paths.join('')}</svg>`;
+}
+function aRow(i) {
+  const left = i.qty
+    ? `<div class="a-step"><button data-action="dec" data-id="${i.id}">${ic('minus')}</button><b>${i.qty}</b><button data-action="inc" data-id="${i.id}">${ic('plus')}</button></div>`
+    : `<button class="a-add" data-action="inc" data-id="${i.id}">${ic('plus')}</button>`;
+  return `<div class="a-row ${i.qty ? '' : 'out'}">${left}<div class="txt"><div class="nm">${i.name}</div><div class="br">${i.brand}</div></div><div class="wt">${fmtW(i.g)}${i.ml ? `<small>${fmtL(i.ml)}</small>` : ''}</div></div>`;
+}
+function aGroups(list, inPack) {
+  return groups(list).map((g) => `
+    <div class="a-cat"><span class="a-ci" style="background:${catColor('A', g.cat)}">${ic(g.cat.icon)}</span>${g.cat.label}
+      <span class="sub">${inPack ? fmtW(sumG(g.items)) : `${g.items.length} items`}</span></div>
+    <div class="a-card">${g.items.map(aRow).join('')}</div>`).join('');
+}
+function aBottle(fill) {
+  const d = 'M30 4h20v14c0 6 18 12 18 30v110a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8V48c0-18 18-24 18-30z';
+  const h = 146 * (fill / 100);
+  return `<svg viewBox="0 0 80 170" width="70" style="flex:none"><defs><clipPath id="abot"><path d="${d}"/></clipPath></defs>
+    <g clip-path="url(#abot)"><rect width="80" height="170" fill="#EFE8DA"/><rect y="${166 - h}" width="80" height="${h + 4}" fill="#5E7A8C"/>
+    <rect y="${166 - h}" width="80" height="3" fill="#8FA9BA"/></g>
+    <path d="${d}" fill="none" stroke="#2F4A3A" stroke-width="2.5"/><rect x="27" y="0" width="26" height="8" rx="2" fill="#D9682B"/></svg>`;
+}
+const aChip = (icon, label) => `<button class="a-chip">${ic(icon)}${label}</button>`;
+const aEmpty = () => `<div class="a-card a-empty"><div class="t">Your pack is empty</div>Add gear from the Locker tab.<br><button data-action="reset">Restore sample items</button></div>`;
+
+const A = {
+  key: 'A',
+  name: 'Trailhead',
+  blurb: 'Warm, earthy, editorial. Feels like a field guide or a national park map: forest green, trail-paper cream, and an ember accent. A serif display face carries the hero numbers.',
+  changes: [
+    '<code>MyPackHeader</code> and <code>MyPackStatsBar</code> merge into one topo hero card with base weight as the headline number',
+    '<code>MyPackToolbar</code> becomes labeled chips instead of bare outlined icons',
+    '<code>PackItem</code> gets an icon, a selected outline, and a check mark',
+    '<code>InventoryItem</code> leads with the item name; dashed add button, pill stepper',
+    '<code>CategorizedItemList</code> uses icon headers and grouped cards',
+    'Tab bar switches to a light bar with an MD3-style active pill',
+  ],
+  tokens: [['primary', '#2F4A3A'], ['secondary', '#7A8B6F'], ['tertiary', '#D9682B'], ['background', '#F4EFE4'], ['surface', '#FFFDF8'], ['onSurface', '#1F2A22'], ['outline', '#D8CFBD'], ['error', '#B54A2A']],
+  palette: ['#5E7A8C', '#C9A66B', '#8C4F3A', '#2F4A3A', '#D9682B', '#7A8B6F', '#4C5B4A', '#B8893B', '#A34A3A', '#6B705C', '#9A8C73', '#3E6259'],
+  type: 'Fraunces (display numbers and titles), Inter (body)',
+  shape: '<code>roundness: 3</code>, 14px cards, pill buttons',
+  screens: {
+    locker: () => `
+      <div class="a-eyebrow">Trail Pack Pro</div><div class="a-h1">Locker</div>
+      <div class="a-sec"><h2>My packs</h2><button class="a-icbtn">${ic('plus')}</button></div>
+      <div class="a-packs">${PACKS.map((p) => {
+        const sel = p.id === state.pack;
+        return `<div class="a-pack ${sel ? 'sel' : ''}" data-action="pack" data-id="${p.id}"><div class="ic">${ic('bag-personal')}</div>${sel ? '<i class="mdi mdi-check-circle chk"></i>' : ''}
+          <div class="brand">${p.brand}</div><div class="model">${p.model}</div><div class="meta">${p.l} L · ${fmtW(p.g)}</div></div>`;
+      }).join('')}</div>
+      <div class="a-sec"><h2>Inventory</h2><button class="a-icbtn">${ic('plus')}</button></div>
+      ${aGroups(state.items, false)}`,
+    mypack: () => {
+      const s = S();
+      return `
+      <div class="a-eyebrow">Loadout</div><div class="a-h1">My Pack</div>
+      <div class="a-hero">${topo()}
+        <div class="top"><div class="ic">${ic('bag-personal')}</div><div><div class="brand">${s.pack.brand}</div><div class="model">${s.pack.model}</div></div></div>
+        <div class="lbl">Base weight</div><div class="num">${wn(s.base)}<small>${UL()}</small></div>
+        <div class="row"><div><span>Total</span><b>${fmtW(s.total)}</b></div><div><span>With liquid</span><b>${fmtW(s.wet)}</b></div><div><span>Capacity</span><b>${s.pack.l} L</b></div></div>
+      </div>
+      <div class="a-chips">${aChip('chart-pie', 'Breakdown')}${aChip('playlist-check', 'Checklist')}${aChip('content-save-outline', 'Save list')}${aChip('import', 'Load list')}<button class="a-chip danger" data-action="empty">${ic('trash-can-outline')}Empty</button></div>
+      <div class="a-sec"><h2>In my pack</h2><span class="meta">${s.inPack.length} items</span></div>
+      ${s.inPack.length ? aGroups(s.inPack, true) : aEmpty()}`;
+    },
+    water: () => {
+      const s = S();
+      const f = state.fill / 100;
+      const cont = s.inPack.filter((i) => i.ml);
+      return `
+      <div class="a-eyebrow">Hydration</div><div class="a-h1">Water</div>
+      <div class="a-card a-water">${aBottle(state.fill)}
+        <div style="flex:1;min-width:0"><div class="lt">Containers in pack</div>
+        ${cont.map((i) => `<div class="cn"><div>${i.qty}× ${i.name}</div><span>${fmtL(i.ml * i.qty)}</span></div>`).join('') || '<div class="cn">None</div>'}</div></div>
+      <div class="a-card a-pad" style="margin-top:12px"><div class="a-sl-l"><span>Fill level</span><b>${state.fill}%</b></div>${slider('a')}</div>
+      <div class="a-card a-tbl" style="margin-top:12px">
+        <div class="h"><span></span><span>Now</span><span>Full</span></div>
+        <div class="r"><span>Liquid</span><b>${fmtL(s.liquidMl * f)}</b><b>${fmtL(s.liquidMl)}</b></div>
+        <div class="r"><span>Liquid weight</span><b>${fmtW(s.liquidMl * f)}</b><b>${fmtW(s.liquidMl)}</b></div>
+        <div class="r tot"><span>Pack total</span><b>${fmtW(s.total + s.liquidMl * f)}</b><b>${fmtW(s.wet)}</b></div>
+      </div>`;
+    },
+    categories: () => `
+      <div class="a-eyebrow">Organize</div><div class="a-h1">Categories</div>
+      <div class="a-sec"><h2>All categories</h2><button class="a-icbtn">${ic('plus')}</button></div>
+      <div class="a-card">${CATS.map((c) => `<div class="a-row"><span class="a-ci" style="background:${catColor('A', c)};width:32px;height:32px;font-size:17px">${ic(c.icon)}</span>
+        <div class="txt"><div class="nm">${c.label}</div>${c.exempt ? '<div class="br">Excluded from base weight</div>' : ''}</div>
+        ${c.stock ? '<span class="a-tag">Stock</span>' : '<i class="mdi mdi-chevron-right a-chev"></i>'}</div>`).join('')}</div>`,
+    settings: () => `
+      <div class="a-eyebrow">Preferences</div><div class="a-h1">Settings</div>
+      <div class="a-card a-user"><div class="av">ZM</div><div class="txt"><div class="nm">Zach McCoy</div><div class="br">zach@example.com</div></div><button class="a-ghost">Sign out</button></div>
+      <div class="a-sec"><h2>Units</h2></div>
+      <div class="a-card a-pad"><div class="a-lbl">Weight</div>${seg('a', 'unit', UNIT_OPTS, state.unit)}
+        <div class="a-lbl" style="margin-top:14px">Liquid</div>${seg('a', 'liq', LIQ_OPTS, state.liq)}</div>
+      <div class="a-foot">Trail Pack Pro · © 2026 Zach McCoy</div>`,
+  },
+  tabbar: (phone, active) => {
+    const n = S().inPack.length;
+    return `<nav class="a-tabs">${TABS.map((t) => `<button class="a-tab ${t.key === active ? 'on' : ''}" data-action="tab" data-phone="${phone}" data-tab="${t.key}">
+      <span class="pill">${ic(t.icon)}</span>${t.label}${t.key === 'mypack' && n ? `<span class="a-badge">${n}</span>` : ''}</button>`).join('')}</nav>`;
+  },
+};
+
+/* ========================================================= B — GOLDEN HOUR */
+const bStripes = () => '<div class="b-stripes"><i></i><i></i><i></i><i></i></div>';
+const bTitle = (t, sub) => `<div class="b-title"><div><div class="sub">${sub}</div><h1>${t}</h1></div>${bStripes()}</div>`;
+const bSun = (cls) => `<svg class="${cls}" viewBox="0 0 120 60"><path d="M0 60a60 60 0 0 1 120 0Z" fill="#C4532D"/><path d="M12 60a48 48 0 0 1 96 0Z" fill="#D97B4A"/><path d="M24 60a36 36 0 0 1 72 0Z" fill="#E9A23B"/><path d="M36 60a24 24 0 0 1 48 0Z" fill="#F2C26B"/></svg>`;
+function bRow(i) {
+  const left = i.qty
+    ? `<div class="b-step"><button data-action="dec" data-id="${i.id}">${ic('minus')}</button><b>${i.qty}</b><button data-action="inc" data-id="${i.id}">${ic('plus')}</button></div>`
+    : `<button class="b-add" data-action="inc" data-id="${i.id}">${ic('plus')}</button>`;
+  return `<div class="b-row ${i.qty ? '' : 'out'}">${left}<div class="txt"><div class="nm">${i.name}</div><div class="br">${i.brand}</div></div><div class="wt">${fmtW(i.g)}${i.ml ? `<small>${fmtL(i.ml)}</small>` : ''}</div></div>`;
+}
+function bGroups(list, inPack) {
+  return groups(list).map((g) => {
+    const col = catColor('B', g.cat);
+    return `<div class="b-tabhd" style="background:${col}">${ic(g.cat.icon)}${g.cat.label}<span>${inPack ? fmtW(sumG(g.items)) : g.items.length}</span></div>
+      <div class="b-list" style="border-top-color:${col}">${g.items.map(bRow).join('')}</div>`;
+  }).join('');
+}
+function bScene(fill) {
+  const ly = 190 - 72 * (fill / 100);
+  return `<svg viewBox="0 0 320 190"><rect width="320" height="190" fill="#FBEBD0"/>
+    <g transform="translate(176 48)">${bSun('').replace('<svg class="" viewBox="0 0 120 60">', '<g>').replace('</svg>', '</g>')}</g>
+    <path d="M0 122L50 74L90 102L140 54L190 106L240 68L290 100L320 84V190H0Z" fill="#3F7F8C"/>
+    <path d="M0 142L60 108L110 130L170 98L230 132L280 110L320 126V190H0Z" fill="#1F4E5A"/>
+    <rect y="${ly}" width="320" height="${190 - ly}" fill="#6FA9AE"/>
+    <rect y="${ly}" width="320" height="3" fill="#CDE5E2"/>
+    <path d="M30 ${ly + 14}h40M120 ${ly + 22}h56M230 ${ly + 12}h50" stroke="#CDE5E2" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg>`;
+}
+const bAct = (icon, label) => `<button class="b-act">${ic(icon)}${label}</button>`;
+const bEmpty = () => `<div class="b-empty"><div class="t">Nothing packed yet</div>Add gear from the Locker tab.<br><button data-action="reset">Restore sample items</button></div>`;
+
+const B = {
+  key: 'B',
+  name: 'Golden Hour',
+  blurb: 'Retro 1970s national park poster. Deep teal, mustard, and sienna with sunset stripes, chunky rounded headings, and stats shown as round badges like trail patches. Warmer and more playful than Trailhead, more grounded than Basecamp.',
+  changes: [
+    '<code>MyPackHeader</code> and <code>MyPackStatsBar</code> become a teal trail-sign card with a sunset and three round "patch" stats',
+    '<code>MyPackToolbar</code> becomes one segmented action bar with labels',
+    '<code>PacksScroller</code> becomes stacked full-width pack rows; the selected pack fills teal with a sunset-stripe edge',
+    '<code>CategorizedItemList</code> uses folder-tab headers in each category color over dashed-divider lists',
+    '<code>WaterBottle</code> becomes a landscape where the lake rises with the fill level; <code>WaterStats</code> becomes a ticket stub',
+    'Tab bar is teal with a rounded top and a raised mustard circle on the active tab',
+  ],
+  tokens: [['primary', '#1F4E5A'], ['secondary', '#E9A23B'], ['tertiary', '#C4532D'], ['background', '#FBF3E4'], ['surface', '#FFF9EE'], ['onSurface', '#2A2420'], ['outline', '#EAD9BC'], ['secondaryContainer', '#F6E6C4']],
+  palette: ['#3F7F8C', '#E9A23B', '#C4532D', '#1F4E5A', '#D97B4A', '#7B9E87', '#8E4A2F', '#A8883F', '#B5523B', '#5A3E36', '#6E8F6A', '#D9A066'],
+  type: 'Bricolage Grotesque (headings and numbers), DM Sans (body)',
+  shape: '<code>roundness: 4</code>, 16–24px cards, dashed dividers',
+  screens: {
+    locker: () => bTitle('Locker', 'Trail Pack Pro') + `
+      <div class="b-sec"><h2>My packs</h2><button class="b-plus">${ic('plus')}</button></div>
+      ${PACKS.map((p) => `<div class="b-pack ${p.id === state.pack ? 'sel' : ''}" data-action="pack" data-id="${p.id}"><span class="ic">${ic('bag-personal')}</span>
+        <div class="txt"><div class="nm">${p.brand} ${p.model}</div><div class="mt">${p.l} liters</div></div><span class="wt">${fmtW(p.g)}</span></div>`).join('')}
+      <div class="b-sec"><h2>Inventory</h2><button class="b-plus">${ic('plus')}</button></div>
+      ${bGroups(state.items, false)}`,
+    mypack: () => {
+      const s = S();
+      return bTitle('My Pack', 'Today\'s loadout') + `
+      <div class="b-hero">${bSun('sun')}
+        <div><div class="eb">Trailhead · ${s.pack.l} L</div><div class="nm">${s.pack.model}</div><div class="br">${s.pack.brand}</div></div>
+        <div class="b-patches">
+          <div class="b-patch big"><span>Base</span><b>${wn(s.base)}</b><small>${UL()}</small></div>
+          <div class="b-patch sm"><span>Total</span><b>${wn(s.total)}</b><small>${UL()}</small></div>
+          <div class="b-patch sm"><span>Wet</span><b>${wn(s.wet)}</b><small>${UL()}</small></div>
+        </div>
+      </div>
+      <div class="b-actions">${bAct('chart-pie', 'Chart')}${bAct('playlist-check', 'Checklist')}${bAct('content-save-outline', 'Save')}${bAct('import', 'Load')}<button class="b-act danger" data-action="empty">${ic('trash-can-outline')}Empty</button></div>
+      <div class="b-sec"><h2>In my pack</h2><span class="meta">${s.inPack.length} items</span></div>
+      ${s.inPack.length ? bGroups(s.inPack, true) : bEmpty()}`;
+    },
+    water: () => {
+      const s = S();
+      const f = state.fill / 100;
+      const cont = s.inPack.filter((i) => i.ml);
+      return bTitle('Water', 'Hydration') + `
+      <div class="b-scene">${bScene(state.fill)}<div class="pct"><small>Fill level</small>${state.fill}%</div></div>
+      <div class="b-conts">${cont.map((i) => `<span>${i.qty}× ${i.name}</span>`).join('') || '<span>No containers</span>'}</div>
+      <div class="b-sl-l"><span>Drag to set fill</span><b>${state.fill}%</b></div>${slider('b')}
+      <div class="b-ticket">
+        <div class="r h"><span></span><span>Now</span><span>Full</span></div>
+        <div class="r"><span>Liquid</span><b>${fmtL(s.liquidMl * f)}</b><b>${fmtL(s.liquidMl)}</b></div>
+        <div class="r"><span>Liquid weight</span><b>${fmtW(s.liquidMl * f)}</b><b>${fmtW(s.liquidMl)}</b></div>
+        <div class="r tot"><span>Pack total</span><b>${fmtW(s.total + s.liquidMl * f)}</b><b>${fmtW(s.wet)}</b></div>
+      </div>`;
+    },
+    categories: () => bTitle('Categories', 'Organize your gear') + `
+      <div class="b-sec"><h2>All categories</h2><button class="b-plus">${ic('plus')}</button></div>
+      <div class="b-list" style="border-radius:16px;border-top-width:1.5px">${CATS.map((c) => `<div class="b-catrow"><span class="b-cbadge" style="background:${catColor('B', c)}">${ic(c.icon)}</span>
+        <div class="nm">${c.label}${c.exempt ? '<small>Not counted in base weight</small>' : ''}</div>
+        ${c.stock ? '<span class="b-stock">Stock</span>' : '<i class="mdi mdi-chevron-right b-chev"></i>'}</div>`).join('')}</div>`,
+    settings: () => bTitle('Settings', 'Preferences') + `
+      <div class="b-post">${bSun('sun')}<div class="av">ZM</div><div><div class="nm">Zach McCoy</div><small>zach@example.com</small></div><button>Sign out</button></div>
+      <div class="b-sec"><h2>Units</h2></div>
+      <div class="b-card"><div class="b-lbl">Weight</div>${seg('b', 'unit', UNIT_OPTS, state.unit)}
+        <div class="b-lbl" style="margin-top:14px">Liquid</div>${seg('b', 'liq', LIQ_OPTS, state.liq)}</div>
+      <div class="b-foot">Trail Pack Pro · © 2026 Zach McCoy</div>`,
+  },
+  tabbar: (phone, active) => {
+    const n = S().inPack.length;
+    return `<nav class="b-tabs">${TABS.map((t) => `<button class="b-tab ${t.key === active ? 'on' : ''}" data-action="tab" data-phone="${phone}" data-tab="${t.key}">
+      <span class="ci">${ic(t.icon)}</span>${t.label}${t.key === 'mypack' && n ? `<span class="b-tbadge">${n}</span>` : ''}</button>`).join('')}</nav>`;
+  },
+};
+
+/* ============================================================ C — BASECAMP */
+const cHead = (sub, title) => `<div class="c-head"><div><div class="hi">${sub}</div><h1>${title}</h1></div><div class="c-av">ZM</div></div>`;
+function cRow(i) {
+  const left = i.qty
+    ? `<div class="c-step"><button data-action="dec" data-id="${i.id}">${ic('minus')}</button><b>${i.qty}</b><button data-action="inc" data-id="${i.id}">${ic('plus')}</button></div>`
+    : `<button class="c-add" data-action="inc" data-id="${i.id}">${ic('plus')}</button>`;
+  return `<div class="c-row ${i.qty ? '' : 'out'}">${left}<div class="txt"><div class="nm">${i.name}</div><div class="br">${i.brand}</div></div><div class="wt">${fmtW(i.g)}${i.ml ? `<small>${fmtL(i.ml)}</small>` : ''}</div></div>`;
+}
+function cGroups(list, inPack) {
+  return groups(list).map((g) => {
+    const col = catColor('C', g.cat);
+    return `<div class="c-group"><div class="c-ghead"><span class="c-tile" style="background:${col}1f;color:${col}">${ic(g.cat.icon)}</span><span class="t">${g.cat.label}</span>
+      <span class="s">${inPack ? fmtW(sumG(g.items)) : `${g.items.length} items`}</span></div>${g.items.map(cRow).join('')}</div>`;
+  }).join('');
+}
+function cRing(s) {
+  const r = 54;
+  const C = 2 * Math.PI * r;
+  const segs = [{ g: s.pack.g }, ...s.byCat];
+  let off = 0;
+  const arcs = segs.map((x, k) => {
+    const len = (x.g / s.total) * C;
+    const arc = `<circle cx="66" cy="66" r="${r}" fill="none" stroke="#fff" stroke-opacity="${1 - k * 0.08}" stroke-width="12" stroke-dasharray="${Math.max(len - 2.5, 0.5)} ${C}" stroke-dashoffset="${-off}" transform="rotate(-90 66 66)"/>`;
+    off += len;
+    return arc;
+  }).join('');
+  return `<svg viewBox="0 0 132 132" width="132" style="flex:none"><circle cx="66" cy="66" r="${r}" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="12"/>${arcs}
+    <text x="66" y="56" text-anchor="middle" fill="#fff" opacity=".8" font-size="11" font-weight="700" font-family="Plus Jakarta Sans">Base</text>
+    <text x="66" y="80" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Plus Jakarta Sans">${wn(s.base)}</text>
+    <text x="66" y="95" text-anchor="middle" fill="#fff" opacity=".8" font-size="11" font-weight="700" font-family="Plus Jakarta Sans">${UL()}</text></svg>`;
+}
+const cMountains = () => `<svg class="mtn" viewBox="0 0 320 90" preserveAspectRatio="none"><path d="M0 90V60L40 34L72 52L112 14L152 54L184 36L222 62L262 22L300 50L320 40V90Z" fill="#fff" opacity=".10"/><path d="M0 90V72L52 54L92 68L142 44L192 70L242 50L292 68L320 58V90Z" fill="#fff" opacity=".12"/></svg>`;
+function cDrop(fill) {
+  const d = 'M80 8C80 8 18 82 18 128a62 62 0 0 0 124 0C142 82 80 8 80 8Z';
+  const y = 190 - 182 * (fill / 100);
+  return `<svg viewBox="0 0 160 200" width="150"><defs><clipPath id="cdrop"><path d="${d}"/></clipPath>
+    <linearGradient id="cwat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6FB8FF"/><stop offset="1" stop-color="#2B59C3"/></linearGradient></defs>
+    <path d="${d}" fill="#E3EBFB"/><g clip-path="url(#cdrop)"><path d="M0 ${y}Q20 ${y - 7} 40 ${y}T80 ${y}T120 ${y}T160 ${y}V200H0Z" fill="url(#cwat)"/></g>
+    <text x="80" y="146" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="30" fill="${fill > 38 ? '#fff' : '#2B59C3'}">${fill}%</text></svg>`;
+}
+const cAct = (icon, label, col) => `<button class="c-act"><span class="tile" style="color:${col}">${ic(icon)}</span>${label}</button>`;
+const cEmpty = () => `<div class="c-empty"><div class="t">🎒</div>Nothing packed yet.<br><button data-action="reset">Restore sample items</button></div>`;
+
+const C = {
+  key: 'C',
+  name: 'Basecamp',
+  blurb: 'Bright, friendly, modern consumer app. Lake blue and alpine-glow coral, soft shadows, big rounded cards. Approachable for casual campers, not just gram-counters.',
+  changes: [
+    '<code>MyPackHeader</code> and <code>MyPackStatsBar</code> become a gradient hero with a base-weight donut (a quick version of <code>CategoryPieChart</code>)',
+    '<code>PackItem</code> becomes a large card; the selected pack turns into a gradient',
+    '<code>CategorizedItemList</code> uses one rounded card per category with a colored icon tile',
+    '<code>MyPackToolbar</code> becomes a row of labeled icon tiles',
+    'Tab bar floats as a rounded bar (<code>tabBarStyle</code> with absolute positioning)',
+    '<code>WaterBottle</code> becomes a droplet with a wave; <code>CategoriesScreen</code> becomes a two-column tile grid',
+  ],
+  tokens: [['primary', '#2B59C3'], ['secondary', '#5BB6A6'], ['tertiary', '#FF8A5B'], ['background', '#F3F6FB'], ['surface', '#FFFFFF'], ['onSurface', '#162033'], ['outline', '#E2E8F2'], ['primaryContainer', '#E3EBFB']],
+  palette: ['#3FA7D6', '#F2B134', '#F07F4F', '#2B59C3', '#9B7BEA', '#E86A92', '#5BB6A6', '#7BC67E', '#FF6B6B', '#6C7A9C', '#C3A6FF', '#14B8A6'],
+  type: 'Plus Jakarta Sans throughout (800 for titles and numbers)',
+  shape: '<code>roundness: 6</code>, 20–28px cards, soft drop shadows',
+  screens: {
+    locker: () => cHead('Good evening, Zach', 'Locker') + `
+      <div class="c-sec"><h2>Your packs</h2><button class="c-plus">${ic('plus')}New</button></div>
+      <div class="c-packs">${PACKS.map((p) => {
+        const sel = p.id === state.pack;
+        return `<div class="c-pack ${sel ? 'sel' : ''}" data-action="pack" data-id="${p.id}">${sel ? `<span class="on">${ic('check')}Selected</span>` : ''}<div class="ic">${ic('bag-personal')}</div>
+          <div class="brand">${p.brand}</div><div class="model">${p.model}</div><div class="meta"><span>${p.l} L</span><span>${fmtW(p.g)}</span></div></div>`;
+      }).join('')}</div>
+      <div class="c-sec"><h2>Inventory</h2><button class="c-plus">${ic('plus')}Item</button></div>
+      ${cGroups(state.items, false)}`,
+    mypack: () => {
+      const s = S();
+      return cHead('Ready for the trail?', 'My Pack') + `
+      <div class="c-hero">${cMountains()}
+        <div class="top"><div><div class="brand">${s.pack.brand}</div><div class="model">${s.pack.model}</div></div><span class="cap">${s.pack.l} L</span></div>
+        <div class="main">${cRing(s)}<div class="side"><div class="st"><span>Total weight</span><b>${fmtW(s.total)}</b></div><div class="st"><span>With liquid</span><b>${fmtW(s.wet)}</b></div></div></div>
+      </div>
+      <div class="c-acts">${cAct('chart-pie', 'Chart', '#2B59C3')}${cAct('playlist-check', 'Checklist', '#5BB6A6')}${cAct('content-save-outline', 'Save', '#9B7BEA')}${cAct('import', 'Load', '#F2B134')}
+        <button class="c-act" data-action="empty"><span class="tile" style="color:#E86A92">${ic('trash-can-outline')}</span>Empty</button></div>
+      <div class="c-sec"><h2>In my pack</h2><span class="c-count">${s.inPack.length} items</span></div>
+      ${s.inPack.length ? cGroups(s.inPack, true) : cEmpty()}`;
+    },
+    water: () => {
+      const s = S();
+      const f = state.fill / 100;
+      const cont = s.inPack.filter((i) => i.ml);
+      return cHead('Stay hydrated', 'Water') + `
+      <div class="c-wcard">${cDrop(state.fill)}
+        <div class="c-conts">${cont.map((i) => `<span>${i.qty}× ${i.name}</span>`).join('') || '<span>No containers</span>'}</div>
+        <div class="c-sl-l"><span>Fill level</span><b>${state.fill}%</b></div>${slider('c')}
+      </div>
+      <div class="c-tiles">
+        <div class="c-st" style="background:#E8F4FB;color:#1F6E95"><span>Liquid</span><b>${fmtL(s.liquidMl * f)}</b><small>of ${fmtL(s.liquidMl)}</small></div>
+        <div class="c-st" style="background:#EEE9FD;color:#5B3FB8"><span>Liquid weight</span><b>${fmtW(s.liquidMl * f)}</b><small>of ${fmtW(s.liquidMl)}</small></div>
+        <div class="c-st" style="background:#FFEDE5;color:#B4502A"><span>Pack total</span><b>${fmtW(s.total + s.liquidMl * f)}</b><small>max ${fmtW(s.wet)}</small></div>
+      </div>`;
+    },
+    categories: () => cHead('Organize your gear', 'Categories') + `
+      <div class="c-catgrid">${CATS.map((c) => {
+        const col = catColor('C', c);
+        const n = state.items.filter((i) => i.cat === c.id).length;
+        return `<div class="c-cat"><span class="c-tile" style="background:${col}1f;color:${col}">${ic(c.icon)}</span>${c.stock ? '<span class="stk">STOCK</span>' : ''}
+          <div class="nm">${c.label}</div><div class="sm">${n} items${c.exempt ? ' · not in base' : ''}</div></div>`;
+      }).join('')}<div class="c-cat new">${ic('plus')} New category</div></div>`,
+    settings: () => cHead('Make it yours', 'Settings') + `
+      <div class="c-prof"><div class="av">ZM</div><div><div class="nm">Zach McCoy</div><small>zach@example.com</small></div><button>Sign out</button></div>
+      <div class="c-set" style="margin-top:14px"><div class="lb">${ic('weight')}Weight units</div>${seg('c', 'unit', UNIT_OPTS, state.unit)}</div>
+      <div class="c-set" style="margin-top:10px"><div class="lb">${ic('water')}Liquid units</div>${seg('c', 'liq', LIQ_OPTS, state.liq)}</div>
+      <div class="c-foot">Trail Pack Pro · © 2026 Zach McCoy</div>`,
+  },
+  tabbar: (phone, active) => {
+    const n = S().inPack.length;
+    return `<nav class="c-tabs">${TABS.map((t) => `<button class="c-tab ${t.key === active ? 'on' : ''}" data-action="tab" data-phone="${phone}" data-tab="${t.key}">
+      ${ic(t.icon)}<span>${t.label}</span>${t.key === 'mypack' && n ? `<span class="c-badge">${n}</span>` : ''}</button>`).join('')}</nav>`;
+  },
+};
+
+const VARIANTS = { A, B, C };
+const ORDER = ['A', 'B', 'C'];
+
+/* ---------------------------------------------------------------- render */
+const root = document.getElementById('root');
+let lastVariant = null;
+
+function panel(v) {
+  return `<header class="panel">
+    <div><div class="pk">Variant ${v.key} of ${ORDER.length}</div><h1>${v.name}</h1><p>${v.blurb}</p>
+      <div class="pk" style="margin-top:4px">Components you own that change</div><ul>${v.changes.map((c) => `<li>${c}</li>`).join('')}</ul></div>
+    <div><div class="pk">Theme tokens for <code>src/theme/theme.ts</code> (MD3 keys)</div>
+      <div class="sw">${v.tokens.map(([k, c]) => `<div class="s"><span style="background:${c}"></span><b>${k}</b><code>${c}</code></div>`).join('')}</div>
+      <div class="pk" style="margin-top:14px">Category and chart palette (<code>chartColors</code>)</div>
+      <div class="pal">${v.palette.map((c) => `<span style="background:${c}"></span>`).join('')}</div>
+      <div class="pmeta"><div><span>Type</span>${v.type}</div><div><span>Shape</span>${v.shape}</div></div></div>
+  </header>
+  <div class="hint">Everything is live and shared across the three phones. Tap any tab bar to change that phone's screen, use +/− on items, select packs, drag the fill slider, or change units in Settings.</div>`;
+}
+
+function phone(v, tab, i) {
+  const label = TABS.find((t) => t.key === tab).label;
+  return `<div><div class="phone-cap">${label}</div><div class="phone v${v.key}" data-phone="${i}">
+    <div class="statusbar"><span>9:41</span><span class="icons">${ic('signal')}${ic('wifi')}${ic('battery')}</span></div>
+    <div class="screen-body">${v.screens[tab]()}</div>${v.tabbar(i, tab)}</div></div>`;
+}
+
+function render() {
+  const v = VARIANTS[state.variant];
+  const scrolls = lastVariant === state.variant ? [...document.querySelectorAll('.screen-body')].map((el) => el.scrollTop) : [];
+  root.innerHTML = panel(v) + `<div class="phones">${state.phoneTabs.map((t, i) => phone(v, t, i)).join('')}</div>`;
+  document.querySelectorAll('.screen-body').forEach((el, i) => { el.scrollTop = scrolls[i] || 0; });
+  document.getElementById('switcher-label').textContent = `${v.key} — ${v.name}`;
+  document.title = `PROTOTYPE · ${v.key} ${v.name}`;
+  lastVariant = state.variant;
+}
+
+function setVariant(key) {
+  state.variant = key;
+  try {
+    const url = new URL(location.href);
+    url.searchParams.set('variant', key);
+    history.replaceState(null, '', url);
+  } catch (e) { /* file:// in some browsers */ }
+  render();
+}
+
+/* ---------------------------------------------------------------- events */
+document.addEventListener('click', (e) => {
+  const cyc = e.target.closest('[data-cycle]');
+  if (cyc) {
+    const idx = (ORDER.indexOf(state.variant) + Number(cyc.dataset.cycle) + ORDER.length) % ORDER.length;
+    return setVariant(ORDER[idx]);
+  }
+  const el = e.target.closest('[data-action]');
+  if (!el) return;
+  const { action, id, phone, tab, val } = el.dataset;
+  const item = id && state.items.find((i) => String(i.id) === id);
+  switch (action) {
+    case 'tab': state.phoneTabs[Number(phone)] = tab; break;
+    case 'inc': item.qty += 1; break;
+    case 'dec': item.qty = Math.max(0, item.qty - 1); break;
+    case 'pack': state.pack = id; break;
+    case 'unit': state.unit = val; break;
+    case 'liq': state.liq = val; break;
+    case 'empty': state.items.forEach((i) => { i.qty = 0; }); break;
+    case 'reset': state.items = clone(); break;
+    default: return;
+  }
+  render();
+});
+
+let dragPhone = null;
+function setFill(e) {
+  const s = document.querySelector(`.phone[data-phone="${dragPhone}"] [data-slider]`);
+  if (!s) return;
+  const r = s.getBoundingClientRect();
+  state.fill = Math.round(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * 100);
+  render();
+}
+document.addEventListener('pointerdown', (e) => {
+  const s = e.target.closest('[data-slider]');
+  if (!s) return;
+  dragPhone = s.closest('.phone').dataset.phone;
+  e.preventDefault();
+  setFill(e);
+});
+document.addEventListener('pointermove', (e) => { if (dragPhone !== null) setFill(e); });
+document.addEventListener('pointerup', () => { dragPhone = null; });
+
+document.addEventListener('keydown', (e) => {
+  const t = e.target;
+  if (t.closest && t.closest('input, textarea, [contenteditable]')) return;
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  const idx = (ORDER.indexOf(state.variant) + (e.key === 'ArrowRight' ? 1 : -1) + ORDER.length) % ORDER.length;
+  setVariant(ORDER[idx]);
+});
+
+const initial = new URLSearchParams(location.search).get('variant');
+state.variant = ORDER.includes(initial) ? initial : 'A';
+render();
+</script>
+</body>
+</html>
