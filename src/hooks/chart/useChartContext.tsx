@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
 import { chartColors } from '../../constants';
 import { useSelector } from '../../redux/reduxHooks';
@@ -20,7 +20,7 @@ interface ChartContextValues {
 const ChartContext = createContext<ChartContextValues | null>(null);
 
 interface Props {
-  children?: JSX.Element[];
+  children?: ReactNode;
 }
 
 export function ChartContextProvider(props: Props): JSX.Element {

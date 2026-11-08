@@ -12,7 +12,11 @@
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19000'",
     "lint": "npx eslint src/*",
     "test:pwa": "node scripts/check-pwa.cjs",
-    "test:pwa:all": "node scripts/check-pwa-matrix.cjs"
+    "test:pwa:all": "node scripts/check-pwa-matrix.cjs",
+    "prototype:web": "EXPO_PUBLIC_PROTOTYPE=1 expo start --web",
+    "prototype:build": "EXPO_PUBLIC_PROTOTYPE=1 expo export --platform web && node scripts/prepare-pwa.cjs",
+    "prototype:screenshots": "node scripts/capture-prototype-screenshots.cjs",
+    "test:prototype": "jest --watchAll=false src/prototype"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
