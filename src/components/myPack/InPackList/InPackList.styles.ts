@@ -4,8 +4,8 @@ import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
-  listContainer: ViewStyle;
-  li: ViewStyle;
+  toolbar: ViewStyle;
+  meta: TextStyle;
   emptyText: TextStyle;
 }
 
@@ -14,18 +14,24 @@ export default function useStyles() {
 
   const styles = StyleSheet.create<Style>({
     container: {
-      paddingHorizontal: theme.space[2],
+      paddingHorizontal: theme.space[3],
       width: '100%',
     },
-    listContainer: {
-      width: '100%',
+    toolbar: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: theme.space[2],
+      marginTop: theme.space[2],
     },
-    li: {
-      padding: 0,
+    meta: {
+      color: theme.colors.onSurfaceVariant,
     },
     emptyText: {
       textAlign: 'center',
       width: '100%',
+      color: theme.colors.onSurfaceVariant,
+      marginTop: theme.space[3],
     },
   });
 
