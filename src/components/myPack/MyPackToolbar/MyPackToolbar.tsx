@@ -49,7 +49,7 @@ export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      style={props.style}
+      style={[styles.scroll, props.style]}
       contentContainerStyle={styles.container}>
       {actions.map((action) => (
         <Chip
