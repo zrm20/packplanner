@@ -6,6 +6,7 @@ interface Style {
   container: ViewStyle;
   toolbar: ViewStyle;
   meta: TextStyle;
+  list: ViewStyle;
   emptyText: TextStyle;
 }
 
@@ -14,6 +15,9 @@ export default function useStyles() {
 
   const styles = StyleSheet.create<Style>({
     container: {
+      flex: 1,
+      minHeight: 0,
+      alignSelf: 'stretch',
       paddingHorizontal: theme.space[3],
       width: '100%',
     },
@@ -26,6 +30,11 @@ export default function useStyles() {
     },
     meta: {
       color: theme.colors.onSurfaceVariant,
+    },
+    list: {
+      flex: 1,
+      minHeight: 0,
+      width: '100%',
     },
     emptyText: {
       textAlign: 'center',

@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, ViewProps, ViewStyle } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import { ScrollView, ViewStyle } from 'react-native';
+import { Chip, Icon } from 'react-native-paper';
 
 import useStyles from './MyPackToolbar.styles';
 import { useInventoryActions } from '../../../hooks';
 
-interface MyPackToolbarProps extends ViewProps {
+interface MyPackToolbarProps {
   style?: ViewStyle;
   toggleNewListModal(): void;
 }
@@ -16,27 +16,63 @@ export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
   const { navigate } = useNavigation();
   const { emptyPack } = useInventoryActions();
 
-  const iconMode: React.ComponentProps<typeof IconButton>['mode'] = 'outlined';
+  const actions = [
+    {
+      label: 'Breakdown',
+      icon: 'chart-pie',
+      onPress: () => navigate('MyPack', { screen: 'Chart' }),
+    },
+    {
+      label: 'Checklist',
+      icon: 'playlist-check',
+      onPress: () => navigate('MyPack', { screen: 'Checklist' }),
+    },
+    {
+      label: 'Save list',
+      icon: 'content-save-outline',
+      onPress: props.toggleNewListModal,
+    },
+    {
+      label: 'Load list',
+      icon: 'import',
+      onPress: () => navigate('MyPack', { screen: 'Lists' }),
+    },
+    {
+      label: 'Empty',
+      icon: 'trash-can-outline',
+      onPress: emptyPack,
+      danger: true,
+    },
+  ];
 
   return (
-    <View style={[styles.container, props.style]}>
-      <IconButton
-        icon="chart-pie"
-        mode={iconMode}
-        onPress={() => navigate('MyPack', { screen: 'Chart' })}
-      />
-      <IconButton
-        icon="playlist-check"
-        mode={iconMode}
-        onPress={() => navigate('MyPack', { screen: 'Checklist' })}
-      />
-      <IconButton icon="content-save" mode={iconMode} onPress={props.toggleNewListModal} />
-      <IconButton
-        icon="import"
-        mode={iconMode}
-        onPress={() => navigate('MyPack', { screen: 'Lists' })}
-      />
-      <IconButton icon="trash-can" mode={iconMode} onPress={emptyPack} />
-    </View>
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={[styles.scroll, props.style]}
+      contentContainerStyle={styles.container}>
+      {actions.map((action) => (
+        <Chip
+          key={action.label}
+          compact
+          mode="outlined"
+          icon={
+            action.danger
+              ? ({ size }) => (
+                  <Icon
+                    source={action.icon}
+                    size={size}
+                    color={styles.dangerIcon.color as string}
+                  />
+                )
+              : action.icon
+          }
+          style={styles.chip}
+          textStyle={styles.chipLabel}
+          onPress={action.onPress}>
+          {action.label}
+        </Chip>
+      ))}
+    </ScrollView>
   );
 }

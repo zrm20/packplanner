@@ -8,6 +8,7 @@ interface Style {
   catIconGlyph: TextStyle;
   catLabel: TextStyle;
   catMeta: TextStyle;
+  list: ViewStyle;
   card: ViewStyle;
   groupSpacing: ViewStyle;
   firstRowNoBorder: ViewStyle;
@@ -44,6 +45,11 @@ export default function useStyles() {
     catMeta: {
       color: theme.colors.onSurfaceVariant,
       fontWeight: '500',
+    },
+    list: {
+      flex: 1,
+      minHeight: 0,
+      width: '100%',
     },
     card: {
       backgroundColor: theme.colors.surface,
