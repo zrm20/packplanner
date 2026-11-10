@@ -12,6 +12,7 @@ interface Style {
   identityText: ViewStyle;
   brand: TextStyle;
   model: TextStyle;
+  baseLabelPlate: ViewStyle;
   baseLabel: TextStyle;
   headline: ViewStyle;
   figure: TextStyle;
@@ -69,8 +70,15 @@ export default function useStyles() {
     model: {
       color: onHero,
     },
-    baseLabel: {
+    baseLabelPlate: {
+      alignSelf: 'flex-start',
       marginTop: theme.space[3],
+      paddingHorizontal: theme.space[2],
+      paddingVertical: theme.space[1],
+      borderRadius: theme.space[1],
+      backgroundColor: chroma(theme.colors.inverseSurface).darken(0.6).alpha(0.82).css(),
+    },
+    baseLabel: {
       color: theme.colors.tertiary,
       textTransform: 'uppercase',
       letterSpacing: 1.6,

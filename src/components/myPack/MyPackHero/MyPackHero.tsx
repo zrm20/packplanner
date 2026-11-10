@@ -74,9 +74,11 @@ export default function MyPackHero(props: MyPackHeroProps): JSX.Element {
         </View>
       </View>
 
-      <Text variant="labelSmall" style={styles.baseLabel}>
-        Base weight
-      </Text>
+      <View style={styles.baseLabelPlate}>
+        <Text variant="labelSmall" style={styles.baseLabel}>
+          Base weight
+        </Text>
+      </View>
       <View style={styles.headline}>
         <Text variant="displayMedium" style={styles.figure}>
           {displayedBaseWeight}
