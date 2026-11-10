@@ -1,11 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { Button, Text } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 
 import useStyles from './RegisterScreen.styles';
 import useUser from '../../../hooks/user/useUser';
 import { SettingsStackParamList } from '../../../navigation/navigation.types';
-import { SafeAreaScreen } from '../../ui';
+import { SafeAreaScreen, ScreenHeader } from '../../ui';
 import LoadingBackdrop from '../../ui/LoadingBackdrop/LoadingBackdrop';
 import RegisterForm from '../RegisterForm/RegisterForm';
 
@@ -24,9 +24,7 @@ export default function RegisterGuestScreen(props: RegisterGuestScreenProps): JS
     <>
       <LoadingBackdrop show={isLoading} />
       <SafeAreaScreen style={styles.container}>
-        <Text style={styles.title} variant="displaySmall">
-          Register
-        </Text>
+        <ScreenHeader eyebrow="Trail Pack Pro" title="Register" />
 
         <RegisterForm style={styles.form} onSubmit={handleSubmit} />
         <Button mode="contained" onPress={goBack}>

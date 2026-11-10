@@ -3,7 +3,7 @@ import React from 'react';
 
 import { LockerStackParamList } from '../../../navigation/navigation.types';
 import { PacksScroller } from '../../packs';
-import { SafeAreaScreen } from '../../ui';
+import { SafeAreaScreen, ScreenHeader } from '../../ui';
 import InventoryList from '../InventoryList/InventoryList';
 
 type InventoryScreenProps = NativeStackScreenProps<LockerStackParamList, 'Inventory'>;
@@ -11,6 +11,7 @@ type InventoryScreenProps = NativeStackScreenProps<LockerStackParamList, 'Invent
 export default function InventoryScreen(props: InventoryScreenProps): JSX.Element {
   return (
     <SafeAreaScreen>
+      <ScreenHeader eyebrow="Trail Pack Pro" title="Locker" />
       <PacksScroller />
       <InventoryList />
     </SafeAreaScreen>

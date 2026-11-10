@@ -3,10 +3,12 @@ import CloseScreenButton from './CloseScreenButton/CloseScreenButton';
 import ContainedModalTitle from './ContainedModalTitle/ContainedModalTitle';
 import LoadingBackdrop from './LoadingBackdrop/LoadingBackdrop';
 import SafeAreaScreen from './SafeAreaScreen/SafeAreaScreen';
+import ScreenHeader from './ScreenHeader/ScreenHeader';
 import ToggleButtonText from './ToggleButtonText/ToggleButtonText';
 
 export {
   SafeAreaScreen,
+  ScreenHeader,
   ToggleButtonText,
   CloseScreenButton,
   LoadingBackdrop,

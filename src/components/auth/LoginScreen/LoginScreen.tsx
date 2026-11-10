@@ -1,11 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { Button, Text } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 
 import useStyles from './LoginScreen.styles';
 import useUser from '../../../hooks/user/useUser';
 import { AuthStackParamList } from '../../../navigation/navigation.types';
-import { LoadingBackdrop, SafeAreaScreen } from '../../ui';
+import { LoadingBackdrop, SafeAreaScreen, ScreenHeader } from '../../ui';
 import LoginForm from '../LoginForm/LoginForm';
 
 type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'Login'>;
@@ -19,7 +19,7 @@ export default function LoginScreen(props: LoginScreenProps): JSX.Element {
     <>
       <LoadingBackdrop show={isLoading} />
       <SafeAreaScreen style={styles.container}>
-        <Text variant="displaySmall">Login</Text>
+        <ScreenHeader eyebrow="Trail Pack Pro" title="Login" />
         <LoginForm style={styles.form} />
         <Button mode="contained" onPress={goBack}>
           Go Back

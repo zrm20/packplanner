@@ -4,7 +4,6 @@ import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
-  title: TextStyle;
   settingsContainer: ViewStyle;
   unitSelector: ViewStyle;
   userWidget: ViewStyle;
@@ -18,7 +17,6 @@ export default function useStyles() {
     container: {
       alignItems: 'center',
     },
-    title: {},
     settingsContainer: {
       width: '100%',
       alignItems: 'center',

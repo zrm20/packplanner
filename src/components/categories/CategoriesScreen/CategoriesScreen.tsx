@@ -6,7 +6,7 @@ import { Text, IconButton, Surface, List, ActivityIndicator } from 'react-native
 import useStyles from './CategoriesScreen.styles';
 import { useCategories } from '../../../hooks';
 import { CategoriesStackParamList } from '../../../navigation/navigation.types';
-import { SafeAreaScreen } from '../../ui';
+import { SafeAreaScreen, ScreenHeader } from '../../ui';
 
 type CategoriesScreenProps = NativeStackScreenProps<CategoriesStackParamList, 'CategoriesHome'>;
 
@@ -21,12 +21,20 @@ export default function CategoriesScreen(props: CategoriesScreenProps): JSX.Elem
 
   return (
     <SafeAreaScreen>
+      <ScreenHeader
+        eyebrow="Organize"
+        title="Categories"
+        action={
+          <IconButton
+            accessibilityLabel="Add category"
+            icon="plus"
+            size={14}
+            mode="outlined"
+            onPress={navToNewCategory}
+          />
+        }
+      />
       <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text variant="titleLarge">Categories</Text>
-          <IconButton icon="plus" size={14} mode="outlined" onPress={navToNewCategory} />
-        </View>
-
         <View style={styles.listContainer}>
           <Surface style={styles.surface}>
             {categoriesSlice.isLoading ? (

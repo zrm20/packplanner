@@ -2,11 +2,12 @@ import chroma from 'chroma-js';
 import { MD3LightTheme, MD3Theme } from 'react-native-paper';
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
-import brandColors from './brandColors';
+import brand from './brandColors';
+import { fonts } from './fonts';
 
 type Sizes = number[];
 
-interface AppColors extends MD3Colors { }
+interface AppColors extends MD3Colors {}
 
 export interface AppTheme extends MD3Theme {
   colors: AppColors;
@@ -16,53 +17,67 @@ export interface AppTheme extends MD3Theme {
 
 const space: Sizes = [0, 4, 8, 16, 32, 64];
 const borderWeight: Sizes = [0, 1, 2, 3, 5, 8];
-const white = '#fff';
-const secondaryScale = chroma.scale([brandColors.secondary, 'white']);
+
+// Containers are tinted toward paper rather than brightened, so cream/forest/ember keep their warmth.
+const tint = (color: string, amount: number) => chroma.mix(color, brand.paper, amount).hex();
+const shade = (color: string) => chroma(color).darken(1.5).hex();
+const towardParchment = (amount: number) => chroma.mix(brand.paper, brand.parchment, amount).hex();
 
 const lightColors: AppColors = {
   ...MD3LightTheme.colors,
-  primary: brandColors.primary,
-  onPrimary: white,
-  primaryContainer: chroma(brandColors.primary).brighten().hex(),
-  onPrimaryContainer: white,
+  primary: brand.forest,
+  onPrimary: brand.cream,
+  primaryContainer: brand.lichen,
+  onPrimaryContainer: brand.forest,
 
-  secondary: brandColors.secondary,
-  onSecondary: white,
-  secondaryContainer: chroma(brandColors.secondary).brighten().hex(),
-  onSecondaryContainer: chroma(brandColors.secondary).darken().hex(),
+  secondary: brand.sage,
+  onSecondary: brand.paper,
+  secondaryContainer: tint(brand.sage, 0.7),
+  onSecondaryContainer: shade(brand.sage),
 
-  tertiary: brandColors.tertiary,
-  onTertiary: white,
-  tertiaryContainer: chroma(brandColors.tertiary).brighten().brighten().hex(),
-  onTertiaryContainer: chroma(brandColors.tertiary).darken().hex(),
+  tertiary: brand.ember,
+  onTertiary: brand.white,
+  tertiaryContainer: tint(brand.ember, 0.8),
+  onTertiaryContainer: shade(brand.ember),
 
-  background: secondaryScale(0.95).hex(),
-  onBackground: chroma(brandColors.primary).darken().darken().darken().hex(),
+  error: brand.rust,
+  onError: brand.white,
+  errorContainer: tint(brand.rust, 0.8),
+  onErrorContainer: shade(brand.rust),
 
-  surface: white,
-  onSurface: brandColors.primary,
-  surfaceVariant: white,
-  onSurfaceVariant: '#44483d',
+  background: brand.cream,
+  onBackground: brand.ink,
 
-  outline: '#75796c',
-  outlineVariant: 'rgb(192, 201, 193)',
+  surface: brand.paper,
+  onSurface: brand.ink,
+  surfaceVariant: brand.parchment,
+  onSurfaceVariant: brand.moss,
 
-  backdrop: chroma(brandColors.primary).alpha(0.4).css(),
+  outline: brand.stone,
+  outlineVariant: brand.sand,
+
+  inverseSurface: brand.ink,
+  inverseOnSurface: brand.cream,
+  inversePrimary: tint(brand.forest, 0.6),
+
+  surfaceDisabled: chroma(brand.ink).alpha(0.12).css(),
+  onSurfaceDisabled: chroma(brand.ink).alpha(0.38).css(),
+  backdrop: chroma(brand.ink).alpha(0.4).css(),
 
   elevation: {
-    // used on surface components
-    level0: secondaryScale(0.9).css(),
-    level1: secondaryScale(0.85).css(),
-    level2: secondaryScale(0.8).css(),
-    level3: secondaryScale(0.75).css(),
-    level4: secondaryScale(0.7).css(),
-    level5: secondaryScale(0.6).css(),
+    level0: 'transparent',
+    level1: brand.paper,
+    level2: towardParchment(0.25),
+    level3: towardParchment(0.5),
+    level4: towardParchment(0.65),
+    level5: towardParchment(0.8),
   },
 };
 
 const theme: AppTheme = {
   ...MD3LightTheme,
-  roundness: 1,
+  roundness: 3,
+  fonts,
   space,
   borderWeight,
   colors: lightColors,
