@@ -4,7 +4,6 @@ import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
-  titleContainer: ViewStyle;
   listItem: ViewStyle;
   listContainer: ViewStyle;
   surface: ViewStyle;
@@ -18,14 +17,6 @@ export default function useStyles() {
       width: '100%',
       padding: theme.space[2],
       flex: 1,
-    },
-    titleContainer: {
-      flexDirection: 'row',
-      borderBottomWidth: theme.borderWeight[1],
-      borderColor: theme.colors.secondary,
-      justifyContent: 'space-between',
-      alignItems: 'flex-end',
-      paddingHorizontal: theme.space[2],
     },
     listContainer: {
       flex: 1,

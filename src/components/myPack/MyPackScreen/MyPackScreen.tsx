@@ -4,7 +4,7 @@ import { Portal } from 'react-native-paper';
 import useStyles from './MyPackScreen.styles';
 import { MyPackHomeScreenProps } from '../../../navigation/navigation.types';
 import { NewListModal } from '../../lists';
-import { SafeAreaScreen } from '../../ui';
+import { SafeAreaScreen, ScreenHeader } from '../../ui';
 import InPackList from '../InPackList/InPackList';
 import MyPackHeader from '../MyPackHeader/MyPackHeader';
 import MyPackStatsBar from '../MyPackStatsBar/MyPackStatsBar';
@@ -21,6 +21,7 @@ export default function MyPackScreen(props: MyPackHomeScreenProps): JSX.Element 
   return (
     <Portal.Host>
       <SafeAreaScreen style={styles.container}>
+        <ScreenHeader eyebrow="Loadout" title="My Pack" />
         <MyPackHeader style={styles.header} />
         <MyPackStatsBar style={styles.stats} />
         <MyPackToolbar style={styles.toolbar} toggleNewListModal={toggleNewListModal} />

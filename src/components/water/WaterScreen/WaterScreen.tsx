@@ -5,7 +5,7 @@ import { Text } from 'react-native-paper';
 
 import useStyles from './WaterScreen.styles';
 import { useTheme } from '../../../theme';
-import { SafeAreaScreen } from '../../ui';
+import { SafeAreaScreen, ScreenHeader } from '../../ui';
 import WaterBottle from '../WaterBottle/WaterBottle';
 import WaterItemsList from '../WaterItemsList/WaterItemsList';
 import WaterStats from '../WaterStats/WaterStats';
@@ -19,6 +19,7 @@ export default function WaterScreen(props: WaterScreenProps): JSX.Element {
 
   return (
     <SafeAreaScreen style={styles.container}>
+      <ScreenHeader eyebrow="Hydration" title="Water" />
       <View style={styles.topSection}>
         <View style={styles.waterBottleContainer}>
           <WaterBottle fillLevel={fillLevel} size={80} />

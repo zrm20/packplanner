@@ -6,7 +6,7 @@ import { Text } from 'react-native-paper';
 import useStyles from './SettingsScreen.styles';
 import { useSettings } from '../../../hooks';
 import { SettingsStackParamList } from '../../../navigation/navigation.types';
-import { SafeAreaScreen } from '../../ui';
+import { SafeAreaScreen, ScreenHeader } from '../../ui';
 import UnitSelector from '../UnitSelector/UnitSelector';
 import UserWidget from '../UserWidget/UserWidget';
 import InstallApp from '../InstallApp/InstallApp';
@@ -28,9 +28,7 @@ export default function SettingsScreen(props: SettingsScreenProps): JSX.Element 
 
   return (
     <SafeAreaScreen style={styles.container}>
-      <Text variant="headlineLarge" style={styles.title}>
-        Settings
-      </Text>
+      <ScreenHeader eyebrow="Preferences" title="Settings" />
 
       <UserWidget style={styles.userWidget} />
 
