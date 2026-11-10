@@ -16,7 +16,7 @@ export default function WaterBottle(props: WaterBottleProps): JSX.Element {
     <View style={styles.container}>
       <View style={styles.cap} />
       <View style={styles.bottleOutline}>
-        <View style={styles.fill} />
+        <View style={styles.fill}>{fillLevel > 0 && <View style={styles.fillLine} />}</View>
       </View>
     </View>
   );

@@ -1,42 +1,68 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { useTheme } from '../../../theme';
 
 interface Style {
-  container: ViewStyle;
-  sliderContainer: ViewStyle;
+  screen: ViewStyle;
+  scroll: ViewStyle;
+  content: ViewStyle;
+  containersCard: ViewStyle;
+  fillCard: ViewStyle;
+  fillLabelRow: ViewStyle;
+  fillLabel: TextStyle;
   slider: ViewStyle;
-  statsContainer: ViewStyle;
-  topSection: ViewStyle;
-  waterBottleContainer: ViewStyle;
 }
 
 export default function useStyles() {
   const theme = useTheme();
 
+  const card: ViewStyle = {
+    backgroundColor: theme.colors.surface,
+    borderWidth: theme.borderWeight[1],
+    borderColor: theme.colors.outlineVariant,
+    borderRadius: 14,
+    overflow: 'hidden',
+  };
+
   const styles = StyleSheet.create<Style>({
-    container: {},
-    topSection: {
+    screen: {
+      minHeight: 0,
+      alignSelf: 'stretch',
       width: '100%',
+    },
+    scroll: {
+      alignSelf: 'stretch',
       flex: 1,
-      flexDirection: 'row',
-      padding: theme.space[2],
-      alignItems: 'center',
-    },
-    waterBottleContainer: {
-      marginHorizontal: theme.space[3],
-    },
-    sliderContainer: {
+      minHeight: 0,
       width: '100%',
-      padding: theme.space[3],
+    },
+    content: {
+      paddingHorizontal: theme.space[3],
+      paddingBottom: theme.space[3],
+      gap: theme.space[3],
+    },
+    containersCard: {
+      ...card,
+      flexDirection: 'row',
       alignItems: 'center',
+      padding: theme.space[3],
+      gap: theme.space[3],
+    },
+    fillCard: {
+      ...card,
+      padding: theme.space[3],
+    },
+    fillLabelRow: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+      justifyContent: 'space-between',
+      marginBottom: theme.space[1],
+    },
+    fillLabel: {
+      color: theme.colors.onSurfaceVariant,
     },
     slider: {
       width: '100%',
-    },
-    statsContainer: {
-      width: '100%',
-      padding: theme.space[2],
     },
   });
   return styles;
