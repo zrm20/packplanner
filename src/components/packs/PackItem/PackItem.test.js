@@ -25,9 +25,19 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 );
 jest.mock('./PackItem.styles', () => () => ({
   container: {},
+  unselectedPack: {},
   selectedPack: {},
-  title: {},
+  iconTile: {},
+  selectedIconTile: {},
+  icon: { color: '#2F4A3A' },
+  selectedIcon: { color: '#F4EFE4' },
+  check: {},
+  checkIcon: { color: '#D9682B' },
+  brand: {},
+  model: {},
+  meta: {},
 }));
+
 
 describe('<PackItem />', () => {
   it('selects the pack when pressed', () => {

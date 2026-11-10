@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ViewStyle } from 'react-native';
-import { Text, Surface } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
 import useStyles from './InPackList.styles';
 import { useInventory } from '../../../hooks';
@@ -16,13 +16,16 @@ export default function InPackList(props: InPackListProps): JSX.Element {
 
   return (
     <View style={[styles.container, props.style]}>
-      <Text variant="labelLarge">In My Pack:</Text>
+      <View style={styles.toolbar}>
+        <Text variant="headlineSmall">In my pack</Text>
+        <Text variant="labelMedium" style={styles.meta}>
+          {itemsInPack.length} {itemsInPack.length === 1 ? 'item' : 'items'}
+        </Text>
+      </View>
       {itemsInPack.length ? (
-        <Surface style={styles.listContainer}>
-          <CategorizedItemList data={itemsInPack} itemProps={{ disabled: true }} />
-        </Surface>
+        <CategorizedItemList data={itemsInPack} itemProps={{ disabled: true }} />
       ) : (
-        <Text variant="headlineMedium" style={styles.emptyText}>
+        <Text variant="titleMedium" style={styles.emptyText}>
           No Items in Pack
         </Text>
       )}

@@ -11,7 +11,7 @@ interface QtyChangerProps {
 
 export default function QtyChanger(props: QtyChangerProps): JSX.Element {
   const styles = useStyles();
-  const { item, size = 24 } = props;
+  const { item, size = 18 } = props;
 
   function increment(): void {
     item.setQty(item.qty + 1);
@@ -25,9 +25,25 @@ export default function QtyChanger(props: QtyChangerProps): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <IconButton icon="minus" onPress={decrement} style={styles.button} size={size} />
-      <Text variant="bodyLarge">{item.qty}</Text>
-      <IconButton icon="plus" onPress={increment} style={styles.button} size={size} />
+      <IconButton
+        icon="minus"
+        onPress={decrement}
+        style={styles.button}
+        size={size}
+        iconColor={styles.icon.color as string}
+        accessibilityLabel="Decrease quantity"
+      />
+      <Text variant="labelLarge" style={styles.qty}>
+        {item.qty}
+      </Text>
+      <IconButton
+        icon="plus"
+        onPress={increment}
+        style={styles.button}
+        size={size}
+        iconColor={styles.icon.color as string}
+        accessibilityLabel="Increase quantity"
+      />
     </View>
   );
 }
