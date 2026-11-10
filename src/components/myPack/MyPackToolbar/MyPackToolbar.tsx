@@ -16,59 +16,63 @@ export default function MyPackToolbar(props: MyPackToolbarProps): JSX.Element {
   const { navigate } = useNavigation();
   const { emptyPack } = useInventoryActions();
 
+  const actions = [
+    {
+      label: 'Breakdown',
+      icon: 'chart-pie',
+      onPress: () => navigate('MyPack', { screen: 'Chart' }),
+    },
+    {
+      label: 'Checklist',
+      icon: 'playlist-check',
+      onPress: () => navigate('MyPack', { screen: 'Checklist' }),
+    },
+    {
+      label: 'Save list',
+      icon: 'content-save-outline',
+      onPress: props.toggleNewListModal,
+    },
+    {
+      label: 'Load list',
+      icon: 'import',
+      onPress: () => navigate('MyPack', { screen: 'Lists' }),
+    },
+    {
+      label: 'Empty',
+      icon: 'trash-can-outline',
+      onPress: emptyPack,
+      danger: true,
+    },
+  ];
+
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       style={props.style}
       contentContainerStyle={styles.container}>
-      <Chip
-        compact
-        mode="outlined"
-        icon="chart-pie"
-        style={styles.chip}
-        textStyle={styles.chipLabel}
-        onPress={() => navigate('MyPack', { screen: 'Chart' })}>
-        Breakdown
-      </Chip>
-      <Chip
-        compact
-        mode="outlined"
-        icon="playlist-check"
-        style={styles.chip}
-        textStyle={styles.chipLabel}
-        onPress={() => navigate('MyPack', { screen: 'Checklist' })}>
-        Checklist
-      </Chip>
-      <Chip
-        compact
-        mode="outlined"
-        icon="content-save-outline"
-        style={styles.chip}
-        textStyle={styles.chipLabel}
-        onPress={props.toggleNewListModal}>
-        Save list
-      </Chip>
-      <Chip
-        compact
-        mode="outlined"
-        icon="import"
-        style={styles.chip}
-        textStyle={styles.chipLabel}
-        onPress={() => navigate('MyPack', { screen: 'Lists' })}>
-        Load list
-      </Chip>
-      <Chip
-        compact
-        mode="outlined"
-        icon={({ size }) => (
-          <Icon source="trash-can-outline" size={size} color={styles.dangerIcon.color as string} />
-        )}
-        style={styles.chip}
-        textStyle={styles.chipLabel}
-        onPress={emptyPack}>
-        Empty
-      </Chip>
+      {actions.map((action) => (
+        <Chip
+          key={action.label}
+          compact
+          mode="outlined"
+          icon={
+            action.danger
+              ? ({ size }) => (
+                  <Icon
+                    source={action.icon}
+                    size={size}
+                    color={styles.dangerIcon.color as string}
+                  />
+                )
+              : action.icon
+          }
+          style={styles.chip}
+          textStyle={styles.chipLabel}
+          onPress={action.onPress}>
+          {action.label}
+        </Chip>
+      ))}
     </ScrollView>
   );
 }

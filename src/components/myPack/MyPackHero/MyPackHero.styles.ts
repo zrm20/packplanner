@@ -71,7 +71,7 @@ export default function useStyles() {
     },
     baseLabel: {
       marginTop: theme.space[3],
-      color: theme.colors.tertiaryContainer,
+      color: theme.colors.tertiary,
       textTransform: 'uppercase',
       letterSpacing: 1.6,
     },

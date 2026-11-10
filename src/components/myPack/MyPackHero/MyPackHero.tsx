@@ -28,9 +28,9 @@ export default function MyPackHero(props: MyPackHeroProps): JSX.Element {
   const totalWeight = packWeight + itemWeight;
   const weightWithLiquid = totalWeight + getTotalLiquidWeight(itemsInPack);
 
-  const base = displayedWeight(baseWeight, weightUnit.convert);
-  const total = displayedWeight(totalWeight, weightUnit.convert);
-  const withLiquid = displayedWeight(weightWithLiquid, weightUnit.convert);
+  const displayedBaseWeight = displayedWeight(baseWeight, weightUnit.convert);
+  const displayedTotalWeight = displayedWeight(totalWeight, weightUnit.convert);
+  const displayedWeightWithLiquid = displayedWeight(weightWithLiquid, weightUnit.convert);
 
   return (
     <View style={[styles.hero, props.style]}>
@@ -79,7 +79,7 @@ export default function MyPackHero(props: MyPackHeroProps): JSX.Element {
       </Text>
       <View style={styles.headline}>
         <Text variant="displayMedium" style={styles.figure}>
-          {base}
+          {displayedBaseWeight}
         </Text>
         <Text variant="titleMedium" style={styles.unit}>
           {weightUnit.label}
@@ -92,7 +92,7 @@ export default function MyPackHero(props: MyPackHeroProps): JSX.Element {
             Total
           </Text>
           <Text variant="titleSmall" style={styles.statValue}>
-            {total} {weightUnit.label}
+            {displayedTotalWeight} {weightUnit.label}
           </Text>
         </View>
         <View style={styles.stat}>
@@ -100,7 +100,7 @@ export default function MyPackHero(props: MyPackHeroProps): JSX.Element {
             With liquid
           </Text>
           <Text variant="titleSmall" style={styles.statValue}>
-            {withLiquid} {weightUnit.label}
+            {displayedWeightWithLiquid} {weightUnit.label}
           </Text>
         </View>
         <View style={styles.stat}>
