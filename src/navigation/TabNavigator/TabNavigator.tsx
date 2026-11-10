@@ -77,6 +77,8 @@ export default function TabNavigator() {
   }: BottomTabScreenProps<RootTabParamList>): BottomTabNavigationOptions {
     return {
       headerShown: false,
+      // Wide viewports would place the label beside the icon and clip through the active pill.
+      tabBarLabelPosition: 'below-icon',
       tabBarIcon: ({ focused }) => (
         <View style={[styles.pill, focused && styles.activePill]}>
           <MaterialCommunityIcons
