@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
-import { ActivityIndicator, Icon, IconButton, Surface, Text } from 'react-native-paper';
+import { ActivityIndicator, Icon, IconButton, Text } from 'react-native-paper';
 
 import useStyles from './CategoriesScreen.styles';
 import { chartColors } from '../../../constants';
@@ -71,7 +71,7 @@ export default function CategoriesScreen(props: CategoriesScreenProps): JSX.Elem
   }
 
   return (
-    <SafeAreaScreen style={styles.screen}>
+    <SafeAreaScreen edges={['top', 'left', 'right']}>
       <ScreenHeader eyebrow="Organize" title="Categories" />
       <View style={styles.container}>
         <View style={styles.toolbar}>
@@ -85,29 +85,29 @@ export default function CategoriesScreen(props: CategoriesScreenProps): JSX.Elem
             onPress={navToNewCategory}
           />
         </View>
-        <Surface style={styles.card} elevation={0}>
-          {categoriesSlice.isLoading ? (
+        {categoriesSlice.isLoading ? (
+          <View style={styles.list}>
             <ActivityIndicator style={styles.spinner} />
-          ) : (
-            <FlatList
-              style={styles.list}
-              data={categories}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item, index }) => (
-                <CategoryRow
-                  category={item}
-                  color={chartColors[index % chartColors.length]}
-                  first={index === 0}
-                  onPress={
-                    !item.isStockCategory
-                      ? () => navigation.navigate('EditCategory', { categoryId: item.id })
-                      : undefined
-                  }
-                />
-              )}
-            />
-          )}
-        </Surface>
+          </View>
+        ) : (
+          <FlatList
+            style={styles.list}
+            data={categories}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item, index }) => (
+              <CategoryRow
+                category={item}
+                color={chartColors[index % chartColors.length]}
+                first={index === 0}
+                onPress={
+                  !item.isStockCategory
+                    ? () => navigation.navigate('EditCategory', { categoryId: item.id })
+                    : undefined
+                }
+              />
+            )}
+          />
+        )}
       </View>
     </SafeAreaScreen>
   );

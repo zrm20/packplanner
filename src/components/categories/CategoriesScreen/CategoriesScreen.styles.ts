@@ -3,11 +3,9 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { useTheme } from '../../../theme';
 
 interface Style {
-  screen: ViewStyle;
   container: ViewStyle;
   toolbar: ViewStyle;
   addButton: ViewStyle;
-  card: ViewStyle;
   spinner: ViewStyle;
   list: ViewStyle;
   row: ViewStyle;
@@ -26,18 +24,10 @@ export default function useStyles() {
   const theme = useTheme();
 
   const styles = StyleSheet.create<Style>({
-    screen: {
-      minHeight: 0,
-      alignSelf: 'stretch',
-      width: '100%',
-    },
     container: {
-      alignSelf: 'stretch',
       width: '100%',
       flex: 1,
-      minHeight: 0,
       paddingHorizontal: theme.space[3],
-      paddingBottom: theme.space[3],
     },
     toolbar: {
       flexDirection: 'row',
@@ -49,21 +39,17 @@ export default function useStyles() {
       margin: 0,
       borderColor: theme.colors.primary,
     },
-    card: {
-      flex: 1,
-      minHeight: 0,
-      backgroundColor: theme.colors.surface,
-      borderWidth: theme.borderWeight[1],
-      borderColor: theme.colors.outlineVariant,
-      borderRadius: 14,
-      overflow: 'hidden',
-    },
     spinner: {
       marginTop: theme.space[4],
     },
     list: {
       flex: 1,
-      minHeight: 0,
+      width: '100%',
+      backgroundColor: theme.colors.surface,
+      borderWidth: theme.borderWeight[1],
+      borderColor: theme.colors.outlineVariant,
+      borderRadius: 14,
+      overflow: 'hidden',
     },
     row: {
       flexDirection: 'row',
