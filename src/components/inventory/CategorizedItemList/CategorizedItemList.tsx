@@ -85,6 +85,7 @@ export default function CategorizedItemList(props: CategorizedItemListProps): JS
 
   return (
     <FlatList
+      style={styles.list}
       keyExtractor={(group) => group.categoryId}
       renderItem={({ item: group, index }) => (
         <View style={index === 0 ? undefined : styles.groupSpacing}>

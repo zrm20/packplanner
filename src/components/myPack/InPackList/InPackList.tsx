@@ -23,7 +23,9 @@ export default function InPackList(props: InPackListProps): JSX.Element {
         </Text>
       </View>
       {itemsInPack.length ? (
-        <CategorizedItemList data={itemsInPack} itemProps={{ disabled: true }} />
+        <View style={styles.list}>
+          <CategorizedItemList data={itemsInPack} itemProps={{ disabled: true }} />
+        </View>
       ) : (
         <Text variant="titleMedium" style={styles.emptyText}>
           No Items in Pack

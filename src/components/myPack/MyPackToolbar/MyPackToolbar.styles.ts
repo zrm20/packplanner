@@ -14,11 +14,13 @@ export default function useStyles() {
   const theme = useTheme();
 
   const styles = StyleSheet.create<Style>({
-    // The screen aligns children to the start, and web flex items refuse to be
-    // narrower than their content. Without a stretched, shrinkable row the
-    // chips widen the page and the PWA frame clips them instead of scrolling.
+    // Stay the height of the chips. A ScrollView otherwise grows into empty
+    // space and shrinks away once the pack list needs the room. minWidth 0
+    // keeps the row screen-width on web so the chips scroll instead of clipping.
     scroll: {
       alignSelf: 'stretch',
+      flexGrow: 0,
+      flexShrink: 0,
       minWidth: 0,
     },
     container: {
