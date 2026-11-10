@@ -1,9 +1,12 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
+  chip: ViewStyle;
+  chipLabel: TextStyle;
+  dangerIcon: TextStyle;
 }
 
 export default function useStyles() {
@@ -12,12 +15,20 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>({
     container: {
       flexDirection: 'row',
-      width: '100%',
-      justifyContent: 'space-evenly',
-      paddingVertical: theme.space[1],
-      borderTopWidth: theme.borderWeight[1],
-      borderBottomWidth: theme.borderWeight[1],
-      borderColor: theme.colors.tertiary,
+      alignItems: 'center',
+      gap: theme.space[2],
+      paddingHorizontal: theme.space[3],
+    },
+    chip: {
+      backgroundColor: theme.colors.surface,
+      borderColor: theme.colors.outline,
+      borderRadius: 999,
+    },
+    chipLabel: {
+      color: theme.colors.onSurface,
+    },
+    dangerIcon: {
+      color: theme.colors.error,
     },
   });
   return styles;

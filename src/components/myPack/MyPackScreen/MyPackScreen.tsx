@@ -6,8 +6,7 @@ import { MyPackHomeScreenProps } from '../../../navigation/navigation.types';
 import { NewListModal } from '../../lists';
 import { SafeAreaScreen, ScreenHeader } from '../../ui';
 import InPackList from '../InPackList/InPackList';
-import MyPackHeader from '../MyPackHeader/MyPackHeader';
-import MyPackStatsBar from '../MyPackStatsBar/MyPackStatsBar';
+import MyPackHero from '../MyPackHero/MyPackHero';
 import MyPackToolbar from '../MyPackToolbar/MyPackToolbar';
 
 export default function MyPackScreen(props: MyPackHomeScreenProps): JSX.Element {
@@ -22,8 +21,7 @@ export default function MyPackScreen(props: MyPackHomeScreenProps): JSX.Element 
     <Portal.Host>
       <SafeAreaScreen style={styles.container}>
         <ScreenHeader eyebrow="Loadout" title="My Pack" />
-        <MyPackHeader style={styles.header} />
-        <MyPackStatsBar style={styles.stats} />
+        <MyPackHero style={styles.hero} />
         <MyPackToolbar style={styles.toolbar} toggleNewListModal={toggleNewListModal} />
         <InPackList />
       </SafeAreaScreen>
