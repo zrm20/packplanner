@@ -24,8 +24,8 @@ export default function UserWidget(props: UserWidgetProps): JSX.Element {
     <>
       <LoadingBackdrop show={isLoading} />
       <View style={[styles.container, props.style]}>
-        <Surface style={styles.authSurface}>
-          <Text variant="headlineSmall">User</Text>
+        <Surface style={styles.authSurface} elevation={0}>
+          <Text variant="headlineSmall">Account</Text>
           <Text style={styles.helperText}>{'email' in user! ? user.email : 'Guest'}</Text>
 
           <View style={styles.buttonGroup}>

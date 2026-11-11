@@ -18,7 +18,11 @@ export default function useStyles() {
       width: '100%',
     },
     authSurface: {
-      padding: theme.space[2],
+      padding: theme.space[3],
+      backgroundColor: theme.colors.surface,
+      borderWidth: theme.borderWeight[1],
+      borderColor: theme.colors.outlineVariant,
+      borderRadius: 14,
       alignItems: 'center',
     },
     buttonGroup: {
@@ -30,6 +34,7 @@ export default function useStyles() {
     },
     helperText: {
       textAlign: 'center',
+      color: theme.colors.onSurfaceVariant,
       marginVertical: theme.space[1],
     },
   });

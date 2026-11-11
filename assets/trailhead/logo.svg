@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>Trail Pack Pro — Trailhead draft mark</title>
+  <rect x="220" y="200" width="584" height="624" rx="180" fill="#2F4A3A"/>
+  <circle cx="654" cy="340" r="44" fill="#D9682B"/>
+  <path d="M300 580 458 348 572 504 628 428 724 580" fill="none" stroke="#F4EFE4" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M516 574c-132 58 126 84 0 140-42 18-64 34-64 58" fill="none" stroke="#D9682B" stroke-width="28" stroke-linecap="round"/>
+</svg>

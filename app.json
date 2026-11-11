@@ -4,15 +4,15 @@
     "slug": "packplanner",
     "version": "2.0.0",
     "orientation": "portrait",
-    "icon": "./assets/packplannerlogo.png",
+    "icon": "./assets/trailhead/icon.png",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.zachrmccoy.packplanner"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/packplannerlogo.png",
-        "backgroundColor": "#4f5d75"
+        "foregroundImage": "./assets/trailhead/adaptive-icon.png",
+        "backgroundColor": "#F4EFE4"
       }
     },
     "web": {
@@ -29,9 +29,10 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/packplannerlogo.png",
+          "image": "./assets/trailhead/splash.png",
+          "imageWidth": 240,
           "resizeMode": "contain",
-          "backgroundColor": "#4f5d75"
+          "backgroundColor": "#F4EFE4"
         }
       ]
     ]
