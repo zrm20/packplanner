@@ -23,7 +23,7 @@ export default function CategoryChartToolbar(props: CategoryChartToolbarProps): 
 
   return (
     <View style={styles.container}>
-      <Surface style={styles.surface}>
+      <Surface elevation={0} style={styles.surface}>
         <View style={styles.row}>
           <View style={styles.switchGroup}>
             <Text variant="labelMedium">Base Weight Only</Text>

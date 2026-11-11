@@ -12,8 +12,9 @@ function ChecklistItem(props: { item: Item }): JSX.Element {
   return (
     <List.Item
       style={styles.item}
+      onPress={item.toggleIsPacked}
       title={item.name}
-      titleNumberOfLines={3}
+      titleNumberOfLines={0}
       description={item.brand || undefined}
       descriptionNumberOfLines={2}
       left={() => (
@@ -72,7 +73,11 @@ export default function ChecklistScreen(): JSX.Element {
             <SegmentedButtons
               value={filter}
               onValueChange={setFilter}
-              buttons={['All', 'Remaining', 'Packed'].map((value) => ({ value, label: value }))}
+              buttons={['All', 'Remaining', 'Packed'].map((value) => ({
+                value,
+                label: value,
+                labelStyle: { fontSize: 12 },
+              }))}
               style={styles.filters}
             />
           </>

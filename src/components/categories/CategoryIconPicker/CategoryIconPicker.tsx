@@ -1,6 +1,6 @@
 import { useField } from 'formik';
 import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { IconButton, Searchbar, Text } from 'react-native-paper';
 
 import useStyles from './CategoryIconPicker.styles';
@@ -29,15 +29,14 @@ export default function CategoryIconPicker(): JSX.Element {
         <Searchbar value={search} onChangeText={setSearch} placeholder="Icon search" />
       </View>
 
-      <FlatList
-        data={icons.filter(searchFilter)}
-        keyExtractor={(item) => item}
-        numColumns={5}
+      <ScrollView
         nestedScrollEnabled
         keyboardShouldPersistTaps="handled"
-        ListEmptyComponent={<Text>No matching icons. Try another search.</Text>}
-        renderItem={({ item }) => (
+        contentContainerStyle={styles.iconContent}>
+        {!icons.some(searchFilter) && <Text>No matching icons. Try another search.</Text>}
+        {icons.filter(searchFilter).map((item) => (
           <IconButton
+            key={item}
             icon={item}
             size={22}
             style={{ margin: 2 }}
@@ -46,9 +45,8 @@ export default function CategoryIconPicker(): JSX.Element {
             mode={item === field.value ? 'contained' : undefined}
             onPress={() => util.setValue(item)}
           />
-        )}
-        contentContainerStyle={styles.flatListContent}
-      />
+        ))}
+      </ScrollView>
     </View>
   );
 }
