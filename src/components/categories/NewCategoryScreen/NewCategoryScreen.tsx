@@ -1,17 +1,15 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 
-import useStyles from './NewCategoryScreen.styles';
 import { useCategories } from '../../../hooks';
 import useThrowAlert from '../../../hooks/alerts/useThrowAlert';
 import { CategoriesStackParamList } from '../../../navigation/navigation.types';
-import { ContainedModalTitle, SafeAreaScreen } from '../../ui';
+import FieldGuideFormScreen from '../../ui/FieldGuideFormScreen';
 import CategoryForm from '../CategoryForm/CategoryForm';
 
 type NewCategoryScreenProps = NativeStackScreenProps<CategoriesStackParamList, 'NewCategory'>;
 
 export default function NewCategoryScreen(props: NewCategoryScreenProps): JSX.Element {
-  const styles = useStyles();
   const { navigation } = props;
   const { createNewCategory } = useCategories();
   const { catchUnknownError } = useThrowAlert();
@@ -26,9 +24,8 @@ export default function NewCategoryScreen(props: NewCategoryScreenProps): JSX.El
   }
 
   return (
-    <SafeAreaScreen style={styles.container}>
-      <ContainedModalTitle title="New Custom Category" />
+    <FieldGuideFormScreen title="Add category" eyebrow="Categories / Field guide">
       <CategoryForm onSubmit={handleSubmit} />
-    </SafeAreaScreen>
+    </FieldGuideFormScreen>
   );
 }

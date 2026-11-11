@@ -21,16 +21,15 @@ export default function PacksScroller(): JSX.Element {
   return (
     <View style={styles.container}>
       <View style={styles.toolbar}>
-        <Text variant="titleLarge">My Packs</Text>
-        <View>
-          <IconButton
-            accessibilityLabel="Add pack"
-            icon="plus"
-            size={14}
-            mode="outlined"
-            onPress={openNewPackScreen}
-          />
-        </View>
+        <Text variant="headlineSmall">My packs</Text>
+        <IconButton
+          accessibilityLabel="Add pack"
+          icon="plus"
+          size={16}
+          mode="outlined"
+          style={styles.addButton}
+          onPress={openNewPackScreen}
+        />
       </View>
 
       <View style={styles.packsContainer}>
@@ -47,6 +46,7 @@ export default function PacksScroller(): JSX.Element {
             keyExtractor={(item) => item.id}
             renderItem={(data) => <PackItem pack={data.item} />}
             horizontal
+            showsHorizontalScrollIndicator={false}
           />
         )}
       </View>

@@ -17,15 +17,19 @@ export default function useStyles() {
 
   const styles = StyleSheet.create<Style>({
     container: {
-      paddingHorizontal: theme.space[2],
       width: '100%',
+      paddingVertical: theme.space[3],
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.roundness * 4,
+      borderWidth: 1,
+      borderColor: theme.colors.outlineVariant,
     },
     liquidEnableSection: {
       marginBottom: theme.space[2],
       paddingHorizontal: theme.space[2],
       flexDirection: 'row',
-      justifyContent: 'center',
-      width: '100%',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     enableLiquidLabel: {
       marginRight: theme.space[3],

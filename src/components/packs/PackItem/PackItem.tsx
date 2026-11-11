@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Text, Surface, Title, Subheading } from 'react-native-paper';
+import { TouchableOpacity, View } from 'react-native';
+import { Text, Icon, Surface } from 'react-native-paper';
 
 import useStyles from './PackItem.styles';
 import { usePackModel } from '../../../hooks';
@@ -23,15 +23,34 @@ export default function PackItem(props: PackItemProps): JSX.Element {
     <TouchableOpacity
       onLongPress={packModel.openEdit}
       onPress={packModel.select}
-      disabled={disabled}>
-      <Surface style={[styles.container, isSelected ? styles.selectedPack : null]}>
-        <Title style={styles.title} adjustsFontSizeToFit numberOfLines={2}>
+      disabled={disabled}
+      accessibilityRole="button"
+      accessibilityState={{ selected: isSelected }}
+      accessibilityLabel={`${pack.brand} ${pack.model}`}>
+      <Surface style={[styles.container, isSelected ? styles.selectedPack : styles.unselectedPack]}>
+        <View style={[styles.iconTile, isSelected ? styles.selectedIconTile : null]}>
+          <Icon
+            source="bag-personal"
+            size={20}
+            color={
+              (isSelected ? styles.selectedIcon.color : styles.icon.color) as string
+            }
+          />
+        </View>
+        {isSelected ? (
+          <View style={styles.check}>
+            <Icon source="check-circle" size={20} color={styles.checkIcon.color as string} />
+          </View>
+        ) : null}
+        <Text variant="titleMedium" style={styles.brand} numberOfLines={2}>
           {pack.brand}
-        </Title>
-        <Subheading adjustsFontSizeToFit numberOfLines={1}>
+        </Text>
+        <Text variant="bodySmall" style={styles.model} numberOfLines={1}>
           {pack.model}
-        </Subheading>
-        <Text>{packModel.getWeight()}</Text>
+        </Text>
+        <Text variant="labelSmall" style={styles.meta} numberOfLines={1}>
+          {pack.capacity} L · {packModel.getWeight()}
+        </Text>
       </Surface>
     </TouchableOpacity>
   );

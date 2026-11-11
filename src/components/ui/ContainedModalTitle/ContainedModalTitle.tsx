@@ -1,24 +1,23 @@
 import React from 'react';
-import { View, ViewStyle, TextStyle } from 'react-native';
-import { Title } from 'react-native-paper';
+import { ViewStyle } from 'react-native';
 
-import useStyles from './ContainedModalTitle.styles';
 import CloseScreenButton, { CloseScreenButtonProps } from '../CloseScreenButton/CloseScreenButton';
+import ScreenHeader from '../ScreenHeader/ScreenHeader';
 
 interface ContainedModalTitleProps extends CloseScreenButtonProps {
   title: string;
+  eyebrow?: string;
   containerStyle?: ViewStyle;
-  titleStyle?: TextStyle;
 }
 
 export default function ContainedModalTitle(props: ContainedModalTitleProps): JSX.Element {
-  const styles = useStyles();
-  const { title, containerStyle, titleStyle, ...rest } = props;
-
+  const { title, eyebrow = 'My pack / Field guide', containerStyle, ...rest } = props;
   return (
-    <View style={[styles.container, containerStyle]}>
-      <CloseScreenButton style={styles.closeButton} {...rest} />
-      <Title style={titleStyle}>{title}</Title>
-    </View>
+    <ScreenHeader
+      eyebrow={eyebrow}
+      title={title}
+      style={containerStyle}
+      action={<CloseScreenButton {...rest} />}
+    />
   );
 }

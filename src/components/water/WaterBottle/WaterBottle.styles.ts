@@ -1,5 +1,6 @@
 import { StyleSheet, ViewStyle } from 'react-native';
 
+import { chartColors, liquidChartColor } from '../../../constants';
 import { useTheme } from '../../../theme';
 
 interface Style {
@@ -7,6 +8,7 @@ interface Style {
   bottleOutline: ViewStyle;
   cap: ViewStyle;
   fill: ViewStyle;
+  fillLine: ViewStyle;
 }
 
 export default function useStyles(fillLevel: number, size: number) {
@@ -25,11 +27,12 @@ export default function useStyles(fillLevel: number, size: number) {
       height: size * 2.5,
       justifyContent: 'flex-end',
       overflow: 'hidden',
+      backgroundColor: theme.colors.surfaceVariant,
     },
     cap: {
       borderWidth: theme.borderWeight[1],
-      borderColor: theme.colors.primary,
-      backgroundColor: theme.colors.primary,
+      borderColor: theme.colors.tertiary,
+      backgroundColor: theme.colors.tertiary,
       borderTopRightRadius: size / 25,
       borderTopLeftRadius: size / 25,
       width: size / 3,
@@ -38,7 +41,13 @@ export default function useStyles(fillLevel: number, size: number) {
     fill: {
       width: '100%',
       height: `${fillLevel}%`,
-      backgroundColor: '#00ffff',
+      backgroundColor: chartColors[0],
+      justifyContent: 'flex-start',
+    },
+    fillLine: {
+      height: 3,
+      width: '100%',
+      backgroundColor: liquidChartColor,
     },
   });
   return styles;

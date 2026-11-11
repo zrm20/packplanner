@@ -1,6 +1,6 @@
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { View } from 'react-native';
 import { TextInput as PaperInput } from 'react-native-paper';
 
 import packFormSchema from './PackForm.schema';
@@ -36,7 +36,7 @@ export default function PackForm(props: PackFormProps): JSX.Element {
       validationSchema={packFormSchema}>
       <>
         <FormikBackdrop />
-        <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <View style={styles.container}>
           <TextInput name="brand" label="Brand" />
           <TextInput name="model" label="Model" />
           <NumberInput
@@ -45,12 +45,12 @@ export default function PackForm(props: PackFormProps): JSX.Element {
             right={<PaperInput.Affix text="liters" />}
           />
           <WeightInput name="weight" label="Weight" />
-
-          <FormActions
-            onDelete={props.onDelete}
-            deleteMessage="Are you sure you want to delete this pack?"
-          />
-        </KeyboardAvoidingView>
+        </View>
+        <FormActions
+          submitText={props.initialValues ? 'Save changes' : 'Add pack'}
+          onDelete={props.onDelete}
+          deleteMessage="Are you sure you want to delete this pack?"
+        />
       </>
     </Formik>
   );

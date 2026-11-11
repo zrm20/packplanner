@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps, View, ViewStyle } from 'react-native';
-import { Text, IconButton } from 'react-native-paper';
+import { Text, Icon } from 'react-native-paper';
 
 import useStyles from './InventoryItem.styles';
 import { useItemModel } from '../../../hooks';
@@ -20,7 +20,6 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
     name,
     brand,
     liquidCapacity,
-    category,
     qty,
     getWeight,
     getLiquidCapacity,
@@ -35,21 +34,33 @@ export default function InventoryItem({ item, ...props }: InventoryItemProps): J
           {qty > 0 ? (
             <QtyChanger item={itemModel} />
           ) : (
-            <IconButton icon="plus" mode="outlined" onPress={addToPack} />
+            <TouchableOpacity
+              accessibilityLabel={`Add ${name} to pack`}
+              onPress={addToPack}
+              style={styles.addButton}>
+              <Icon source="plus" size={16} />
+            </TouchableOpacity>
           )}
         </View>
         <View style={styles.textContainer}>
-          {Boolean(category) && <Text variant="labelSmall">{category.label}</Text>}
-          <Text variant="titleMedium" numberOfLines={1}>
-            {brand}
-          </Text>
-          <Text variant="titleSmall" numberOfLines={1}>
+          <Text variant="titleSmall" numberOfLines={1} style={styles.name}>
             {name}
           </Text>
+          {Boolean(brand) && (
+            <Text variant="bodySmall" numberOfLines={1} style={styles.brand}>
+              {brand}
+            </Text>
+          )}
         </View>
         <View style={styles.weightContainer}>
-          <Text variant="labelSmall">{getWeight()}</Text>
-          {Boolean(liquidCapacity) && <Text variant="labelSmall">{getLiquidCapacity()}</Text>}
+          <Text variant="labelLarge" style={styles.weight}>
+            {getWeight()}
+          </Text>
+          {Boolean(liquidCapacity) && (
+            <Text variant="labelSmall" style={styles.liquid}>
+              {getLiquidCapacity()}
+            </Text>
+          )}
         </View>
       </View>
     </TouchableOpacity>

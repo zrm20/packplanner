@@ -8,8 +8,8 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>({
     container: {
       width: '100%',
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
+      gap: 8,
+      paddingVertical: 16,
     },
   });
   return styles;

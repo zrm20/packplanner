@@ -1,12 +1,12 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { View } from 'react-native';
-import { Divider, IconButton, Tooltip } from 'react-native-paper';
+import { Divider, IconButton, Tooltip, Text } from 'react-native-paper';
 
 import categoryFormSchema from './CategoryForm.schema';
 import useStyles from './CategoryForm.styles';
-import { FormActions, FormikBackdrop, TextInput } from '../../formComponents';
 import appAlert from '../../../utils/appAlert/appAlert';
+import { FormActions, FormikBackdrop, TextInput } from '../../formComponents';
 import ToggleSwitchInput from '../../formComponents/ToggleSwitchInput/ToggleSwitchInput';
 import CategoryIconPicker from '../CategoryIconPicker/CategoryIconPicker';
 
@@ -51,16 +51,19 @@ export default function CategoryForm(props: CategoryFormProps): JSX.Element {
 
           <Divider />
 
+          <Text variant="titleMedium" style={{ padding: 16 }}>
+            Category icon
+          </Text>
           <View style={styles.iconContainer}>
             <CategoryIconPicker />
             <Divider />
           </View>
-
-          <FormActions
-            onDelete={props.onDelete}
-            deleteMessage='Do you want to permanently delete this category? All items with this category will be set to "Misc"'
-          />
         </View>
+        <FormActions
+          submitText={props.category ? 'Save changes' : 'Add category'}
+          onDelete={props.onDelete}
+          deleteMessage='Do you want to permanently delete this category? All items with this category will be set to "Misc"'
+        />
       </>
     </Formik>
   );

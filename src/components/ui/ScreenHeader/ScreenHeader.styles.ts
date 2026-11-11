@@ -4,9 +4,8 @@ import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
-  dataContainer: ViewStyle;
-  emptyText: TextStyle;
-  emptyContainer: ViewStyle;
+  text: ViewStyle;
+  eyebrow: TextStyle;
 }
 
 export default function useStyles() {
@@ -14,20 +13,20 @@ export default function useStyles() {
 
   const styles = StyleSheet.create<Style>({
     container: {
+      alignSelf: 'stretch',
       flexDirection: 'row',
+      alignItems: 'flex-end',
       paddingHorizontal: theme.space[3],
+      paddingTop: theme.space[2],
+      paddingBottom: theme.space[3],
     },
-    dataContainer: {
+    text: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'space-evenly',
     },
-    emptyText: {
-      textAlign: 'center',
-    },
-    emptyContainer: {
-      width: '100%',
-      paddingHorizontal: theme.space[3],
+    eyebrow: {
+      color: theme.colors.tertiary,
+      textTransform: 'uppercase',
+      letterSpacing: 1.8,
     },
   });
   return styles;

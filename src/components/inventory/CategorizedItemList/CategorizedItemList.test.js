@@ -7,7 +7,16 @@ import categoriesReducer, { setCategories } from '../../../redux/categoriesSlice
 import CategorizedItemList from './CategorizedItemList';
 
 jest.mock('../InventoryItem/InventoryItem', () => () => null);
-jest.mock('./CategorizedItemList.styles', () => () => ({ catHeader: {} }));
+jest.mock('./CategorizedItemList.styles', () => () => ({
+  catHeader: {},
+  catIcon: {},
+  catIconGlyph: { color: '#FFFDF8' },
+  catLabel: {},
+  catMeta: {},
+  card: {},
+  groupSpacing: {},
+  firstRowNoBorder: {},
+}));
 
 const item = { id: 'item-1', category: 'custom-category', name: 'Tent', qty: 0 };
 

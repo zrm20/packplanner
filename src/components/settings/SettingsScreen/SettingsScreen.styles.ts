@@ -4,9 +4,9 @@ import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
-  title: TextStyle;
+  scroll: ViewStyle;
+  content: ViewStyle;
   settingsContainer: ViewStyle;
-  unitSelector: ViewStyle;
   userWidget: ViewStyle;
   copyright: TextStyle;
 }
@@ -16,23 +16,34 @@ export default function useStyles() {
 
   const styles = StyleSheet.create<Style>({
     container: {
-      alignItems: 'center',
+      minHeight: 0,
+      width: '100%',
     },
-    title: {},
+    scroll: {
+      flex: 1,
+      minHeight: 0,
+      width: '100%',
+    },
+    content: {
+      paddingHorizontal: theme.space[3],
+      paddingBottom: theme.space[3],
+      gap: theme.space[3],
+    },
     settingsContainer: {
       width: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
+      gap: theme.space[3],
+      backgroundColor: theme.colors.surface,
+      borderWidth: theme.borderWeight[1],
+      borderColor: theme.colors.outlineVariant,
+      borderRadius: 14,
       padding: theme.space[3],
     },
-    unitSelector: {
-      marginBottom: theme.space[3],
-    },
     userWidget: {
-      marginVertical: theme.space[4],
+      padding: 0,
     },
     copyright: {
-      marginTop: 'auto',
+      textAlign: 'center',
+      color: theme.colors.onSurfaceVariant,
       marginBottom: theme.space[3],
     },
   });

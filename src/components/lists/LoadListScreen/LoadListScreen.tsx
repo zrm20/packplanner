@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
-import { IconButton, List, Text } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 
 import useStyles from './LoadListScreen.styles';
 import { useLists } from '../../../hooks';
@@ -48,18 +48,30 @@ export default function LoadListScreen(props: LoadListScreenProps): JSX.Element 
         <FlatList
           data={lists}
           keyExtractor={(item) => item.id}
-          ListEmptyComponent={<Text style={styles.emptyText}>No lists saved yet</Text>}
+          contentContainerStyle={styles.content}
+          ListHeaderComponent={
+            <Text style={styles.hint}>Saved items and quantities, ready to use again.</Text>
+          }
+          ListEmptyComponent={
+            <Text style={styles.emptyText}>
+              No lists saved yet. Save your current pack as a list to reuse the loadout later.
+            </Text>
+          }
           renderItem={({ item }) => (
-            <List.Item
-              title={item.name}
-              description={`${item.myPackState.itemsInPack.length} items`}
-              right={(props) => (
-                <>
-                  <IconButton icon="delete" onPress={() => confirmHandleDelete(item.id)} />
-                  <IconButton icon="download" onPress={() => handleLoadList(item)} />
-                </>
-              )}
-            />
+            <View style={styles.card}>
+              <Text variant="titleLarge">{item.name}</Text>
+              <Text variant="bodyMedium">{item.myPackState.itemsInPack.length} items</Text>
+              <View style={styles.actions}>
+                <Button
+                  textColor={styles.danger.color}
+                  onPress={() => confirmHandleDelete(item.id)}>
+                  Delete
+                </Button>
+                <Button mode="outlined" onPress={() => handleLoadList(item)}>
+                  Load list
+                </Button>
+              </View>
+            </View>
           )}
         />
       </View>

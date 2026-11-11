@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { ScrollView, View } from 'react-native';
 import { ActivityIndicator, Button, Dialog, Text, TextInput } from 'react-native-paper';
 
 import useStyles from './NewListModal.styles';
-import { useLists } from '../../../hooks';
+import { useLists, useInventory, usePacks, useSettings } from '../../../hooks';
 import useThrowAlert from '../../../hooks/alerts/useThrowAlert';
+import { getTotalWeight } from '../../../utils/inventoryUtils/inventoryUtils';
 
 interface ListModalProps {
   visible: boolean;
@@ -12,6 +14,10 @@ interface ListModalProps {
 
 export default function NewListModal(props: ListModalProps): JSX.Element {
   const styles = useStyles();
+  const { selectedPack } = usePacks();
+  const { itemsInPack, getBaseWeightItems } = useInventory();
+  const { weightUnit } = useSettings();
+  const baseWeight = (selectedPack?.weight || 0) + getTotalWeight(getBaseWeightItems(itemsInPack));
   const [text, setText] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { savePackAsList } = useLists();
@@ -31,27 +37,42 @@ export default function NewListModal(props: ListModalProps): JSX.Element {
 
   return (
     <Dialog style={styles.container} visible={props.visible} onDismiss={props.toggleVisibility}>
-      <Dialog.Title style={styles.title}>New List</Dialog.Title>
-      <Dialog.Content>
-        <Text>Save your current pack as a list.</Text>
+      <ScrollView keyboardShouldPersistTaps="handled">
+        <Dialog.Title style={styles.title}>Save list</Dialog.Title>
+        <Dialog.Content>
+          <Text>Save your current pack as a list.</Text>
+          <View style={styles.context}>
+            <Text variant="labelMedium" style={styles.eyebrow}>
+              Current pack
+            </Text>
+            <Text variant="titleLarge">
+              {selectedPack ? `${selectedPack.brand} ${selectedPack.model}` : 'No pack selected'}
+            </Text>
+            <Text variant="bodyMedium">
+              {itemsInPack.length} items · {Math.round(weightUnit.convert(baseWeight) * 100) / 100}{' '}
+              {weightUnit.label} base weight
+            </Text>
+          </View>
 
-        <TextInput
-          label="List Name"
-          mode="outlined"
-          style={styles.input}
-          value={text}
-          onChangeText={setText}
-        />
-      </Dialog.Content>
-      {isLoading && <ActivityIndicator />}
-      <Dialog.Actions style={styles.actions}>
-        <Button mode="contained" disabled={!text || isLoading} onPress={submitList}>
-          Save
-        </Button>
-        <Button mode="outlined" onPress={props.toggleVisibility}>
-          Cancel
-        </Button>
-      </Dialog.Actions>
+          <TextInput
+            label="List Name"
+            accessibilityLabel="List Name"
+            mode="outlined"
+            style={styles.input}
+            value={text}
+            onChangeText={setText}
+          />
+        </Dialog.Content>
+        {isLoading && <ActivityIndicator />}
+        <Dialog.Actions style={styles.actions}>
+          <Button mode="contained" disabled={!text || isLoading} onPress={submitList}>
+            Save
+          </Button>
+          <Button mode="outlined" onPress={props.toggleVisibility}>
+            Cancel
+          </Button>
+        </Dialog.Actions>
+      </ScrollView>
     </Dialog>
   );
 }

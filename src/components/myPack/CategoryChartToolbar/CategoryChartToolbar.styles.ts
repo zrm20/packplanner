@@ -17,18 +17,22 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>({
     container: {
       width: '100%',
-      paddingHorizontal: theme.space[2],
-      marginBottom: theme.space[4],
+      marginBottom: theme.space[2],
     },
     surface: {
       width: '100%',
-      padding: theme.space[2],
+      padding: theme.space[3],
+      borderRadius: theme.roundness * 4,
+      borderWidth: 1,
+      borderColor: theme.colors.outlineVariant,
+      backgroundColor: theme.colors.surface,
     },
     row: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
+      gap: theme.space[2],
     },
     switchGroup: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       alignItems: 'center',
     },
     sliderGroup: {

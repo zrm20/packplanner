@@ -1,10 +1,9 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
 import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
-  title: TextStyle;
   form: ViewStyle;
 }
 
@@ -15,9 +14,6 @@ export default function useStyles() {
     container: {
       alignItems: 'center',
       backgroundColor: theme.colors.background,
-    },
-    title: {
-      marginTop: theme.space[3],
     },
     form: {
       flex: 1,

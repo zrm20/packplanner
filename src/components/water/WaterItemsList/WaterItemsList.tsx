@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Surface, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
 import useStyles from './WaterItemsList.styles';
 import { useInventory, useSettings } from '../../../hooks';
@@ -15,21 +15,32 @@ export default function WaterItemsList(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <Surface style={styles.surface}>
-        <Text variant="titleMedium" style={styles.title}>
-          Water Containers in Pack
-        </Text>
-        {items.length ? (
-          items.map((item) => (
-            <Text variant="labelLarge" key={item.id}>
-              ({item.qty}){Boolean(item.brand) && ' ' + item.brand} {item.name} -{' '}
+      <Text variant="labelMedium" style={styles.title}>
+        Containers in pack
+      </Text>
+      {items.length ? (
+        items.map((item, index) => (
+          <View key={item.id} style={[styles.row, index === 0 && styles.firstRow]}>
+            <View style={styles.text}>
+              <Text variant="titleSmall" numberOfLines={1} style={styles.name}>
+                {item.qty}× {item.name}
+              </Text>
+              {Boolean(item.brand) && (
+                <Text variant="bodySmall" numberOfLines={1} style={styles.brand}>
+                  {item.brand}
+                </Text>
+              )}
+            </View>
+            <Text variant="labelLarge" style={styles.capacity}>
               {liquidUnit.convert(item.liquidCapacity!)} {liquidUnit.label}
             </Text>
-          ))
-        ) : (
-          <Text>No water containers in pack yet.</Text>
-        )}
-      </Surface>
+          </View>
+        ))
+      ) : (
+        <Text variant="bodyMedium" style={styles.empty}>
+          No water containers in pack yet.
+        </Text>
+      )}
     </View>
   );
 }

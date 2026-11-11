@@ -1,7 +1,7 @@
 import chroma from 'chroma-js';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
-import { chartColors } from '../../constants';
+import { chartColors, liquidChartColor, packChartColor } from '../../constants';
 import { useSelector } from '../../redux/reduxHooks';
 import { getTotalLiquidWeight, getTotalWeight } from '../../utils/inventoryUtils/inventoryUtils';
 import useInventory from '../inventory/useInventory';
@@ -20,7 +20,7 @@ interface ChartContextValues {
 const ChartContext = createContext<ChartContextValues | null>(null);
 
 interface Props {
-  children?: JSX.Element[];
+  children?: ReactNode;
 }
 
 export function ChartContextProvider(props: Props): JSX.Element {
@@ -53,7 +53,9 @@ export function ChartContextProvider(props: Props): JSX.Element {
       weight: getTotalWeight(cat.items),
       name: cat.category.label,
       key: cat.category.id,
-      color: i < chartColors.length ? chartColors[i] : chroma.random().hex(),
+      color: chroma(chartColors[i % chartColors.length])
+        .brighten(Math.floor(i / chartColors.length))
+        .hex(),
     }));
 
   // add the pack weight to the chart data
@@ -61,7 +63,7 @@ export function ChartContextProvider(props: Props): JSX.Element {
     weight: selectedPack?.weight || 0,
     name: 'Pack',
     key: 'Pack-stock',
-    color: '#808080',
+    color: packChartColor,
   });
 
   // add the liquid weight to chart data IF showing liquid weight
@@ -70,7 +72,7 @@ export function ChartContextProvider(props: Props): JSX.Element {
       weight: (getTotalLiquidWeight(itemsInPack) * liquidLevel) / 100,
       name: 'Liquid',
       key: 'Liquid-stock',
-      color: '#00ffff',
+      color: liquidChartColor,
     });
   }
 

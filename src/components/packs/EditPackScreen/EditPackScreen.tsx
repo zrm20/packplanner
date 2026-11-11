@@ -1,18 +1,15 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 
-import useStyles from './EditPackScreen.styles';
 import { usePackModel } from '../../../hooks';
 import useThrowAlert from '../../../hooks/alerts/useThrowAlert';
 import { LockerStackParamList } from '../../../navigation/navigation.types';
-import { ContainedModalTitle, SafeAreaScreen } from '../../ui';
+import FieldGuideFormScreen from '../../ui/FieldGuideFormScreen';
 import PackForm from '../PackForm/PackForm';
 
 type EditPackScreenProps = NativeStackScreenProps<LockerStackParamList, 'EditPack'>;
 
 export default function EditPackScreen({ route, navigation }: EditPackScreenProps): JSX.Element {
-  const styles = useStyles();
   const { catchUnknownError } = useThrowAlert();
   const { pack } = route.params;
   const packModel = usePackModel(pack);
@@ -36,11 +33,8 @@ export default function EditPackScreen({ route, navigation }: EditPackScreenProp
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaScreen style={styles.container}>
-        <ContainedModalTitle title="Edit Pack" />
-        {pack && <PackForm onSubmit={handleSubmit} initialValues={pack} onDelete={handleDelete} />}
-      </SafeAreaScreen>
-    </TouchableWithoutFeedback>
+    <FieldGuideFormScreen title="Edit pack" eyebrow="Locker / Field guide">
+      {pack && <PackForm onSubmit={handleSubmit} initialValues={pack} onDelete={handleDelete} />}
+    </FieldGuideFormScreen>
   );
 }
