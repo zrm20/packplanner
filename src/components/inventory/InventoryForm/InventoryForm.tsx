@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import React from 'react';
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
+import { View } from 'react-native';
 
 import inventoryFormSchema from './InventoryForm.schema';
 import useStyles from './InventoryForm.styles';
@@ -40,26 +40,24 @@ export default function InventoryForm(props: InventoryFormProps): JSX.Element {
       validationSchema={inventoryFormSchema}>
       <>
         <FormikBackdrop />
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView style={styles.container} behavior="padding">
-            <PickerInput
-              name="category"
-              label="Category"
-              data={categories.map((cat) => ({ label: cat.label, value: cat.id }))}
-            />
+        <View style={styles.container}>
+          <PickerInput
+            name="category"
+            label="Category"
+            data={categories.map((cat) => ({ label: cat.label, value: cat.id }))}
+          />
 
-            <TextInput name="brand" label="Brand" />
-            <TextInput name="name" label="Name" />
-            <WeightInput name="weight" label="Weight" />
+          <TextInput name="brand" label="Brand" />
+          <TextInput name="name" label="Name" />
+          <WeightInput name="weight" label="Weight" />
 
-            <ShowLiquidInput />
-
-            <FormActions
-              onDelete={props.onDelete}
-              deleteMessage="Do you want to permanently delete this item?"
-            />
-          </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+          <ShowLiquidInput />
+        </View>
+        <FormActions
+          submitText={props.submitText || 'Add item'}
+          onDelete={props.onDelete}
+          deleteMessage="Do you want to permanently delete this item?"
+        />
       </>
     </Formik>
   );

@@ -1,29 +1,27 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { useTheme } from '../../../theme';
 
-interface Style {
-  container: ViewStyle;
-  title: TextStyle;
-  input: ViewStyle;
-  actions: ViewStyle;
-}
-
 export default function useStyles() {
-  const theme = useTheme();
-
-  const styles = StyleSheet.create<Style>({
-    container: {},
-    title: {
-      textAlign: 'center',
+  const { colors, space, roundness, fonts } = useTheme();
+  return StyleSheet.create({
+    container: {
+      backgroundColor: colors.background,
+      borderRadius: roundness * 5,
+      maxHeight: '90%',
     },
-    input: {
-      marginTop: theme.space[3],
-      backgroundColor: theme.colors.background,
+    title: { ...fonts.headlineLarge },
+    context: {
+      padding: space[3],
+      marginTop: space[3],
+      backgroundColor: colors.surface,
+      borderRadius: roundness * 4,
+      borderWidth: 1,
+      borderColor: colors.outlineVariant,
+      gap: space[1],
     },
-    actions: {
-      justifyContent: 'space-evenly',
-    },
+    eyebrow: { color: colors.tertiary, textTransform: 'uppercase', letterSpacing: 1.5 },
+    input: { marginTop: space[3], backgroundColor: colors.surface },
+    actions: { flexDirection: 'column', alignItems: 'stretch', gap: space[2], padding: space[3] },
   });
-  return styles;
 }

@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
-import { IconButton, Searchbar } from 'react-native-paper';
+import { ScrollView, View } from 'react-native';
+import { IconButton, Searchbar, Text } from 'react-native-paper';
 
 import useStyles from './CategoryIconPicker.styles';
 import icons from './iconsArray';
@@ -18,19 +18,35 @@ export default function CategoryIconPicker(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <IconButton icon={field.value} disabled size={50} />
+      <IconButton
+        icon={field.value}
+        accessibilityLabel={`Selected icon: ${field.value}`}
+        mode="contained"
+        size={32}
+      />
 
       <View style={styles.searchBar}>
         <Searchbar value={search} onChangeText={setSearch} placeholder="Icon search" />
       </View>
 
-      <FlatList
-        data={icons.filter(searchFilter)}
-        keyExtractor={(item) => item}
-        numColumns={6}
-        renderItem={({ item }) => <IconButton icon={item} onPress={() => util.setValue(item)} />}
-        contentContainerStyle={styles.flatListContent}
-      />
+      <ScrollView
+        nestedScrollEnabled
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={styles.iconContent}>
+        {!icons.some(searchFilter) && <Text>No matching icons. Try another search.</Text>}
+        {icons.filter(searchFilter).map((item) => (
+          <IconButton
+            key={item}
+            icon={item}
+            size={22}
+            style={{ margin: 2 }}
+            accessibilityLabel={`Select ${item} icon`}
+            accessibilityState={{ selected: item === field.value }}
+            mode={item === field.value ? 'contained' : undefined}
+            onPress={() => util.setValue(item)}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 }

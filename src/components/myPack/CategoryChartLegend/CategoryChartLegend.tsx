@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import useStyles from './CategoryChartLegend.styles';
@@ -9,19 +9,27 @@ export default function CategoryChartLegend(): JSX.Element {
   const styles = useStyles();
   const { weightUnit } = useSettings();
   const { chartData } = useChartContext();
-
-  chartData.sort((a, b) => b.weight - a.weight);
-
+  const total = chartData.reduce((weight, category) => weight + category.weight, 0);
   return (
-    <ScrollView contentContainerStyle={styles.container} style={styles.scrollView}>
-      {chartData.map((cat) => (
-        <View style={styles.legendItem} key={cat.key}>
-          <View style={[styles.legendItemColor, { backgroundColor: cat.color }]} />
-          <Text variant="labelLarge" adjustsFontSizeToFit numberOfLines={1}>
-            {cat.name} ({weightUnit.convert(cat.weight)} {weightUnit.label})
-          </Text>
-        </View>
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      {[...chartData]
+        .sort((a, b) => b.weight - a.weight)
+        .map((category) => (
+          <View style={styles.legendItem} key={category.key}>
+            <View style={[styles.legendItemColor, { backgroundColor: category.color }]} />
+            <Text variant="bodyMedium" style={styles.name}>
+              {category.name}
+            </Text>
+            <View style={styles.figures}>
+              <Text variant="labelLarge">
+                {Math.round(weightUnit.convert(category.weight) * 100) / 100} {weightUnit.label}
+              </Text>
+              <Text variant="bodySmall">
+                {total ? Math.round((category.weight / total) * 100) : 0}%
+              </Text>
+            </View>
+          </View>
+        ))}
+    </View>
   );
 }

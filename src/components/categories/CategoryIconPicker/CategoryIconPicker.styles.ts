@@ -4,7 +4,7 @@ import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
-  flatListContent: ViewStyle;
+  iconContent: ViewStyle;
   searchBar: ViewStyle;
 }
 
@@ -17,7 +17,7 @@ export default function useStyles() {
       height: '100%',
       alignItems: 'center',
     },
-    flatListContent: {},
+    iconContent: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' },
     searchBar: {
       width: '100%',
       marginBottom: theme.space[2],
