@@ -201,7 +201,7 @@ const base = devURL
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
       assert.equal(await page.evaluate(() => document.documentElement.scrollHeight), height);
       for (const name of ['Locker', 'MyPack', 'Water', 'Categories', 'Settings']) {
-        const tab = page.getByRole('link', { name: new RegExp(name) });
+        const tab = page.getByRole('link', { name: new RegExp(name === 'MyPack' ? 'My Pack' : name) });
         const box = await tab.boundingBox();
         assert(box.x >= 0 && box.y >= top && box.x + box.width <= width + 1);
         assert(box.y + box.height <= height - bottom + 1);
