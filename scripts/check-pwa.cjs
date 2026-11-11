@@ -223,7 +223,7 @@ const base = devURL
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.getByRole('link', { name: /Locker/ }).click();
     await page.getByRole('button', { name: 'Add pack', exact: true }).click();
-    await page.getByText('New Pack', { exact: true }).waitFor();
+    await page.getByRole('heading', { name: 'Add pack', exact: true }).waitFor();
     await page.getByRole('button', { name: 'Close screen', exact: true }).click();
     await page.getByRole('button', { name: 'Add pack', exact: true }).waitFor();
     await page.getByRole('link', { name: /Settings/ }).click();
@@ -309,14 +309,15 @@ const base = devURL
     const writeStarted = page.waitForRequest((request) =>
       request.url().includes('Firestore/Write/channel')
     );
-    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await page.getByRole('button', { name: 'Add pack', exact: true }).click();
     await writeStarted;
     await context.setOffline(true);
     await page.getByRole('heading', { name: 'Internet connection required' }).waitFor();
     assert.equal(await page.getByRole('textbox').nth(1).inputValue(), 'Pending pack');
     assert.equal(
       await page
-        .getByRole('button', { name: 'Save', exact: true, includeHidden: true })
+        .getByRole('button', { name: 'Add pack', exact: true, includeHidden: true })
+        .filter({ hasText: /^Add pack$/ })
         .isDisabled(),
       true
     );
