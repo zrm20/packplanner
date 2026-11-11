@@ -31,6 +31,7 @@ function TextInput(props: CustomTextInputProps): JSX.Element {
         onChangeText={util.setValue}
         error={showError}
         label={props.label || props.name}
+        accessibilityLabel={props.label || props.name}
         mode="outlined"
         returnKeyType="done"
         {...props}

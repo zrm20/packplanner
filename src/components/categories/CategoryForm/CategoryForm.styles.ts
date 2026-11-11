@@ -14,15 +14,18 @@ export default function useStyles() {
   const styles = StyleSheet.create<Style>({
     container: {
       width: '100%',
-      flex: 1,
-      padding: theme.space[2],
+      paddingVertical: theme.space[3],
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.roundness * 4,
+      borderWidth: 1,
+      borderColor: theme.colors.outlineVariant,
     },
     baseWeightContainer: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
     },
     iconContainer: {
-      flex: 1,
+      height: 340,
       marginBottom: theme.space[2],
     },
   });

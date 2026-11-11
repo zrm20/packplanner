@@ -3,17 +3,16 @@ import React from 'react';
 import { View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 
-import useStyles from './EditCategoryScreen.styles';
 import { useCategories, useDeleteCategory } from '../../../hooks';
 import useThrowAlert from '../../../hooks/alerts/useThrowAlert';
 import { CategoriesStackParamList } from '../../../navigation/navigation.types';
-import { ContainedModalTitle, SafeAreaScreen } from '../../ui';
+import { SafeAreaScreen } from '../../ui';
+import FieldGuideFormScreen from '../../ui/FieldGuideFormScreen';
 import CategoryForm from '../CategoryForm/CategoryForm';
 
 type EditCategoryScreenProps = NativeStackScreenProps<CategoriesStackParamList, 'EditCategory'>;
 
 export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.Element {
-  const styles = useStyles();
   const { categoryId } = props.route.params;
   const { goBack } = props.navigation;
   const { getCategoryById } = useCategories();
@@ -24,8 +23,8 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
 
   if (!category) {
     return (
-      <SafeAreaScreen style={styles.container}>
-        <View style={styles.errorContainer}>
+      <SafeAreaScreen>
+        <View>
           <Text>Could not find a category with that id</Text>
           <Button onPress={goBack} mode="contained">
             Go Back
@@ -54,9 +53,8 @@ export default function EditCategoryScreen(props: EditCategoryScreenProps): JSX.
   }
 
   return (
-    <SafeAreaScreen style={styles.container}>
-      <ContainedModalTitle title="Edit Custom Category" />
+    <FieldGuideFormScreen title="Edit category" eyebrow="Categories / Field guide">
       <CategoryForm category={category} onSubmit={handleSubmit} onDelete={handleDelete} />
-    </SafeAreaScreen>
+    </FieldGuideFormScreen>
   );
 }

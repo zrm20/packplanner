@@ -27,24 +27,33 @@ export default function CategoryChartToolbar(props: CategoryChartToolbarProps): 
         <View style={styles.row}>
           <View style={styles.switchGroup}>
             <Text variant="labelMedium">Base Weight Only</Text>
-            <Switch value={baseWeightOnly} onValueChange={handleChangeBaseWeightOnly} />
+            <Switch
+              accessibilityLabel="Base weight only"
+              value={baseWeightOnly}
+              onValueChange={handleChangeBaseWeightOnly}
+            />
           </View>
           <View style={styles.switchGroup}>
             <Text variant="labelMedium">Hide Liquid Weight</Text>
-            <Switch value={hideLiquidWeight} onValueChange={setHideLiquidWeight} />
+            <Switch
+              accessibilityLabel="Hide liquid weight"
+              value={hideLiquidWeight}
+              onValueChange={setHideLiquidWeight}
+            />
           </View>
         </View>
 
         <View style={styles.sliderGroup}>
           <Text variant="labelMedium">Liquid Fill Level {liquidLevel}%</Text>
           <Slider
+            accessibilityLabel="Liquid fill level"
             style={styles.slider}
             value={liquidLevel}
             onValueChange={setLiquidLevel}
             step={1}
             minimumValue={0}
             maximumValue={100}
-            minimumTrackTintColor={colors.secondary}
+            minimumTrackTintColor={colors.primary}
           />
         </View>
       </Surface>

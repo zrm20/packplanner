@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { View } from 'react-native';
@@ -10,10 +11,12 @@ import { confirmDelete } from '../../../utils';
 interface FormActionsProps {
   onDelete?(): Promise<void>;
   deleteMessage?: string;
+  submitText?: string;
 }
 
 export default function FormActions(props: FormActionsProps): JSX.Element {
   const styles = useStyles();
+  const { goBack } = useNavigation();
   const { submitForm, isSubmitting, setSubmitting } = useFormikContext();
   const { colors } = useTheme();
 
@@ -30,14 +33,13 @@ export default function FormActions(props: FormActionsProps): JSX.Element {
   return (
     <View style={styles.container}>
       <Button mode="contained" onPress={submitForm} disabled={isSubmitting}>
-        Save
+        {props.submitText || 'Save changes'}
+      </Button>
+      <Button mode="outlined" onPress={goBack} disabled={isSubmitting}>
+        Cancel
       </Button>
       {Boolean(props.onDelete) && (
-        <Button
-          mode="contained"
-          buttonColor={colors.error}
-          onPress={handleDelete}
-          disabled={isSubmitting}>
+        <Button mode="text" textColor={colors.error} onPress={handleDelete} disabled={isSubmitting}>
           Delete
         </Button>
       )}

@@ -1,36 +1,27 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { useTheme } from '../../../theme';
 
-interface Style {
-  container: ViewStyle;
-  legendItem: ViewStyle;
-  legendItemColor: ViewStyle;
-  scrollView: ViewStyle;
-}
-
 export default function useStyles() {
-  const theme = useTheme();
-
-  const styles = StyleSheet.create<Style>({
-    scrollView: {
-      width: '100%',
-    },
+  const { colors, space, roundness } = useTheme();
+  return StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
+      backgroundColor: colors.surface,
+      borderRadius: roundness * 4,
+      borderWidth: 1,
+      borderColor: colors.outlineVariant,
+      paddingHorizontal: space[3],
     },
     legendItem: {
-      width: '50%',
       flexDirection: 'row',
-      marginBottom: theme.space[1],
+      alignItems: 'center',
+      paddingVertical: space[3],
+      gap: space[2],
+      borderBottomWidth: 1,
+      borderColor: colors.outlineVariant,
     },
-    legendItemColor: {
-      width: 25,
-      height: 25,
-      borderRadius: theme.roundness * 5,
-      marginRight: theme.space[2],
-    },
+    legendItemColor: { width: 12, height: 12, borderRadius: 6 },
+    name: { flex: 1, flexShrink: 1 },
+    figures: { alignItems: 'flex-end' },
   });
-  return styles;
 }

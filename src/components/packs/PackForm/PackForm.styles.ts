@@ -11,9 +11,12 @@ export default function useStyles() {
 
   const styles = StyleSheet.create<Style>({
     container: {
-      padding: theme.space[2],
-      alignItems: 'center',
       width: '100%',
+      paddingVertical: theme.space[3],
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.roundness * 4,
+      borderWidth: 1,
+      borderColor: theme.colors.outlineVariant,
     },
   });
   return styles;
