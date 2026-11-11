@@ -14,6 +14,30 @@ interface WaterStatsProps {
   fillLevel: number;
 }
 
+function StatRow(props: {
+  label: string;
+  now: string;
+  full: string;
+  first?: boolean;
+  total?: boolean;
+}): JSX.Element {
+  const styles = useStyles();
+
+  return (
+    <View style={[styles.row, props.first && styles.firstRow, props.total && styles.totalRow]}>
+      <Text variant="bodyMedium" style={styles.rowLabel}>
+        {props.label}
+      </Text>
+      <Text variant="labelLarge" style={[styles.value, props.total && styles.totalNow]}>
+        {props.now}
+      </Text>
+      <Text variant="labelLarge" style={styles.value}>
+        {props.full}
+      </Text>
+    </View>
+  );
+}
+
 export default function WaterStats(props: WaterStatsProps): JSX.Element {
   const styles = useStyles();
   const { fillLevel } = props;
@@ -44,50 +68,33 @@ export default function WaterStats(props: WaterStatsProps): JSX.Element {
   );
 
   return (
-    <Surface style={styles.container}>
-      <View style={styles.gridItem}>
-        <Text variant="headlineSmall">Current</Text>
-      </View>
-      <View style={styles.gridItem}>
-        <Text variant="headlineSmall">Max</Text>
-      </View>
-
-      <Text style={styles.catHeader}>Liquid Capacity</Text>
-
-      <View style={styles.gridItem}>
-        <Text variant="titleLarge">
-          {currentLiquidCapacity} {liquidUnit.label}
+    <Surface style={styles.container} elevation={0}>
+      <View style={styles.header}>
+        <View style={styles.rowLabel} />
+        <Text variant="labelMedium" style={styles.headerCell}>
+          Now
+        </Text>
+        <Text variant="labelMedium" style={styles.headerCell}>
+          Full
         </Text>
       </View>
-      <View style={styles.gridItem}>
-        <Text variant="titleLarge">
-          {maxLiquidCapacity} {liquidUnit.label}
-        </Text>
-      </View>
-
-      <Text style={styles.catHeader}>Liquid Weight</Text>
-      <View style={styles.gridItem}>
-        <Text variant="titleLarge">
-          {currentLiquidWeight} {weightUnit.label}
-        </Text>
-      </View>
-      <View style={styles.gridItem}>
-        <Text variant="titleLarge">
-          {maxLiquidWeight} {weightUnit.label}
-        </Text>
-      </View>
-
-      <Text style={styles.catHeader}>Total Weight</Text>
-      <View style={styles.gridItem}>
-        <Text variant="titleLarge">
-          {currentTotalWeight} {weightUnit.label}
-        </Text>
-      </View>
-      <View style={styles.gridItem}>
-        <Text variant="titleLarge">
-          {maxTotalWeight} {weightUnit.label}
-        </Text>
-      </View>
+      <StatRow
+        label="Liquid"
+        now={`${currentLiquidCapacity} ${liquidUnit.label}`}
+        full={`${maxLiquidCapacity} ${liquidUnit.label}`}
+        first
+      />
+      <StatRow
+        label="Liquid weight"
+        now={`${currentLiquidWeight} ${weightUnit.label}`}
+        full={`${maxLiquidWeight} ${weightUnit.label}`}
+      />
+      <StatRow
+        label="Pack total"
+        now={`${currentTotalWeight} ${weightUnit.label}`}
+        full={`${maxTotalWeight} ${weightUnit.label}`}
+        total
+      />
     </Surface>
   );
 }
