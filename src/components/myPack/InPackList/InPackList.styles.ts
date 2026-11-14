@@ -6,7 +6,6 @@ interface Style {
   container: ViewStyle;
   toolbar: ViewStyle;
   meta: TextStyle;
-  list: ViewStyle;
   emptyText: TextStyle;
 }
 
@@ -18,7 +17,6 @@ export default function useStyles() {
       flex: 1,
       minHeight: 0,
       alignSelf: 'stretch',
-      paddingHorizontal: theme.space[3],
       width: '100%',
     },
     toolbar: {
@@ -27,14 +25,10 @@ export default function useStyles() {
       alignItems: 'center',
       marginBottom: theme.space[2],
       marginTop: theme.space[2],
+      paddingHorizontal: theme.space[3],
     },
     meta: {
       color: theme.colors.onSurfaceVariant,
-    },
-    list: {
-      flex: 1,
-      minHeight: 0,
-      width: '100%',
     },
     emptyText: {
       textAlign: 'center',

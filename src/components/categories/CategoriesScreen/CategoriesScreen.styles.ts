@@ -28,6 +28,7 @@ export default function useStyles() {
       width: '100%',
       flex: 1,
       paddingHorizontal: theme.space[3],
+      paddingBottom: theme.space[3],
     },
     toolbar: {
       flexDirection: 'row',

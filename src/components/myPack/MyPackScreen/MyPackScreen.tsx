@@ -6,7 +6,7 @@ import { MyPackHomeScreenProps } from '../../../navigation/navigation.types';
 import { NewListModal } from '../../lists';
 import { SafeAreaScreen, ScreenHeader } from '../../ui';
 import InPackList from '../InPackList/InPackList';
-import MyPackHero from '../MyPackHero/MyPackHero';
+import MyPackHero, { MyPackTotals } from '../MyPackHero/MyPackHero';
 import MyPackToolbar from '../MyPackToolbar/MyPackToolbar';
 
 export default function MyPackScreen(props: MyPackHomeScreenProps): JSX.Element {
@@ -20,10 +20,26 @@ export default function MyPackScreen(props: MyPackHomeScreenProps): JSX.Element 
   return (
     <Portal.Host>
       <SafeAreaScreen style={styles.container}>
-        <ScreenHeader eyebrow="Loadout" title="My Pack" />
-        <MyPackHero style={styles.hero} />
-        <MyPackToolbar style={styles.toolbar} toggleNewListModal={toggleNewListModal} />
-        <InPackList />
+        <InPackList
+          headerSections={[
+            {
+              key: 'hero',
+              element: (
+                <>
+                  <ScreenHeader eyebrow="Loadout" title="My Pack" />
+                  <MyPackHero />
+                </>
+              ),
+            },
+            { key: 'totals', element: <MyPackTotals />, sticky: true },
+            {
+              key: 'actions',
+              element: (
+                <MyPackToolbar style={styles.toolbar} toggleNewListModal={toggleNewListModal} />
+              ),
+            },
+          ]}
+        />
       </SafeAreaScreen>
       <NewListModal visible={showNewListModal} toggleVisibility={toggleNewListModal} />
     </Portal.Host>

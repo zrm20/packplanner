@@ -23,14 +23,9 @@ export default function MyPackHero(props: MyPackHeroProps): JSX.Element {
   const { itemsInPack, getBaseWeightItems } = useInventory();
 
   const packWeight = selectedPack?.weight || 0;
-  const itemWeight = getTotalWeight(itemsInPack);
   const baseWeight = packWeight + getTotalWeight(getBaseWeightItems(itemsInPack));
-  const totalWeight = packWeight + itemWeight;
-  const weightWithLiquid = totalWeight + getTotalLiquidWeight(itemsInPack);
 
   const displayedBaseWeight = displayedWeight(baseWeight, weightUnit.convert);
-  const displayedTotalWeight = displayedWeight(totalWeight, weightUnit.convert);
-  const displayedWeightWithLiquid = displayedWeight(weightWithLiquid, weightUnit.convert);
 
   return (
     <View style={[styles.hero, props.style]}>
@@ -87,31 +82,48 @@ export default function MyPackHero(props: MyPackHeroProps): JSX.Element {
           {weightUnit.label}
         </Text>
       </View>
+    </View>
+  );
+}
 
-      <View style={styles.stats}>
-        <View style={styles.stat}>
-          <Text variant="labelMedium" style={styles.statLabel}>
-            Total
-          </Text>
-          <Text variant="titleSmall" style={styles.statValue}>
-            {displayedTotalWeight} {weightUnit.label}
-          </Text>
-        </View>
-        <View style={styles.stat}>
-          <Text variant="labelMedium" style={styles.statLabel}>
-            With liquid
-          </Text>
-          <Text variant="titleSmall" style={styles.statValue}>
-            {displayedWeightWithLiquid} {weightUnit.label}
-          </Text>
-        </View>
-        <View style={styles.stat}>
-          <Text variant="labelMedium" style={styles.statLabel}>
-            Capacity
-          </Text>
-          <Text variant="titleSmall" style={styles.statValue}>
-            {selectedPack ? `${selectedPack.capacity} L` : '—'}
-          </Text>
+export function MyPackTotals(): JSX.Element {
+  const styles = useStyles();
+  const { weightUnit } = useSettings();
+  const { selectedPack } = usePacks();
+  const { itemsInPack } = useInventory();
+  const totalWeight = (selectedPack?.weight || 0) + getTotalWeight(itemsInPack);
+  const weightWithLiquid = totalWeight + getTotalLiquidWeight(itemsInPack);
+  const displayedTotalWeight = displayedWeight(totalWeight, weightUnit.convert);
+  const displayedWeightWithLiquid = displayedWeight(weightWithLiquid, weightUnit.convert);
+
+  return (
+    <View style={styles.totalsBackground}>
+      <View style={styles.totals}>
+        <View style={styles.stats}>
+          <View style={styles.stat}>
+            <Text variant="labelMedium" style={styles.statLabel}>
+              Total
+            </Text>
+            <Text variant="titleSmall" style={styles.statValue}>
+              {displayedTotalWeight} {weightUnit.label}
+            </Text>
+          </View>
+          <View style={styles.stat}>
+            <Text variant="labelMedium" style={styles.statLabel}>
+              With liquid
+            </Text>
+            <Text variant="titleSmall" style={styles.statValue}>
+              {displayedWeightWithLiquid} {weightUnit.label}
+            </Text>
+          </View>
+          <View style={styles.stat}>
+            <Text variant="labelMedium" style={styles.statLabel}>
+              Capacity
+            </Text>
+            <Text variant="titleSmall" style={styles.statValue}>
+              {selectedPack ? `${selectedPack.capacity} L` : '—'}
+            </Text>
+          </View>
         </View>
       </View>
     </View>

@@ -9,7 +9,9 @@ interface Style {
   catLabel: TextStyle;
   catMeta: TextStyle;
   list: ViewStyle;
+  content: ViewStyle;
   card: ViewStyle;
+  group: ViewStyle;
   groupSpacing: ViewStyle;
   firstRowNoBorder: ViewStyle;
 }
@@ -51,6 +53,9 @@ export default function useStyles() {
       minHeight: 0,
       width: '100%',
     },
+    content: {
+      paddingBottom: theme.space[3],
+    },
     card: {
       backgroundColor: theme.colors.surface,
       borderWidth: theme.borderWeight[1],
@@ -60,6 +65,9 @@ export default function useStyles() {
     },
     groupSpacing: {
       marginTop: theme.space[3],
+    },
+    group: {
+      paddingHorizontal: theme.space[3],
     },
     firstRowNoBorder: {
       borderTopWidth: 0,

@@ -18,6 +18,8 @@ interface Style {
   figure: TextStyle;
   unit: TextStyle;
   stats: ViewStyle;
+  totalsBackground: ViewStyle;
+  totals: ViewStyle;
   stat: ViewStyle;
   statLabel: TextStyle;
   statValue: TextStyle;
@@ -32,7 +34,8 @@ export default function useStyles() {
       alignSelf: 'stretch',
       marginHorizontal: theme.space[3],
       padding: theme.space[3],
-      borderRadius: 22,
+      borderTopLeftRadius: 22,
+      borderTopRightRadius: 22,
       backgroundColor: theme.colors.primary,
       overflow: 'hidden',
     },
@@ -98,10 +101,20 @@ export default function useStyles() {
     },
     stats: {
       flexDirection: 'row',
-      marginTop: theme.space[3],
       paddingTop: theme.space[2],
       borderTopWidth: theme.borderWeight[1],
       borderTopColor: chroma(onHero).alpha(0.18).css(),
+    },
+    totalsBackground: {
+      backgroundColor: theme.colors.background,
+      paddingHorizontal: theme.space[3],
+    },
+    totals: {
+      backgroundColor: theme.colors.primary,
+      paddingHorizontal: theme.space[3],
+      paddingBottom: theme.space[3],
+      borderBottomLeftRadius: 22,
+      borderBottomRightRadius: 22,
     },
     stat: {
       flex: 1,
