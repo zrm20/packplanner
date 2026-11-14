@@ -29,6 +29,10 @@ node scripts/generate-brand-assets.cjs
 CHROME_BIN='/path/to/chrome' node scripts/generate-brand-assets.cjs
 ```
 
+Preview every generated PNG at its actual pixel size before committing. Confirm
+one complete, centered mark with clear margins, especially in the 180px Apple
+touch icon and 192px manifest icon used by installed web apps.
+
 Regeneration overwrites the PNGs above; skip it when replacing them with final
 artwork. No generation runs during normal development or build. Expo config
 refreshes the embedded offline-page icon on the next start/export.
