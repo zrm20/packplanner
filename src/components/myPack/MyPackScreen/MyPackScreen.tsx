@@ -20,10 +20,11 @@ export default function MyPackScreen(props: MyPackHomeScreenProps): JSX.Element 
   return (
     <Portal.Host>
       <SafeAreaScreen style={styles.container}>
-        <ScreenHeader eyebrow="Loadout" title="My Pack" />
-        <MyPackHero style={styles.hero} />
-        <MyPackToolbar style={styles.toolbar} toggleNewListModal={toggleNewListModal} />
-        <InPackList />
+        <InPackList>
+          <ScreenHeader eyebrow="Loadout" title="My Pack" />
+          <MyPackHero style={styles.hero} />
+          <MyPackToolbar style={styles.toolbar} toggleNewListModal={toggleNewListModal} />
+        </InPackList>
       </SafeAreaScreen>
       <NewListModal visible={showNewListModal} toggleVisibility={toggleNewListModal} />
     </Portal.Host>

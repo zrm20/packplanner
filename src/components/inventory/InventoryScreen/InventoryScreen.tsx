@@ -11,9 +11,10 @@ type InventoryScreenProps = NativeStackScreenProps<LockerStackParamList, 'Invent
 export default function InventoryScreen(props: InventoryScreenProps): JSX.Element {
   return (
     <SafeAreaScreen>
-      <ScreenHeader eyebrow="Trail Pack Pro" title="Locker" />
-      <PacksScroller />
-      <InventoryList />
+      <InventoryList>
+        <ScreenHeader eyebrow="Trail Pack Pro" title="Locker" />
+        <PacksScroller />
+      </InventoryList>
     </SafeAreaScreen>
   );
 }

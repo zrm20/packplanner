@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, FlatListProps, View } from 'react-native';
 import { Icon, Surface, Text } from 'react-native-paper';
 
 import useStyles from './CategorizedItemList.styles';
@@ -7,7 +7,8 @@ import { chartColors } from '../../../constants';
 import { useSelector } from '../../../redux/reduxHooks';
 import InventoryItem from '../InventoryItem/InventoryItem';
 
-interface CategorizedItemListProps {
+interface CategorizedItemListProps
+  extends Pick<FlatListProps<CategoryGroup>, 'ListHeaderComponent' | 'ListEmptyComponent'> {
   data: Item[];
   itemProps?: {
     disabled?: boolean;
@@ -88,7 +89,7 @@ export default function CategorizedItemList(props: CategorizedItemListProps): JS
       style={styles.list}
       keyExtractor={(group) => group.categoryId}
       renderItem={({ item: group, index }) => (
-        <View style={index === 0 ? undefined : styles.groupSpacing}>
+        <View style={[styles.group, index === 0 ? undefined : styles.groupSpacing]}>
           <CategoryHeader
             id={group.categoryId}
             itemCount={group.items.length}

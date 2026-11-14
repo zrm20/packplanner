@@ -10,6 +10,7 @@ interface Style {
   catMeta: TextStyle;
   list: ViewStyle;
   card: ViewStyle;
+  group: ViewStyle;
   groupSpacing: ViewStyle;
   firstRowNoBorder: ViewStyle;
 }
@@ -60,6 +61,9 @@ export default function useStyles() {
     },
     groupSpacing: {
       marginTop: theme.space[3],
+    },
+    group: {
+      paddingHorizontal: theme.space[3],
     },
     firstRowNoBorder: {
       borderTopWidth: 0,

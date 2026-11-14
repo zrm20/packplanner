@@ -6,7 +6,7 @@ import useStyles from './InPackList.styles';
 import { useInventory } from '../../../hooks';
 import { CategorizedItemList } from '../../inventory';
 
-interface InPackListProps {
+interface InPackListProps extends React.PropsWithChildren {
   style?: ViewStyle;
 }
 
@@ -16,21 +16,26 @@ export default function InPackList(props: InPackListProps): JSX.Element {
 
   return (
     <View style={[styles.container, props.style]}>
-      <View style={styles.toolbar}>
-        <Text variant="headlineSmall">In my pack</Text>
-        <Text variant="labelMedium" style={styles.meta}>
-          {itemsInPack.length} {itemsInPack.length === 1 ? 'item' : 'items'}
-        </Text>
-      </View>
-      {itemsInPack.length ? (
-        <View style={styles.list}>
-          <CategorizedItemList data={itemsInPack} itemProps={{ disabled: true }} />
-        </View>
-      ) : (
-        <Text variant="titleMedium" style={styles.emptyText}>
-          No Items in Pack
-        </Text>
-      )}
+      <CategorizedItemList
+        data={itemsInPack}
+        itemProps={{ disabled: true }}
+        ListHeaderComponent={
+          <>
+            {props.children}
+            <View style={styles.toolbar}>
+              <Text variant="headlineSmall">In my pack</Text>
+              <Text variant="labelMedium" style={styles.meta}>
+                {itemsInPack.length} {itemsInPack.length === 1 ? 'item' : 'items'}
+              </Text>
+            </View>
+          </>
+        }
+        ListEmptyComponent={
+          <Text variant="titleMedium" style={styles.emptyText}>
+            No Items in Pack
+          </Text>
+        }
+      />
     </View>
   );
 }
