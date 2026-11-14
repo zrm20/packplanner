@@ -4,7 +4,6 @@ import { useTheme } from '../../../theme';
 
 interface Style {
   container: ViewStyle;
-  hero: ViewStyle;
   toolbar: ViewStyle;
 }
 
@@ -13,10 +12,8 @@ export default function useStyles() {
 
   const styles = StyleSheet.create<Style>({
     container: {},
-    hero: {
-      marginBottom: theme.space[3],
-    },
     toolbar: {
+      marginTop: theme.space[3],
       marginBottom: theme.space[2],
     },
   });

@@ -161,6 +161,25 @@ describe('<MyPackScreen />', () => {
     alertSpy.mockRestore();
   });
 
+  it('updates the single totals summary when item quantities change', () => {
+    renderScreen();
+
+    // Bottle is in the first category. A second bottle adds 1 kg of gear and 2 kg of liquid.
+    fireEvent.press(screen.getAllByLabelText('Increase quantity')[0]);
+
+    expect(screen.getAllByText('Total')).toHaveLength(1);
+    expect(screen.getAllByText('With liquid')).toHaveLength(1);
+    expect(screen.getAllByText('Capacity')).toHaveLength(1);
+    expect(screen.getByText('8 kg')).toBeTruthy();
+    expect(screen.getByText('12 kg')).toBeTruthy();
+    expect(screen.getByText('55 L')).toBeTruthy();
+
+    fireEvent.press(screen.getAllByLabelText('Decrease quantity')[0]);
+
+    expect(screen.getByText('7 kg')).toBeTruthy();
+    expect(screen.getByText('9 kg')).toBeTruthy();
+  });
+
   it('explains how to choose a pack when none is selected', () => {
     renderScreen({ selectedPack: null });
 

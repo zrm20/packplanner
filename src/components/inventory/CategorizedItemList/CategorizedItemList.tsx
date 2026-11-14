@@ -10,9 +10,17 @@ import InventoryItem from '../InventoryItem/InventoryItem';
 interface CategorizedItemListProps
   extends Pick<FlatListProps<CategoryGroup>, 'ListHeaderComponent' | 'ListEmptyComponent'> {
   data: Item[];
+  headerSections?: ListHeaderSection[];
   itemProps?: {
     disabled?: boolean;
+    openOnPress?: boolean;
   };
+}
+
+export interface ListHeaderSection {
+  key: string;
+  element: React.ReactElement;
+  sticky?: boolean;
 }
 
 interface CategoryGroup {
@@ -20,11 +28,12 @@ interface CategoryGroup {
   items: Item[];
 }
 
-function CategoryHeader(props: {
-  id: string;
-  itemCount: number;
-  color: string;
-}): JSX.Element {
+type ListRow =
+  | { type: 'header'; section: ListHeaderSection }
+  | { type: 'empty' }
+  | { type: 'category'; group: CategoryGroup; index: number };
+
+function CategoryHeader(props: { id: string; itemCount: number; color: string }): JSX.Element {
   const styles = useStyles();
   const category = useSelector((state) =>
     state.categories.categories.find((c) => c.id === props.id)
@@ -74,9 +83,21 @@ function groupByCategory(data: Item[]): CategoryGroup[] {
 }
 
 export default function CategorizedItemList(props: CategorizedItemListProps): JSX.Element {
+  const { headerSections = [], itemProps, ...listProps } = props;
   const styles = useStyles();
   const categories = useSelector((state) => state.categories.categories);
   const groups = useMemo(() => groupByCategory(props.data), [props.data]);
+  // Sticky content must be a direct list cell rather than nested in its header.
+  const rows: ListRow[] = [
+    ...headerSections.map((section): ListRow => ({ type: 'header', section })),
+    ...groups.map((group, index): ListRow => ({ type: 'category', group, index })),
+  ];
+  // Header cells count as data, so FlatList won't render its empty component itself.
+  if (headerSections.length && !groups.length) rows.push({ type: 'empty' });
+  const headerOffset = props.ListHeaderComponent ? 1 : 0;
+  const stickyHeaderIndices = headerSections.flatMap((section, index) =>
+    section.sticky ? [index + headerOffset] : []
+  );
 
   function colorForCategory(categoryId: string): string {
     const index = categories.findIndex((category) => category.id === categoryId);
@@ -87,29 +108,45 @@ export default function CategorizedItemList(props: CategorizedItemListProps): JS
   return (
     <FlatList
       style={styles.list}
-      keyExtractor={(group) => group.categoryId}
-      renderItem={({ item: group, index }) => (
-        <View style={[styles.group, index === 0 ? undefined : styles.groupSpacing]}>
-          <CategoryHeader
-            id={group.categoryId}
-            itemCount={group.items.length}
-            color={colorForCategory(group.categoryId)}
-          />
-          <Surface style={styles.card} elevation={0}>
-            {group.items.map((item, itemIndex) => (
-              <InventoryItem
-                key={item.id}
-                item={item}
-                openOnPress
-                disabled={props.itemProps?.disabled}
-                style={itemIndex === 0 ? styles.firstRowNoBorder : undefined}
-              />
-            ))}
-          </Surface>
-        </View>
-      )}
-      {...props}
-      data={groups}
+      contentContainerStyle={styles.content}
+      keyExtractor={(row) =>
+        row.type === 'header'
+          ? `header:${row.section.key}`
+          : row.type === 'empty'
+          ? 'empty'
+          : `category:${row.group.categoryId}`
+      }
+      renderItem={({ item: row }) => {
+        if (row.type === 'header') return row.section.element;
+        if (row.type === 'empty') {
+          const Empty = props.ListEmptyComponent;
+          return React.isValidElement(Empty) ? Empty : Empty ? <Empty /> : null;
+        }
+        const { group, index } = row;
+        return (
+          <View style={[styles.group, index === 0 ? undefined : styles.groupSpacing]}>
+            <CategoryHeader
+              id={group.categoryId}
+              itemCount={group.items.length}
+              color={colorForCategory(group.categoryId)}
+            />
+            <Surface style={styles.card} elevation={0}>
+              {group.items.map((item, itemIndex) => (
+                <InventoryItem
+                  key={item.id}
+                  item={item}
+                  openOnPress={itemProps?.openOnPress ?? true}
+                  disabled={itemProps?.disabled}
+                  style={itemIndex === 0 ? styles.firstRowNoBorder : undefined}
+                />
+              ))}
+            </Surface>
+          </View>
+        );
+      }}
+      {...listProps}
+      stickyHeaderIndices={stickyHeaderIndices}
+      data={rows}
     />
   );
 }

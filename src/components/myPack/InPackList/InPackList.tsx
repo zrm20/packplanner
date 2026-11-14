@@ -5,9 +5,11 @@ import { Text } from 'react-native-paper';
 import useStyles from './InPackList.styles';
 import { useInventory } from '../../../hooks';
 import { CategorizedItemList } from '../../inventory';
+import { ListHeaderSection } from '../../inventory/CategorizedItemList/CategorizedItemList';
 
-interface InPackListProps extends React.PropsWithChildren {
+interface InPackListProps {
   style?: ViewStyle;
+  headerSections?: ListHeaderSection[];
 }
 
 export default function InPackList(props: InPackListProps): JSX.Element {
@@ -18,18 +20,21 @@ export default function InPackList(props: InPackListProps): JSX.Element {
     <View style={[styles.container, props.style]}>
       <CategorizedItemList
         data={itemsInPack}
-        itemProps={{ disabled: true }}
-        ListHeaderComponent={
-          <>
-            {props.children}
-            <View style={styles.toolbar}>
-              <Text variant="headlineSmall">In my pack</Text>
-              <Text variant="labelMedium" style={styles.meta}>
-                {itemsInPack.length} {itemsInPack.length === 1 ? 'item' : 'items'}
-              </Text>
-            </View>
-          </>
-        }
+        itemProps={{ openOnPress: false }}
+        headerSections={[
+          ...(props.headerSections ?? []),
+          {
+            key: 'item-count',
+            element: (
+              <View style={styles.toolbar}>
+                <Text variant="headlineSmall">In my pack</Text>
+                <Text variant="labelMedium" style={styles.meta}>
+                  {itemsInPack.length} {itemsInPack.length === 1 ? 'item' : 'items'}
+                </Text>
+              </View>
+            ),
+          },
+        ]}
         ListEmptyComponent={
           <Text variant="titleMedium" style={styles.emptyText}>
             No Items in Pack

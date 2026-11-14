@@ -9,6 +9,7 @@ interface Style {
   catLabel: TextStyle;
   catMeta: TextStyle;
   list: ViewStyle;
+  content: ViewStyle;
   card: ViewStyle;
   group: ViewStyle;
   groupSpacing: ViewStyle;
@@ -51,6 +52,9 @@ export default function useStyles() {
       flex: 1,
       minHeight: 0,
       width: '100%',
+    },
+    content: {
+      paddingBottom: theme.space[3],
     },
     card: {
       backgroundColor: theme.colors.surface,
